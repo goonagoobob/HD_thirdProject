@@ -43,6 +43,7 @@ hs_err_pid*
 
 ### STS ###
 /.settings/
+/.metadata/
 .apt_generated
 .classpath
 .factorypath
