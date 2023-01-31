@@ -6,9 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>회원정보입력폼 | 더한섬닷컴</title>
+  
+  <script type="text/javascript" src="/member/member.js"></script>
 
   <link rel="shortcut icon" type="image/x-icon" media="all" href="//">
-
   <link href="https://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/font_443.css" rel="stylesheet"
     type="text/css">
   <link href="https://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/jquery-ui.css" rel="stylesheet"
@@ -23,11 +24,10 @@
     type="text/css">
   <link href="https://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/devAssist.css" rel="stylesheet"
     type="text/css">
-
   <link href="https://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/popup.css" rel="stylesheet"
     type="text/css">
 
-
+	
 </head>
 
 <body>
@@ -113,6 +113,26 @@
             <h5>이름<i class="txt_point">*</i></h5>
             <input type="text" id="name" name="name" class="user_name" placeholder="이름을 입력하세요." title="이름을 입력하세요."
               maxlength="100">
+
+            <div class="input_user_id"></div>
+
+            <h5>성별<i class="txt_point">*</i></h5>
+            <div class="input_user_gender">
+              <ul style="list-style:none;">
+                <li class="check_area">
+                	<input id="genderFemale" name="gender" value="female" class="check" type="checkbox" onclick='genderCheckOnlyOne(this)'>
+                		<label for="genderFemale">여성</label>
+                </li>
+                
+                <li class="check_area">
+                	<input id="genderMale" name="gender" value="male" class="check" type="checkbox" onclick='genderCheckOnlyOne(this)'>
+                		<label for="genderMale">남성</label>
+                </li>
+                
+                
+              </ul>
+            </div>
+            
 
             <!-- [TO DEV] Error msg here. -->
             <div class="err_wrap">
