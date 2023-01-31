@@ -27,7 +27,8 @@
   <link href="https://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/popup.css" rel="stylesheet"
     type="text/css">
 
-	
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -77,11 +78,16 @@
             <div class="input_user_id"></div>
 
             <h5>아이디<i class="txt_point">*</i></h5>
-            <input type="text" id="id" name="id" class="user_id" placeholder="아이디를 입력하세요." title="아이디를 입력하세요."
+            <div style="float:left;">
+              <input type="text" id="id" name="id" class="user_id" placeholder="아이디를 입력하세요." title="아이디를 입력하세요."
               maxlength="100">
-
-
+            </div>
+            <div style="float:left;">
+              <button type="button" class="btnstl3 solid_btn_blk btn_agree" id="idCheck" onclick="idCheckOnlyOne()">중복확인</button>
+            </div>
+            <br>
             <div class="input_user_id"></div>
+
 
 
             <h5 style="margin: 0px 2px 0px 0px;">비밀번호<i class="txt_point">*</i></h5>
@@ -96,25 +102,29 @@
             <div class="err_wrap">
               <p class="err_txt" id="pwcMsg"><!-- 입력한 비밀번호가 일치하지 않습니다. --></p>
             </div>
-            <div class="input_user_id"></div>
-
+            <br>
+	
             <h5>이메일<i class="txt_point">*</i></h5>
-            <input type="email" id="email" class="user_email" placeholder="이메일을 입력하세요." title="이메일을 입력하세요."
+            <div>
+            	<input type="email" id="email" class="user_email" placeholder="이메일을 입력하세요." title="이메일을 입력하세요."
               maxlength="100">
-
-            <div class="input_user_id"></div>
+			</div>
+            <br>
 
             <h5>휴대폰 번호<i class="txt_point">*</i></h5>
+            <div>
             <input type="text" id="phone" name="phone" class="user_phone" placeholder="010-0000-0000" title="휴대폰 번호를 입력하세요."
               maxlength="100">
-
-            <div class="input_user_id"></div>
+			</div>
+            <br>
 
             <h5>이름<i class="txt_point">*</i></h5>
+            <div>
             <input type="text" id="name" name="name" class="user_name" placeholder="이름을 입력하세요." title="이름을 입력하세요."
               maxlength="100">
-
-            <div class="input_user_id"></div>
+			</div>
+			<br>
+            
 
             <h5>성별<i class="txt_point">*</i></h5>
             <div class="input_user_gender">
@@ -122,22 +132,35 @@
                 <li class="check_area">
                 	<input id="genderFemale" name="gender" value="female" class="check" type="checkbox" onclick='genderCheckOnlyOne(this)'>
                 		<label for="genderFemale">여성</label>
-                </li>
-                
+                </li>             
                 <li class="check_area">
                 	<input id="genderMale" name="gender" value="male" class="check" type="checkbox" onclick='genderCheckOnlyOne(this)'>
                 		<label for="genderMale">남성</label>
                 </li>
-                
-                
               </ul>
             </div>
             
-
+            <div class="input_user_id"></div>
+			<h5>주소<i class="txt_point">*</i></h5>
+            <div style="float:left;">
+              <input type="text" id="mzipcode" name="mzipcode" class="user_address" placeholder="우편번호" title="우편번호" maxlength="10">
+            </div>
+            <div style="float:left;">
+              <button type="button" class="btnstl3 solid_btn_blk btn_agree" id="findAddress">주소찾기</button>
+            </div>
+            <div>
+              <input type="text" id="maddress1" name="maddress1" class="user_address" placeholder="주소" title="주소" maxlength="50">
+              <input type="text" id="maddress2" name="maddress2" class="user_address" placeholder="세부주소" title="세부주소" maxlength="100">
+            </div>
+            
+            <div class="input_user_id"></div>
+            <br>
             <!-- [TO DEV] Error msg here. -->
             <div class="err_wrap">
               <p class="err_txt" id="nameMsg"></p>
             </div>
+            
+            
             <h5 class="pd_title">생년월일<i class="txt_point">*</i></h5>
             <div class="input_user_bday">
               <div class="bday_year">

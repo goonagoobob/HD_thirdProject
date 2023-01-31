@@ -14,3 +14,8 @@ function genderCheckOnlyOne(element) {
 	
 	element.checked = true;
 }
+
+function idCheckOnlyOne() {
+	 
+	console.log("hello");
+}
