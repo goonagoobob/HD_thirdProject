@@ -19,4 +19,9 @@ public class memberController {
 	public void memberJoin() {
 		
 	}
+	
+	@GetMapping("/findIdAndPassword")
+	public void userFidIdAndPassword() {
+		
+	}
 }

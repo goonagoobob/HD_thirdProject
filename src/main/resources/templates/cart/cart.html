@@ -1,11 +1,539 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+<title>쇼핑백 | 더한섬닷컴</title>
+<link rel="shortcut icon"
+	href="https://www.thehandsome.com/_ui/mobile/common/images/common/thehandsome_ic_16x16.ico">
+<link rel="apple-touch-icon"
+	href="https://www.thehandsome.com/_ui/mobile/common/images/common/app_ban_logo.png">
+<link rel="apple-touch-icon-precomposed"
+	href="https://www.thehandsome.com/_ui/mobile/common/images/common/app_ban_logo.png">
+<link rel="apple-touch-icon-120x120"
+	href="https://www.thehandsome.com/_ui/mobile/common/images/common/app_ban_logo.png">
+<link rel="apple-touch-icon-120x120-precomposed"
+	href="https://www.thehandsome.com/_ui/mobile/common/images/common/app_ban_logo.png">
+<link rel="shortcut icon" type="image/x-icon" media="all" href="//">
+<link
+	href="https://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/font_80.css?20221121"
+	rel="stylesheet" type="text/css">
+<link
+	href="https://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/jquery-ui.css"
+	rel="stylesheet" type="text/css">
+<link
+	href="https://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/selectordie.css"
+	rel="stylesheet" type="text/css">
+<link
+	href="https://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/default.css?202200826"
+	rel="stylesheet" type="text/css">
+<link
+	href="https://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/display.css?20221107"
+	rel="stylesheet" type="text/css">
+<link
+	href="https://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/assist.css?20220929"
+	rel="stylesheet" type="text/css">
+<link
+	href="https://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/devAssist.css"
+	rel="stylesheet" type="text/css">
+<link
+	href="https://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/popup.css"
+	rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css"
+	href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+<link rel="stylesheet" type="text/css"
+	href="//static.groobee.io/dist/g2/css/grb-recommend-list_v2.css">
+<link rel="stylesheet" type="text/css"
+	href="//static.groobee.io/dist/g2/css/custom-swiper.css">
 </head>
-<body>
-cart.html
+<body class="back">
+	<form id="CSRFForm" action="/ko/shoppingbag" method="post">
+		<div>
+			<input type="hidden" name="CSRFToken"
+				value="b6f2133e-ad08-492d-98df-f12cbe18ce36">
+		</div>
+	</form>
+	<div class="hsome_allContents_wrapper">
+		<div class="hsome_allContents fixed_btn_on">
+			<header class="hsome_header">
+				<h1 class="h_ttl ellipsis" id="headerTitle">쇼핑백</h1>
+				<a href="/ko/main" class="h_top_home"><span>홈</span></a> <a
+					href="javascript:noLink();" onclick="goBack();" class="h_prev">이전
+					페이지로 가기</a>
+				<ul class="h_gnbMenu">
+					<li class="search"><a href="/ko/mobilecommon/search"
+						onclick="GA_Event('공통', '헤더', '검색');"><span>search</span></a></li>
+					<li class="cart"><a href="/ko/shoppingbag"
+						onclick="GA_Event('공통', '헤더', '쇼핑백');"><span>cart</span><i>1</i></a></li>
+				</ul>
+			</header>
+			<div id="contents" class="hsome_contents shoppingbag_list_wrap">
+				<div class="shopingbag_tab_desc_box">4PM 상품은 오후 4시 이후 주문 시 일반
+					택배 상품으로 발송됩니다.</div>
+				<div id="shoppingbagCartView">
+					<h3 class="section_tit mb0 gl_tit gl_4pm">
+						<div class="check_stl gl_check_all_wrap">
+							<input type="checkbox" id="gl_check_all" class="gl_check_all"
+								value=""> <label for="gl_check_all">담은 상품<span>(1개)</span></label>
+						</div>
 
+					</h3>
+					<ul class="goods_list_wrap">
+						<li>
+							<div class="gl_item " id="entryProductInfo"
+								data-pk="11140173201452" data-deliverykind=""
+								data-outofstock="false">
+
+								<script type="text/javascript">
+$(document).ready(function(){
+  $(".gl_item input[name=cartlist]").each(function(){
+     if($(this).attr("data-soldout") == "Y"){
+         $(this).prop("disabled",true);
+         $(this).parents(".gl_item").find(".gl_status .icon_soldout").attr("style","display:block !important");
+     }
+  });
+});
+function deleteBtnEvent(param){
+var la = new layerConfirm('선택하신 상품을 쇼핑백에서 삭제하시겠습니까?','확인','취소');
+la.confirmAction = function(){//확인 호출 펑션
+      var form = $('#updateCartForm' + param);
+      var productCode = form.find('input[name=productCode]').val(); 
+      var initialCartQuantity = form.find('input[name=initialQuantity]');
+      var cartQuantity = form.find('input[name=quantity]');
+      var cartData = form.data("cart");
+      
+      AEC_F_D(productCode,'o',initialCartQuantity.val());
+      
+      cartQuantity.val(0);
+      initialCartQuantity.val(0);
+      form.submit();
+      setEcommerceData(param, "Remove From Cart");
+};
+}
+</script>
+								<div class="check_stl">
+									<!-- 2019.11.12 쇼핑백 진입 시 선택 상품 없도록 수정 -->
+									<input type="checkbox" id="gl_check_0" name="cartlist"
+										data-pk="11140173201452" data-division="" data-deliverykind=""
+										value="0" data-soldout="N" onclick="checkTotalPrice(this);">
+									<label for="gl_check_0"></label>
+								</div>
+								<ul class="gl_status">
+									<li><div class="icon_soldout">
+											<span>SOLD OUT</span>
+										</div></li>
+									<li><div class="icon_quick_delivery">
+											<span>4PM</span>
+										</div></li>
+								</ul>
+								<ul class="gl_top_btns">
+									<li><a href="javascript:;" class="icon_btn btn_gl_del"
+										onclick="deleteBtnEvent('0');"><span>삭제</span></a></li>
+								</ul>
+								<div class="gl_mid">
+									<div class="gl_tit">
+										<a href="/ko/p/OB2C7KCD762WP2_ZB_90"
+											onclick="setEcommerceData('0', 'Click ADD');"> <img
+											src="http://newmedia.thehandsome.com/OB/2C/FW/OB2C7KCD762WP2_ZB_S01.jpg/dims/resize/"
+											class="gl_thumbimg" alt="">
+										</a>
+									</div>
+									<ul class="gl_con">
+										<a href="/ko/p/OB2C7KCD762WP2_ZB_90"
+											onclick="setEcommerceData('0', 'Click ADD');">
+											<li class="gl_con_brand";="">OBZEE</li>
+											<li class="gl_con_name">헤어리 크리스탈 버튼 가디건</li>
+										</a>
+										<li class="gl_con_price">₩595,000<input type="hidden"
+											id="checkZeroPrice0" name="checkZeroPrice" value="595000.0">
+										</li>
+									</ul>
+								</div>
+								<script type="text/javascript">
+$(document).ready(function(){
+setColorRadio(); //색상 선택 라디오버튼 활성화
+$(document).on('click', '.btn_option_edit', function(){
+  var prodid = $(this).prop('id').split("^");
+  var curSize = $('#updateCartForm'+prodid[1]).find('input[name=curSize]').val();
+  var qty = $('#updateCartForm'+prodid[1]).find('input[name=initialQuantity]').val();
+      var reserveSaleyyyy = $(this).parent(".gl_btm").parent(".gl_item").find(".gl_mid .pre_order_txt1903_s #reserveSaleyyyy").val();
+      var reserveSalemm = $(this).parent(".gl_btm").parent(".gl_item").find(".gl_mid .pre_order_txt1903_s #reserveSalemm").val();
+      var reserveSaledd = $(this).parent(".gl_btm").parent(".gl_item").find(".gl_mid .pre_order_txt1903_s #reserveSaledd").val();
+      var deliveryPlanDate = '<span class="point_fc">'+reserveSaleyyyy+'년 '+reserveSalemm+'월 '+reserveSaledd+'일</span>부터 <span class="point_fc">순차배송</span> 예정입니다.';
+  });
+});
+function setSelectbox(){ //selectbox http://rwdb.kr/selectjquery_plugin/ 참조
+$('select.sodsb').selectOrDie();
+}
+</script>
+								<div class="gl_btm">
+									<ul class="gl_info">
+										<li>
+											<div class="gl_tit">옵션수량</div>
+											<div class="gl_con">
+												ZET BLACK&nbsp;<span class="and_line">/</span> 90 / 1개
+											</div>
+										</li>
+									</ul>
+									<a href="javascript:void(0);"
+										class="border_btn btn_option_edit"
+										id="optOpenLayer^0^OB2C7KCD762WP2_ZB"><span>변경</span></a>
+								</div>
+								<form id="updateCartForm0"
+									data-cart="{&quot;cartCode&quot; : &quot;463337257&quot;,&quot;productPostPrice&quot;:&quot;595000.0&quot;,&quot;productName&quot;:&quot;헤어리 크리스탈 버튼 가디건&quot;}"
+									action="/ko/shoppingbag/update" method="post">
+									<input type="hidden" name="entryNumber" value="0"> <input
+										type="hidden" name="productCode" value="OB2C7KCD762WP2_ZB_90">
+									<input type="hidden" name="initialQuantity" value="1">
+									<input type="hidden" name="chgProductCode" value=""> <input
+										type="hidden" name="quantity" value="1"> <input
+										type="hidden" name="curSize" value="90"> <input
+										type="hidden" name="deliveryKind" value=""> <input
+										type="hidden" name="storeId" value=""> <input
+										type="hidden" name="storePickupDate" value=""> <input
+										type="hidden" name="cartDivision" value="">
+									<div class="gl_tgl gl_tgl_option" id="pt_list_0"
+										style="display: block; height: 210px; padding-top: 20px; margin-top: 0px; padding-bottom: 17px; margin-bottom: 0px;">
+										<!-- color_size_price -->
+										<ul class="gl_edit">
+											<li>
+												<div class="gl_tit">색상</div>
+												<ul class="gl_con btn_color_wrap">
+													<!-- function setColorRadio 참조 -->
+													<li><input type="radio" checked="checked"
+														id="gl_rd_color_00_02" name="gl_rd_color_00"
+														onclick="setOptions(this, '0', 'OB2C7KCD762WP2_ZB', 'style');">
+														<label for="gl_rd_color_00_02"></label> <span
+														class="gl_color_val"
+														style="background: #000000 url('http://newmedia.thehandsome.com/OB/2C/FW/OB2C7KCD762WP2_ZB_C01.jpg/dims/resize/60x60') center/100% auto no-repeat">#000000</span>
+													</li>
+												</ul>
+												<div class="gl_con selected_color_txt">
+													<span class="sct_v">ZET BLACK</span>
+												</div>
+											</li>
+											<li>
+												<div class="gl_tit">사이즈</div>
+												<div class="gl_con">
+													<span class="sod_select  touch" tabindex="0"
+														data-cycle="false" data-links="false"
+														data-links-external="false"
+														data-placeholder-option="false" data-filter=""> <span
+														class="sod_label">90</span> <span class="sod_list_wrapper">
+															<span class="sod_list"> <span
+																class="sod_option  selected active " title="90"
+																data-value="OB2C7KCD762WP2_ZB_90">90</span> <span
+																class="sod_option " title="95"
+																data-value="OB2C7KCD762WP2_ZB_95">95</span>
+														</span>
+													</span> <select id="gl_slr_size_0" name="gl_slr_size_0"
+														class="sodsb"
+														onchange="setOptions(this, '0', '', 'size');">
+															<option value="OB2C7KCD762WP2_ZB_90" selected="">90</option>
+													</select>
+													</span>
+												</div>
+											</li>
+											<li>
+												<div class="gl_tit">수량</div>
+												<div class="gl_con">
+													<div class="gl_count_edit">
+														<a onclick="quantityMinus(this, '0');" class="btn_minus"><span>감소</span></a>
+														<div class="gl_count_num">
+															<input type="text" title="수량" readonly="" value="1"
+																class="mr0" id="quantity_0" name="quantity_0"
+																path="quantity">
+														</div>
+														<a onclick="quantityPlus(this, '0');" class="btn_plus"><span>증가</span></a>
+													</div>
+												</div>
+											</li>
+										</ul>
+										<div class="gl_tgl_btns btn_wrap btn_wrap_div2">
+											<a href="#none" class="btnstl3 solid_btn_gray btn_cancel"><span>취소</span></a>
+											<a href="#none" class="btnstl3 solid_btn_blk btn_save"
+												id="UpdateCart_0" onclick="productModifyEvent(this);"><span>저장</span></a>
+										</div>
+									</div>
+									<div>
+										<input type="hidden" name="CSRFToken"
+											value="b6f2133e-ad08-492d-98df-f12cbe18ce36">
+									</div>
+								</form>
+							</div>
+						</li>
+					</ul>
+					<div class="gl_edit_btn_wrap">
+						<div class="order_goods_summary_wrap">
+							<div class="ordgd_tit">
+								총 <b><span id="selectProductCount">0</span></b>개 상품
+							</div>
+							<ul class="ordgd_detail total_price_detail">
+								<li>
+									<div class="ttpd_tit">상품 합계</div>
+									<div class="ttpd_con">
+										<span id="cartDataSubtotal">₩0</span>
+									</div>
+								</li>
+								<li>
+									<div class="ttpd_tit">배송비</div>
+									<div class="ttpd_con">
+										<span id="cartDataDeliveryCost">₩0</span>
+									</div>
+								</li>
+								<li class="total_sum">
+									<div class="ttpd_tit">합계</div>
+									<div class="ttpd_con">
+										<span id="cartDataTotalPrice">₩0</span>
+									</div>
+								</li>
+							</ul>
+						</div>
+						<div class="btn_wrap btn_wrap_div2">
+							<a href="#none" class="btnstl3 border_btn_gray gleb_select_del"
+								style="width: 100%" onclick="selectRemove();"><span>선택상품
+									삭제</span></a>
+						</div>
+						<div class="btn_wrap btn_wrap btn_wrap_div1" id="orderButtonGroup">
+							<a href="#none" class="btnstl3 solid_btn_blk gleb_order"
+								onclick="continueUrl();"><span>쇼핑계속하기</span></a>
+						</div>
+					</div>
+				</div>
+				<ul class="shoppingbag_guide_wrap btn_wrap btn_wrap_div1 last_box">
+					<li><a href="javascript:shoppingbagInfoOpen();"
+						class="btnstl5 arrow_btn spb_guide" data-layerpop-depth="depth1"><span>쇼핑백
+								이용안내</span></a></li>
+
+					<li><a href=".product_card_pop"
+						class="btnstl5 arrow_btn spb_card_benefit btn_popup_trigger"><span>카드
+								행사 혜택(무이자, 청구, 즉시할인)</span></a></li>
+				</ul>
+				<div class="payment_btn_wrap btm_fixed_wrap on">
+					<ul class="btn_wrap btn_wrap_div1">
+						<li class="pymt_select_first" style="display: block;"><a
+							href="#none" class="btnstl6 solid_btn_gray"><span>주문하실
+									상품을 선택해 주세요</span></a></li>
+
+						<li class="pymt_order_apply" style="display: none;"><a
+							href="javascript:checkoutPage('checkout');"
+							class="btnstl6 solid_btn_point " id="oderBtn"></a></li>
+						<div style="display: none">
+							<script type="text/javascript">
+var varUA = navigator.userAgent.toLowerCase();
+var iPhoneYn = false;
+if (varUA.indexOf("iphone")>-1||varUA.indexOf("ipad")>-1||varUA.indexOf("ipod")>-1) {
+  iPhoneYn = true;
+}
+window.onpageshow = function(e) {
+  if ( e.persisted || (window.performance && window.performance.navigation.type == 2)) {
+    if ( iPhoneYn && e.persisted ) {
+      objHide($('.pop_loading_buynow_200218'));
+      $(".btn_lyrpp_close").click();
+      location.reload(true);
+    } else {
+      location.reload(true);
+    }
+  }
+};
+$(document).ready(function(){
+switch(paramDivision)
+{
+case "store":
+case "athome":
+  $("#cartOneclickButton").hide();
+  break;
+}
+$(".lyrpp_close.lyrpp_close_stl3.btn_lyrpp_close").click(function(){
+      $('body').removeClass("hold_body");
+      $(".hsome_layerpop_contents.lp_depth1.dir_h.lp_stl_black").removeClass("visible active");
+});
+});
+function selectOderTypeClose(){
+var curScrollPosition = 0;
+var hs_allCon = $('.hsome_allContents');
+$('.hsome_layerpop_contents').removeClass('active');
+$('.hsome_layerpop_contents').removeClass('absolute');
+hs_allCon.css({ marginTop: curScrollPosition*-1 });
+hs_allCon.removeClass('disabled');
+setTimeout(function(){
+  hs_allCon.css({ marginTop: 0 });
+  $(window).scrollTop(curScrollPosition);
+}, 300);
+return;
+}
+function checkoutPage(payMethod) {
+  var cartDivision = $("#ordersheetCartDivision").val();
+  var resultReturn = true;
+$("input[name=checkZeroPrice]").each(function(){
+  var price = $(this).val();  
+  if(price <= 0){
+    layerAlert("선택 상품은 일시적인 시스템 장애로 구매하실 수 없습니다.<br/>고객센터(1800-5700)로 문의주세요.");
+    resultReturn = false;
+    return;
+  }
+});
+if(resultReturn == false) {
+  return;
+}
+ var entryNumber = "";
+$("input:checkbox[name='cartlist']:checked:not(:disabled)").each(function(){
+  entryNumber += $(this).val() + ",";
+});
+if(entryNumber == "") {
+  layerAlert("주문하실 상품을 선택해주세요.");
+  return;
+}
+entryNumber = entryNumber.substring(0,entryNumber.length-1);
+function oneclickLoadingStart(products,onlyFourPm, vipDeliAvail){
+var _vipDeliAvail = vipDeliAvail;
+$("#lpOrderApplyBtns").hide(); 
+  $("#lyrppTopColseArea").hide(); 
+  $("#onclickLodingArea").show(); 
+  if(!onlyFourPm && $(":checkbox[name='cartlist']:checked").length > 0){
+      $(":checkbox[name='cartlist']:checked").each(function(i){
+          var _data_delivery = this.getAttribute("data-deliverykind");
+          if(_data_delivery != 'undefined' && _data_delivery == 'FOUR_PM'){
+            _vipDeliAvail = false;
+          }
+      });
+  }
+oneclick.open(products,_vipDeliAvail);
+}
+</script>
+							<!-- layerpop_wrap | 주문하기 s -->
+							<div class="layerpop_wrap lp_order_apply_wrap"
+								id="order_layerpop">
+								<div class="lyrpp_top" id="lyrppTopColseArea">
+									<!--       <a href="#none" class="lyrpp_close lyrpp_close_stl3  btn_lyrpp_close"><span>닫기</span></a> -->
+									<a href="javascript:;"
+										class="lyrpp_close lyrpp_close_stl3 btn_lyrpp_close "><span>닫기</span></a>
+								</div>
+								<div class="lyrpp_mid">
+									<ul id="lpOrderApplyBtns"
+										class="btn_wrap btn_wrap_div1 lp_order_apply_btns">
+										<li><a href="javascript:paymentProcess('checkout');"
+											class="btnstl4 border_btn_blk">배송&amp;결제정보 입력</a></li>
+										<li><div class="lyrpp_desc ta_c">
+												해외 배송을 원할 경우 thehandsome.com 의 <br> 글로벌 서비스를 이용해주세요.
+											</div></li>
+									</ul>
+									<div id="onclickLodingArea" class="m_popwrap_ldgbox"
+										style="display: none;">
+										<div class="m_popwrap_ldgcon">
+											<img
+												src="http://cdn.thehandsome.com/_ui/handsomemobile/images/product/img_loding_mo.png"
+												alt=""> <strong>최대할인 혜택을 계산 중 입니다.</strong>
+											<p>
+												최대할인 혜택을 원클릭결제에 자동 적용하여<br> 편리한 결제가 가능합니다.
+											</p>
+										</div>
+									</div>
+								</div>
+								<!-- layerpop_middle e -->
+							</div>
+							<!-- layerpop_wrap | 주문하기 e -->
+						</div>
+					</ul>
+				</div>
+				<a href="#" class="hsome_topBtn active" style="bottom: 60px;">TOP</a>
+			</div>
+			<footer id="footer" class="hsome_footer new181127 footer_kr">
+				<div class="main-notice">
+					<div class="tit-notice">공지</div>
+					<div class="list-notice">
+						<ul class="notice-wrap" style="top: -0.664196px;">
+							<li><a
+								href="/ko/svcenter/mobilenotice?noticeCode=8804711092144">[당첨자
+									발표] 2023 신년 기프트 향수 이벤트 당첨자 발표</a></li>
+							<li><a
+								href="/ko/svcenter/mobilenotice?noticeCode=8804547317680">[당첨자
+									발표] 1월 뷰티 릴레이 체험단 당첨</a></li>
+							<li><a
+								href="/ko/svcenter/mobilenotice?noticeCode=8804678520752">[당첨자
+									발표] 핸썸TV 더한섬닷컴 설선물 라이브 방송(1/17) 사은품 및 스페셜 마일리지 당첨자 발표</a></li>
+							<li><a
+								href="/ko/svcenter/mobilenotice?noticeCode=8804678487984">결제완료(주문완료)
+									페이지 오류 안내</a></li>
+							<li><a
+								href="/ko/svcenter/mobilenotice?noticeCode=8804711092144">[당첨자
+									발표] 2023 신년 기프트 향수 이벤트 당첨자 발표</a></li>
+						</ul>
+					</div>
+					<div class="btn-more">
+						<a href="/ko/svcenter/mobilenotice"><img
+							src="http://cdn.thehandsome.com/_ui/handsomemobile/images/main/btn_arr_notice.png"
+							alt=""></a>
+					</div>
+				</div>
+				<div class="f_wrap">
+					<div class="f_menu re1911">
+						<!-- 수정 190207 -->
+						<ul class="top_line">
+							<li><a href="#"></a></li>
+							<li><a href="/ko/member/login" class="login"
+								style="float: left;" onclick="GA_Event('공통', '푸터_메뉴', '로그인');">로그인<!--로그인--></a></li>
+							<li><a href="/ko/svcenter/mobilemain?uiel=Mobile"
+								class="customer" style="float: left; width: 32%;"
+								onclick="GA_Event('공통', '푸터_메뉴', '고객센터');">고객센터<!--고객센터--></a></li>
+							<li><a href="/ko/store-finder/storeInformation?uiel=Mobile"
+								class="storeinfo" style="float: left;"
+								onclick="GA_Event('공통', '푸터_메뉴', '매장안내');">매장안내</a></li>
+						</ul>
+						<ul class="btm_line1911">
+							<li><a href="/ko/svcenter/theClubInfo?uiel=Mobile"
+								class="memberBenefit" style="float: left; letter-spacing: -1px;"
+								onclick="GA_Event('공통', '푸터_메뉴', '한섬 회원 혜택');">한섬 회원 혜택<!-- 한섬 회원 혜택 --></a></li>
+							<li><a
+								href="http://www.handsome.co.kr/ko/company/aboutHandsome.do?leng=ko"
+								target="_blank" style="float: left; letter-spacing: -1px;"
+								onclick="GA_Event('공통', '푸터_메뉴', '회사소개');">회사소개</a></li>
+							<li id="family_site"><span
+								class="language family_site1911 for_iph_css1911"
+								onclick="familySiteSelect();GA_Event('공통', '푸터_CNT', 'FAMILYSITE');">FAMILY
+									SITE&nbsp;</span></li>
+						</ul>
+						<!-- 챗봇 테스트 -->
+					</div>
+					<div class="f_sns">
+						<a href="javascript:noLink();"
+							onclick="GA_Event('공통', '푸터_SNS', 'INSTAGRAM');window.open('https://instagram.com/thehandsome_official/','instagram');return false"
+							class="ist">인스타그램</a> <a href="javascript:noLink();"
+							onclick="GA_Event('공통', '푸터_SNS', 'YOUTUBE');window.open('https://www.youtube.com/channel/UC0fmjgbVA8iZrPbIR3dppUQ','youtube');return false"
+							class="ytb">유튜브</a>
+					</div>
+					<div class="f_policy">
+						<a href="/ko/footer/footerTermBusiness?uiel=Mobile">서비스이용약관</a> <a
+							href="/ko/footer/footerPrivacy?uiel=Mobile"
+							style="font-weight: bold;">개인정보처리방침</a>
+					</div>
+					<div class="f_copyright">COPYRIGHT © 2018 HANDSOME. ALL RIGHT
+						RESERVED</div>
+					<a href="javascript:noLink();" class="f_info_viewer"
+						onclick="GA_Event('공통', '푸터_CNT', 'INFO');"> <span
+						class="f-txt">(주) 한섬 </span> <span class="f-logo"><img
+							src="http://cdn.thehandsome.com/_ui/handsomemobile/images/common/mob-footer-handsome-logo.png"
+							alt=""></span>
+					</a>
+					<div class="f_info">
+						<div class="corp">
+							대표이사 : 김민덕 | 서울시 강남구 도산대로 523 한섬빌딩<br>TEL : 1800-5700 (유료) |
+							FAX : 02-6078-2856 <br>개인정보보호책임자 : 윤인수 | 호스팅서비스 : (주) 한섬<br>사업자등록번호
+							: 120-81-26337<br>통신판매업신고번호 : 제 2009-서울강남-00826호
+						</div>
+						<div class="link">
+							<a
+								href="https://recruit.ehyundai.com/recruit-info/announcement/list.nhd?pageNo=1&amp;hireGb=01&amp;coCd=HDHAN"
+								target="_blank" onclick="GA_Event('공통', '푸터_CNT', 'INFO_채용정보');">채용정보</a>
+							<a
+								href="http://www.handsome.co.kr/ko/sustainability/sharedGrowth01.do"
+								target="_blank" onclick="GA_Event('공통', '푸터_CNT', 'INFO_동반성장');">동반성장</a>
+							<a
+								href="http://www.handsome.co.kr/ko/sustainability/ecoFriendly01.do"
+								target="_blank" onclick="GA_Event('공통', '푸터_CNT', 'INFO_환경경영');">환경경영</a>
+						</div>
+					</div>
+				</div>
+			</footer>
+		</div>
+	</div>
 </body>
 </html>
