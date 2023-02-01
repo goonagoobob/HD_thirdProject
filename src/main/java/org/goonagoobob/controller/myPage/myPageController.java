@@ -21,4 +21,8 @@ public class myPageController {
 	public void changeUserInfo() {
 		
 	}
+	
+	@GetMapping("/passwordChange")
+	public void passwordChange() {
+	}
 }
