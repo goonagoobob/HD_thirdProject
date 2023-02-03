@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width">
 <title>쇼핑백 | 더한섬닷컴</title>
 <link rel="shortcut icon"
 	href="https://www.thehandsome.com/_ui/mobile/common/images/common/thehandsome_ic_16x16.ico">
@@ -137,9 +138,8 @@ la.confirmAction = function(){//확인 호출 펑션
 										</a>
 									</div>
 									<ul class="gl_con">
-										<a href="/ko/p/OB2C7KCD762WP2_ZB_90"
-											onclick="setEcommerceData('0', 'Click ADD');">
-											<li class="gl_con_brand";="">OBZEE</li>
+										<a href="#" onclick="">
+											<li class="gl_con_brand">OBZEE</li>
 											<li class="gl_con_name">헤어리 크리스탈 버튼 가디건</li>
 										</a>
 										<li class="gl_con_price">₩595,000<input type="hidden"
@@ -227,7 +227,7 @@ $('select.sodsb').selectOrDie();
 													</span> <select id="gl_slr_size_0" name="gl_slr_size_0"
 														class="sodsb"
 														onchange="setOptions(this, '0', '', 'size');">
-															<option value="OB2C7KCD762WP2_ZB_90" selected="">90</option>
+															<option value="OB2C7KCD762WP2_ZB_90" >90</option>
 													</select>
 													</span>
 												</div>
@@ -238,9 +238,8 @@ $('select.sodsb').selectOrDie();
 													<div class="gl_count_edit">
 														<a onclick="quantityMinus(this, '0');" class="btn_minus"><span>감소</span></a>
 														<div class="gl_count_num">
-															<input type="text" title="수량" readonly="" value="1"
-																class="mr0" id="quantity_0" name="quantity_0"
-																path="quantity">
+															<input type="text" title="수량" value="1"
+																class="mr0" id="quantity_0" name="quantity_0">
 														</div>
 														<a onclick="quantityPlus(this, '0');" class="btn_plus"><span>증가</span></a>
 													</div>

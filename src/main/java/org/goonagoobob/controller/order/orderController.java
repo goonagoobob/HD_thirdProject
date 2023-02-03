@@ -10,9 +10,14 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 @RequestMapping("/order/")
 public class orderController {
-   @GetMapping("/orderComplete")
+   @GetMapping("/complete")
    public void orderComplete() {
-      
+      log.info("orderComplete controller");
+   }
+   
+   @GetMapping("/cancel")
+   public void orderCancel() {
+	   log.info("orderCancel controller");
    }
    
 

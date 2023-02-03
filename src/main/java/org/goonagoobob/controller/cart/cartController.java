@@ -10,8 +10,9 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 @RequestMapping("/cart/")
 public class cartController {
-	@GetMapping("/cart")
-	public void cart() {
-		
+	
+	@GetMapping("/list")
+	public void cartList() {
+		log.info("cartList controller");
 	}
 }
