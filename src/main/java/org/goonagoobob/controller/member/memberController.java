@@ -24,4 +24,5 @@ public class memberController {
 	public void userFidIdAndPassword() {
 		
 	}
+	
 }
