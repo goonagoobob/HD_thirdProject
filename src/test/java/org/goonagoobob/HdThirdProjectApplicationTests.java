@@ -1,4 +1,4 @@
-package org.goonagoobab;
+package org.goonagoobob;
 
 import static org.junit.Assert.fail;
 
@@ -28,7 +28,7 @@ class HdThirdProjectApplicationTests {
 	@Test
 	public void testConnection() {
 		try (Connection connection = DriverManager.getConnection(
-				"jdbc:oracle:thin:edudb_high?TNS_ADMIN=/Users/choilwoo/Desktop/dev64/Wallet_edudb", "goonagoobob", "Ygcha09365283")) {
+				"jdbc:oracle:thin:@edudb_high?TNS_ADMIN=/Users/choilwoo/Desktop/dev64/Wallet_edudb", "goonagoobob", "Ygcha09365283")) {
 
 			if (connection != null) {
 				System.out.println("DB Connection Success!");
