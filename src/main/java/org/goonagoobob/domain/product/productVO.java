@@ -1,5 +1,6 @@
 package org.goonagoobob.domain.product;
 
-public class productVO {
 
+public class productVO {
+	
 }
