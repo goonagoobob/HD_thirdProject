@@ -52,7 +52,7 @@
   <link rel="stylesheet" type="text/css" href="//static.groobee.io/dist/g2/css/grb-recommend-list_v2.css">
   <link rel="stylesheet" type="text/css" href="//static.groobee.io/dist/g2/css/custom-swiper.css">
   </head>
-  <body class="back"><th:block th:replace="wck/includes/headTag :: head_tag(title='배송 | 더한섬닷컴')"></th:block>
+  <body class="back">
   <style>
     .general_pay_list.gpd_tab_w3 li {
       width: 50%;
@@ -537,7 +537,7 @@
                 <ul class="swiper-wrapper" style="transition-duration: 0ms; transform: translate3d(61px, 0px, 0px);">
                   <li class="swiper-slide last swiper-slide-active" style="margin-right: 20px;">
                     <div class="card_item cd_kind_add"><a href="javascript:;" class="card_add_btn" onclick="checkoutWpay.btnCardRegist()">카드등록</a></div>
-                    <div style="hidden"> <input type="radio" id="card_choice_" name="card_choice" value=""> </div>
+                    <div> <input type="radio" id="card_choice_" name="card_choice" value=""> </div>
                   </li>
                 </ul>
               </div>
@@ -547,7 +547,7 @@
             <!-- tab_cont : 카드간편결제 s -->
             <!-- tab_cont : 일반결제 s -->
             <div class="cont  on" id="general_pay">
-              <div class="general_pay_wrap " style="overflow:hidden;">
+              <div class="general_pay_wrap" style="overflow:hidden;">
                 <ul class="general_pay_list gpd_tab_w3">
                   <li class="on"><a href="#none" class="gpd_a_credit" data-g-pay-kind="credit" data-g-pay-mode="KO001">신용카드</a></li>
                
