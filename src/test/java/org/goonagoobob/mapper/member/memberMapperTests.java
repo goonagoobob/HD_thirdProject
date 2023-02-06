@@ -3,6 +3,7 @@ package org.goonagoobob.mapper.member;
 import java.sql.SQLException;
 import java.text.ParseException;
 
+import org.goonagoobob.domain.member.memberAccount;
 import org.goonagoobob.domain.member.memberJoin;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,28 +18,44 @@ public class memberMapperTests {
 	
 
 	@Autowired
-	private memberMapper memberMapper;
+	private memberMapper memberMapper;	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
 	
 	@Test
-	public void test() {
-		log.info("hello");
+	public void testInsert() throws SQLException, ParseException{
+		
+		String mpassword = passwordEncoder.encode("1111");
+		System.out.println(mpassword);
+		boolean matchResult = passwordEncoder.matches("1111", mpassword);
+		if(matchResult) {
+			memberAccount mA = new memberAccount();
+			mA.setMid("user1");
+			mA.setMpassword(mpassword);
+			mA.setMphone("01000000001");
+			mA.setMgender(0);
+			mA.setMzipcode("01337");
+			mA.setMaddress1("user1주소");
+			mA.setMaddress2("user1상세주소");
+			mA.setMbirth("1998/10/19");
+			mA.setMname("user1");
+			mA.setMemail("user1@email");
+			memberMapper.joinMemberAccount(mA);
+		}
+		
+		else {
+			System.out.println("insert불가");
+		}
+
+		
 	}
 	
+	
+	
 	@Test
-	public void insertDummies2() throws SQLException, ParseException{
-		memberJoin memberJoin = new memberJoin();
-		memberJoin.setMid("userAPI6");
-		memberJoin.setMpassword("1111");
-		memberJoin.setMphone("userAPI6");
-		memberJoin.setMgender(0);
-		memberJoin.setMzipcode("01337");
-		memberJoin.setMaddress1("userAPI6주소");
-		memberJoin.setMaddress2("userAPI6상세주소");
-		memberJoin.setMbirth("1998/10/19");
-		memberJoin.setMname("userAPI6");
-		memberJoin.setMemail("userAPI6@email");
-		
-		memberMapper.joinMemberAccount(memberJoin);
-		
+	public void selectByID() {
+		String mid="user1";
+		System.out.println(memberMapper.selectById(mid));
 	}
 }

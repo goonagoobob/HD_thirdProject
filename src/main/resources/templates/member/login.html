@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" 
+	  xmlns:th="http://www.thymeleaf.org">
 
 <head>
 <meta charset="UTF-8">
@@ -48,6 +49,7 @@
 </head>
 
 <body class="back">
+	<p>helloo</p>
 	<!-- Loading -->
 	<div style="display: none;">
 		<div id="loadingBarDiv" style="display: none;"></div>
@@ -69,22 +71,21 @@
 
 	<div class="hsome_contents mem_ct_wrap id_login" id="handsomeCust">
 		<div class="mem_login_input_area">
-			
-			<br>
-			<form id="loginForm" action="/ko/j_spring_security_check"
+
+			<form id="loginForm" th:action="@{/member/login}"
 				method="post">
 				<!-- 로그인 정보 입력 -->
 				<div class="input_group">
-					<input type="hidden" name="inputId" id="inputId" value="">
+					<input type="hidden" th:name="_csrf" id="inputId" th:value="_csrf.token"/>
 					<!-- 아이디 입력 -->
 					<div class="input_login_id">
-						<input id="j_username" name="j_username" type="text"
+						<input id="mid" name="username" type="text"
 							class="login_id" placeholder="아이디/이메일을 입력하세요."
 							title="아이디/이메일을 입력하세요.">
 					</div>
 					<!-- 패스워드 입력 -->
 					<div class="input_login_pw">
-						<input type="password" id="j_password" name="j_password"
+						<input type="password" id="mpassword" name="password"
 							placeholder="비밀번호를 입력하세요." title="비밀번호를 입력하세요.">
 					</div>
 					<!-- [TO DEV] Error msg here. -->
@@ -92,7 +93,7 @@
 						<p id="hpErrMsg" class="err_txt"></p>
 					</div>
 					<div class="btn_wrap">
-						<button type="button" id="login_btn"
+						<button type="submit" id="login_btn"
 							class="btn btn_bg_b btn_login btn_popup">로그인</button>
 					</div>
 					<div class="login_option bio">
@@ -125,8 +126,8 @@
 				<button class="btnstl3 border_btn_gray btn_fdpw"
 					onclick="hpPasswordFind();">통합회원 비밀번호 찾기</button>
 			</div>
+
 		</div>
-		
 		<div class="login_signup_area">
 			<div class="txt_wrap">
 				<p class="tit">더 큰 혜택으로 보다 즐거운 쇼핑을!</p>

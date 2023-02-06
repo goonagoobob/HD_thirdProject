@@ -1,5 +1,9 @@
 package org.goonagoobob.service.member;
 
-public class memberService {
+import org.goonagoobob.domain.member.memberAccount;
+
+public interface memberService {
+	
+	public memberAccount selectById(String mid);
 
 }

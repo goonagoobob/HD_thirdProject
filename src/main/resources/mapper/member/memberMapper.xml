@@ -6,4 +6,10 @@
 		insert into member(mid, mpassword, mname, memail, mphone, mzipcode, maddress1, maddress2, mbirth, mgender, mlogintype, mtosno, menabled, mrole, mgrade, mmileage)
 		values(#{mid},#{mpassword},#{mname},#{memail},#{mphone},#{mzipcode}, #{maddress1}, #{maddress2}, #{mbirth}, #{mgender}, 'normal', 1, 1, 'user', 1, 1000)
 	</insert>
+	
+	<select id="selectById" resultType="org.goonagoobob.domain.member.memberAccount">
+		select mid, mpassword, mname, memail, mphone, mtel, mzipcode, maddress1, maddress2, mbirth, mgender, mrefid, mlogintype, mtosno, menabled, mrole, mgrade, mmileage
+		from member
+		where mid = #{mid}
+	</select>
 </mapper>
