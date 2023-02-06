@@ -23,8 +23,7 @@ public class memberController {
 	public void loginInput(Principal principal, @RequestParam("username") String mid, @RequestParam("password") String mpassword) {
 		System.out.println("mid");
 		System.out.println("hello");
-		
-		
+			
 	}
 	
 	@GetMapping("/join")
