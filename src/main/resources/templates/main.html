@@ -1,0 +1,988 @@
+<html lang="ko" class="back"><head>
+    <!-- #2894 - 카카오광고 집행 위한 픽셀&SDK 삽입 -->
+    <script async="" defer="" src="https://cdn.megadata.co.kr/dist/prod/enp_tracker_self_hosted.min.js"></script><script async="" src="https://www.googletagmanager.com/gtm.js?id=GTM-KSHFVVQ"></script><script async="" src="https://www.google-analytics.com/analytics.js"></script><script async="" src="https://connect.facebook.net/en_US/fbevents.js"></script><script async="" charset="utf-8" src="//static.recopick.com/dist/production.min.js"></script><script type="text/javascript" charset="UTF-8" src="//t1.daumcdn.net/adfit/static/kp.js"></script>
+    <script type="text/javascript">
+      if(typeof kakaoPixel !== 'undefined'){
+          var kakaoTrackId = '3482319208237780781'; //개발
+              if(location.href.indexOf("www.thehandsome.com") > -1) kakaoTrackId = '7855119525940511046'; //운영
+              kakaoPixel(kakaoTrackId).pageView();
+      }
+    </script>
+    <!-- #2894 - 카카오광고 집행 위한 픽셀&SDK 삽입 END -->
+  
+      <meta name="naver-site-verification" content="2f9358e1e36605519854a595f243f0171519dd1d">
+        <meta name="google-site-verification" content="0bGV8gPhwO_PzritNvIsz2k74EH5yPsrXXluJ8ZUed8">
+        <meta name="google-site-verification" content="dO99-Ao-ywXeVDEz4jz5nJBXzQXVCgmX4WXzxl_Nf3c">
+        <meta name="facebook-domain-verification" content="jvxpdjfrqqan9oe1qdrjfyxj553an6">
+        <meta name="fallbackUrl" content="https://itunes.apple.com/app/apple-store/id1072288949">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    
+    <meta charset="UTF-8">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width">
+    <meta name="format-detection" content="telephone=no">
+    
+    <!-- Mobile Smart Banner for IOS Device -->
+    <meta name="apple-itunes-app" content="app-id=1072288949">
+    <!-- //Mobile Smart Banner for IOS Device -->
+    <meta property="og:type" content="article">
+        <meta property="og:title" content="더한섬닷컴 | THE HANDSOME.COM">
+        <meta property="og:description" content="타임, 마인, 시스템, SJSJ 등 프리미엄 브랜드 및 트렌디한 해외·편집숍까지 가득한 스타일 플랫폼!">
+        <meta property="og:image" content="http://s3.ap-northeast-2.amazonaws.com/cdn.thehandsome.com-kr/pc/210510_logo/%E3%84%B9%EB%A1%9C%EA%B3%A0.png">
+        <meta property="og:url" content="http://www.thehandsome.com/ko/">
+        <meta name="keywords" contents="한섬, 더한섬닷컴, 한섬몰, 한섬아울렛, 한섬닷컴, 더한섬, 한섬올라인몰, HANDSOME, thehandsome">
+            <script>
+  </script><script type="text/javascript">
+  var appYn = "N";
+  var appOs = ""; //ios, android
+  
+  var uid = "";
+    var pageUid = "mobileMain202105Page";
+    var chkScreenPage = [];
+    
+    
+    if(appYn == 'Y'){  //appì¼ëë§ ì²´í¬
+        if(uid == "snsMain" || uid == "snsDetail" || uid == "snsMyProfile" || uid == "snsCollectionDetail" || uid == "snsSearchList"
+        || chkScreenPage.indexOf(pageUid) > -1) { //íì©íì´ì§
+            if(appOs == "ios"){ //ios
+                webkit.messageHandlers.screenShotEnable.postMessage("false");
+            }else { //android
+                Android.screenShotEnable("false");
+            }
+        }else { //ì¬ì©ìí¨
+            if(appOs == "ios"){ //ios
+                webkit.messageHandlers.screenShotEnable.postMessage("true");
+            }else { //android
+                Android.screenShotEnable("true");
+            }
+        }  
+    }
+    
+  </script>
+  
+  <title>
+    더한섬닷컴</title>
+    <link rel="shortcut icon" href="http://www.thehandsome.com/_ui/mobile/common/images/common/thehandsome_ic_16x16.ico">
+    <link rel="apple-touch-icon" href="http://www.thehandsome.com/_ui/mobile/common/images/common/app_ban_logo.png">
+    <link rel="apple-touch-icon-precomposed" href="http://www.thehandsome.com/_ui/mobile/common/images/common/app_ban_logo.png">
+    <link rel="apple-touch-icon-120x120" href="http://www.thehandsome.com/_ui/mobile/common/images/common/app_ban_logo.png">
+    <link rel="apple-touch-icon-120x120-precomposed" href="http://www.thehandsome.com/_ui/mobile/common/images/common/app_ban_logo.png">
+    
+    <!-- <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> -->
+    
+  
+    <link rel="shortcut icon" type="image/x-icon" media="all" href="//">
+  
+    <link href="http://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/font_80.css?20221121" rel="stylesheet" type="text/css">
+    <link href="http://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/jquery-ui.css" rel="stylesheet" type="text/css">
+  <link href="http://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/selectordie.css" rel="stylesheet" type="text/css">
+  <link href="http://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/default.css?202200826" rel="stylesheet" type="text/css">
+  <link href="http://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/display.css?20221107" rel="stylesheet" type="text/css">
+  <link href="http://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/assist.css?20220929" rel="stylesheet" type="text/css">
+    <link href="http://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/devAssist.css" rel="stylesheet" type="text/css">
+    
+    <link href="http://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/swiper-vr1908.min.css" rel="stylesheet" type="text/css">
+    <link href="http://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/main201909.css?20200423" rel="stylesheet" type="text/css">
+  <link href="http://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/renew_main.css?20220826" rel="stylesheet" type="text/css">
+  <link href="http://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/popup.css" rel="stylesheet" type="text/css">
+  
+  <script type="text/javascript">
+  /*<![CDATA[*/
+  
+  var ACCMOB = { config: {} };
+  ACCMOB.config.contextPath = "";
+  ACCMOB.config.encodedContextPath = "/ko";
+  ACCMOB.config.commonResourcePath = "http://www.thehandsome.com/_ui/handsomemobile/common";
+  ACCMOB.config.themeResourcePath = "http://www.thehandsome.com/_ui/handsomemobile/theme-blue";
+  ACCMOB.config.siteResourcePath = "http://www.thehandsome.com/_ui/handsomemobile/site-handsome";
+  ACCMOB.config.rootPath = "http://www.thehandsome.com/_ui/handsomemobile";
+  ACCMOB.config.CSRFToken = "242b1290-0bad-40c2-9827-9b3230fab443";
+  
+  
+  /*]]>*/
+  </script>
+  <script type="text/javascript">
+  /*<![CDATA[*/
+  ACCMOB.addons = {};   //JS holder for addons properties
+      
+  
+  /*]]>*/
+  </script><script type="text/javascript">
+    var handsomePageId = "mobileMain202105Page";
+    var main_bul = false;
+  </script>
+  
+  <script type="text/javascript">
+    var goToMySmartFilterYn = "N";
+    var gnbType = "br";
+    var UserAgent = navigator.platform;
+    var userPhoneOs = "";
+    if (UserAgent.match(/i(Phone|Pod|Pad)/i) != null ){
+        userPhoneOs = "IOS";
+    } else{
+        userPhoneOs = "ANDROID";
+    }
+  </script>
+  
+  <script type="text/javascript">
+    
+        var handsomeUserLoginYn = "Y";
+    </script>
+  <script type="text/javascript">
+        var isoKoYn = "Y";
+    </script>
+  <script type="text/javascript">
+    var handsomeIsoCode = "ko";
+    var handsomeContextPath = "/ko"; 
+  </script>
+  
+  <script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/jquery.min.js"></script>
+  <script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/jquery.vticker.js"></script><!-- 200318 Ã¬Â¶ÂÃªÂ°Â -->
+  <script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/masonry.pkgd.min.js"></script>
+  <script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/imagesloaded.pkgd.min.js"></script>
+  <script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/jquery.form.min.js"></script>
+    <script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/selectordie.min.js"></script>
+    <script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/jquery.bpopup.min.js"></script>
+    <script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/echarts.min.js"></script>
+    <script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/common.js?20210501"></script>
+        <script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/assist_common.js?v=20220630"></script>
+    <script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/handsome.js"></script>
+    <script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/common_function.js"></script>
+    <script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/json2.js"></script>
+    <script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/SsoAjax.js"></script>
+    
+    <script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/instagramAPI.js"></script>
+    <script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/makePCookie.js"></script>
+    <script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/popup.js"></script>
+    <script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/simplepagination.js"></script>
+  <script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/swiper_vr1908.min.js"></script>
+    <script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/jquery.lazyload.js"></script>
+    <script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/netfunnel.js" charset="UTF-8"></script>
+  <script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/netfunnel_skin.js" charset="UTF-8"></script>
+  
+  <script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/unorm.js"></script>
+  
+  <script type="text/javascript">
+  var setDimensionData = function(){
+    //GA 설정 sessionStorage 페이지 이동시 초기화 
+    window.sessionStorage.removeItem('main_new_ecommerceDataList');
+    window.sessionStorage.removeItem('main_best_ecommerceDataList');
+    var smartListSize = window.sessionStorage.getItem('smart_ecommerceDataList_size');
+    for(var i=0; i<=smartListSize; i++){
+        window.sessionStorage.removeItem('smart_ecommerceDataList_'+i);
+    }
+    window.sessionStorage.removeItem('smart_ecommerceDataList_size');
+    window.sessionStorage.removeItem('smart_more_ecommerceDataList');
+    window.sessionStorage.removeItem('search_recommend_ecommerceDataList');
+    window.sessionStorage.removeItem('ecommerceDataList');
+    window.sessionStorage.removeItem('yours_lately_ecommerceDataList');
+    window.sessionStorage.removeItem('yours_shoppingbag_ecommerceDataList');
+    window.sessionStorage.removeItem('yours_wish_ecommerceDataList');
+    window.sessionStorage.removeItem('yours_recommend_ecommerceDataList');
+    window.sessionStorage.removeItem('ou_main_ecommerceDataList');
+    
+    var categoryListSize = window.sessionStorage.getItem('category_ecommerceDataList_size');
+    for(var i=0; i<=categoryListSize; i++){
+        window.sessionStorage.removeItem('normal_cate_ecommerceDataList_'+i);
+    }
+    window.sessionStorage.removeItem('category_ecommerceDataList_size');
+    
+    var cid = getCid();
+    var device = "";
+    
+    if(getCookie2("app") == null || getCookie2("app") == "") {
+        device = "MO_WEB";
+    }else{
+        device = "APP";
+    }
+    
+    var entrySite = "";
+    
+      entrySite = "KO";
+  
+    
+    var oneDepthPage;   // 없을 경우 undifined 그대로 넘겨야 하기 때문에 초기화 X
+    var pageTitle = "";
+    var tmp = getPageDepth();
+    if(tmp != ""){
+        oneDepthPage = tmp;
+        pageTitle = getGAPageTitle(oneDepthPage);
+        if(pageTitle == ""){
+          oneDepthPage = undefined;
+            pageTitle = document.title;
+        }
+    }else{
+        pageTitle = document.title;
+    }
+    
+    var pageviewObj = new Object();
+        pageviewObj.dimension1 =  cid;                          //고객_ClientID
+        pageviewObj.dimension15 = device;                       //채널_채널유형
+        pageviewObj.dimension16 = entrySite;                  //채널_언어 - #2846 삭제요청 hychung, #2846 복원요청 hychung
+        pageviewObj.dimension18 = oneDepthPage;                 //페이지_1Depth (페이지depth 없는경우 undefined처리)
+        pageviewObj.title = pageTitle;                          //페이지제목     (페이지제목 없는경우 document.title 입력)
+    
+     //로그인 했을경우만 추가 dimension 세팅
+     
+       pageviewObj.dimension2 = "65250879";                  //고객_회원번호
+       pageviewObj.dimension3 = "통합";                  //고객_회원구분
+       pageviewObj.dimension4 = "";                  //고객_지역
+       pageviewObj.dimension5 = "F";                  //고객_성별
+       pageviewObj.dimension6 = "25";                  //고객_연령대
+       pageviewObj.dimension7 = "cTFIANw7oAy2DLvTsBMd8g==";                  //고객_생년 => 고객_통합멤버십번호 변경됨
+       pageviewObj.dimension8 = "FRIEND";                  //고객_온라인등급
+       pageviewObj.dimension9 = "";                  //고객_한섬통합등급
+       pageviewObj.dimension10 = "0";                //고객_구매횟수
+       pageviewObj.dimension11 = "";                //고객_구매금액대
+       pageviewObj.dimension12 = "";                //고객_첫구매일자
+       pageviewObj.dimension13 = "";                //고객_최종구매일자
+       pageviewObj.dimension14 = "20230130";                //고객_회원가입일
+       pageviewObj.userId = "65250879";                      //사용자ID
+    
+  
+    // 검색 결과 페이지 일 경우만 처리
+    if(window.location.pathname.indexOf("/hssearch/searchCount") > -1) {
+        pageviewObj.dimension17 = "";                     //검색_검색어(검색결과페이지일때 사용)
+    }
+    
+    return pageviewObj;
+  };
+  
+  // 고객_ClientID
+  function getCid() {
+    var cookieData = document.cookie;
+    var Cookies = cookieData.split(';')
+    var clientId = "";
+    for (var i=0; i < Cookies.length; i++) {
+        if (Cookies[i].split('=')[0] == '_ga' || Cookies[i].split('=')[0] == ' _ga') {
+        clientId = Cookies[i].split('=')[1];
+        }
+    }
+    if (clientId != "") {
+        clientId = clientId.substring(6);
+    }
+    if (clientId == "") {
+        try{
+            ga(function(tracker) {
+                clientId = tracker.get('clientId');
+            });
+        }catch(e) {
+            console.log(e);
+        }
+    }
+    return clientId;
+  }
+  
+  function getPageDepth(){
+    var returnDepth = "";
+    var target_url  = document.location.href;
+  
+    if(target_url.substring(target_url.indexOf("/ko/")+4) == ""){
+        returnDepth = "메인";
+    }else if(target_url.substring(target_url.indexOf("/ko")+3) == ""){
+        returnDepth = "메인";
+    }else if(target_url.indexOf("/p/") > -1){
+        returnDepth = "상품상세";
+    }else if(target_url.indexOf("/b/") > -1){
+        
+        returnDepth = "브랜드";
+      
+    }else if(target_url.indexOf("/c/ou_") > -1){
+        returnDepth = "아울렛";
+    }else if(target_url.indexOf("/c/") > -1){
+        // if'/c/카테고리코드' : /가 한개면
+        
+        if(target_url.substring(target_url.indexOf("/c/")+3).indexOf("/") > -1){
+          if(target_url.toLowerCase().substring(target_url.indexOf("/c/")+3).indexOf("br") > -1){
+              returnDepth = "브랜드";
+          }else{
+            returnDepth = "카테고리";
+          }
+        }else{
+            returnDepth = "카테고리";
+        }
+        
+    }else if(target_url.indexOf("/mypage/care/") > -1){
+        returnDepth = "케어";
+    }else if(target_url.indexOf("/mypage") > -1){
+        returnDepth = "마이페이지";
+    }else if(target_url.indexOf("/magazine/events") > -1){
+        returnDepth = "이벤트";
+    }else if(target_url.indexOf("/magazine/") > -1){
+        returnDepth = "매거진";
+    }else if(target_url.indexOf("/shoppingbag") > -1){
+        returnDepth = "쇼핑백";
+    }else if(target_url.indexOf("/ou/") > -1){
+        returnDepth = "아울렛";
+    }else if(target_url.indexOf("/checkout/") > -1){
+        returnDepth = "주문";
+    }else if(target_url.indexOf("/member/") > -1){
+        returnDepth = "로그인";
+    }else if(target_url.indexOf("/login/") > -1){
+        returnDepth = "로그인";
+    }else if(target_url.indexOf("/sns/") > -1){
+        returnDepth = "SNS";
+    }else if(target_url.indexOf("/prodqna/") > -1){
+        returnDepth = "상품Q&A";
+    }else if(target_url.indexOf("/svcenter/") > -1){
+        returnDepth = "고객센터";
+    }else if(target_url.indexOf("/item/") > -1){
+        returnDepth = "아이템";
+    }else if(target_url.indexOf("/store-finder/") > -1){
+        returnDepth = "매장안내";
+    }else if(target_url.indexOf("/footer/") > -1){
+        returnDepth = "FOOTER";
+    }else if(target_url.indexOf("/appDownloadSMS/") > -1){
+        returnDepth = "APP 다운로드";
+    }else if(target_url.indexOf("/intro/") > -1){
+        returnDepth = "당신만의 한섬";
+    }else if(target_url.indexOf("/mobilecommon/mainIntro") > -1){
+        returnDepth = "공통";
+    }else if(target_url.indexOf("/mobilecommon/search") > -1){
+        returnDepth = "공통";
+    }else if(target_url.indexOf("/hssearch") > -1){
+        returnDepth = "검색";
+    }else if(target_url.indexOf("/product/") > -1){
+        returnDepth = "상품";
+    }else if(target_url.indexOf("/globalMain") > -1){
+        returnDepth = "메인";
+    }else if(target_url.indexOf("/main") > -1){
+        returnDepth = "메인";
+    }else{
+        returnDepth = "";
+    }
+    return returnDepth;
+  }
+  
+  function getGAPageTitle(oneDepthPage){
+    var returnTitle = "";
+    var target_url  = document.location.href;
+    //if(target_url.substring(target_url.indexOf("/ko/")+4).indexOf("/") == -1){
+    if(target_url.substring(target_url.indexOf("/ko/")+4) == ""){
+        returnTitle = oneDepthPage;
+    }else if(target_url.substring(target_url.indexOf("/ko")+3) == ""){
+        returnTitle = oneDepthPage;
+    }else if(target_url.indexOf("/p/") > -1){
+        returnTitle = oneDepthPage+">";
+    }else if(target_url.indexOf("/c//") > -1){
+        returnTitle = oneDepthPage+">>전체보기";
+    }else if(target_url.indexOf("/b/fourmMain") > -1){
+        returnTitle = oneDepthPage+">FOURM 메인";
+    }else if(target_url.indexOf("/b//brand") > -1){
+        returnTitle = oneDepthPage+">>소개";
+    }else if(target_url.indexOf("/b//storeInformation") > -1){
+        returnTitle = oneDepthPage+">>매장";
+    }else if(target_url.indexOf("/b//lookBookDetail?lookBookCode=") > -1){
+        returnTitle = oneDepthPage+">>룩북>";
+    }else if(target_url.indexOf("/b//lookBook") > -1){
+        returnTitle = oneDepthPage+">>룩북";
+    }else if(target_url.indexOf("/b/") > -1){
+        returnTitle = oneDepthPage+">>브랜드 메인";
+    }else if(target_url.indexOf("/c//ou") > -1){
+      returnTitle = oneDepthPage;
+      
+    }else if(target_url.indexOf("/c//") > -1){
+      returnTitle = oneDepthPage;       
+      
+    }else if(target_url.indexOf("/c/") > -1){
+      returnTitle = oneDepthPage;
+      
+    }else if(target_url.indexOf("/mypage/order/myordersAthome") > -1){
+        returnTitle = oneDepthPage+">앳홈신청 및 결제";
+    }else if(target_url.indexOf("/mypage/order/myorders") > -1){
+        returnTitle = oneDepthPage+">주문/배송조회";
+    }else if(target_url.indexOf("/mypage/myGradeInfo") > -1){
+        returnTitle = oneDepthPage+">나의 회원등급";
+    }else if(target_url.indexOf("/mypage/voucher") > -1){
+        returnTitle = oneDepthPage+">쿠폰";
+    }else if(target_url.indexOf("/mypage/mypoint") > -1){
+        returnTitle = oneDepthPage+">혜택관리>나의 한섬마일리지";
+    }else if(target_url.indexOf("/mypage/myEGiftCard") > -1){
+        returnTitle = oneDepthPage+">혜택관리>e-giftcard";
+    }else if(target_url.indexOf("/mypage/myWish") > -1){
+        returnTitle = oneDepthPage+">위시리스트";
+    }else if(target_url.indexOf("/mypage/rsalarm") > -1){
+        returnTitle = oneDepthPage+">재입고 알림";
+    }else if(target_url.indexOf("/mypage/personInfomationChangePWCheck") > -1){
+        returnTitle = oneDepthPage+">개인정보 변경/탈퇴";
+    }else if(target_url.indexOf("/mypage/mydelivery") > -1){
+        returnTitle = oneDepthPage+">배송지 관리";
+    }else if(target_url.indexOf("/mypage/oneClick") > -1){
+        returnTitle = oneDepthPage+">나의 정보관리>원클릭 결제 관리";
+    }else if(target_url.indexOf("/mypage/myreview") > -1){
+        returnTitle = oneDepthPage+">내 상품평";
+    }else if(target_url.indexOf("/mypage/myqna") > -1){
+        returnTitle = oneDepthPage+">상품 Q&A";
+    }else if(target_url.indexOf("/mypage/mymantomaninquiry") > -1){
+        returnTitle = oneDepthPage+">1:1 문의";
+    }else if(target_url.indexOf("/mypage/mypageFloatingPopup") > -1){
+        returnTitle = oneDepthPage+">메인";
+    }else if(target_url.indexOf("/mypage/mypoint/mobile") > -1){
+        returnTitle = oneDepthPage+">나의 혜택";
+    }else if(target_url.indexOf("/mypage/event/myevents") > -1){
+        returnTitle = oneDepthPage+">나의 이벤트";
+    }else if(target_url.indexOf("/mypage/oneBuy") > -1){
+        returnTitle = oneDepthPage+">원클릭 결제 설정";
+    }else if(target_url.indexOf("/mypage/care/mycares") > -1){
+        returnTitle = oneDepthPage+">내역조회";
+    }else if(target_url.indexOf("/mypage/care/careRequestComplete") > -1){
+        returnTitle = oneDepthPage+">신청완료";
+    }else if(target_url.indexOf("/mypage/care/careRequest") > -1){
+        returnTitle = oneDepthPage+">신청하기";
+    }else if(target_url.endsWith("/ko/mypage/", target_url.length)){
+        returnTitle = oneDepthPage+">메인";
+    }else if(target_url.endsWith("/ko/mypage", target_url.length)){
+        returnTitle = oneDepthPage+">메인";
+    }else if(target_url.indexOf("/magazine/events/") > -1){
+        returnTitle = oneDepthPage+">상세>";
+    }else if(target_url.indexOf("/magazine/events") > -1){
+        if(getCookie2("app") == null || getCookie2("app") == "") {
+            returnTitle = oneDepthPage+">리스트";
+        }else{
+            returnTitle = oneDepthPage+">모바일썸네일";
+        }
+    }else if(target_url.indexOf("/magazine/editorials/") > -1){
+        returnTitle = oneDepthPage+">에디토리얼>상세>";
+    }else if(target_url.indexOf("/magazine/editorials") > -1){
+        returnTitle = oneDepthPage+">에디토리얼>리스트";
+    }else if(target_url.indexOf("/magazine/exhibitions/") > -1){
+        returnTitle = oneDepthPage+">기획전>상세>";
+    }else if(target_url.indexOf("/magazine/exhibitions") > -1){
+        returnTitle = oneDepthPage+">기획전>리스트";
+    }else if(target_url.indexOf("/magazine/handpeople") > -1){
+        returnTitle = oneDepthPage+">핸썸피플 리스트";
+    }else if(target_url.indexOf("/magazine/instagram") > -1){
+        returnTitle = oneDepthPage+">인스타그램";
+    }else if(target_url.indexOf("/magazine/lookbookDetail/") > -1){
+        returnTitle = oneDepthPage+">룩북>상세>";
+    }else if(target_url.indexOf("/magazine/lookbook") > -1){
+        returnTitle = oneDepthPage+">룩북>리스트";
+    }else if(target_url.indexOf("/magazine/newsDetailtemplatetype") > -1){
+        returnTitle = oneDepthPage+">뉴스>상세>";
+    }else if(target_url.indexOf("/magazine/news") > -1){
+        returnTitle = oneDepthPage+">뉴스>리스트";
+    }else if(target_url.indexOf("/magazine/weeklypick") > -1){
+        returnTitle = oneDepthPage+">위클리 픽 리스트";
+    }else if(target_url.indexOf("/magazine/submain") > -1){
+        returnTitle = oneDepthPage+">THE매거진 메인";
+    }else if(target_url.indexOf("/magazine/youtubeList") > -1){
+        returnTitle = oneDepthPage+">비디오";
+    }else if(target_url.indexOf("/shoppingbag") > -1){
+        returnTitle = oneDepthPage;
+    }else if(target_url.indexOf("/ou/outletMain") > -1){
+        returnTitle = oneDepthPage+">메인";
+    }else if(target_url.indexOf("/c/ou_/ou") > -1){
+        returnTitle = oneDepthPage+">";
+    }else if(target_url.indexOf("/mobilecommon/search") > -1){
+        returnTitle = oneDepthPage+">키워드";
+    }else if(target_url.indexOf("/hssearch/") > -1){
+        returnTitle = oneDepthPage+">검색결과";
+    }else if(target_url.indexOf("/checkout/ordersheet") > -1){
+        returnTitle = oneDepthPage+">주문서 작성";
+    }else if(target_url.indexOf("/checkout/orderConfirmation") > -1){
+        returnTitle = oneDepthPage+">주문 완료";
+    }else if(target_url.indexOf("/member/login") > -1){
+        returnTitle = oneDepthPage;
+    }else if(target_url.indexOf("/login/checkout") > -1){
+        returnTitle = oneDepthPage+">미로그인시로그인유도";
+    }else if(target_url.indexOf("/member/pwChange") > -1){
+        returnTitle = oneDepthPage+">비밀번호 변경 대상";
+    }else if(target_url.indexOf("/member/findIdPwPage") > -1){
+        returnTitle = oneDepthPage+">한섬회원 아이디/비밀번호 찾기";
+    }else if(target_url.indexOf("/member/globaljoincomplete") > -1){
+        returnTitle = oneDepthPage+">가입완료";
+    }else if(target_url.indexOf("/member/joincomplete") > -1){
+        returnTitle = oneDepthPage+">가입완료";
+    }else if(target_url.indexOf("/member/joinGuidePage") > -1){
+        returnTitle = oneDepthPage+">회원가입안내";
+    }else if(target_url.indexOf("/member/joininfoform") > -1){
+        returnTitle = oneDepthPage+">간편회원 정보입력";
+    }else if(target_url.indexOf("/member/joinstart") > -1){
+        returnTitle = oneDepthPage+">간편회원 이메일";
+    }else if(target_url.indexOf("/member/nonMemberLogin") > -1){
+        returnTitle = oneDepthPage+">비회원 주문조회";
+    }else if(target_url.indexOf("/sns/main") > -1){
+        returnTitle = oneDepthPage+">메인";
+    }else if(target_url.indexOf("/sns/detail?") > -1){
+        returnTitle = oneDepthPage+">포스트상세보기";
+    }else if(target_url.indexOf("/sns/myNotice") > -1){
+        returnTitle = oneDepthPage+">나의알림";
+    }else if(target_url.indexOf("/sns/collectionDetail?") > -1){
+        returnTitle = oneDepthPage+">콜렉션상세";
+    }else if(target_url.indexOf("/sns/followerList?") > -1){
+        returnTitle = oneDepthPage+">팔로워리스트";
+    }else if(target_url.indexOf("/sns/followingList?") > -1){
+        returnTitle = oneDepthPage+">팔로윙리스트";
+    }else if(target_url.indexOf("/sns/snsSearch?searchWord=") > -1){
+        returnTitle = oneDepthPage+">태그검색";
+    }else if(target_url.indexOf("/sns/message?") > -1){
+        returnTitle = oneDepthPage+">메시지";
+    }else if(target_url.indexOf("/sns/messageList") > -1){
+        returnTitle = oneDepthPage+">메시지리스트";
+    }else if(target_url.indexOf("/sns/myLevel") > -1){
+        returnTitle = oneDepthPage+">나의레벨";
+    }else if(target_url.indexOf("/sns/myProfile?") > -1){
+        returnTitle = oneDepthPage+">나의프로필";
+    }else if(target_url.indexOf("/sns/weeklyBest") > -1){
+        returnTitle = oneDepthPage+">위클리베스트";
+    }else if(target_url.indexOf("/sns/write") > -1){
+        returnTitle = oneDepthPage+">포스팅작성";
+    }else if(target_url.indexOf("/mobilecommon/mainIntro") > -1){
+        returnTitle = oneDepthPage+">인트로";
+    }else if(target_url.indexOf("/prodqna/listProdQnA?") > -1){
+      returnTitle = oneDepthPage+">";
+    }else if(target_url.indexOf("/svcenter/submain") > -1){
+        returnTitle = oneDepthPage+">서브메인";
+    }else if(target_url.indexOf("/svcenter/notice") > -1){
+        returnTitle = oneDepthPage+">공지사항";
+    }else if(target_url.indexOf("/svcenter/mantomaninquiry") > -1){
+        returnTitle = oneDepthPage+">1:1 문의";
+    }else if(target_url.indexOf("/svcenter/faq") > -1){
+        returnTitle = oneDepthPage+">FAQ";
+    }else if(target_url.indexOf("/svcenter/mending") > -1){
+        returnTitle = oneDepthPage+">수선진행조회";
+    }else if(target_url.indexOf("/svcenter/memberjoinguide") > -1){
+        returnTitle = oneDepthPage+">쇼핑가이드>회원가입";
+    }else if(target_url.indexOf("/svcenter/theClubInfo") > -1){
+        returnTitle = oneDepthPage+">쇼핑가이드>온라인 멤버십";
+    }else if(target_url.indexOf("/svcenter/memberbenefitguide") > -1){
+        returnTitle = oneDepthPage+">쇼핑가이드>한섬 VVIP 혜택";
+    }else if(target_url.indexOf("/svcenter/pointguide") > -1){
+        returnTitle = oneDepthPage+">쇼핑가이드>한섬마일리지 혜택";
+    }else if(target_url.indexOf("/svcenter/couponguide") > -1){
+        returnTitle = oneDepthPage+">쇼핑가이드>쿠폰";
+    }else if(target_url.indexOf("/svcenter/asguide") > -1){
+        returnTitle = oneDepthPage+">쇼핑가이드>배송/반품/AS";
+    }else if(target_url.indexOf("/svcenter/paymentguide") > -1){
+        returnTitle = oneDepthPage+">쇼핑가이드>주문/결제";
+    }else if(target_url.indexOf("/svcenter/athomeInfo") > -1){
+        returnTitle = oneDepthPage+">at HOME";
+    }else if(target_url.indexOf("/svcenter/footerAthomeInfo") > -1){
+        returnTitle = oneDepthPage+">딜리버리서비스";
+    }else if(target_url.indexOf("/svcenter/mobilemain") > -1){
+        returnTitle = oneDepthPage+">메인";
+    }else if(target_url.indexOf("/svcenter/mobilenotice") > -1){
+        returnTitle = oneDepthPage+">공지사항";
+    }else if(target_url.indexOf("/svcenter/mobilefaq") > -1){
+        returnTitle = oneDepthPage+">FAQ";
+    }else if(target_url.indexOf("/svcenter/mobilemending") > -1){
+        returnTitle = oneDepthPage+">수선진행조회";
+    }else if(target_url.indexOf("/svcenter/serviceguide?targetSlide=0") > -1){
+        returnTitle = oneDepthPage+">서비스소개>간편서비스";
+    }else if(target_url.indexOf("/svcenter/serviceguide?targetSlide=1") > -1){
+        returnTitle = oneDepthPage+">서비스소개>스마트쇼핑";
+    }else if(target_url.indexOf("/svcenter/serviceguide?targetSlide=2") > -1){
+        returnTitle = oneDepthPage+">서비스소개>유니크한섬";
+    }else if(target_url.indexOf("/svcenter/serviceguide") > -1){
+        returnTitle = oneDepthPage+">서비스소개";
+    }else if(target_url.indexOf("/product/reviewList/") > -1){
+        returnTitle = oneDepthPage+">상품평>";
+    }else if(target_url.indexOf("/item/we") > -1){
+        returnTitle = oneDepthPage+">WE";
+    }else if(target_url.indexOf("/item/me") > -1){
+        returnTitle = oneDepthPage+">ME";
+    }else if(target_url.indexOf("/store-finder/") > -1){
+        returnTitle = oneDepthPage;
+    }else if(target_url.indexOf("/footer/footerBrandintro") > -1){
+        returnTitle = oneDepthPage+">브랜드소개";
+    }else if(target_url.indexOf("/footer/footerCEOGreetings") > -1){
+        returnTitle = oneDepthPage+">CEO 메시지";
+    }else if(target_url.indexOf("/footer/footerCompanyIntro") > -1){
+        returnTitle = oneDepthPage+">회사소개>한섬소개";
+    }else if(target_url.indexOf("/footer/footerCEOGreetings") > -1){
+        returnTitle = oneDepthPage+">회사소개>CEO 메시지";
+    }else if(target_url.indexOf("/footer/footerBrandintro") > -1){
+        returnTitle = oneDepthPage+">회사소개>브랜드소개";
+    }else if(target_url.indexOf("/footer/footerGovernance") > -1){
+        returnTitle = oneDepthPage+">투자정보>기업지배구조";
+    }else if(target_url.indexOf("/footer/footerFinancialInfo") > -1){
+        returnTitle = oneDepthPage+">투자정보>재무정보";
+    }else if(target_url.indexOf("/footer/footerStockInfo") > -1){
+        returnTitle = oneDepthPage+">투자정보>주가정보";
+    }else if(target_url.indexOf("/footer/footerIR") > -1){
+        returnTitle = oneDepthPage+">투자정보>IR";
+    }else if(target_url.indexOf("/footer/footerCorporatePartnership") > -1){
+        returnTitle = oneDepthPage+">동반성장>소개";
+    }else if(target_url.indexOf("/footer/footerCoreFourPractices") > -1){
+        returnTitle = oneDepthPage+">동반성장>4대 실천사항";
+    }else if(target_url.indexOf("/footer/footerCooperatorSelection") > -1){
+        returnTitle = oneDepthPage+">동반성장>협력업체 선정";
+    }else if(target_url.indexOf("/footer/footerSupportProgram") > -1){
+        returnTitle = oneDepthPage+">동반성장>지원제도";
+    }else if(target_url.indexOf("/footer/footerContactUs") > -1){
+        returnTitle = oneDepthPage+">동반성장>소통의 장";
+    }else if(target_url.indexOf("/appDownloadSMS/") > -1){
+        returnTitle = oneDepthPage;
+    }else if(target_url.indexOf("/intro/mainYours") > -1){
+        returnTitle = oneDepthPage;
+    }else if(target_url.indexOf("/globalMain") > -1){
+        returnTitle = oneDepthPage;
+    }else if(target_url.indexOf("/main") > -1){
+        returnTitle = oneDepthPage;
+    }
+    
+    return returnTitle;
+  }
+  
+  function getCookie2(cname)
+  {
+    var name = cname + "=";
+    var decodedCookie = unescape(document.cookie);
+    var ca = decodedCookie.split(';');
+    var cookieValue = "";
+    for(var i=0; i<ca.length; i++)
+    {
+        var c = ca[i];
+        while(c.charAt(0) == ' ')
+        {
+            c = c.substring(1);
+        }
+        if(c.indexOf(name) == 0)
+        {
+            cookieValue = c.substring(name.length, c.length);
+        }
+    }
+    return cookieValue;
+  }
+  
+  function GA_Event(Category,Action,Label) {
+  
+  Label = unescape(Label).replace(/\&#039;/gi,"'").replace(/\&amp;/g,"&");
+  
+  var v_Label = Label;
+  var v_Category = Category;
+  var v_Action = Action;
+  //공백처리을  _ 처리
+  if(Category != null){
+    v_Category = Category.replace(/\s{2,}/gi,' ').trim().replace(/\s/gi,'_');
+  }
+  if(Action != null){
+    v_Action = Action.replace(/\s{2,}/gi,' ').trim().replace(/\s/gi,'_');
+  }
+  if(Label != null){
+    v_Label = Label.replace(/\s{2,}/gi,' ').trim().replace(/\s/gi,'_');
+  }
+  console.log(v_Category,v_Action,v_Label);
+  ga('gp.send','event',v_Category,v_Action,v_Label);
+  }
+  
+  if (!String.prototype.endsWith) {
+    String.prototype.endsWith = function(searchString, position) {
+        var subjectString = this.toString();
+        if (typeof position !== 'number' || !isFinite(position) || Math.floor(position) !== position || position > subjectString.length) {
+            position = subjectString.length;
+        }
+        position -= searchString.length;
+        var lastIndex = subjectString.indexOf(searchString, position);
+        return lastIndex !== -1 && lastIndex === position;
+    };
+  }
+  
+  function gaIsoCodeEncoding(isoCode){
+    if(isoCode.toLowerCase() == "ko"){
+        GA_Event('공통', '푸터_CNT', 'LANGUAGE_한국어');
+    }else if(isoCode.toLowerCase() == "en"){
+        GA_Event('공통', '푸터_CNT', 'LANGUAGE_영어');
+    }else if(isoCode.toLowerCase() == "zh"){
+        GA_Event('공통', '푸터_CNT', 'LANGUAGE_중국어');
+    }
+  }
+  
+  </script>
+  <script>
+        var ko_time = '20230130180610'; // 현재시간
+        
+        // 스타일라이브 (20210901 이전 접근불가)
+        if( Number(ko_time) < 20210901000000 && 'http://www.thehandsome.com/WEB-INF/views/handsomemobile/pages/main/main202105.jsp'.indexOf('/sns/') > -1 ) {
+            location.replace("http://www.thehandsome.com/ko/magazine/newsDetailtemplatetype4?newsCode=8802187958044");
+        }
+        </script>
+    
+    <style media="screen">
+      .blsmflw1 {animation: target_image 1.5s;animation-iteration-count: 2;transform-origin:50% 50%;}
+      @keyframes target_image {
+            0% { transform: rotate(-2deg); }
+            50% { transform: rotate(9deg) }
+            100% { transform: rotate(-1deg); }
+        }
+      </style>
+  
+    <script>
+    
+        <!--  recoPick  START ---->
+        
+    var birthday = 'Fri May 29 00:00:00 UTC 1998';
+    var splitBirthday = birthday != '' ? birthday.split(" ")[5]: ''; //출생년도
+    var gender   = 'FEMALE';
+    
+      gender   = 'F';      
+    
+  
+    (function(w,d,n,s,e,o) {
+       w[n]=w[n]||function(){(w[n].q=w[n].q||[]).push(arguments)};
+       e=d.createElement(s);e.async=1;e.charset='utf-8';e.src='//static.recopick.com/dist/production.min.js';
+       o=d.getElementsByTagName(s)[0];o.parentNode.insertBefore(e,o);
+     })(window, document, 'recoPick', 'script');
+     
+        recoPick('service', 'thehandsome.com/ko/');   
+        
+      var cookieUid = getCookie("searchUID");
+          if(cookieUid == false){
+              //setting
+              $.ajax({
+                  url: '/ko/intro/getCookieValue',
+                  dataType:"json",
+                  type: "get",
+                  cache : false,
+                  dataType : "json",
+                  async : false,
+                  contentType : "application/json",
+                  success:function(data){
+                      if(getCookie("searchUID") != false){
+                          recoPick('setMID', getCookie("searchUID"));
+                          recoPick('setUserInfo',{ birthyear: splitBirthday , gender: gender});                        
+                      }
+                  },
+                  error:function(e){
+                      //
+                  }
+              });
+          }else{
+              recoPick('setMID', cookieUid);
+              recoPick('setUserInfo',{ birthyear: splitBirthday , gender: gender});
+          }
+    
+            try{
+                recoPick('sendLog','visit');   
+            }catch(e) {
+                console.log(e);
+            }
+        <!--  recoPick END ---->
+    </script>
+  
+        <script>
+    </script>
+    
+        <!-- Facebook Pixel Code -->
+        <script>
+            !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+            n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', '1947530058811697'); // Insert your pixel ID here.
+            fbq('track', 'PageView');
+        </script>
+        <noscript>
+            <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1947530058811697&ev=PageView&noscript=1"/>
+        </noscript>
+        <!-- End Facebook Pixel Code -->
+  
+                <script>
+    
+    var pageviewObj = new Object();
+    pageviewObj = setDimensionData();
+    
+    <!-- GA 추적코드 추가 -->
+    <!-- Google Analytics -->
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    
+    try{
+      ga('create', 'UA-154649175-1', 'auto', 'gp');
+      ga('gp.set', 'anonymizeIp', true);              // IP 익명화 선언
+      <!-- End Google Analytics -->
+      ga('gp.set',pageviewObj);
+    }catch(e) {
+        console.log(e);
+    }
+    <!-- GTM 추적코드 추가 -->
+    <!-- dataLayer 초기선언 -->
+    dataLayer = [pageviewObj];
+    
+    <!-- Google Tag Manager -->
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-KSHFVVQ');
+    <!-- End Google Tag Manager -->
+    
+    </script>
+    
+        <!-- Groobee -->
+    <script type="text/javascript">
+    (function(a,i,u,e,o) {
+    a[u]=a[u]||function(){(a[u].q=a[u].q||[]).push(arguments)};
+    })(window, document, "groobee");
+    groobee("serviceKey", "446b3d48b07e41f68624bf7f3457f33d");
+    groobee("siteType", "custom");
+    </script>
+    <script charset="utf-8" src="//static.groobee.io/dist/g2/groobee.init.min.js"></script>
+    <!-- End of Groobee -->
+    <meta property="groobee:member_id" content="rlawngp124">
+    <meta property="groobee:member_grade" content="FRIEND">
+    <meta property="groobee:member_gender" content="여성">
+    <meta property="groobee:member_type" content="통합회원">
+    <meta property="groobee:member_age" content="26">
+    <script>
+    // 검색 결과 페이지
+    if(window.location.pathname.indexOf("/hssearch/searchCount") > -1) {
+        var groobeeKeyword = "";                     //검색_검색어(검색결과페이지일때 사용)
+        groobee( "SE", { keyword : groobeeKeyword } );
+    }
+    
+    </script>
+  <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css"><link rel="stylesheet" type="text/css" href="//static.groobee.io/dist/g2/css/grb-recommend-list_v2.css"></head>
+  
+  <body class="back">
+    <script>
+        //라쿠텐 유입
+        var siteID = "" ? "" : "";
+        if(siteID != ""){
+          (function(cname, cvalue){
+            //20일 fix : 추후 변경 가능 - 변경시 bos단 처리
+            var d = new Date();
+            d.setTime(d.getTime() + (20*24*60*60*1000));
+            document.cookie = cname + '=' + cvalue + '; expires=' + d.toUTCString() + '; path=/';
+          })('rakuten', siteID);
+        }
+        (function(cname, cvalue, day){
+          var d = new Date();
+          d.setTime(d.getTime() + (day*24*60*60*1000));
+          document.cookie = cname + '=' + cvalue + '; expires=' + d.toUTCString() + '; path=/';
+        })('sslvisit1', false, -7);
+        </script>
+      <script>
+        (function(cname, cvalue, day){
+          var d = new Date();
+          d.setTime(d.getTime() + (day*24*60*60*1000));
+          document.cookie = cname + '=' + cvalue + '; expires=' + d.toUTCString() + '; path=/';
+        })('thehyundai', false, -7);
+        </script>
+      <!-- hmall 유입 시작 -->
+      <script>
+        (function(cname, cvalue, day){
+          var d = new Date();
+          d.setTime(d.getTime() + (day*24*60*60*1000));
+          document.cookie = cname + '=' + cvalue + '; expires=' + d.toUTCString() + '; path=/';
+        })('hyundaihmall', false, -7);
+        </script>
+      <!-- hmall 유입 끝 -->
+      <!-- 광고 유입 시작 -->
+          <script>
+              (function(cname, cvalue, day){
+                  var d = new Date();
+                  d.setTime(d.getTime() + (day*24*60*60*1000));
+                  document.cookie = cname + '=' + cvalue + '; expires=' + d.toUTCString() + '; path=/';
+              })('fromSite', '', -7);
+              </script>
+          <!-- 광고 유입 끝 -->
+          <!-- 추천인 이벤트 유입 시작 -->
+          <!-- 추천인 이벤트 유입 끝 -->
+    <!-- Loading -->
+    <div style="display:none;">
+    <div id="loadingBarDiv" style="display:none;">
+    </div>
+    </div>
+    <!-- //Loading -->
+  
+    <form id="CSRFForm" action="/ko" method="post"><div>
+  <input type="hidden" name="CSRFToken" value="242b1290-0bad-40c2-9827-9b3230fab443">
+  </div></form><div id="mapleMainPopwrap" style="position:fixed;top:50%;left:50%;width:81.333333%;z-index:805;transform:translate(-50%,-50%);display:none">
+    </div>
+    
+        <div class="layerArea" id="mapleLayer" style="display:none;">
+           <div class="layerBg"></div>
+        </div>
+    
+    
+  <div class="hsome_allContents_wrapper">
+  
+  <div class="hsome_allContents">
+  
+    <script type="text/javascript">
+    function goMainpage() {
+      window.sessionStorage.removeItem('moveYn');
+    location.href = "/ko/main";
+  }
+  </script>
+  
+    
+    <header class="hsome_header main201909 header-fix white-header t-prent header-top">
+      <h1 class="h_logo" id="headerTitle">
+          <a href="javascript:noLink();" onclick="goMainpage();GA_Event('공통', '로고', '상단');">THEHANDSOME.COM</a>
+          </h1>
+      <ul class="h_gnbMenu">
+          <li class="search"><a href="/ko/mobilecommon/search" onclick="GA_Event('공통', '헤더', '검색');"><span>search</span></a></li>
+          <li class="cart"><a href="/ko/shoppingbag" onclick="GA_Event('공통', '헤더', '쇼핑백');"><span>cart</span><i>1</i></a></li>
+        </ul><div class="top_nav1909" id="topNav1909">
+                <ul>
+                    <li class="on"><a href="#contents-home" class="home" onclick="GA_Event('공통', 'GNB', '홈');">홈</a></li>
+                    <li><a href="#contents-newitem" class="new_item" onclick="GA_Event('공통', 'GNB', '신상품');">신상품</a></li>
+                    <li><a href="#contents-best" class="best" onclick="GA_Event('공통', 'GNB', '베스트');">베스트</a></li>
+                    
+                    
+                    <li class="new"><a href="#contents-golf" class="golf" onclick="goGolfList()">골프</a></li>
+                    
+                    </ul>
+            </div>
+            </header>
+    <!-- //################## header ################## -->
+  <!-- ################## contents ################## -->
+        <div class="hsome_contents">
+            <div class="hsome_main">
+                <!-- Swiper -->
+                <div id="main1909_h" class="main-swiper-all-wrap main-contents-wrap">
+                    <!-- 홈 -->
+                    <div id="contents-home" class="hsomemain-contents-box home" style="display:block;">
+                        <div class="swiper-container swiper-container-v main1909_v main_wrapper_swiper1909 verticalSlide0 swiper-container-initialized swiper-container-vertical" style="height: 900px;">
+                            <ul class="swiper-wrapper vertical_slide_wrap" style="transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;">
+                                <!-- 메인배너 -->
+                            <li class="swiper-slide main-slide-tt-first index_slide swiper-slide-active" data-index="0" id="home" style="height: 900px;">
+                               <!-- Swiper -->
+                                   <div class="swiper-container standard-sp horiSlide0 swiper-container-initialized swiper-container-horizontal">
+                                       <div class="swiper-wrapper" id="mainList" style="transition-duration: 0ms; transform: translate3d(-394.667px, 0px, 0px);"><div class="swiper-slide WHITE BG_WHITE TXT_WHITE swiper-slide-duplicate swiper-slide-prev" data-swiper-slide-index="7" style="width: 400px;"><a href="/magazine/exhibitions/8813690181304" onclick="GA_Event('메인','메인배너_7', 'WELCOME%20SPRING');" class="link-box">   <div class="img"><img class="lazy_main" data-original="http://image.thehandsome.com/sys_master/images/hf4/he2/9364514570270.jpg" alt="" src="http://image.thehandsome.com/sys_master/images/hf4/he2/9364514570270.jpg" style="display: inline;">   </div>   <div class="txt_area btm  center">       <div class="txt_area_inner190820">       <p class="txt">         <span class="bar-in">            <font color="#FFFFFF">WELCOME<br>SPRING</font>            <span class="ab-bar left" style="background-color:#FFFFFF;"></span>            <span class="ab-bar right" style="background-color:#FFFFFF;"></span>         </span>       </p>       <p class="s_txt">         <font color="#FFFFFF">발리 23SS 1st DROP<br>견고한 디테일의 가죽 ACC</font>       </p>       </div>   </div></a></div><div class="swiper-slide WHITE BG_WHITE TXT_WHITE swiper-slide-active" data-swiper-slide-index="0" style="width: 400px;"><a href="/magazine/exhibitions/8813722752696" onclick="GA_Event('메인','메인배너_0', 'Ready%20for%20spring%3F');" class="link-box">   <div class="img"><img src="http://image.thehandsome.com/sys_master/images/h0b/h90/9365881618462.jpg" alt="">   </div>   <div class="txt_area btm  center">       <div class="txt_area_inner190820">       <p class="txt">         <span class="bar-in">            <font color="#FFFFFF">Ready for spring?</font>            <span class="ab-bar left" style="background-color:#FFFFFF;"></span>            <span class="ab-bar right" style="background-color:#FFFFFF;"></span>         </span>       </p>       <p class="s_txt">         <font color="#FFFFFF">좀 더 가볍고 포근하게!<br>오즈세컨의 봄 신상품 스타일링</font>       </p>       </div>   </div></a></div><div class="swiper-slide WHITE BG_WHITE TXT_WHITE swiper-slide-next" data-swiper-slide-index="1" style="width: 400px;"><a href="/magazine/editorials/8807037622344" onclick="GA_Event('메인','메인배너_1', '%uC6B0%uB9AC%uB4E4%uC758%20%uBE14%uB8E8%uC2A4');" class="link-box">   <div class="img"><img src="http://image.thehandsome.com/sys_master/images/h8f/h96/9365592637470.jpg" alt="">   </div>   <div class="txt_area btm  center">       <div class="txt_area_inner190820">       <p class="txt">         <span class="bar-in">            <font color="#FFFFFF">우리들의 블루스</font>            <span class="ab-bar left" style="background-color:#FFFFFF;"></span>            <span class="ab-bar right" style="background-color:#FFFFFF;"></span>         </span>       </p>       <p class="s_txt">         <font color="#FFFFFF">풋풋한 설렘을 안겨주는<br>새 시즌의 여섯 가지 스타일</font>       </p>       </div>   </div></a></div><div class="swiper-slide WHITE BG_WHITE TXT_WHITE" data-swiper-slide-index="2" style="width: 400px;"><a href="/c/br01/br01#1_0_0_0_0_886_0_0_0" onclick="GA_Event('메인','메인배너_2', '%uBD04%uC744%20%uBA38%uAE08%uC740%20TIME');" class="link-box">   <div class="img"><img class="lazy_main" data-original="http://image.thehandsome.com/sys_master/images/h7d/ha6/9365880569886.jpg" alt="" src="http://image.thehandsome.com/sys_master/images/h7d/ha6/9365880569886.jpg" style="display: inline;">   </div>   <div class="txt_area btm  center">       <div class="txt_area_inner190820">       <p class="txt">         <span class="bar-in">            <font color="#FFFFFF">봄을 머금은 TIME</font>            <span class="ab-bar left" style="background-color:#FFFFFF;"></span>            <span class="ab-bar right" style="background-color:#FFFFFF;"></span>         </span>       </p>       <p class="s_txt">         <font color="#FFFFFF">클래식 무드에 섬세함을 더한<br>타임 23SS 신상품 보러 가기</font>       </p>       </div>   </div></a></div><div class="swiper-slide WHITE BG_WHITE TXT_WHITE" data-swiper-slide-index="3" style="width: 400px;"><a href="/magazine/exhibitions/8813722490552" onclick="GA_Event('메인','메인배너_3', 'NATURAL%20BEAUTY');" class="link-box">   <div class="img"><img class="lazy_main" data-original="http://image.thehandsome.com/sys_master/images/h32/h21/9365419655198.jpg" alt="" src="http://image.thehandsome.com/sys_master/images/h32/h21/9365419655198.jpg" style="display: inline;">   </div>   <div class="txt_area btm  center">       <div class="txt_area_inner190820">       <p class="txt">         <span class="bar-in">            <font color="#FFFFFF">NATURAL<br>BEAUTY</font>            <span class="ab-bar left" style="background-color:#FFFFFF;"></span>            <span class="ab-bar right" style="background-color:#FFFFFF;"></span>         </span>       </p>       <p class="s_txt">         <font color="#FFFFFF">더캐시미어 띵스의 뷰티 아이템<br>무료배송부터 추가 적립 EVENT</font>       </p>       </div>   </div></a></div><div class="swiper-slide WHITE BG_WHITE TXT_WHITE" data-swiper-slide-index="4" style="width: 400px;"><a href="/magazine/editorials/8807037655112" onclick="GA_Event('메인','메인배너_4', 'NEW%20IN%20SEASON');" class="link-box">   <div class="img"><img class="lazy_main" data-original="http://image.thehandsome.com/sys_master/images/he4/h8f/9365043511326.jpg" alt="" src="http://image.thehandsome.com/sys_master/images/he4/h8f/9365043511326.jpg" style="display: inline;">   </div>   <div class="txt_area btm  center">       <div class="txt_area_inner190820">       <p class="txt">         <span class="bar-in">            <font color="#FFFFFF">NEW<br>IN SEASON</font>            <span class="ab-bar left" style="background-color:#FFFFFF;"></span>            <span class="ab-bar right" style="background-color:#FFFFFF;"></span>         </span>       </p>       <p class="s_txt">         <font color="#FFFFFF">시스템옴므의 새로운 봄날<br>따뜻하고도 찬란한 뉴 컬렉션</font>       </p>       </div>   </div></a></div><div class="swiper-slide WHITE BG_WHITE TXT_WHITE" data-swiper-slide-index="5" style="width: 400px;"><a href="/magazine/editorials/8807037589576" onclick="GA_Event('메인','메인배너_5', '%uC774%uC724%uACBD%uC758%20%uD658%uC601%uD558%uB294%20%uC2DD%uD0C1');" class="link-box">   <div class="img"><img class="lazy_main" data-original="http://image.thehandsome.com/sys_master/images/hfa/hf1/9364600061982.jpg" alt="" src="http://image.thehandsome.com/sys_master/images/hfa/hf1/9364600061982.jpg" style="display: inline;">   </div>   <div class="txt_area btm  center">       <div class="txt_area_inner190820">       <p class="txt">         <span class="bar-in">            <font color="#FFFFFF">이윤경의<br>환영하는 식탁</font>            <span class="ab-bar left" style="background-color:#FFFFFF;"></span>            <span class="ab-bar right" style="background-color:#FFFFFF;"></span>         </span>       </p>       <p class="s_txt">         <font color="#FFFFFF">직접 만든 요리만큼 재미있는<br>요리연구가 이윤경의 옷장</font>       </p>       </div>   </div></a></div><div class="swiper-slide WHITE BG_WHITE TXT_WHITE" data-swiper-slide-index="6" style="width: 400px;"><a href="/magazine/exhibitions/8813690508984" onclick="GA_Event('메인','메인배너_6', 'MUE%27s%20PICK');" class="link-box">   <div class="img"><img class="lazy_main" data-original="http://image.thehandsome.com/sys_master/images/h79/h94/9364389986334.jpg" alt="" src="http://image.thehandsome.com/sys_master/images/h79/h94/9364389986334.jpg" style="display: inline;">   </div>   <div class="txt_area btm  center">       <div class="txt_area_inner190820">       <p class="txt">         <span class="bar-in">            <font color="#FFFFFF">MUE's PICK</font>            <span class="ab-bar left" style="background-color:#FFFFFF;"></span>            <span class="ab-bar right" style="background-color:#FFFFFF;"></span>         </span>       </p>       <p class="s_txt">         <font color="#FFFFFF">무이가 주목한 브랜드<br>MM6·미하라 야스히로 신상품 입고</font>       </p>       </div>   </div></a></div><div class="swiper-slide WHITE BG_WHITE TXT_WHITE swiper-slide-duplicate-prev" data-swiper-slide-index="7" style="width: 400px;"><a href="/magazine/exhibitions/8813690181304" onclick="GA_Event('메인','메인배너_7', 'WELCOME%20SPRING');" class="link-box">   <div class="img"><img class="lazy_main" data-original="http://image.thehandsome.com/sys_master/images/hf4/he2/9364514570270.jpg" alt="" src="http://image.thehandsome.com/sys_master/images/hf4/he2/9364514570270.jpg" style="display: inline;">   </div>   <div class="txt_area btm  center">       <div class="txt_area_inner190820">       <p class="txt">         <span class="bar-in">            <font color="#FFFFFF">WELCOME<br>SPRING</font>            <span class="ab-bar left" style="background-color:#FFFFFF;"></span>            <span class="ab-bar right" style="background-color:#FFFFFF;"></span>         </span>       </p>       <p class="s_txt">         <font color="#FFFFFF">발리 23SS 1st DROP<br>견고한 디테일의 가죽 ACC</font>       </p>       </div>   </div></a></div><div class="swiper-slide WHITE BG_WHITE TXT_WHITE swiper-slide-duplicate swiper-slide-duplicate-active" data-swiper-slide-index="0" style="width: 400px;"><a href="/magazine/exhibitions/8813722752696" onclick="GA_Event('메인','메인배너_0', 'Ready%20for%20spring%3F');" class="link-box">   <div class="img"><img src="http://image.thehandsome.com/sys_master/images/h0b/h90/9365881618462.jpg" alt="">   </div>   <div class="txt_area btm  center">       <div class="txt_area_inner190820">       <p class="txt">         <span class="bar-in">            <font color="#FFFFFF">Ready for spring?</font>            <span class="ab-bar left" style="background-color:#FFFFFF;"></span>            <span class="ab-bar right" style="background-color:#FFFFFF;"></span>         </span>       </p>       <p class="s_txt">         <font color="#FFFFFF">좀 더 가볍고 포근하게!<br>오즈세컨의 봄 신상품 스타일링</font>       </p>       </div>   </div></a></div></div>
+                                       <!-- Add Pagination -->
+                                       <div class="swiper-pagination hori-pagination0 bar swiper-pagination-bullets" style="bottom:109px;"><span class="swiper-pagination-bullet swiper-pagination-bullet-active"></span><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span></div>
+                                   <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
+                               
+                               <!-- 미리보기 -->
+                                   <div class="main202103-look-ahead next-button-ahead" id="magazinePreview" onclick="GA_Event('메인','메인배너_하단배너', '%uD3EC%uADFC%uD55C%20%uC2DC%uC5B4%uB9C1%20%uC7AC%uD0B7%20%uC2A4%uD0C0%uC77C')" tabindex="0" role="button" aria-label="Next slide" aria-disabled="false"><span class="tt">포근한 시어링 재킷 스타일</span></div>
+                                   <!-- //미리보기 -->
+                            
+                            </li>
+                            <!-- //메인배너 -->
+                            
+                            
+                            
+                            
+                                
+                                <!-- //기획전 -->
+                                <!-- 이벤트 -->
+                                <li class="swiper-slide index_slide swiper-slide-next" data-index="0" id="events" style="height: 900px;">
+                                    <div class="sw-con-pd">
+                                        <div class="main202103-depth-title">
+                                            <h3 class="tt">이벤트</h3>
+                                            <a href="/ko/magazine/events" class="more" onclick="GA_Event('메인','이벤트배너_전체보기','클릭')"><i><span class="blind">더보기</span></i></a>
+                                        </div>
+                                        <!-- Swiper -->
+                                        <div class="swiper-container standard-sp horiSlide3 swiper-container-initialized swiper-container-horizontal" style="height:calc(100% - 139px); margin:0 -15px;">
+                                            <div class="swiper-wrapper" id="eventList" style="transition-duration: 0ms; transform: translate3d(-800px, 0px, 0px);"><div class="swiper-slide sbetween swiper-slide-duplicate" data-swiper-slide-index="4" style="width: 400px;">   <div class="main202103-event-list-box">      <div class="event-box">        <a href="/ko/magazine/events/8798681749376" class="radius-box shadow" onclick="GA_Event('메인','이벤트배너_상단4', '1%uC6D4%20%uC2E0%uC6A9%uCE74%uB4DC%20%uBB34%uC774%uC790%20%uD61C%uD0DD');">            <div class="img">            <img class="lazy_event" data-original="http://cdn.thehandsome.com/mobile/event/list/banner/20210506_6870415854873873_ko.jpg" alt="" src="http://cdn.thehandsome.com/mobile/event/list/banner/20210506_6870415854873873_ko.jpg" style="display: block;">            </div>            <div class="banner-con-type type-02">                <strong class="tt">신용카드 무이자 할부 혜택</strong>                <p class="sub-txt">카드사별 무이자 할부 기준 안내</p>            </div>        </a>      </div>   </div></div><div class="swiper-slide sbetween swiper-slide-prev" data-swiper-slide-index="0" style="width: 400px;">   <div class="main202103-event-list-box">      <div class="event-box">        <a href="/ko/magazine/events/8804842362752" class="radius-box shadow" onclick="GA_Event('메인','이벤트배너_상단0', '%uC2DC%uC2A4%uD15C%uC634%uBBC0%20X%20%uBE44%uC804%uC5B4%uC148%uBE14%uB9AC%20%uC5B8%uB354%uC6E8%uC5B4%20SET%20%uC99D%uC815');">            <div class="img">            <img src="http://cdn.thehandsome.com/mobile/event/list/banner/20230119_60695049715916313_ko.jpg" alt="">            </div>            <div class="banner-con-type type-02">                <strong class="tt">2023 S/S SPECIAL GIFT</strong>                <p class="sub-txt">with SYSTEM HOMME X VISIONASSEMBLY</p>            </div>        </a>      </div>      <div class="event-box">        <a href="/ko/magazine/events/8802941687680" class="radius-box shadow" onclick="GA_Event('메인','이벤트배너_하단0', '%uC2E0%uADDC%uD68C%uC6D0%uB2D8%uC744%20%uC704%uD55C%20%uD2B9%uBCC4%20%uD61C%uD0DD');">            <div class="img">            <img src="http://cdn.thehandsome.com/mobile/event/list/banner/20221213_57502766621122035_ko.jpg" alt="">            </div>            <div class="banner-con-type type-02">                <strong class="tt">신규회원님을 위한 특별 혜택</strong>                <p class="sub-txt">가입 즉시 쿠폰 자동 발급!</p>            </div>        </a>      </div>   </div></div><div class="swiper-slide sbetween swiper-slide-active" data-swiper-slide-index="1" style="width: 400px;">   <div class="main202103-event-list-box">      <div class="event-box">        <a href="/ko/magazine/events/8803891894144" class="radius-box shadow" onclick="GA_Event('메인','이벤트배너_상단1', 'ONLY%20%uCE74%uCE74%uC624%uD1A1%20%uCC44%uB110%20%uCE5C%uAD6C%20%uC804%uC6A9%20%uC774%uBCA4%uD2B8');">            <div class="img">            <img src="http://cdn.thehandsome.com/mobile/event/list/banner/20230105_59480377132417409_ko.jpg" alt="">            </div>            <div class="banner-con-type type-02">                <strong class="tt">카카오톡 채널 친구 전용 혜택</strong>                <p class="sub-txt">더한섬닷컴 친구 추가하고, 7% 쿠폰 받기!</p>            </div>        </a>      </div>      <div class="event-box">        <a href="/ko/magazine/events/8798976661376" class="radius-box shadow" onclick="GA_Event('메인','이벤트배너_하단1', '%uD604%uB300%uCE74%uB4DC%20the%20Red%20%uC1FC%uD551%uBC14%uC6B0%uCC98%20%uC0AC%uC6A9%20%uC548%uB0B4%20');">            <div class="img">            <img src="http://cdn.thehandsome.com/mobile/event/list/banner/20210506_6870384860531616_ko.jpg" alt="">            </div>            <div class="banner-con-type type-02">                <strong class="tt">더한섬닷컴 X 현대카드 the Red </strong>                <p class="sub-txt">쇼핑바우처 사용 안내</p>            </div>        </a>      </div>   </div></div><div class="swiper-slide sbetween swiper-slide-next" data-swiper-slide-index="2" style="width: 400px;">   <div class="main202103-event-list-box">      <div class="event-box">        <a href="/ko/magazine/events/8804285110144" class="radius-box shadow" onclick="GA_Event('메인','이벤트배너_상단2', '%uB354%uD55C%uC12C%uB2F7%uCEF4%20%uBA64%uBC84%uC2ED%20THE%20%uD074%uB7FD');">            <div class="img">            <img class="lazy_event" data-original="http://cdn.thehandsome.com/mobile/event/list/banner/20220722_45059811582788831_ko.jpg" alt="" src="http://cdn.thehandsome.com/mobile/event/list/banner/20220722_45059811582788831_ko.jpg" style="display: block;">            </div>            <div class="banner-con-type type-02">                <strong class="tt">더한섬닷컴 멤버십 THE 클럽 </strong>                <p class="sub-txt">한섬 온라인 전용 멤버십 THE 클럽 혜택 안내</p>            </div>        </a>      </div>      <div class="event-box">        <a href="/ko/magazine/events/8803433142144" class="radius-box shadow" onclick="GA_Event('메인','이벤트배너_하단2', '%uC571%20%uB2E4%uC6B4%uB85C%uB4DC%20%uC774%uBCA4%uD2B8');">            <div class="img">            <img class="lazy_event" data-original="http://cdn.thehandsome.com/mobile/event/list/banner/20211228_27254734340941809_ko.jpg" alt="" src="http://cdn.thehandsome.com/mobile/event/list/banner/20211228_27254734340941809_ko.jpg" style="display: block;">            </div>            <div class="banner-con-type type-02">                <strong class="tt">앱 첫 다운로드 혜택</strong>                <p class="sub-txt">앱 전용! 3만원 즉시 할인</p>            </div>        </a>      </div>   </div></div><div class="swiper-slide sbetween" data-swiper-slide-index="3" style="width: 400px;">   <div class="main202103-event-list-box">      <div class="event-box">        <a href="/ko/magazine/events/8800680662912" class="radius-box shadow" onclick="GA_Event('메인','이벤트배너_상단3', '%uB354%uD55C%uC12C%uB2F7%uCEF4X%uD604%uB300%uCE74%uB4DC%20M%uD3EC%uC778%uD2B8%20%uC81C%uD734');">            <div class="img">            <img class="lazy_event" data-original="http://cdn.thehandsome.com/mobile/event/list/banner/20210506_6870231882140041_ko.jpg" alt="" src="http://cdn.thehandsome.com/mobile/event/list/banner/20210506_6870231882140041_ko.jpg" style="display: block;">            </div>            <div class="banner-con-type type-02">                <strong class="tt">현대카드 M포인트 제휴</strong>                <p class="sub-txt">결제금액의 10% M포인트 사용 (최대 3만원)</p>            </div>        </a>      </div>      <div class="event-box">        <a href="/ko/magazine/events/8800156342144" class="radius-box shadow" onclick="GA_Event('메인','이벤트배너_하단3', '%uB354%uD55C%uC12C%uD558%uC6B0%uC2A4%20%uC774%uBCA4%uD2B8%20%uBAA8%uC544%uBCF4%uAE30');">            <div class="img">            <img class="lazy_event" data-original="http://cdn.thehandsome.com/mobile/event/list/banner/20221125_55952004478404995_ko.jpg" alt="" src="http://cdn.thehandsome.com/mobile/event/list/banner/20221125_55952004478404995_ko.jpg" style="display: block;">            </div>            <div class="banner-con-type type-02">                <strong class="tt">더한섬하우스 모아보기</strong>                <p class="sub-txt">부산점 · 광주점 · 제주점 · 청주점 이벤트</p>            </div>        </a>      </div>   </div></div><div class="swiper-slide sbetween" data-swiper-slide-index="4" style="width: 400px;">   <div class="main202103-event-list-box">      <div class="event-box">        <a href="/ko/magazine/events/8798681749376" class="radius-box shadow" onclick="GA_Event('메인','이벤트배너_상단4', '1%uC6D4%20%uC2E0%uC6A9%uCE74%uB4DC%20%uBB34%uC774%uC790%20%uD61C%uD0DD');">            <div class="img">            <img class="lazy_event" data-original="http://cdn.thehandsome.com/mobile/event/list/banner/20210506_6870415854873873_ko.jpg" alt="" src="http://cdn.thehandsome.com/mobile/event/list/banner/20210506_6870415854873873_ko.jpg" style="display: block;">            </div>            <div class="banner-con-type type-02">                <strong class="tt">신용카드 무이자 할부 혜택</strong>                <p class="sub-txt">카드사별 무이자 할부 기준 안내</p>            </div>        </a>      </div>   </div></div><div class="swiper-slide sbetween swiper-slide-duplicate swiper-slide-duplicate-prev" data-swiper-slide-index="0" style="width: 400px;">   <div class="main202103-event-list-box">      <div class="event-box">        <a href="/ko/magazine/events/8804842362752" class="radius-box shadow" onclick="GA_Event('메인','이벤트배너_상단0', '%uC2DC%uC2A4%uD15C%uC634%uBBC0%20X%20%uBE44%uC804%uC5B4%uC148%uBE14%uB9AC%20%uC5B8%uB354%uC6E8%uC5B4%20SET%20%uC99D%uC815');">            <div class="img">            <img src="http://cdn.thehandsome.com/mobile/event/list/banner/20230119_60695049715916313_ko.jpg" alt="">            </div>            <div class="banner-con-type type-02">                <strong class="tt">2023 S/S SPECIAL GIFT</strong>                <p class="sub-txt">with SYSTEM HOMME X VISIONASSEMBLY</p>            </div>        </a>      </div>      <div class="event-box">        <a href="/ko/magazine/events/8802941687680" class="radius-box shadow" onclick="GA_Event('메인','이벤트배너_하단0', '%uC2E0%uADDC%uD68C%uC6D0%uB2D8%uC744%20%uC704%uD55C%20%uD2B9%uBCC4%20%uD61C%uD0DD');">            <div class="img">            <img src="http://cdn.thehandsome.com/mobile/event/list/banner/20221213_57502766621122035_ko.jpg" alt="">            </div>            <div class="banner-con-type type-02">                <strong class="tt">신규회원님을 위한 특별 혜택</strong>                <p class="sub-txt">가입 즉시 쿠폰 자동 발급!</p>            </div>        </a>      </div>   </div></div></div>
+                                            <!-- Add Pagination -->
+                                            <div class="swiper-pagination hori-pagination3 bar black swiper-pagination-bullets" style="bottom:5px;"><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet swiper-pagination-bullet-active"></span><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span></div>
+                                        <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
+                                        
+                                        
+                                        
+                                    </div>
+                                </li>
+                                <!-- //이벤트 -->
+                                
+                                
+                              

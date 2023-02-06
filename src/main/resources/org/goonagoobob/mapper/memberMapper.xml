@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.goonagoobob.mapper.member.memberMapper">	
-	<insert id="joinMemberAccount">
-		insert into member(mid, mpassword, mname, memail, mphone, mzipcode, maddress1, maddress2, mbirth, mgender, mlogintype, mtosno, menabled, mrole, mgrade, mmileage)
-		values(#{mid},#{mpassword},#{mname},#{memail},#{mphone},#{mzipcode}, #{maddress1}, #{maddress2}, #{mbirth}, #{mgender}, 'normal', 1, 1, 'user', 1, 1000)
-	</insert>
-</mapper>
