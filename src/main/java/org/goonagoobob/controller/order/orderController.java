@@ -20,5 +20,10 @@ public class orderController {
 	   log.info("orderCancel controller");
    }
    
+   @GetMapping("/form")
+   public void orderForm() {
+	   log.info("orderForm controller");
+   }
+   
 
 }
