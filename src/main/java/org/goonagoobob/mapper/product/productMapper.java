@@ -1,8 +1,8 @@
 package org.goonagoobob.mapper.product;
 
-import org.springframework.transaction.annotation.Transactional;
+import org.apache.ibatis.annotations.Mapper;
 
-@Transactional
-public class productMapper {
-
+@Mapper
+public interface productMapper {
+	public String test();
 }

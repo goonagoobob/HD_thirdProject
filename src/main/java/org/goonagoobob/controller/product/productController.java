@@ -11,8 +11,12 @@ public class productController {
 //	@Autowired
 //	private ProductService productService;
 	
-	@GetMapping("/list")
-	public void list() {
+	@GetMapping("/Productlist")
+	public void ProductList() {
+		
+	}
+	@GetMapping("/ProductDetail")
+	public void Productdetail() {
 		
 	}
 }

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.goonagoobob.mapper.product.productMapper" >	
+	<select id="test" resultType="String">
+		<![CDATA[
+				select pcid from product_color where rownum < 2
+		]]>
+
+	</select>
+</mapper>
+
+<!-- /*********************************
+ * @function : 상품 관련 Mapper
+ * @author : 조일우
+ * @Date : Feb 6. 2023.
+ * 상품 상세 정보 Mapper Feb 6. 2022
+ * 로그인 실패 구현
+ * 아이디 비밀번호 저장 구현
+ *********************************/ -->
