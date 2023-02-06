@@ -1,5 +1,5 @@
 package org.goonagoobob.service.product;
 
-public class productService {
-
+public interface productService {
+	
 }
