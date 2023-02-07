@@ -8,5 +8,9 @@ import lombok.ToString;
 @Setter
 @Getter
 public class cartVO {
+	
+	private String mid;
+	private String psid;
+	private int pquantity;
 
 }
