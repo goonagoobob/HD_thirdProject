@@ -3,11 +3,34 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.goonagoobob.mapper.product.productMapper" >	
-	<select id="test" resultType="String">
-		<![CDATA[
-				select pcid from product_color where rownum < 2
-		]]>
-
+	<resultMap type="org.goonagoobob.domain.product.productCommonVO" id="pc1Map">
+		<result property="pid" column="pid"></result>
+		<result property="pname" column="pname"></result>
+		<result property="pnote" column="pnote"></result>
+		<result property="bno" column="bno"></result>
+		<collection property="pcVO" resultMap="pc2Map"></collection>
+	</resultMap>
+	
+	<resultMap type="org.goonagoobob.domain.product.productColorVO" id="pc2Map">
+		<result property="pcid" column="pcid"/>
+		<result property="pcimg1" column="pcimg1"></result>
+		<result property="pcimg2" column="pcimg2"></result>
+		<result property="pcimg3" column="pcimg3"></result>
+		<result property="pcchipimg" column="pcchipimg"></result>
+		<result property="pccolorcode" column="pccolorcode"></result>
+		<result property="pcprice" column="pcprice"></result>
+		<result property="preleasedate" column="preleasedate"></result>
+		<collection property="psVO" resultMap="psMap"></collection>
+	</resultMap>
+	
+		<resultMap type="org.goonagoobob.domain.product.productStockVO" id="psMap">
+		<result property="psid" column="psid"></result>
+		<result property="psstock" column="psstock"></result>
+		<result property="psize" column="psize"></result>
+	</resultMap>
+	
+	<select id="getPDetail" resultMap="pc1Map">
+		select * from allproduct where #{pid} = pid
 	</select>
 </mapper>
 
