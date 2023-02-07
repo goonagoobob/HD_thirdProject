@@ -1,4 +1,4 @@
-package org.goonagoobob.mapper.order;
+package org.goonagoobob.service.order;
 
 
 import java.util.Date;
