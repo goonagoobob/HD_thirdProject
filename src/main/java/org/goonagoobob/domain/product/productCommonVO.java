@@ -17,6 +17,6 @@ public class productCommonVO {
 	private String pid;
 	private String pname;
 	private String pnote;
-	private String bno; 
+	private String bname; 
 	private List<productColorVO> pcVO;
 }

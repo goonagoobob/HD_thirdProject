@@ -7,7 +7,7 @@
 		<result property="pid" column="pid"></result>
 		<result property="pname" column="pname"></result>
 		<result property="pnote" column="pnote"></result>
-		<result property="bno" column="bno"></result>
+		<result property="bname" column="bname"></result>
 		<collection property="pcVO" resultMap="pc2Map"></collection>
 	</resultMap>
 	

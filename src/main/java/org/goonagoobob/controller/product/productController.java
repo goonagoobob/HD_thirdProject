@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/product")
@@ -29,9 +30,17 @@ public class productController {
 		
 	}
 	@GetMapping("/productDetail")
-	public void Productdetail(@RequestParam("pcid") String pcid, Model model) {
-        pcid = "TM2CAKOP661W_DN";
+	public void Productdetail(@RequestParam(value = "pid", required=false) String pid, @RequestParam(value = "pcid", required=false) String pcid,Model model) {
+        pid = "TM2CBWSC582W";
+		pcid = "TM2CBWSC582W_CR";
 		productCommonVO vo = service.getPDetail(pcid);
-		model.addAttribute("ProductVO", vo);
+		System.out.println(vo);
+		System.out.println("conrotller");
+		model.addAttribute("productVO", vo);
+		model.addAttribute("pcid", pcid);
 	}
+//	@GetMapping("/productDetail")
+//	public void prod() {
+//		
+//	}
 }

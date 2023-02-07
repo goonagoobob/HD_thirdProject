@@ -18,5 +18,5 @@ import org.goonagoobob.domain.product.productCommonVO;
 public interface productMapper {
 	public String test();
 
-	public productCommonVO getPDetail(@Param("pid") String pcid);
+	public productCommonVO getPDetail(@Param("pid") String pid);
 }
