@@ -12,5 +12,10 @@ public class cartVO {
 	private String mid;
 	private String psid;
 	private int pquantity;
-
+	private String pcimg1;
+	private String bname;
+	private int pcprice;
+	private String pname;
+	private String pccolorcode;
+	private String psize;
 }

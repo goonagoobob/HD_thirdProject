@@ -29,7 +29,7 @@ public class productController {
 		
 	}
 	@GetMapping("/productDetail")
-	public void Productdetail(@RequestParam("pcid") String pcid, Model model) {
+	public void Productdetail(@RequestParam(value="pcid", required=false) String pcid, Model model) {
         pcid = "TM2CAKOP661W_DN";
 		productCommonVO vo = service.getPDetail(pcid);
 		model.addAttribute("ProductVO", vo);
