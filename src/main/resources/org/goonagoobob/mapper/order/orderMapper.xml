@@ -2,93 +2,92 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
- 
- 
- <mapper namespace="org.goonagoobob.mapper.order.orderMapper">
- 
-   <resultMap type="org.goonagoobob.domain.order.orderVO" id="orderMap">
-    <result property="oid" column="oid"/>
-    <result property="ostatus" column="ostatus"/>
-    <result property="odate" column="odate"/>
-    <collection property="itemList" resultMap="itemMap">
-    </collection> 
-  </resultMap>
-  
-    <resultMap type="org.goonagoobob.domain.order.orderItemVO" id="itemMap">
-    <result property="psid" column="psid"/>
-    <result property="oid" column="oid"/>
-    <result property="oicount" column="oicount"/>
-    <result property="oitotalprice" column="oitotalprice"/>
-    <association property="productDetail" resultMap="productMap"/>
-  </resultMap>
-  
-  <!-- <resultMap type="org.goonagoobob.domain.product.ProductDetailVO" id="productMap">
-  		<result property="bname" column="bname"/>
-    	<result property="pname" column="pname"/>
-    	<result property="pccolorcode" column="pccolorcode"/>
-    	<result property="pcimg1" column="pcimg1"/>
-    	<result property="pcprice" column="pcprice"/>
-    	<result property="psize" column="psize"/>
-  </resultMap> -->
- 
- <sql id="criteria">
- <trim prefix="(" suffix=") AND " prefixOverrides="OR">
- 	<foreach item="type" collection="cri.typeArr">
- 		<trim prefix="OR">
- 			<choose>
- 				<when test="cri.type== 'P'.toString()">
- 					vpd.pname like '%' ||  #{cri.keyword} ||  '%' 				
- 				</when>
- 				<when test="cri.type== 'O'.toString()">
- 					o.oid like '%' ||  #{cri.keyword} ||  '%' 
- 				</when>			
- 			</choose> end choose 
- 		</trim>end trim OR 
- 	</foreach> foreach 
- </trim> end trim pre... 
-</sql>
 
- <select id="getCountByMid" resultType="int">
- 	select count(*) 
- 	from orders o
- 	left join order_item items
- 	on o.oid = items.oid
- 	left join view_product_detail vpd 
-  	on items.psid = vpd.psid
- 	where mid = #{mid} and
- 	<include refid="criteria"> </include> 	
- 	o.oid > '0'
- </select>
- 
- <select id="getList" resultType="org.goonagoobob.domain.order.orderVO">
- select * from orders
- </select>  
- 
-<!--    <select id="getListWithPaging" resultMap="orderMap" >
-     <![CDATA[
-  	select oid, psid, ostatus, odate, oicount, oitotalprice, pname, bname, pccolorcode, pcimg1, pcprice, psize
-  	from (
-  		select 
-  		rownum rn, o.oid, items.psid, o.ostatus, o.odate, oicount, oitotalprice, pname, bname, pccolorcode, pcimg1, pcprice, psize
-  		from orders o
-  		left outer join order_item items
-  		on o.oid = items.oid
-  		left outer join view_product_detail vpd 
-  		on items.psid = vpd.psid
-  	 where
-  	 mid = #{mid} and
-   ]]>
- <include refid="criteria"> </include> 
-  <![CDATA[
-  rownum <= #{cri.pageNum} * #{cri.amount}
-  )
-where rn > ( #{cri.pageNum} - 1 ) *  #{cri.amount}  
- ]]>
- </select> --> 
- 
-  <insert id="insert">
- 	insert into orders
-	values (#{oid}, #{ozipcode},#{oaddress1},#{oreceiver},#{ophone},#{otel},#{omemo},#{oemail},#{ousedmileage},#{obeforeprice},#{oafterprice},#{ostatus},#{mid},#{pmcode},#{odate},#{cpid},#{oaddress2})
- </insert> 
- 
-  </mapper> 
+
+	<mapper namespace="org.goonagoobob.mapper.order.orderMapper">
+
+	<resultMap type="org.goonagoobob.domain.order.orderVO" id="orderMap">
+		<result property="oid" column="oid" />
+		<result property="ostatus" column="ostatus" />
+		<result property="odate" column="odate" />
+		<collection property="itemList" resultMap="itemMap">
+		</collection>
+	</resultMap>
+
+	<resultMap type="org.goonagoobob.domain.order.orderItemVO" id="itemMap">
+		<result property="psid" column="psid" />
+		<result property="oid" column="oid" />
+		<result property="oicount" column="oicount" />
+		<result property="oitotalprice" column="oitotalprice" />
+		<association property="productDetail" resultMap="productMap" />
+	</resultMap>
+
+	<resultMap type="org.goonagoobob.domain.product.productDetailVO" id="productMap">
+		<result property="bname" column="bname" />
+		<result property="pname" column="pname" />
+		<result property="pccolorcode" column="pccolorcode" />
+		<result property="pcimg1" column="pcimg1" />
+		<result property="pcprice" column="pcprice" />
+		<result property="psize" column="psize" />
+	</resultMap>
+
+	<sql id="criteria">
+		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach item="type" collection="cri.typeArr">
+				<trim prefix="OR">
+					<choose>
+						<when test="cri.type== 'P'.toString()">
+							vpd.pname like '%' || #{cri.keyword} || '%'
+						</when>
+						<when test="cri.type== 'O'.toString()">
+							o.oid like '%' || #{cri.keyword} || '%'
+						</when>
+					</choose> <!-- end choose -->
+				</trim><!--end trim OR -->
+			</foreach> <!--foreach -->
+		</trim> <!--end trim pre... -->
+	</sql>
+
+	<select id="getCountByMid" resultType="int">
+		select count(*)
+		from orders o
+		left join order_item items
+		on o.oid = items.oid
+		left join view_product_detail vpd
+		on items.psid = vpd.psid
+		where mid = #{mid} and
+		<include refid="criteria"></include>
+		o.oid > '0'
+	</select>
+
+	<select id="getList" resultType="org.goonagoobob.domain.order.orderVO">
+		select * from orders
+	</select>
+
+	<select id="getListWithPaging" resultMap="orderMap">
+     	<![CDATA[
+		  	select oid, psid, ostatus, odate, oicount, oitotalprice, pname, bname, pccolorcode, pcimg1, pcprice, psize
+		  	from (
+		  		select 
+		  		rownum rn, o.oid, items.psid, o.ostatus, o.odate, oicount, oitotalprice, pname, bname, pccolorcode, pcimg1, pcprice, psize
+		  		from orders o
+		  		left outer join order_item items
+		  		on o.oid = items.oid
+		  		left outer join view_product_detail vpd 
+		  		on items.psid = vpd.psid
+		  	 where
+		  	 mid = #{mid} and
+   		]]>
+		<include refid="criteria"></include> 
+	  	<![CDATA[
+		 	rownum <= #{cri.pageNum} * #{cri.amount})
+			where rn > ( #{cri.pageNum} - 1 ) *  #{cri.amount}  
+	 	]]>
+	</select>
+
+	<insert id="insert">
+		insert into orders(OID, OZIPCODE, OADDRESS1, ORECEIVER, OPHONE, OTEL, OMEMO, OEAMIL, OUSEDMILEAGE, OBEFOREPRICE, OAFTERPRICE, MID, PMCODE, CPID, OADDRESS2)
+		values (order_sequence.nextval, #{ozipcode},#{oaddress1},#{oreceiver},#{ophone},#{otel},#{omemo},#{oemail},#{ousedmileage},#{obeforeprice},#{oafterprice},#{mid},#{pmcode},#{cpid},#{oaddress2})
+	</insert>
+
+</mapper> 
