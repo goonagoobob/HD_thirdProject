@@ -33,6 +33,7 @@ public class productController {
 	public void Productdetail(@RequestParam(value = "pid", required=false) String pid, @RequestParam(value = "pcid", required=false) String pcid,Model model) {
         pid = "TM2CBWSC582W";
 		pcid = "TM2CBWSC582W_CR";
+
 		productCommonVO vo = service.getPDetail(pcid);
 		System.out.println(vo);
 		System.out.println("conrotller");
