@@ -1,6 +1,7 @@
 package org.goonagoobob.mapper.member;
 
 import org.goonagoobob.domain.member.memberAccount;
+import org.goonagoobob.domain.member.memberJoin;
 import org.goonagoobob.service.member.memberService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,5 +17,11 @@ public class memberServiceTests {
 	public void selectById() {
 		memberAccount mA = service.selectById("user1");
 		System.out.println(mA);
+	}
+	
+	@Test
+	public void insertServiceTest() {
+		memberJoin mJ = new memberJoin("self3", "1111", "self3", "self3", "self3", "self3", "self2", "self2", "1998/10/19", 0);
+		System.out.println(service.joinMemberAccount(mJ));
 	}
 }
