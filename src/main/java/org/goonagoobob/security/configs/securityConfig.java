@@ -58,6 +58,10 @@ public class securityConfig extends WebSecurityConfigurerAdapter {
 			.loginProcessingUrl("/member/login")
 			.defaultSuccessUrl("/");
 		
+		http.logout()
+		.logoutSuccessUrl("/")
+		.invalidateHttpSession(true);
+		
 	}
 
 	@Bean

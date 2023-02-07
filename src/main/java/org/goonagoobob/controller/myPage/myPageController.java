@@ -25,4 +25,9 @@ public class myPageController {
 	@GetMapping("/passwordChange")
 	public void passwordChange() {
 	}
+	
+	@GetMapping("/myPage")
+	public void memberLogin() {
+		
+	}
 }
