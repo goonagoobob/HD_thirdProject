@@ -1,4 +1,5 @@
-<html lang="ko" class="back"><head>
+<html lang="ko" class="back" xmlns:th="http://www.thymeleaf.org">
+<head>
 	<meta name="naver-site-verification" content="2f9358e1e36605519854a595f243f0171519dd1d">
 	<meta name="google-site-verification" content="0bGV8gPhwO_PzritNvIsz2k74EH5yPsrXXluJ8ZUed8">
 	<meta name="google-site-verification" content="dO99-Ao-ywXeVDEz4jz5nJBXzQXVCgmX4WXzxl_Nf3c">
@@ -449,24 +450,50 @@ return false;
 	<li><a href="javascript:;" class="icon_btn btn_gl_del icon_btn_on" onclick="deleteBtnEvent('1');"><span>삭제</span></a></li>
 </ul>
 <!-- goods_top_btn e --><!-- 상품정보 -->
+<input type="hidden" th:name="_csrf" th:value="${_csrf.token}"/>
+<th:each= "list : ${list} ">
 						<!-- goods_option_info_mid s -->
 <div class="gl_mid">
 <div class="gl_tit">
 	<a href="/ko/p/OB2C7KCD762WP2_ZB_90" onclick="setEcommerceData('0', 'Click ADD');">
-		<img src="http://newmedia.thehandsome.com/OB/2C/FW/OB2C7KCD762WP2_ZB_S01.jpg/dims/resize/" class="gl_thumbimg" alt="">
+		<img src= th:text="@{list.pcimg1}" alt="">
 					</a>
 </div>
 <ul class="gl_con">
 	<a href="/ko/p/OB2C7KCD762WP2_ZB_90" onclick="setEcommerceData('0', 'Click ADD');">
-		<li class="gl_con_brand">OBZEE</li>
-		<li class="gl_con_name">
-			헤어리 크리스탈 버튼 가디건</li>
+		<li class="gl_con_brand">[[${brand}]]</li>
+		<li class="gl_con_name">[[${pname}]]</li>
 	</a>
-	<li class="gl_con_price">
-		₩595,000<input type="hidden" id="checkZeroPrice1" name="checkZeroPrice" value="595000.0"> </li>
+	<li class="gl_con_price">[[${pcprice}]]</li>
 </ul>
 </div>
-<!-- goods_option_info_mid e --><!-- 옵션 변경 -->
+<!-- goods_option_info_mid e -->
+<!-- goods_option_info_btm s -->
+<div class="gl_btm">
+	<ul class="gl_info">
+		<li>
+			<div class="gl_tit">옵션수량</div>
+			<div class="gl_con" >[[${pccolorcode}]]&nbsp;<span class="and_line">/</span>
+						[[${psize}]] /<span th:text="'${list.pquantity}' + '개'">0개</span></div>
+		
+		</li>
+		<li><div class="gl_tit">적립 마일리지</div>
+					<div class="gl_con">
+						29,750M
+						</div>
+				</li>
+				<li><div class="gl_tit">적립 H.Point</div>
+					<div class="gl_con">
+						595P
+					</div>
+				</li>
+			</ul>
+	<a href="javascript:void(0);" class="border_btn btn_option_edit" id="optOpenLayer^1^OB2C7KCD762WP2_ZB"><span>변경</span></a>	</div>
+	<!-- goods_option_info_btm e -->
+</th:each>
+
+
+<!-- 옵션 변경 -->
 						<script type="text/javascript">
 $(document).ready(function(){
 setColorRadio(); //색상 선택 라디오버튼 활성화
@@ -546,28 +573,6 @@ function setSelectbox(){ //selectbox http://rwdb.kr/selectjquery_plugin/ 참조
 $('select.sodsb').selectOrDie();
 }
 </script>
-<!-- goods_option_info_btm s -->
-<div class="gl_btm">
-<ul class="gl_info">
-	<li>
-		<div class="gl_tit">옵션수량</div>
-		<div class="gl_con">ZET BLACK&nbsp;<span class="and_line">/</span>
-					90 / 1개</div>
-	
-	</li>
-	<li><div class="gl_tit">적립 마일리지</div>
-				<div class="gl_con">
-					29,750M
-					</div>
-			</li>
-			<li><div class="gl_tit">적립 H.Point</div>
-				<div class="gl_con">
-					595P
-				</div>
-			</li>
-		</ul>
-<a href="javascript:void(0);" class="border_btn btn_option_edit" id="optOpenLayer^1^OB2C7KCD762WP2_ZB"><span>변경</span></a>	</div>
-<!-- goods_option_info_btm e -->
 <form id="updateCartForm1" data-cart="{&quot;cartCode&quot; : &quot;463452555&quot;,&quot;productPostPrice&quot;:&quot;595000.0&quot;,&quot;productName&quot;:&quot;헤어리 크리스탈 버튼 가디건&quot;}" action="/ko/shoppingbag/update" method="post"><input type="hidden" name="entryNumber" value="1">
 <input type="hidden" name="productCode" value="OB2C7KCD762WP2_ZB_90">
 <input type="hidden" name="initialQuantity" value="1">

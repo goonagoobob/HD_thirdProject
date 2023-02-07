@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.goonagoobob.mapper.cart.cartMapper">	
+
+<!-- cartList 가져오기 -->
+<select id = "getCartList" resultType="org.goonagoobob.domain.cart.cartVO">
+	SELECT pcol.pcimg1, b.bname, pc.pname, pcol.pcprice, pcol.pccolorcode, ps.psize, c.pquantity
+	FROM brand b, product_common pc, product_color pcol, product_stock ps, cart c
+	WHERE c.psid = ps.psid
+	AND ps.pcid = pcol.pcid
+	AND pcol.pid = pc.pid
+	AND pc.bno = b.bno
+	AND c.mid = #{mid}
+</select>
+
+</mapper>

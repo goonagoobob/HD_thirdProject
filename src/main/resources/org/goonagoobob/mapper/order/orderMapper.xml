@@ -87,8 +87,8 @@ where rn > ( #{cri.pageNum} - 1 ) *  #{cri.amount}
  </select> --> 
  
   <insert id="insert">
- insert into orders
-values (#{oid}, #{ozipcode},#{oaddress1},#{oreceiver},#{ophone},#{otel},#{omemo},#{oemail},#{ousedmileage},#{obeforeprice},#{oafterprice},#{ostatus},#{mid},#{pmcode},#{odate},#{cpid},#{oaddress2})
+ 	insert into orders
+	values (#{oid}, #{ozipcode},#{oaddress1},#{oreceiver},#{ophone},#{otel},#{omemo},#{oemail},#{ousedmileage},#{obeforeprice},#{oafterprice},#{ostatus},#{mid},#{pmcode},#{odate},#{cpid},#{oaddress2})
  </insert> 
  
   </mapper> 
