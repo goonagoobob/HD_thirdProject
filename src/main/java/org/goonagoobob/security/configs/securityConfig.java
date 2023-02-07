@@ -24,15 +24,8 @@ public class securityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private UserDetailsService userDetailsService; //이 모양으로 반납해줄 .,,, bean 설정해놓음
 	
-	
-
-	// 1. AuthenticationProvider
-	
+	// 1. AuthenticationProvider	
 	// 2. authenticationprovider 사용한 생성자?
-	
-	
-	
-
 	// 3. AuthenticationManagerBuilder	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -53,12 +46,11 @@ public class securityConfig extends WebSecurityConfigurerAdapter {
 	// 4. 스프링 시큐리티 규칙
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable();
+		//http.csrf().disable();
 		
 		http.authorizeHttpRequests().antMatchers("/member/join").permitAll()
-			.antMatchers("/member/login").permitAll()
-			.antMatchers("/memberRestAPI/idCheck").permitAll()
-			.anyRequest().authenticated().and().csrf().disable(); // csrf 보안 설정 비활성화
+			.antMatchers("/member/login").permitAll();
+			//anyRequest().authenticated(); // csrf 보안 설정 비활성화
 		// .addFilter(jwtAuthorizationFilter()) 해야함
 
 		http.formLogin()

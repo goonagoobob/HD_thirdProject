@@ -1,8 +1,147 @@
-<html lang="ko" class="">
-
+<html xmlns:th="http://www.thymeleaf.org" 
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	
 <head>
-<title>회원정보입력폼 | 더한섬닷컴</title>
-<script type="text/javascript" src="/member/member.js"></script>
+<!-- <title>회원정보입력폼 | 더한섬닷컴</title> -->
+<title></title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<!-- <meta name="_csrf" th:content="${_csrf?.token}" th:if="${_csrf} ne null"> -->
+<meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+
+<script type="text/javascript">
+	window.onload = function() {
+		console.log('hello');
+	}
+
+	function genderCheckOnlyOne(element) {
+		console.log("element" + element.id);
+		const mgenderFemale = document.getElementById("genderFemale").checked;
+		const mgenderMale = document.getElementById("genderMale").checked;
+
+		if (element.id == "genderFemale") {
+			console.log("genderFemale Clicked");
+			document.getElementById("genderFemale").checked = true;
+			document.getElementById("genderMale").checked = false; //genderMale 지우기
+			console.log("mgenderFemale 꺼졌나요 ? "
+					+ document.getElementById("genderFemale").checked);
+			console.log("mgenderMale 꺼졌나요 ? "
+					+ document.getElementById("genderMale").checked);
+		}
+
+		if (element.id == "genderMale") {
+			console.log("genderMale Clicked");
+			document.getElementById("genderFemale").checked = false;
+			document.getElementById("genderMale").checked = true;
+			console.log(mgenderFemale);
+			console.log(mgenderMale);
+		}
+
+	}
+
+	function joinMemberAccount() {
+		console.log("hello");
+
+		const mid = document.getElementById("mid").value;
+		const mpassword = document.getElementById("mpassword").value;
+		const mpwc = document.getElementById("pwc").value;
+		const memail = document.getElementById("memail").value;
+		const mphone = document.getElementById("mphone").value;
+		const mname = document.getElementById("mname").value;
+		const mzipcode = document.getElementById("mzipcode").value;
+		const maddress1 = document.getElementById("maddress1").value;
+		const maddress2 = document.getElementById("maddress2").value;
+		
+
+		let mbirth = "";
+		/** 성별 체크된 값 가져오기
+		 */
+		let mgender = 5;
+		if (document.getElementById("genderFemale").checked
+				&& !document.getElementById("genderMale").checked) {
+			console.log("mgender" + 0);
+			mgender = 0;
+		} else if (!document.getElementById("genderFemale").checked
+				&& document.getElementById("genderMale").checked) {
+			console.log("mgender" + 1);
+			mgender = 1;
+		}
+
+		// birth select 값 가져오기
+		var birthYear = document.getElementById('selYear');
+		console.log(birthYear.options[birthYear.selectedIndex].value);
+		birthYear = birthYear.options[birthYear.selectedIndex].value;
+
+		var birthMonth = document.getElementById('selMonth');
+		console.log(birthMonth.options[birthMonth.selectedIndex].value);
+		birthMonth = birthMonth.options[birthMonth.selectedIndex].value;
+
+		var birthDay = document.getElementById('selDay');
+		console.log(birthDay.options[birthDay.selectedIndex].value);
+		birthDay = birthDay.options[birthDay.selectedIndex].value;
+		mbirth = birthYear + '/' + birthMonth + "/" + birthDay;
+
+		console.log(mid);
+		console.log(mpassword);
+		console.log(mpwc);
+		console.log(memail);
+		console.log(mphone);
+		console.log(mname);
+		console.log(mzipcode);
+		console.log(maddress1);
+		console.log(maddress2);
+		console.log(mgender);
+		console.log(mbirth);
+
+		let memberJoinObj = {
+			"mid" : mid,
+			"mpassword" : mpassword,
+			"mname" : mname,
+			"memail" : memail,
+			"mphone" : mphone,
+			"mzipcode" : mzipcode,
+			"maddress1" : maddress1,
+			"maddress2" : maddress2,
+			"mbirth" : mbirth,
+			"mgender" : mgender
+		}
+
+		ajaxMemberJoinObj(memberJoinObj);
+
+	}
+
+	function ajaxMemberJoinObj(element) {
+		console.log("보낸당 ...");
+		console.log(element);
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		//1. form 전송
+		//document.getElementById('memberJoinForm').submit();
+
+		//CSRF HEADER, TOKEN 만들기
+		console.log("보내졋나?");
+		console.log("token : " + token);
+		console.log("header : " + header);
+		$.ajax({
+			type : 'post',
+			url : '/memberRestAPI/joinMemberAccount',
+			data : JSON.stringify(element),
+			contentType : "application/json; charset=utf-8",
+			dataType : "text",
+			beforeSend : function(jqXHR) {
+				jqXHR.setRequestHeader(header, token);
+			},
+			success : function(jqXHR) {
+				console.log("success");
+			},
+			error : function(jqXHR) {
+				console.log("error");
+			},
+			complete : function(jqXHR) {
+			}
+		});
+	}
+</script>
 
 <link rel="shortcut icon"
 	href="https://www.thehandsome.com/_ui/mobile/common/images/common/thehandsome_ic_16x16.ico">
@@ -112,35 +251,7 @@
 </head>
 
 <body>
-	<script>
-		(function() {
-			if (document.cookie.indexOf('thehyundai=true') > -1) {
-				var d = new Date();
-				d.setTime(d.getTime() + (365 * 24 * 60 * 60 * 1000));
-				document.cookie = 'sslvisit=true; expires=' + d.toUTCString()
-						+ '; path=/';
-			} else if (document.cookie.indexOf('rakuten=') > -1) {
-				var d = new Date();
-				d.setTime(d.getTime() + (365 * 24 * 60 * 60 * 1000));
-				document.cookie = 'sslvisit1=true; expires=' + d.toUTCString()
-						+ '; path=/';
-			} else if (document.cookie.indexOf('hyundaihmall=true') > -1) {
-				var d = new Date();
-				d.setTime(d.getTime() + (365 * 24 * 60 * 60 * 1000));
-				document.cookie = 'sslvisit2=true; expires=' + d.toUTCString()
-						+ '; path=/';
-			} else if (document.cookie.indexOf('fromSite') > -1) {
-				var d = new Date();
-				d.setTime(d.getTime() + (365 * 24 * 60 * 60 * 1000));
-				document.cookie = 'sslvisit3=' + "" + '; expires='
-						+ d.toUTCString() + '; path=/';
-			} else if (document.cookie.indexOf('recommender') > -1) {
-				var d = new Date();
-				d.setTime(d.getTime() + (365 * 24 * 60 * 60 * 1000));
-				document.cookie = 'sslvisit4=' + "" + '; path=/';
-			}
-		})();
-	</script>
+	
 	<!-- Loading -->
 	<div style="display: none;">
 		<div id="loadingBarDiv" style="display: none;"></div>
@@ -148,10 +259,7 @@
 	<!-- //Loading -->
 
 	<form id="CSRFForm" action="/ko/member/joininfoform" method="post">
-		<div>
-			<input type="hidden" name="CSRFToken"
-				value="1aa8beef-893f-442d-a234-b7e891470228">
-		</div>
+
 	</form>
 	<div id="mapleMainPopwrap"
 		style="position: fixed; top: 50%; left: 50%; width: 81.333333%; z-index: 805; transform: translate(-50%, -50%); display: none">
@@ -165,12 +273,7 @@
 	<div class="hsome_allContents_wrapper">
 
 		<div class="hsome_allContents">
-			<script type="text/javascript">
-				function goMainpage() {
-					window.sessionStorage.removeItem('moveYn');
-					location.href = "/ko/main";
-				}
-			</script>
+
 
 			<!-- ################## header ################## -->
 			<header class="hsome_header">
@@ -198,14 +301,17 @@
 
 
 				<div class="mem_ct_wrap">
-					<form id="memberJoinForm" action="/memberAPI/"
+					<form id="memberJoinForm" action="/memberRestAPI/joinMemberAccount"
 						method="POST">
-						<input type="hidden" name="emailDuplChk" id="emailDuplChk"
-							value="N" title="이메일 중복"> <input type="hidden"
-							name="pwTypeChk" id="pwTypeChk" value="Y" title="비밀번호 형식">
-						<input type="hidden" name="pwConfirmChk" id="pwConfirmChk"
-							value="" title="비밀번호 일치"> <input type="hidden" id="uid"
-							name="uid" value="michelle56590@naver.com">
+						<!--  CSRF 토큰 -->
+						<input type="hidden" th:name="_csrf" th:value="_csrf.token" />
+					
+						<input type="hidden" name="emailDuplChk" id="emailDuplChk" value="N"
+							title="이메일 중복"> <input type="hidden" name="pwTypeChk"
+							id="pwTypeChk" value="Y" title="비밀번호 형식"> <input
+							type="hidden" name="pwConfirmChk" id="pwConfirmChk" value=""
+							title="비밀번호 일치"> <input type="hidden" id="uid" name="uid"
+							value="">
 						<!-- <input type="hidden" id="emailAddress" name="emailAddress" value="" /> -->
 						<input type="hidden" id="sBirthday" name="sBirthday" value="">
 						<input type="hidden" id="gender" name="gender" value=""> <input
@@ -222,7 +328,7 @@
 							</div>
 							<div style="float: left;">
 								<button type="button" class="btnstl3 solid_btn_blk btn_agree"
-									id="idCheck" onclick="idCheckOnlyOne()">중복확인</button>
+									id="idCheck" th:onclick="idCheckOnlyOne()">중복확인</button>
 							</div>
 						</div>
 						<div class="input_user_name"></div>
@@ -565,10 +671,7 @@
 							<br>
 						</div>
 
-						<div>
-							<input type="hidden" name="CSRFToken"
-								value="1aa8beef-893f-442d-a234-b7e891470228">
-						</div>
+
 					</form>
 					<!-- [TO DEV] 20180625 버튼 클래스명 수정 s -->
 					<div class="btn_wrap btn_wrap_div2">
@@ -630,20 +733,7 @@
 
 	</div>
 
-	<!-- adinsight 공통스크립트 start -->
-	<script type="text/javascript">
-		var TRS_AIDX = 11865;
-		var TRS_PROTOCOL = document.location.protocol;
-		document.writeln();
-		var TRS_URL = TRS_PROTOCOL
-				+ '//'
-				+ ((TRS_PROTOCOL == 'https:') ? 'analysis.adinsight.co.kr'
-						: 'adlog.adinsight.co.kr') + '/emnet/trs_esc.js';
-		document
-				.writeln("<scr" + "ipt language='javascript' src='" + TRS_URL + "'></scr" + "ipt>");
-	</script>
-	<script language="javascript"
-		src="https://analysis.adinsight.co.kr/emnet/trs_esc.js"></script>
+
 
 </body>
 <!-- AceCounter Log Gathering Script V.7.5.2013010701 -->

@@ -30,18 +30,18 @@ public class memberMapperTests {
 		System.out.println(mpassword);
 		boolean matchResult = passwordEncoder.matches("1111", mpassword);
 		if(matchResult) {
-			memberAccount mA = new memberAccount();
-			mA.setMid("user1");
-			mA.setMpassword(mpassword);
-			mA.setMphone("01000000001");
-			mA.setMgender(0);
-			mA.setMzipcode("01337");
-			mA.setMaddress1("user1주소");
-			mA.setMaddress2("user1상세주소");
-			mA.setMbirth("1998/10/19");
-			mA.setMname("user1");
-			mA.setMemail("user1@email");
-			memberMapper.joinMemberAccount(mA);
+			memberJoin mJ = new memberJoin();
+			mJ.setMid("test11");
+			mJ.setMpassword(mpassword);
+			mJ.setMphone("010000000011");
+			mJ.setMgender(0);
+			mJ.setMzipcode("01337");
+			mJ.setMaddress1("test11주소");
+			mJ.setMaddress2("test11상세주소");
+			mJ.setMbirth("1998/10/19");
+			mJ.setMname("user1");
+			mJ.setMemail("user1@email");
+			memberMapper.joinMemberAccount(mJ);
 		}
 		
 		else {

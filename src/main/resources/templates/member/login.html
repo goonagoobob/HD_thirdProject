@@ -76,7 +76,7 @@
 				method="post">
 				<!-- 로그인 정보 입력 -->
 				<div class="input_group">
-					<input type="hidden" th:name="_csrf" id="inputId" th:value="_csrf.token"/>
+					<input type="hidden" th:name="_csrf" id="inputId" th:value="${_csrf.token}"/>
 					<!-- 아이디 입력 -->
 					<div class="input_login_id">
 						<input id="mid" name="username" type="text"
