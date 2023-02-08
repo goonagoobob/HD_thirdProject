@@ -145,7 +145,7 @@
 <script type="text/javascript"
 	src="https://www.thehandsome.com/_ui/handsomemobile/js/echarts.min.js"></script>
 <script type="text/javascript"
-	src="https://www.thehandsome.com/_ui/handsomemobile/js/common.js?20210501"></script>
+	src="../../static/product/common.js"></script>
 <script type="text/javascript"
 	src="https://www.thehandsome.com/_ui/handsomemobile/js/assist_common.js?v=20220630"></script>
 <script type="text/javascript"
@@ -876,6 +876,7 @@ rotate(
 	<!-- 추천인 이벤트 유입 시작 -->
 	<!-- 추천인 이벤트 유입 끝 -->
 	<!-- Loading -->
+	
 	<div style="display: none">
 		<div id="loadingBarDiv" style="display: none"></div>
 	</div>
@@ -1004,6 +1005,40 @@ rotate(
 					<!-- brand_video_slide -->
 					<div id="brandBanner">
 						<script type="text/javascript">
+						$(document).ready(function() {
+
+							//퀵메뉴 show & hide 시작 20180530 수정(TOP버튼 추가)
+							var lastScrollPosition;
+							var scrollPosition = 0;
+							$(window).scroll(function(){
+								scrollPosition = $(this).scrollTop();
+								if (!main_bul) {//180909 메인 페이지가 아니라면 실행
+									if ((scrollPosition < lastScrollPosition) || (scrollPosition <= 0)) {
+										if (scrollPosition >= ($(document).height() - $(window).height())){
+											if (scrollPosition != ($(document).height() - $(window).height())){
+												$('.hsome_quickMenu').removeClass('active');
+												$('a.hsome_topBtn').removeClass('upper');
+											}
+										} else {
+											$('.hsome_quickMenu').addClass('active');
+											$('a.hsome_topBtn').addClass('upper');
+										}
+									} else {
+										$('.hsome_quickMenu').removeClass('active');
+										$('a.hsome_topBtn').removeClass('upper');
+									}
+								}
+
+								if (scrollPosition > 0) {
+								    if (!main_bul) {
+								        $('a.hsome_topBtn').addClass('active');
+								    }
+								} else {
+									$('a.hsome_topBtn').removeClass('active');
+								}
+
+								lastScrollPosition = scrollPosition;
+							});
                 $(document).ready(function () {
                   // get oera brand banner
                   if ("BR31" == "BR61" || "BR31" == "BR63") {
@@ -1390,18 +1425,7 @@ rotate(
                 });
               }
             </script>
-					<div class="brand-quick-tab-link" style="">
-						<ul>
-							<li><a href="javascript:void(0);"
-								onclick="moveBrandLookBook('br31');GA_Event('브랜드 전체보기', '룩북/스페셜샵', '룩북 전체보기');"><span>룩북
-										전체보기</span></a></li>
-							<!-- <li><a href="#none"><span>SPECIAL SHOP</span></a></li> -->
-							<li><a
-								href="https://www.thehandsome.com/ko/c/br31_we09/br31"
-								onclick="GA_Event('브랜드 전체보기', '룩북/스페셜샵', 'SPECIAL SHOP');"><span>SPECIAL
-										SHOP</span></a></li>
-						</ul>
-					</div>
+				
 					<div class="top_item_wrap" style="height: 277.32">
 						<h2 class="hs_top_bold_tit01">탑 셀러</h2>
 						<div
@@ -9120,23 +9144,6 @@ layer popup 형식의 confirm 창
               dataType: "json",
               error: function (request, status, error) {
                 console.log(
-                  "code:" +
-                    request.status +
-                    "\n" +
-                    "message:" +
-                    request.responseText +
-                    "\n" +
-                    "error:" +
-                    error
-                );
-                t.PARAMS.jsonObjectData = 0;
-                // ajax 호출 실패 시 네트워크 확인 메시지 alert. 181122
-                var la = new layerAlert(
-                  "네트워크 접속이 원활하지 않습니다. LTE 또는 Wifi 접속 상태를 확인해주세요."
-                );
-                la.confirmAction = function () {
-                  return;
-                };
               },
               success: function (result) {
                 t.PARAMS.jsonObjectData = result;
@@ -11600,8 +11607,6 @@ layer popup 형식의 confirm 창
 		type="text/javascript"></script>
 	<script type="text/javascript">
       $(document).ready(function () {
-        //alert("https://www.thehandsome.com/ko/category/brandbanner?brandCode=BR31");
-        //$('.hsome_quickMenu_contents').html('<img src="https://www.thehandsome.com/_ui/handsomemobile/images/common/ico_loader.gif" alt="loading" class="hsome_quickMenu_loader" />');
         jQuery.ajax({
           url: "https://www.thehandsome.com/ko/category/brandbanner?brandCode=BR31",
           data: "",
@@ -11613,22 +11618,7 @@ layer popup 형식의 confirm 창
           },
         });
 
-        if ($("#video").length > 0) {
-          videoPlay();
-        }
       });
-
-      function videoPlay() {
-        $("#brandBanner").on("click", function () {
-          $(this).find(".video_cont .iframe video").show();
-          $(this).find(".video_cont .img").hide();
-          $("#video")[0].play();
-        });
-      }
-      function videoEnded(target, idx) {
-        $("#" + target + " video").hide();
-        $("#" + target + " div:eq(" + idx + ")").show();
-      }
     </script>
 	<!-- Google 리마케팅 태그 코드 -->
 	<script type="text/javascript">
@@ -12466,6 +12456,7 @@ layer popup 형식의 confirm 창
 		style="display: none"></iframe>
 	<iframe height="0" width="0" title="Criteo DIS iframe"
 		style="display: none"></iframe>
+		
 </body>
 <!-- This script is for AceCounter START -->
 </html>
