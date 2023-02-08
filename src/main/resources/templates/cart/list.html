@@ -172,35 +172,16 @@ ACCMOB.config.CSRFToken = "c7173c07-0f23-459b-9438-53fe8ca983cf";
 	transform-origin: 50% 50%;
 }
 
-@
-keyframes target_image { 0% {
-	transform: rotate(-2deg);
-}
-50
-%
-{
-transform
-:
-rotate(
-9deg
-)
-}
-100
-%
-{
-transform
-:
-rotate(
--1deg
-);
-}
+@keyframes target_image { 
+	0% {transform: rotate(-2deg);}
+	50%{transform:rotate(9deg);}
+	100%{transform:rotate(-1deg);}
 }
 </style>
 </head>
 <body class="back">
-	s
 	<script>
-			<!--  recoPick  START ---->	
+<!--  recoPick  START ---->	
 	var birthday = 'Fri May 29 00:00:00 UTC 1998';
 	var splitBirthday = birthday != '' ? birthday.split(" ")[5]: ''; //출생년도
 	var gender   = 'FEMALE';
@@ -274,8 +255,8 @@ rotate(
 			<script type="text/javascript">
 	function goMainpage() {
 		window.sessionStorage.removeItem('moveYn');
-	location.href = "/ko/main";
-}
+		location.href = "/ko/main";
+	}
 </script>
 			<!-- ################## header ################## -->
 			<header class="hsome_header">
@@ -310,6 +291,117 @@ if(typeof kakaoPixel !== 'undefined'){
 	if(location.href.indexOf("www.thehandsome.com") > -1) kakaoTrackId = '7855119525940511046'; //운영
 	kakaoPixel(kakaoTrackId).pageView();
 	kakaoPixel(kakaoTrackId).viewCart();
+}
+</script>
+<!-- 상품 선택 -->
+								<script type="text/javascript">
+
+function deleteBtnEvent(param){
+var la = new layerConfirm('선택하신 상품을 쇼핑백에서 삭제하시겠습니까?','확인','취소');
+la.confirmAction = function(){//확인 호출 펑션
+			var form = $('#updateCartForm' + param);
+			var productCode = form.find('input[name=productCode]').val(); 
+			var initialCartQuantity = form.find('input[name=initialQuantity]');
+			var cartQuantity = form.find('input[name=quantity]');
+			var cartData = form.data("cart");
+			
+			AEC_F_D(productCode,'o',initialCartQuantity.val());
+			
+			cartQuantity.val(0);
+			initialCartQuantity.val(0);
+			form.submit();
+			setEcommerceData(param, "Remove From Cart");
+};
+}
+/* ======================================================================
+Function : 체크박스 선택시 가격 및 수량 정보 변경
+Return   : 
+========================================================================= */
+function checkboxSelect(prodCnt,priceVal){	
+ if(prodCnt > 0){
+//		$('.gleb_order span').html("선택상품 주문하기");
+	$('.pymt_select_first').css("display" , "none");
+	$('.pymt_order_apply').css("display" , "block");
+	var cartDivision = $("#ordersheetCartDivision").val();
+	var btnNm = "";
+		btnNm = "선택상품 주문하기";
+	if(cartDivision == "athome"){
+		btnNm = "앳홈 신청하기";
+	}else{
+	}
+	$('#orderButtonGroup').html("<a href=\"javascript:checkoutPage('checkout');\" class='btnstl3 solid_btn_blk gleb_order'><span>"+btnNm+"</span></a>");
+	$('#oderBtn').html("<span class='btn_t_1'><b>"+addComma(priceVal)+"</b> 원</span><span class='btn_t_2'>주문하기</span>");
+ }else{
+//		$('.gleb_order span').html("쇼핑계속하기");
+	$('.pymt_select_first').css("display" , "block");
+	$('.pymt_order_apply').css("display" , "none");
+	$('#orderButtonGroup').html("<a href='#none' class='btnstl3 solid_btn_blk gleb_order' onclick='continueUrl();'><span>쇼핑계속하기</span></a>");
+ }
+}
+function cartListCheckPrice(entryPkList, only4pm) {
+if($.trim(entryPkList) == "") {
+	entryPkList = ",";
+}
+var cartDivision = $("#ordersheetCartDivision").val();
+if(only4pm == false) {
+	$("input[name='cartlist']").each(function(){
+		if($(this).prop("checked") == true
+										&& $(this).parents("#entryProductInfo").data("outofstock") != true) {
+			entryPkList += $(this).data("pk");
+			entryPkList += ",";
+		}
+	});
+}
+var selectProductCount = entryPkList.split(",").length -2; // ,로 시작해서 , 로 끝나므로 -2
+$("#selectProductCount").text(selectProductCount);
+}
+function checkTotalPrice(obj){
+	var isCartListCheckPrice = true;
+	if($("input:checkbox[name='cartlist']:checked:not(:disabled)").length > 0){
+		if($(obj).attr("data-division") == "store"){
+			if($(".tab_li_store").hasClass("on")){
+				//매장수령일 경우 동일한 브랜드 and 매장 만 체크box 처리
+				var targetIdx = $("input[name='cartlist']").index(obj);
+				var targetBrand = $(".gl_con_brand").eq(targetIdx).html();
+				var targetStore = $(".storePickupName").eq(targetIdx).html();
+				$("input:checkbox[name='cartlist']").each(function(idx){
+					if(targetIdx != idx){
+						var tempBrand = $(".gl_con_brand").eq(idx).html();
+						var tempStore = $(".storePickupName").eq(idx).html();
+						if(targetBrand != tempBrand || targetStore != tempStore){
+							$(this).prop("disabled", true);
+							$(this).prop("checked", false);
+						}
+					}
+				});
+			}
+		} else if($(obj).attr("data-division") == "athome"){
+			if($(".tab_li_athome").hasClass("on")){
+				if($("input:checkbox[name='cartlist']:checked").length > 3){
+					layerAlert('앳홈은 3개 상품 까지만 주문이 가능합니다.');
+					$(obj).prop("checked", false);
+					isCartListCheckPrice = false;
+				}
+			}
+		}
+	}else{
+		if($("#ordersheetCartDivision").val() != ""){
+						$("input[name='cartlist']").each(function(){
+								if ($(this).parents("#entryProductInfo").data("outofstock") != true) {
+										$(this).prop("disabled", false);
+								}
+						})
+		}
+	}
+	if(isCartListCheckPrice){
+			cartListCheckPrice(",", false);
+	}else{
+			return false;
+	}
+}
+function ReqRewarehousing(productcode, layer) {
+getWarehousingPage(productcode, layer);
+return false;
 }
 </script>
 					<script type="text/javascript">
@@ -423,185 +515,6 @@ location.href="/ko/";
 							<div class="gl_item " id="entryProductInfo"
 								data-pk="11140707450924" data-deliverykind=""
 								data-outofstock="false">
-								<!-- 상품 선택 -->
-								<script type="text/javascript">
-
-function deleteBtnEvent(param){
-var la = new layerConfirm('선택하신 상품을 쇼핑백에서 삭제하시겠습니까?','확인','취소');
-la.confirmAction = function(){//확인 호출 펑션
-			var form = $('#updateCartForm' + param);
-			var productCode = form.find('input[name=productCode]').val(); 
-			var initialCartQuantity = form.find('input[name=initialQuantity]');
-			var cartQuantity = form.find('input[name=quantity]');
-			var cartData = form.data("cart");
-			
-			AEC_F_D(productCode,'o',initialCartQuantity.val());
-			
-			cartQuantity.val(0);
-			initialCartQuantity.val(0);
-			form.submit();
-			setEcommerceData(param, "Remove From Cart");
-};
-}
-/* ======================================================================
-Function : 체크박스 선택시 가격 및 수량 정보 변경
-Return   : 
-========================================================================= */
-function checkboxSelect(prodCnt,priceVal){	
- if(prodCnt > 0){
-//		$('.gleb_order span').html("선택상품 주문하기");
-	$('.pymt_select_first').css("display" , "none");
-	$('.pymt_order_apply').css("display" , "block");
-	var cartDivision = $("#ordersheetCartDivision").val();
-	var btnNm = "";
-		btnNm = "선택상품 주문하기";
-	if(cartDivision == "athome"){
-		btnNm = "앳홈 신청하기";
-	}else{
-	}
-	$('#orderButtonGroup').html("<a href=\"javascript:checkoutPage('checkout');\" class='btnstl3 solid_btn_blk gleb_order'><span>"+btnNm+"</span></a>");
-	$('#oderBtn').html("<span class='btn_t_1'><b>"+addComma(priceVal)+"</b> 원</span><span class='btn_t_2'>주문하기</span>");
- }else{
-//		$('.gleb_order span').html("쇼핑계속하기");
-	$('.pymt_select_first').css("display" , "block");
-	$('.pymt_order_apply').css("display" , "none");
-	$('#orderButtonGroup').html("<a href='#none' class='btnstl3 solid_btn_blk gleb_order' onclick='continueUrl();'><span>쇼핑계속하기</span></a>");
- }
-}
-function cartListCheckPrice(entryPkList, only4pm) {
-if($.trim(entryPkList) == "") {
-	entryPkList = ",";
-}
-var cartDivision = $("#ordersheetCartDivision").val();
-if(only4pm == false) {
-	$("input[name='cartlist']").each(function(){
-		if($(this).prop("checked") == true
-										&& $(this).parents("#entryProductInfo").data("outofstock") != true) {
-			entryPkList += $(this).data("pk");
-			entryPkList += ",";
-		}
-	});
-}
-var selectProductCount = entryPkList.split(",").length -2; // ,로 시작해서 , 로 끝나므로 -2
-$("#selectProductCount").text(selectProductCount);
-}
-function checkTotalPrice(obj){
-	var isCartListCheckPrice = true;
-	if($("input:checkbox[name='cartlist']:checked:not(:disabled)").length > 0){
-		if($(obj).attr("data-division") == "store"){
-			if($(".tab_li_store").hasClass("on")){
-				//매장수령일 경우 동일한 브랜드 and 매장 만 체크box 처리
-				var targetIdx = $("input[name='cartlist']").index(obj);
-				var targetBrand = $(".gl_con_brand").eq(targetIdx).html();
-				var targetStore = $(".storePickupName").eq(targetIdx).html();
-				$("input:checkbox[name='cartlist']").each(function(idx){
-					if(targetIdx != idx){
-						var tempBrand = $(".gl_con_brand").eq(idx).html();
-						var tempStore = $(".storePickupName").eq(idx).html();
-						if(targetBrand != tempBrand || targetStore != tempStore){
-							$(this).prop("disabled", true);
-							$(this).prop("checked", false);
-						}
-					}
-				});
-			}
-		} else if($(obj).attr("data-division") == "athome"){
-			if($(".tab_li_athome").hasClass("on")){
-				if($("input:checkbox[name='cartlist']:checked").length > 3){
-					layerAlert('앳홈은 3개 상품 까지만 주문이 가능합니다.');
-					$(obj).prop("checked", false);
-					isCartListCheckPrice = false;
-				}
-			}
-		}
-	}else{
-		if($("#ordersheetCartDivision").val() != ""){
-						$("input[name='cartlist']").each(function(){
-								if ($(this).parents("#entryProductInfo").data("outofstock") != true) {
-										$(this).prop("disabled", false);
-								}
-						})
-		}
-	}
-	if(isCartListCheckPrice){
-			cartListCheckPrice(",", false);
-	}else{
-			return false;
-	}
-}
-function ReqRewarehousing(productcode, layer) {
-getWarehousingPage(productcode, layer);
-return false;
-}
-</script>
-								<!-- goods_check s -->
-								<div class="check_stl">
-									<!-- 2019.11.12 쇼핑백 진입 시 선택 상품 없도록 수정 -->
-									<input type="checkbox" id="gl_check_1" name="cartlist"
-										data-pk="11140707450924" data-division="" data-deliverykind=""
-										value="1" data-soldout="N" onclick="checkTotalPrice(this);">
-									<label for="gl_check_1"></label>
-								</div>
-								<!-- goods_check e -->
-								<!-- goods_top_btn s -->
-								<!-- 활성화 : 클래스 icon_btn_on 추가/삭제 -->
-								<ul class="gl_top_btns">
-									<!-- goods_list_item s -->
-									<!-- 활성화 : gl_item에 품절상품 : gl_status_soldout 클래스 추가/삭제 -->
-									<li><a href="javascript:;"
-										class="icon_btn btn_gl_del icon_btn_on"
-										onclick="deleteBtnEvent('1');"><span>삭제</span></a></li>
-								</ul>
-								<!-- goods_top_btn e -->
-								<!-- 상품정보 -->
-
-								<!-- goods_option_info_mid s -->
-								<div class="gl_mid">
-									<div class="gl_tit">
-										<a href="/ko/p/OB2C7KCD762WP2_ZB_90"
-											onclick="setEcommerceData('0', 'Click ADD');"> <img
-											th:src="${list.pcimg1}" class="gl_thumbimg" alt="">
-										</a>
-									</div>
-									<ul class="gl_con">
-										<a href="/ko/p/OB2C7KCD762WP2_ZB_90"
-											onclick="setEcommerceData('0', 'Click ADD');">
-											<li class="gl_con_brand" th:text="${list.bname}">브랜드</li>
-											<li class="gl_con_name" th:text="${list.pname}">헤어리 크리스탈
-												버튼 가디건</li>
-										</a>
-										<li class="gl_con_price"
-											th:text="'₩'+${#numbers.formatInteger(list.pcprice, 3, 'COMMA')}">
-											₩595,000<input type="hidden" id="checkZeroPrice1"
-											name="checkZeroPrice" value="595000.0">
-										</li>
-									</ul>
-								</div>
-								<!-- goods_option_info_mid e -->
-								<!-- goods_option_info_btm s -->
-								<div class="gl_btm">
-									<ul class="gl_info">
-										<li>
-											<div class="gl_tit">옵션수량</div>
-											<div class="gl_con">
-												<span th:text="${list.psid}">ZET BLACK&nbsp;</span><span
-													class="and_line">/</span> <span th:text="${list.psize}"></span>/
-												<span th:text="${list.pquantity}"></span>개
-											</div>
-
-										</li>
-										<li><div class="gl_tit">적립 마일리지</div>
-											<div class="gl_con">29,750M</div></li>
-										<li><div class="gl_tit">적립 H.Point</div>
-											<div class="gl_con">595P</div></li>
-									</ul>
-									<a href="javascript:void(0);"
-										class="border_btn btn_option_edit"
-										id="optOpenLayer^1^OB2C7KCD762WP2_ZB"><span>변경</span></a>
-								</div>
-								<!-- goods_option_info_btm e -->
-
-
 
 								<!-- 옵션 변경 -->
 								<script type="text/javascript">
@@ -683,20 +596,88 @@ function setSelectbox(){ //selectbox http://rwdb.kr/selectjquery_plugin/ 참조
 $('select.sodsb').selectOrDie();
 }
 </script>
-								<form id="updateCartForm1"
-									data-cart="{&quot;cartCode&quot; : &quot;463452555&quot;,&quot;productPostPrice&quot;:&quot;595000.0&quot;,&quot;productName&quot;:&quot;헤어리 크리스탈 버튼 가디건&quot;}"
+								<!-- goods_check s -->
+								<div class="check_stl" style="top: 30px;">
+									<!-- 2019.11.12 쇼핑백 진입 시 선택 상품 없도록 수정 -->
+									<input type="checkbox"
+										th:id="${'gl_check_'+ i.count}"
+										name="cartlist" data-pk="11140707450924" data-division=""
+										data-deliverykind="" th:value="${list.psid}" data-soldout="N"
+										onclick="checkTotalPrice(this);"> <label
+										th:for="${'gl_check_' + i.count}"></label>
+								</div>
+								<!-- goods_check e -->
+								<!-- goods_top_btn s -->
+								<!-- 활성화 : 클래스 icon_btn_on 추가/삭제 -->
+								<ul class="gl_top_btns">
+									<!-- goods_list_item s -->
+									<!-- 활성화 : gl_item에 품절상품 : gl_status_soldout 클래스 추가/삭제 -->
+									<li><a href="javascript:;"
+										class="icon_btn btn_gl_del icon_btn_on"
+										onclick="deleteBtnEvent('1');"><span>삭제</span></a></li>
+								</ul>
+								<!-- goods_top_btn e -->
+								<!-- 상품정보 -->
+
+								<!-- goods_option_info_mid s -->
+								<div class="gl_mid">
+									<div class="gl_tit">
+										<a href="/ko/p/OB2C7KCD762WP2_ZB_90" onclick="setEcommerceData('0', 'Click ADD');"> 
+										<img th:src="${list.pcimg1}" class="gl_thumbimg" alt="">
+										</a>
+									</div>
+									
+									<ul class="gl_con">
+										<a href="/ko/p/OB2C7KCD762WP2_ZB_90"
+											onclick="setEcommerceData('0', 'Click ADD');">
+											<li class="gl_con_brand" th:text="${list.bname}">브랜드</li>
+											<li class="gl_con_name" th:text="${list.pname}">헤어리 크리스탈 버튼 가디건</li>
+										</a>
+										<form>
+										</form>
+										<li class="gl_con_price" th:text="'₩'+${#numbers.formatInteger(list.pcprice, 3, 'COMMA')}">
+											₩595,000<input type="hidden" id="checkZeroPrice1" name="checkZeroPrice" value="595000.0">
+										</li>
+									</ul>
+								</div>
+								<!-- goods_option_info_mid e -->
+								<!-- goods_option_info_btm s -->
+								<div class="gl_btm">
+									<ul class="gl_info">
+										<li>
+											<div class="gl_tit">옵션수량</div>
+											<div class="gl_con">
+												<span th:text="${list.psid1}">ZET BLACK&nbsp;</span><span
+													class="and_line">/</span> <span th:text="${list.psize}"></span>/
+												<span th:text="${list.pquantity}"></span>개
+											</div>
+
+										</li>
+										<li><div class="gl_tit">적립 마일리지</div>
+											<div class="gl_con">29,750M</div></li>
+										<li><div class="gl_tit">적립 H.Point</div>
+											<div class="gl_con">595P</div></li>
+									</ul>
+									<a href="javascript:void(0);"
+										class="border_btn btn_option_edit"
+										id="optOpenLayer^1^OB2C7KCD762WP2_ZB"><span>변경</span></a>
+								</div>
+								<!-- goods_option_info_btm e -->
+
+
+
+
+								<form id="updateCartForm1" data-cart="{&quot;cartCode&quot; : &quot;463452555&quot;,&quot;productPostPrice&quot;:&quot;595000.0&quot;,&quot;productName&quot;:&quot;헤어리 크리스탈 버튼 가디건&quot;}"
 									action="/ko/shoppingbag/update" method="post">
-									<input type="hidden" name="entryNumber" value="1"> <input
-										type="hidden" name="productCode" value="OB2C7KCD762WP2_ZB_90">
+									<input type="hidden" name="entryNumber" value="2"> 
+									<input type="hidden" name="productCode" value="OB2C7KCD762WP2_ZB_90">
 									<input type="hidden" name="initialQuantity" value="1">
-									<input type="hidden" name="chgProductCode"
-										value="OB2C7KCD762WP2_ZB_90"> <input type="hidden"
-										name="quantity" value="1"> <input type="hidden"
-										name="curSize" value="90"> <input type="hidden"
-										name="deliveryKind" value=""> <input type="hidden"
-										name="storeId" value=""> <input type="hidden"
-										name="storePickupDate" value=""> <input type="hidden"
-										name="cartDivision" value="">
+									<input type="hidden" name="chgProductCode" value="OB2C7KCD762WP2_ZB_90"> 
+									<input type="hidden" name="quantity" value="1"> 
+									<input type="hidden" name="curSize" value="90"> 
+									<input type="hidden" name="storeId" value=""> 
+									<input type="hidden" name="storePickupDate" value=""> 
+									<input type="hidden" name="cartDivision" value="">
 									<!-- goods_option_edit s -->
 									<div class="gl_tgl gl_tgl_option" id="pt_list_1"
 										style="display: none;">
@@ -814,7 +795,7 @@ $('select.sodsb').selectOrDie();
 						<!-- 수정(46107) : 20180709 e -->
 						<div class="btn_wrap btn_wrap_div2">
 							<a href="#none" class="btnstl3 border_btn_gray gleb_select_del"
-								onclick="selectRemove();" style="width: 100%;"><span>전체상품
+								onclick="selectRemove();" style="width: 100%;"><span>선택상품
 									삭제</span></a>
 							<!-- 선택상품삭제 -->
 							<!-- 쇼핑 계속하기 버튼 s -->
@@ -1974,9 +1955,11 @@ document.writeln("<scr"+"ipt language='javascript' src='" + TRS_URL + "'></scr"+
 	// ]]>
 </script>
 
-//선택삭제
-<script>
+	//선택삭제
+	<script>
 function selectRemove(entryNumber) {
+	
+	
 
 var msgStr = "";
 
@@ -1994,6 +1977,7 @@ la.confirmAction = function(){//확인 호출 펑션
     $("input:checkbox[name='cartlist']:checked").each(function(){
       entryNumber += $(this).val() + ",";
     });
+    console.log(entryNumber);
   }
   
   if(entryNumber == "") {
@@ -2005,7 +1989,7 @@ la.confirmAction = function(){//확인 호출 펑션
   
   $.ajax({
       type: "GET",
-      url: "/ko/shoppingbag/selectRemove",
+      url: "cart/seldelete",
       dataType: "json",
       async : false,
       data : {"entryNumber" : entryNumber},

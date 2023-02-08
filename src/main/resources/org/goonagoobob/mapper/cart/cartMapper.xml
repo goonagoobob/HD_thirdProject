@@ -1,23 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- /*********************************
+ * @function : Cart Mapper.xml 
+ * @author : 김주혜
+ * @Date : Feb 6. 2023
+ * 카트목록 mapper.xml 추가 Feb 6. 2023
+ * 카트삭제 mapper.xml 추가 Feb 7. 2023
+ *********************************/ -->
+
 <mapper namespace="org.goonagoobob.mapper.cart.cartMapper">	
 
 <!-- cartList 가져오기 -->
 <select id = "getCartList" resultType="org.goonagoobob.domain.cart.cartVO">
-	SELECT substr(ps.psid,-5,2) as psid, pcol.pcimg1, b.bname, pc.pname, pcol.pcprice, pcol.pccolorcode, substr(ps.psize, 0, 2) as psize, c.pquantity
+	SELECT ps.psid, substr(ps.psid,-5,2) as psid1, pcol.pcimg1, b.bname, pc.pname, pcol.pcprice, pcol.pccolorcode, substr(ps.psize, 0, 2) as psize, c.pquantity
 	FROM brand b, product_common pc, product_color pcol, product_stock ps, cart c
 	WHERE c.psid = ps.psid
 	AND ps.pcid = pcol.pcid
 	AND pcol.pid = pc.pid
 	AND pc.bno = b.bno
-	AND c.mid = #{mid}
+	AND c.mid = 'user1'
 </select>
 
-<delete id = "deleteCart">
+<delete id = "selectDelete">
 
 	DELETE cart
 	WHERE mid = #{mid}
+	AND psid = #{entryNumber}
 
 </delete>
 

@@ -1,3 +1,11 @@
+/*********************************
+ * @function : Cart MapperTest 
+ * @author : 김주혜
+ * @Date : Feb 6. 2023
+ * 카트목록 meppertest 추가 Feb 6. 2023
+ * 카트삭제 meppertest 추가 Feb 7. 2023
+ *********************************/
+
 package org.goonagoobob.mapper.cart;
 
 import java.util.List;
@@ -21,6 +29,13 @@ public class cartMapperTests {
 		List<cartVO> list = mapper.getCartList(mid);
 		log.info(list);
 	
+	}
+	
+	@Test
+	public void deleteCart() {
+		String mid = "user1";
+		int result = mapper.deleteCart(mid);
+		log.info(result);
 	}
 	
 	

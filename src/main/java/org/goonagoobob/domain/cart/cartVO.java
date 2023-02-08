@@ -1,3 +1,10 @@
+/*********************************
+ * @function : cartVO 
+ * @author : 김주혜
+ * @Date : Feb 6. 2023
+ * vo 수정 : Feb 7. 2023
+ *********************************/
+
 package org.goonagoobob.domain.cart;
 
 import lombok.Getter;
@@ -11,6 +18,7 @@ public class cartVO {
 	
 	private String mid;
 	private String psid;
+	private String psid1;
 	private int pquantity;
 	private String pcimg1;
 	private String bname;

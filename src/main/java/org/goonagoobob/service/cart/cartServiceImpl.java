@@ -1,3 +1,11 @@
+/*********************************
+ * @function : Cart ServiceImpl 
+ * @author : 김주혜
+ * @Date : Feb 6. 2023
+ * 카트목록 ServiceImpl 추가 Feb 6. 2023
+ * 카트삭제 ServiceImpl 추가 Feb 7. 2023
+ *********************************/
+
 package org.goonagoobob.service.cart;
 
 import java.security.Principal;
@@ -32,10 +40,10 @@ public class cartServiceImpl implements cartService {
 	}
 	
 	@Override
-	public int deleteCart(String mid) {
+	public int selectDelete(String mid, List<String> entryNumber) {
 		log.info("cartDelete Service.....");
 		
-		return mapper.deleteCart(mid);
+		return mapper.selectDelete(mid, entryNumber);
 		
 	}
 }

@@ -1,3 +1,12 @@
+/*********************************
+ * @function : Cart Controller 
+ * @author : 김주혜
+ * @Date : Feb 6. 2023
+ * 카트목록 Controller 추가 Feb 6. 2023
+ * 카트삭제 Controller 추가 Feb 7. 2023
+ *********************************/
+
+
 package org.goonagoobob.controller.cart;
 
 import java.nio.charset.Charset;
@@ -42,19 +51,45 @@ public class cartController {
 	public void cartInsert( @RequestParam("username") String mid, Model model) {
 		log.info("cartInsert controller");
 	}
-	// 장바구니 전체 삭제
-	@PostMapping("/delete")
-	public String cartDelete(Principal principal, Model model) throws Exception{
+	
+//	  // 장바구니 전체 삭제
+//	  
+//	  @PostMapping("/delete") public String cartDelete(Principal principal, Model model) throws Exception{ 
+//	  log.info("cartDelete controller"); 
+//	  String mid = principal.getName(); 
+//	  HttpHeaders headers = new HttpHeaders();
+//	  headers.setContentType(new MediaType("text", "html", Charset.forName("UTF-8")));
+//	  int result = service.deleteCart(mid); log.info(result);
+//	  model.addAttribute("result", result);
+//	  return "cart/list"; 
+//	 }
+	 
+	
+	@PostMapping("/seldelete") 
+	public String selectDelete(Principal principal, @RequestParam("entryNumber") List<String> entryNumber, Model model) {
 		log.info("cartDelete controller");
-		String mid = principal.getName();
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(new MediaType("text", "html", Charset.forName("UTF-8")));
 		
-		int result = service.deleteCart(mid);
+		String mid = principal.getName();
+		int result = service.selectDelete(mid, entryNumber);
 		log.info(result);
-		model.addAttribute("result", result);
+		model.addAttribute(result);
 		
 		return "cart/list";
 	}
 	
+//	@PostMapping("/insertCart")
+//	public String insertCart(Principal prin, String)
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
