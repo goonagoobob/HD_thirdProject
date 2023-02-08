@@ -8,6 +8,7 @@
 package org.goonagoobob.domain.order;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -35,5 +36,7 @@ public class orderVO {
 	private Date odate; // 주문 날짜
 	private String cpid; // 쿠폰 id
 	private String oaddress2; // 상세 배송지
+	
+	private List<orderItemVO> itemList;
 
 }

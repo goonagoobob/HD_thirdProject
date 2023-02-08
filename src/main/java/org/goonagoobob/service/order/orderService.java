@@ -10,9 +10,9 @@ public interface orderService {
 
 	public void insert(orderVO orders);
 	
-	public List<orderVO> getList();
-	
 	public List<orderVO> getList(Criteria cri, String mid);
 	
 	public orderPageDTO getListPage(Criteria cri, String mid);
+	
+	public int orderRemove(String oid);
 }
