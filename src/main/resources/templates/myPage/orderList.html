@@ -640,7 +640,7 @@
             <div class="mpord_tit mpord_dlvr">
               <div class="mpord_tit_num">택배배송 [[${list.oid}]]</div>
               <div class="mpord_tit_sub" th:text="${#dates.format(list.odate, 'yyyy-MM-dd HH:mm:ss')}"></div>
-              <a href="#" class="arrow_btn list_detail_btn" onclick="GA_Event('주문/배송조회', '상세보기', '클릭');"> 주문취소 </a>
+              <a th:if="${list.ostatus != '주문 취소'}" th:href="@{/order/cancel/(oid=${list.oid})}" class="arrow_btn list_detail_btn" > 주문취소 </a>
             </div>
             <ul class="mpord_goods_ul goods_list_wrap" th:each="itemList:${list.itemList}">
               <li>

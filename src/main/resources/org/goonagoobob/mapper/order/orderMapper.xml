@@ -10,6 +10,9 @@
 		<result property="oid" column="oid" />
 		<result property="ostatus" column="ostatus" />
 		<result property="odate" column="odate" />
+		<result property="obeforeprice" column="obeforeprice"/>
+		<result property="oafterprice" column="oafterprice"/>
+		<result property="ousedmileage" column="ousedmileage"/>
 		<collection property="itemList" resultMap="itemMap">
 		</collection>
 	</resultMap>
@@ -60,10 +63,6 @@
 		o.oid > '0'
 	</select>
 
-	<select id="getList" resultType="org.goonagoobob.domain.order.orderVO">
-		select * from orders
-	</select>
-
 	<select id="getListWithPaging" resultMap="orderMap">
      	<![CDATA[
 		  	select oid, psid, ostatus, odate, oicount, oitotalprice, pname, bname, pccolorcode, pcimg1, pcprice, psize
@@ -81,7 +80,8 @@
 		<include refid="criteria"></include> 
 	  	<![CDATA[
 		 	rownum <= #{cri.pageNum} * #{cri.amount})
-			where rn > ( #{cri.pageNum} - 1 ) *  #{cri.amount}  
+			where rn > ( #{cri.pageNum} - 1 ) *  #{cri.amount}
+			order by odate desc
 	 	]]>
 	</select>
 
@@ -91,28 +91,29 @@
 	</insert>
 	
 	<update id="orderCancel">
-		update orders set ostatus = '주문 취소' where oid = #{oid} 
+		update orders set ostatus = '주문 취소' and odate = sysdate where oid = #{oid} 
 	</update>
 	
-		<select id="removeList" resultMap="orderMap">
-     	<![CDATA[
-		  	select oid, psid, ostatus, odate, oicount, oitotalprice, pname, bname, pccolorcode, pcimg1, pcprice, psize
-		  	from (
-		  		select 
-		  		rownum rn, o.oid, items.psid, o.ostatus, o.odate, oicount, oitotalprice, pname, bname, pccolorcode, pcimg1, pcprice, psize
-		  		from orders o
-		  		left outer join order_item items
-		  		on o.oid = items.oid
-		  		left outer join view_product_detail vpd 
-		  		on items.psid = vpd.psid
-		  	 where
-		  	 mid = #{mid} and
-   		]]>
-		<include refid="criteria"></include> 
-	  	<![CDATA[
-		 	rownum <= #{cri.pageNum} * #{cri.amount})
-			where rn > ( #{cri.pageNum} - 1 ) *  #{cri.amount} and oid = #{oid}
-	 	]]>
+	<select id="cancelList" resultMap="orderMap">
+     	
+		select oid, psid, ostatus, odate, oicount, oitotalprice, pname, bname, pccolorcode, pcimg1, pcprice, psize, obeforeprice, oafterprice, ousedmileage
+		from (
+			select 
+		  	rownum rn, o.oid, items.psid, o.ostatus, o.odate, oicount, oitotalprice, pname, bname, pccolorcode, pcimg1, pcprice, psize, obeforeprice, oafterprice, ousedmileage
+		  	from orders o
+		  	left outer join order_item items
+		  	on o.oid = items.oid
+		  	left outer join view_product_detail vpd 
+		  	on items.psid = vpd.psid
+		  	where
+		  	mid = #{mid} and o.oid = #{oid}
+		  	)
+	</select>
+	
+	<select id="orderList" resultMap="itemMap">
+		select *
+		from view_product_detail
+		where pisd = #{psid}
 	</select>
 
 </mapper> 

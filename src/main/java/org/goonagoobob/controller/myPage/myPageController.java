@@ -8,8 +8,8 @@ import org.goonagoobob.service.member.memberService;
 import org.goonagoobob.service.order.orderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -53,10 +53,10 @@ public class myPageController {
 	}
 	
 	@GetMapping(value = "/orderList")
-	public void getList(Criteria cri, Model model, Authentication authentication) {
+	public void getList(Criteria cri, Model model) {
 		log.info("getList............");
-		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-		String mid = userDetails.getUsername();
+		Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+		String mid = loggedInUser.getName();
 		System.out.println("controller mid " + mid);
 		model.addAttribute("orderList", service.getList(cri, mid));
 	}

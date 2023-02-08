@@ -6,6 +6,7 @@ import java.util.List;
 import org.goonagoobob.domain.order.Criteria;
 import org.goonagoobob.domain.order.orderPageDTO;
 import org.goonagoobob.domain.order.orderVO;
+import org.goonagoobob.domain.product.productDetailVO;
 import org.goonagoobob.mapper.order.orderMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,14 +23,26 @@ public class orderServiceImpl implements orderService {
 	private orderMapper mapper;
 	
 	@Override
+	public List<productDetailVO> orderProductList(String psid) {
+		log.info("order product list........");
+		return mapper.orderList(psid);
+	}
+	
+	@Override
 	public int orderRemove(String oid) {
 		int result = 0;
 		log.info("order remove..............");
-		result = mapper.ordercancel(oid);
+		result = mapper.orderCancel(oid);
 		if (result == 0) {
 			log.info("service에서 취소가 잘 되지 않았습니다.");
 		}
 		return result;
+	}
+	
+	@Override
+	public orderVO orderRemoveList(String mid, String oid) {
+		log.info("order remove list........");
+		return mapper.cancelList(mid, oid);
 	}
 
 	@Override
