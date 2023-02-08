@@ -15,6 +15,13 @@
 		from member
 		where mid = #{mid}
 	</select>
+	
+	<!-- 비밀번호 입력하면 맞는지 확인 -->
+	<select id="checkPassword" resultType="String">
+		select mpassword
+		from member
+		where mid = #{mid}
+	</select>
 </mapper>
 
 <!--*********************************

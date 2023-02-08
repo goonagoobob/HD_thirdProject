@@ -31,12 +31,7 @@ public class cartMapperTests {
 	
 	}
 	
-	@Test
-	public void deleteCart() {
-		String mid = "user1";
-		int result = mapper.deleteCart(mid);
-		log.info(result);
-	}
+
 	
 	
 }

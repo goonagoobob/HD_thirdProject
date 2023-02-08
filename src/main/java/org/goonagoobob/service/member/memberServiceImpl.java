@@ -32,4 +32,11 @@ public class memberServiceImpl implements memberService{
 		int result = memberMapper.joinMemberAccount(mj);	
 		return result;
 	}
+	
+	@Override
+	public String checkPassword(String mid) {
+		String mpassword = memberMapper.checkPassword(mid);
+		return mpassword;
+	}
+
 }
