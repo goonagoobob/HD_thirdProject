@@ -23,6 +23,12 @@
 	AND c.mid = 'user1'
 </select>
 
+<insert id = "cartInsert">
+	INSERT INTO cart
+	VALUES(#{mid}, #{psid}, #{pquantity})
+
+</insert>
+
 <delete id = "selectDelete">
 
 	DELETE cart
