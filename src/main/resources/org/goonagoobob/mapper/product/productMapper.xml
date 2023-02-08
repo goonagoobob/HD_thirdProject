@@ -32,6 +32,11 @@
 	<select id="getPDetail" resultMap="pc1Map">
 		select * from allproduct where #{pid} = pid
 	</select>
+	
+	<select id="getPColor" resultMap="pc2Map">
+		select pcid, pcimg1, pcimg2, pcimg3, pcchipimg, pccolorcode, pcprice, preleasedate, 
+psid, psstock, psize from allproduct where #{pcid} = pcid
+	</select>
 </mapper>
 
 <!-- /*********************************
@@ -39,6 +44,6 @@
  * @author : 조일우
  * @Date : Feb 6. 2023.
  * 상품 상세 정보 Mapper Feb 6. 2022
- * 로그인 실패 구현
+ * 상품 컬러 변경 Mapper Feb 7. 2022
  * 아이디 비밀번호 저장 구현
  *********************************/ -->

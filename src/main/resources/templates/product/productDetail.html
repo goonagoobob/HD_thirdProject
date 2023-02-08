@@ -742,6 +742,21 @@ function gaIsoCodeEncoding(isoCode){
 					d.setTime(d.getTime() + (day*24*60*60*1000));
 					document.cookie = cname + '=' + cvalue + '; expires=' + d.toUTCString() + '; path=/';
 				})('thehyundai', false, -7);
+			    $('.hs_prd_info_wrap .hs_btn_color_chip.infoColor button.chip').on('click', function() {
+			        
+			        if ( $('.hs_prd_info_wrap .hs_btn_color_chip button.chip').hasClass('on') == true ) {
+			            $('.hs_prd_info_wrap .hs_btn_color_chip button.chip').removeClass('on');
+			            $(this).addClass('on');
+			            var prodcode = $(this).attr('id').replace("info_","");
+			            GA_Event('상품_상세', '컬러칩', prodcode.split('_')[1]);
+			            reloadDetailPage(prodcode);
+			            $(".hs_prd_info_wrap .parentTxt").hide();
+			            $(".add_mileage_info_wrap").hide();
+			            changeOfflineQtyColor();
+			            
+			            $("#popularProudct").hide();
+			        }
+			    });
 				</script>
 	<!-- hmall 유입 시작 -->
 	<script>
@@ -830,10 +845,11 @@ function gaIsoCodeEncoding(isoCode){
 						<div
 							class="swiper-container vw_swiper swiper-container-horizontal swiper-container-android swiper-container-wp8-horizontal">
 							<ul class="swiper-wrapper" id="prodImages"
-								style="transform: translate3d(0px, 0px, 0px); transition-duration: 0ms; opacity: 1; height: 588px;" th:each="list, l : ${productVO.pcVO}">
+								style="transform: translate3d(0px, 0px, 0px); transition-duration: 0ms; opacity: 1; height: 588px;" th:each="list, l : ${productVO.pcVO}"
+								th:if="${list.pcid == pcid}">
 								<li class="swiper-slide animated swiper-slide-active"
 									style="width: 390px; transition: all 0ms ease 0s;" >
-									<div class="slide-inner" 
+									<div class="slide-inner"
 									th:style="'background-image: url('+ ${list.pcimg1}+ '); 
 									transform: translate3d(0px, 0px, 0px); transition: all 0ms ease 0s;'" id="slider-W01">
 									</div>
@@ -856,10 +872,9 @@ function gaIsoCodeEncoding(isoCode){
 							<!-- <div class="swiper-pagination"></div> -->
 							<div
 								class="swiper-pagination swiper-pagination-progressbar swiper-pagination-clickable swiper-pagination-bullets">
+								<span class="swiper-pagination-bullet swiper-pagination-bullet-active"></span>
 								<span
-									class="swiper-pagination-bullet swiper-pagination-bullet-active"></span><span
-									class="swiper-pagination-bullet"></span><span
-									class="swiper-pagination-bullet"></span>
+									class="swiper-pagination-bullet" th:each="list3 : ${productVO.pcVO}"></span>
 							</div>
 							<!-- 210728 oera 신규 추가 S -->
 							<!-- 210728 oera 신규 추가 E -->
@@ -1140,7 +1155,49 @@ try{
 var currecy = ""; // USD, CNY
 var rate = ""; // 환율
 var simbol = ""; // 심볼
+/* 상품 상세보기 팝업 닫기 */
+$(document).on('click', '.product_zoom_pop a.pop-zoom-cls', function(){
+    $('.product_zoom_pop').stop().fadeOut('fast', function(){
+        $('#domElementToZoom').smartZoom('destroy');
+    });
+    return false;
+});
+/* 상품 상세보기 팝업 닫기 */
+ 
+//레이어 팝업 닫기
+ function layerPopupClose(layer, pop) {
+     var $popup = $(this).closest(pop);
+     $popup.removeClass('activated');
+     $popup.removeClass('active');
+     setTimeout(function(){
+         $popup.removeClass('visible');
+         $(".hsome_allContents").removeClass("disabled");
+         $(layer).removeClass("active");
+         $(layer).removeClass("visible");
+         if($.cookie("handsomelayerscroll") !== null) {
+             $(document).scrollTop(getCookie("handsomelayerscroll"));
+         }
+     }, 400);
+     return false;
+ }
 
+ //레이어 팝업 닫기
+ function layerPopupClose2(layer, pop) {
+     $(pop).removeClass('activated');
+     $(pop).removeClass('active');
+     setTimeout(function(){
+         $(pop).removeClass('visible');
+         $(".hsome_allContents").removeClass("disabled");
+         $(layer).removeClass("active");
+         $(layer).removeClass("visible");
+         if($.cookie("handsomelayerscroll") !== null) {
+             $(document).scrollTop(getCookie("handsomelayerscroll"));
+         }
+     }, 400);
+     return false;
+ }
+
+ 
 	$(document).ready(function() {
 	    
 	    
@@ -2553,8 +2610,11 @@ var simbol = ""; // 심볼
 							<!-- 색상 버튼 -->
 							<div class="hs_btn_color_chip infoColor"
 								id="hs_btn_color_chip_area">
-								<button th:each="list : ${productVO.pcVO}"  type="button" th:id="'info_'+${list.pcid}"
+								<button th:each="list : ${productVO.pcVO}"  th:if="${list.pcid == pcid}" type="button" th:id="${list.pcid}"
 									class="chip on"
+									th:style="'background:'+${list.pccolorcode}+' url('+${list.pcchipimg}+');'"></button>
+									<button th:each="list : ${productVO.pcVO}"  th:if="${list.pcid != pcid}" type="button" th:id="${list.pcid}"
+									class="chip"
 									th:style="'background:'+${list.pccolorcode}+' url('+${list.pcchipimg}+');'"></button>
 							</div>
 							<!--// 색상 버튼 -->
@@ -2571,7 +2631,7 @@ var simbol = ""; // 심볼
 								</div>
 
 								<div class="price">
-									<span>₩145,000</span>
+									<span th:each="list : ${productVO.pcVO}" th:if="${list.pcid == pcid}" th:text="'₩'+${list.pcprice}"></span>
 								</div>
 
 								<div class="number">
@@ -2581,10 +2641,10 @@ var simbol = ""; // 심볼
 									<!-- <button type="button" class="copy">IL2C9TTO870N_BK</button> -->
 									<!-- after -->
 									
-									<button type="button" class="copy btn_clipboard"
+									<button type="button" class="copy btn_clipboard" id="copy_btn_clipboard"
 										data-clipboard-action="copy"
 										data-clipboard-text="IL2C9TTO870N_BK"
-										onclick="GA_Event('상품_상세', '품번', 'IL2C9TTO870N_BK');">IL2C9TTO870N_BK</button>
+										th:onclick="`GA_Event('상품_상세', '품번', '');`" th:text="${pcid}"></button>
 									<!-- 수정(redmine:914) : 20180910 e -->
 									<!-- input text만 복사 가능하여 품번 복사를 위한 영역을 지정 -->
 								</div>
@@ -2605,13 +2665,10 @@ var simbol = ""; // 심볼
 							<!-- 	<div class="hs_btn_size_wrap"> -->
 							<div class="hs_btn_size_wrap">
 								<p class="tit">사이즈</p>
-								<div class="size_area" id="size_btn_area">
-									<span class="size"><button type="button" class="btn"
-											onclick="sizeBtnClick(this)" data-value="82">
+								<div class="size_area" id="size_btn_area" th:each="list : ${productVO.pcVO}" th:if="${list.pcid == pcid}">
+									<span  th:each="subList : ${list.psVO}" class="size"><button type="button" class="btn"
+											onclick="sizeBtnClick(this)" data-value="82" th:text="${subList.psize}">
 											82<span class="ko_size1901">&nbsp;(55)</span>
-										</button></span><span class="size"><button type="button" class="btn"
-											onclick="sizeBtnClick(this)" data-value="88">
-											88<span class="ko_size1901">&nbsp;(66)</span>
 										</button></span>
 								</div>
 
@@ -2658,51 +2715,13 @@ var simbol = ""; // 심볼
 						<!-- 20200904 제품상세내용 -->
 						<div class="vw_prd_pInfo pv-element" id="newDescriptionArea1"
 							style="display: block;">
-							<div class="prod-detail-con-box">
+							<div class="prod-detail-con-box" style="padding-top: 0px;">
 								<div class="round-style">
-									<p>군더더기 없이 간결하고 깔끔한 디자인의 탑으로 바디 라인에 자연스럽게 핏 되는 실루엣이 페미닌한
-										무드를 자아내며, 울과 스판 혼방 소재를 사용하여 편안한 착용감을 선사합니다. 부드럽게 목을 감싸는 하이넥
-										디자인으로 보온성을 더했으며, 한층 세련된 룩을 완성해 줍니다.</p>
-								</div>
-								<div class="size-text" id="newDescriptionSizeArea"
-									style="display: block;">
-									<p>- 피팅 정보 : 170cm, 55 사이즈 모델이 82 사이즈 착용</p>
+									<p th:text="${productVO.pnote}"></p>
 								</div>
 							</div>
 						</div>
 						<!-- //20200904 제품상세내용 -->
-						<!-- 20200904 더보기 -->
-						<div class="vw_prd_pInfo pv-element" id="newDescriptionArea2"
-							style="display: block;">
-							<div class="info_sect">
-								<div class="prod-detail-con-more">
-									<button type="button" class="more-btn">
-										더보기<i></i>
-									</button>
-									<div class="more-con-box">
-										<ul>
-											<li></li>
-											<li>울과 스판 혼방 소재</li>
-											<li>하이넥 디자인</li>
-											<li>밑단 한쪽에 슬릿</li>
-										</ul>
-									</div>
-								</div>
-							</div>
-							<script>
-                $(document).ready(function() {
-                    $('.prod-detail-con-more').on('click', '.more-btn', function(){
-                        $('.more-con-box').slideToggle(function(){
-                            $(this).parent('.prod-detail-con-more').find('.more-btn').toggleClass('on');
-                        });
-                    })
-                    
-                    
-                });
-            </script>
-						</div>
-						<!-- //20200904 더보기 -->
-
 						<!-- 제품 소개글 (구) -->
 						<div class="vw_prd_pInfo pv-element" id="oldDescriptionArea"
 							style="display: none;">
@@ -2725,254 +2744,8 @@ var simbol = ""; // 심볼
 							</div>
 						</div>
 						<!-- 예약주문 클릭시 얼럿1903 -->
+<script>
 
-						<script type="text/javascript">
-////////////////180824 동영상 재생/일시정지 수정 시작 (movie_margin_up/movie_margin_down 추가)
-//////////////////////////////180905 동영상이 youtube 등이 아닌 자체 동영상일 때 시작
-var $pl_play,
-	$pl_pause,
-	$pl_video,
-	$pl_pause_clickCnt = 0,
-	$pl_pause_bul = false;
-
-movie_func();
-function movie_func(){
-	$pl_play  = document.getElementById("video_button"),
-	$pl_pause = document.getElementById("video_pause_button"),
-	$pl_video = document.getElementById("video");
-
-	if ($pl_video == null) {
-		return;
-	}
-	
-	$pl_play.addEventListener("click", function() {// Event listener for the play/pause button
-		if ($pl_video.paused == true) {// Play the video
-			movie_play_func($(this));
-		}
-	});
-	
-	var $pl_pause_timer = '';
-	$pl_pause.addEventListener("click", function() {// Event listener for the play/pause button
-		$pl_pause_bul = true;
-		var $this = $(this);
-		$pl_pause_clickCnt++;
-		$this.addClass('back');
-	
-		clearTimeout($pl_pause_timer);
-		$pl_pause_timer = setTimeout(function(){
-			$this.removeClass('back');
-			$pl_pause_clickCnt = 0;
-		}, 2000);
-	
-		if ($pl_pause_clickCnt > 1) {
-			$this.hide();
-			$pl_video.pause();
-	
-			$this.parent().find('.youtube_play').show();
-			$('.vw_swiper .swiper-pagination').removeClass('hidden');
-	
-			$this.removeClass('back');
-			$pl_pause_clickCnt = 0;
-		}
-	});
-	
-	$pl_video.addEventListener('ended', function(){
-		$pl_pause_bul = false;
-		$('.vw_slide_wrap .youtube_play').fadeIn('fast');
-		$('.vw_slide_wrap .youtube_pause').hide();
-		$('.vw_slide_wrap .youtube').removeClass('active');
-		movie_margin_down();
-		$('.vw_swiper .swiper-pagination').removeClass('hidden');
-	});
-}
-
-function movie_play_func($play){
-	$play.fadeOut('fast');
-	$play.parent().find('.youtube').addClass('active');
-	movie_margin_up();
-
-	if ( $pl_video != null ) $pl_video.play();
-
-	$play.parent().find('.youtube_pause').show();
-	$play.parent().find('.youtube_pause').removeClass('back');
-	$pl_pause_clickCnt = 0;
-	$('.vw_swiper .swiper-pagination').addClass('hidden');
-}
-
-var $pl_curr_space;
-function movie_margin_up (){
-	var $pl_video_etc = $('.product_view_wrap .vw_slide_etc'),
-		$pl_video_el = $('.product_view_wrap .vw_slide_wrap .vw_swiper li .youtube video'),
-		$pl_video_bot = $('.product_view_wrap .pv-element.hs_prd_info_wrap');
-		$pl_curr_space = $pl_video_etc.offset().top - $pl_video_el.height();
-
-	if ($pl_curr_space != 0 && !$pl_pause_bul) {
-		$pl_video_etc.css({
-			marginTop: $pl_curr_space * -1
-		});
-	}
-	if (($pl_video_etc.offset().top < ($(window).height() - 50)) && !$pl_video_bot.hasClass('is-active')) {
-		$pl_video_bot.addClass('is-active');
-	}
-}
-function movie_margin_down() {
-	$('.product_view_wrap .vw_slide_etc').css({
-        marginTop: 0
-	});
-}
-
-/////////////////180920 수정 시작
-var vwSwiper;
-$(window).load(function(){
-	vwSwiper = new Swiper('.vw_swiper.swiper-container', swiperOptions);
-
-	if ($pl_video != null) {
-		vwSwiper.on('slideChange', function(){
-			if (vwSwiper.activeIndex == (vwSwiper.slides.length - 1)) {
-				$('.vw_slide_wrap .video_btn').fadeOut('fast');
-			} else {
-				$('.vw_slide_wrap .video_btn').fadeIn('fast');
-				$pl_video.pause();
-
-				$('.vw_slide_wrap .youtube_pause').hide();//180817 추가
-				$('.vw_slide_wrap .youtube_play').fadeIn('fast');
-				$('.vw_slide_wrap .youtube').removeClass('active');
-				movie_margin_down();
-				$('.vw_swiper .swiper-pagination').removeClass('hidden');//180817 추가
-
-				$pl_pause_bul = false;
-			}
-		});
-	}
-});
-/////////////////180920 수정 끝
-
-//$(document).on('click', '.vw_slide_wrap .video_btn .btn', function(){
-$(".vw_slide_wrap").on('click', '.video_btn .btn', function(){
-	$(window).scrollTop(0);
-	vwSwiper.slideTo(vwSwiper.slides.length - 1, 600);
-
-	setTimeout(function(){
-		//movie_play_func($('.vw_slide_wrap .youtube_play'));
-		$('.vw_slide_wrap .youtube_play').fadeOut('fast');
-		$('.vw_slide_wrap .youtube_play').parent().find('.youtube').addClass('active');
-
-		if ( $pl_play === null )  $pl_play  = document.getElementById("video_button");
-		if ( $pl_video === null ) $pl_video = document.getElementById("video");
-
-		if ($pl_video == null) {
-			return;
-		}
-		
-		movie_func();
-		movie_play_func($('.vw_slide_wrap .youtube_play'));
-	}, 200);
-	return false;
-});
-////////////////////////180824 수정 끝
-//180727 수정 끝
-
-function resetVwSwiper(reload,liLength) {
-	if ( reload === 'reload' ) {
-		setTimeout(function(){
-		    if($("#prodImages > li").length > liLength){
-                for(var i=0; i<liLength; i++){
-                    $("#prodImages > li:first").remove();
-                }
-            }
-
-			//180910 추가 시작
-			if ( vwSwiper === null ) vwSwiper = new Swiper('.vw_swiper.swiper-container', swiperOptions);
-
-			vwSwiper.update();//스와이퍼 재실행
-			vwSwiper.slideTo(0,0);//첫 번째 슬라이드로 이동
-
-			$pl_pause_bul = false;
-			$('.vw_slide_wrap .youtube_play').fadeIn('fast');
-			$('.vw_slide_wrap .youtube_pause').hide();
-			$('.vw_slide_wrap .youtube').removeClass('active');
-			movie_margin_down();
-			$('.vw_swiper .swiper-pagination').removeClass('hidden');
-			//180910 추가 끝
-			
-			movie_func();
-		}, 200);
-	}
-}
-//////////////////////////////180905 동영상이 youtube 등이 아닌 자체 동영상일 때 끝
-
-/* slide */
-//180727 수정 시작
-var interleaveOffset = 0.5;
-
-var swiperOptions = {
-	speed: 500,
-	pagination: {
-		el			: '.swiper-pagination',
-		clickable	: true,
-		/* type		: 'progressbar' */
-	},
-	parallax: true,
-	grabCursor: true,
-	watchSlidesProgress: true,
-	mousewheelControl: true,
-	keyboardControl: true,
-	on: {
-		progress: function() {
-			var swiper = this;
-			for (var i = 0; i < swiper.slides.length; i++) {
-				var slideProgress = swiper.slides[i].progress;
-				var innerOffset = swiper.width * interleaveOffset;
-				var innerTranslate = slideProgress * innerOffset;
-				swiper.slides[i].querySelector(".slide-inner").style.transform = "translate3d(" + innerTranslate + "px, 0, 0)";
-			}
-		},
-		touchStart: function() {
-			var swiper = this;
-			for (var i = 0; i < swiper.slides.length; i++) {
-				swiper.slides[i].style.transition = "";
-			}
-		},
-		setTransition: function(speed) {
-			var swiper = this;
-			for (var i = 0; i < swiper.slides.length; i++) {
-				swiper.slides[i].style.transition = speed + "ms";
-				swiper.slides[i].querySelector(".slide-inner").style.transition = speed + "ms";
-			}
-		},
-		// 210728 oera 신규 추가 S
-        //오에라 슬라이드 비디오
-        slideChangeTransitionStart: function (){
-            if($('.swiper-slide .video-beauty').length > 0 ) {
-                var appChk = "N";
-                if(vwSwiper.isEnd) { //마지막 슬라이드이면,
-                    $(".h_gnbMenu .like").hide();
-                    if(appChk == 'Y') {
-                        $(".h_gnbMenu .edit").hide();    
-                    }
-                }else {
-                    $(".h_gnbMenu .like").show();
-                    if(appChk == 'Y') {
-                        $(".h_gnbMenu .edit").show();    
-                    }
-                }           
-            }
-            
-            if ($('.swiper-slide-active .video-beauty').length){
-                $('.swiper-slide-active .video-beauty').get(0).play();
-                $('.vw_slide_wrap .btn-video-play').hide();
-                $('.video-beauty').parents('.swiper-slide').css('z-index',9999);
-            } 
-            if ($('.swiper-slide-active video').length==0){
-                if($('.swiper-slide .video-beauty').length > 0){
-                    $('.swiper-slide .video-beauty').get(0).pause();        
-                    $('.vw_slide_wrap .btn-video-play').show();    
-                }
-            }
-        }
-        // 210728 oera 신규 추가 E
-	}
-};
 </script>
 						<!--// 제품 소개글 -->
 						<!--// 제품 정보 -->
@@ -2982,37 +2755,12 @@ var swiperOptions = {
 
 						<!-- 결제 관련안내 -->
 						<ul class="vw_prd_liInfo pv-element">
-							<li><i class="tit">한섬마일리지</i> <span class="txt" id="point">7,250
+							<li><i class="tit">한섬마일리지</i> <span class="txt" id="point" th:each="list, l : ${productVO.pcVO}" th:if="${list.pcid == pcid}" th:text="${#numbers.formatInteger(list.pcprice*5/1000, 1, 'COMMA') + 'P (5%)'}">7,250
 									P (5%)</span>
 
-								<div class="add_mileage_info_wrap" style="display: none;">
-									<div class="add_mileage_info_wrap" style="display: none;">
-										<div class="hs_tooltip_wrap add_mileage_info1905">
-											<p class="info_tit">추가적립 안내</p>
-											<a class="ico_btn">icon</a>
-											<div class="tooltip_cont">
-												<p class="txt">
-													<strong>예약판매 진행 중인 옵션 구매 시 한섬마일리지를 3% 추가 적립해드립니다.</strong><br>
-													7,250&nbsp;M&nbsp;(5%)
-													<!-- 24,900 M (5%) + 14,900 M (3%) = 39,800 M (8%) -->
-													<br>
-													<!--                         추가 적립금은 상품 발송일 기준 익월 말일에 일괄 지급될 예정입니다. -->
-												</p>
-												<a href="#" class="close" id="addMileageInfoClose">닫기</a>
-											</div>
-										</div>
-									</div>
-								</div></li>
-							<li><i class="tit">H.Point</i> <span class="txt" id="hpoint">145
-									P (0.1%)</span></li>
+								</li>
 							<li><i class="tit">배송비</i> <span class="txt"> 30,000원
 									이상 무료배송 (실결제 기준)</span></li>
-							<li><i class="tit">카드사 혜택</i> <span class="txt"> <a
-									href=".product_card_pop" class="arr_link btn_popup_trigger"
-									onclick="javascript:GA_Event('상품_상세', '카드사혜택', '무이자 할부');">카드사
-										혜택 상세 보기<i class="arr wid7 right"></i>
-								</a>
-							</span></li>
 						</ul>
 						<!--// 결제 관련안내 -->
 						<!--// 결제 관련안내 -->
@@ -3028,11 +2776,97 @@ var swiperOptions = {
 						<!-- // 210728 oera 신규 추가  -->
 
 						<!-- 팝업 링크 -->
-						<script type="text/javascript">
+						<script th:inline="javascript">
+						var swiperOptions = {
+						        speed: 500,
+						        pagination: {
+						        el			: '.swiper-pagination',
+						        clickable	: true,
+						        type		: 'progressbar'
+						        },
+						        parallax: true,
+						        grabCursor: true,
+						        watchSlidesProgress: true,
+						        mousewheelControl: true,
+						        keyboardControl: true,
+						        on: {
+						            progress: function() {
+						                var swiper = this;
+						                for (var i = 0; i < swiper.slides.length; i++) {
+						                    var slideProgress = swiper.slides[i].progress;
+						                    var innerOffset = swiper.width * interleaveOffset;
+						                    var innerTranslate = slideProgress * innerOffset;
+						                    swiper.slides[i].querySelector(".slide-inner").style.transform = "translate3d(" + innerTranslate + "px, 0, 0)";
+						                }
+						            },
+						            touchStart: function() {
+						                var swiper = this;
+						                for (var i = 0; i < swiper.slides.length; i++) {
+						                    swiper.slides[i].style.transition = "";
+						                }
+						            },
+						            setTransition: function(speed) {
+						                var swiper = this;
+						                for (var i = 0; i < swiper.slides.length; i++) {
+						                    swiper.slides[i].style.transition = speed + "ms";
+						                    swiper.slides[i].querySelector(".slide-inner").style.transition = speed + "ms";
+						                }
+						            }
+						        }
+						    };
+						var vwSwiper;
+						vwSwiper = new Swiper('.vw_swiper.swiper-container', swiperOptions);
 
-function moveProdQnAPage() {
-	location.href='/ko/prodqna/listProdQnA?productCode=IL2C9TTO870N_BK';
-}
+						if ($pl_video != null) {
+						    vwSwiper.on('slideChange', function(){
+						        if (vwSwiper.activeIndex == (vwSwiper.slides.length - 1)) {
+						            $('.vw_slide_wrap .video_btn').fadeOut('fast');
+						        } else {
+						            $('.vw_slide_wrap .video_btn').fadeIn('fast');
+						            $pl_video.pause();
+
+						            $('.vw_slide_wrap .youtube_pause').hide();//180817 추가
+						            $('.vw_slide_wrap .youtube_play').fadeIn('fast');
+						            $('.vw_slide_wrap .youtube').removeClass('active');
+						            movie_margin_down();
+						            $('.vw_swiper .swiper-pagination').removeClass('hidden');//180817 추가
+
+						            $pl_pause_bul = false;
+						        }
+						    });
+						}
+						//컬러칩 클릭시 상품 색상 변경 기능
+						/*<![CDATA[*/
+						$('.chip').on("click", function() {
+							var pcid = $(this).attr('id');
+							$.ajax({
+								 url : "./colorChg", 
+								 type : "GET", 
+								 data : {
+								 pcid : pcid,
+								 },
+								 context: this,
+								 success : function(data) { 
+									 $('.chip').removeClass("on");
+									 $(this).addClass("on");
+									 $('#slider-W01').css("background-image", "url(" + data.pcimg1 + ")");
+									 $('#slider-W02').css("background-image", "url(" + data.pcimg2 + ")");
+									 $('#slider-W03').css("background-image", "url(" + data.pcimg3 + ")");
+									 $('#size_btn_area .size').html('<button type="button" class="btn" onclick="sizeBtnClick(this)">'+data.psVO[0].psize+'</button>');
+									 for(var i = 1; i < data.length; i++){
+										 $('#size_btn_area .size').text('<button type="button" class="btn" onclick="sizeBtnClick(this)">'+data.psVO[i].psize+'</button>');
+									 }
+									 $('#copy_btn_clipboard').text(data.pcid);
+								 },
+							 	error : function(request,error) {
+									 alert("에러: 잠시후 다시 시도해주세요");
+									 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+								 }
+							 });
+						
+							 
+						});
+						/*]]>*/
 
 </script>
 
@@ -3297,7 +3131,33 @@ if ( reviewCnt > 0 ) {
 		}
 	});
 }
+function resetVwSwiper(reload,liLength) {
+	if ( reload === 'reload' ) {
+	    setTimeout(function(){
+	        if($("#prodImages > li").length > liLength){
+	            for(var i=0; i<liLength; i++){
+	                $("#prodImages > li:first").remove();
+	            }
+	        }
 
+	        //180910 추가 시작
+	        if ( vwSwiper === null ) vwSwiper = new Swiper('.vw_swiper.swiper-container', swiperOptions);
+
+	        vwSwiper.update();//스와이퍼 재실행
+	        vwSwiper.slideTo(0,0);//첫 번째 슬라이드로 이동
+
+	        $pl_pause_bul = false;
+	        $('.vw_slide_wrap .youtube_play').fadeIn('fast');
+	        $('.vw_slide_wrap .youtube_pause').hide();
+	        $('.vw_slide_wrap .youtube').removeClass('active');
+	        movie_margin_down();
+	        $('.vw_swiper .swiper-pagination').removeClass('hidden');
+	        //180910 추가 끝
+	        
+	        movie_func();
+	    }, 200);
+	}
+	}
 // 상품평 수정하기
 function modifyReview(reviewPk, color, colorName, size, orderNumber, purchaseProdYN, categoryCode) {
     var url = '/ko/p/modifyReviewPage?customerReviewId='+reviewPk+'&purchaseColor='+color
