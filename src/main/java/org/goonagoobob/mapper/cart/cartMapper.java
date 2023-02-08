@@ -19,4 +19,6 @@ public interface cartMapper {
 	public List<cartVO> getCartList(String mid);
 	//카트 목록 삭제
 	public int selectDelete(String mid, List<String> entryNumber);
+	//장바구니 추가
+	public String cartInsert(String mid);
 }

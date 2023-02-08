@@ -46,4 +46,11 @@ public class cartServiceImpl implements cartService {
 		return mapper.selectDelete(mid, entryNumber);
 		
 	}
+	
+	@Override
+	public String cartInsert(String mid) {
+		log.info("cartInsert service....");
+		
+		return mapper.cartInsert(mid);
+	}
 }

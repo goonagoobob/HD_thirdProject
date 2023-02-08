@@ -1,5 +1,6 @@
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org" 
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <head>
 
 <meta name="naver-site-verification"
@@ -22,6 +23,7 @@
 <meta name="viewport"
 	content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width">
 <meta name="format-detection" content="telephone=no">
+
 
 
 <title>울 블렌드 하이넥 탑 | T-Shirts | Top | WOMEN | HANDSOME | 더한섬닷컴</title>
@@ -1334,7 +1336,8 @@ $(document).on('click', '.product_zoom_pop a.pop-zoom-cls', function(){
 		$(elem).parent().addClass('on');
 		
 		var colorcode = $('.hs_prd_info_wrap .hs_btn_color_chip button.chip.on').attr('id').replace("info_","");
-		var sizecode  = $(elem).attr('data-value');
+		var sizecode  = $(elem).text();
+		sizecode = parseInt(sizecode);
 		
 		$('.hs_prd_info_wrap.pv-element .copy').text(colorcode+"_"+sizecode);
 		$('.hs_prd_info_wrap.pv-element .copy').attr('data-clipboard-text',colorcode+"_"+sizecode); //추가(redmine:914)품번복사 20180910
@@ -2642,6 +2645,21 @@ $(document).on('click', '.product_zoom_pop a.pop-zoom-cls', function(){
 		$(".product-info-211027").remove();
 	}
 </script>
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#insertcartbutton").click(function() {
+		alert("눌려줘");
+		var pquantity = $('#ordQty').attr('value');
+		alert(pquantity);
+		var psid = $("#copy_btn_clipboard").text().replaceAll("_", " ");
+		alert(check);
+		
+	});	
+}); 
+
+
+</script>
 
 						<!-- 사전예약 -->
 						<!-- 제품 정보 -->
@@ -2653,11 +2671,20 @@ $(document).on('click', '.product_zoom_pop a.pop-zoom-cls', function(){
 									th:if="${list.pcid == pcid}" type="button" th:id="${list.pcid}"
 									class="chip on"
 									th:style="'background:'+${list.pccolorcode}+' url('+${list.pcchipimg}+');'"></button>
-								<button th:each="list : ${productVO.pcVO}"
-									th:if="${list.pcid != pcid}" type="button" th:id="${list.pcid}"
-									class="chip"
-									th:style="'background:'+${list.pccolorcode}+' url('+${list.pcchipimg}+');'"></button>
-							</div>
+
+
+
+								<button th:each="list : ${productVO.pcVO}" th:if="${list.pcid != pcid}" type="button" th:id="${list.pcid}" class="chip" th:style="'background:'+${list.pccolorcode}+' url('+${list.pcchipimg}+');'"></button>
+			
+									<ul class="discountMember">
+										<li><a href="#">
+												<img class="ec-front-product-show-benefit-icon" product-no="3492" benefit="DP" src="//img.echosting.cafe24.com/skin/admin_ko_KR/product/btn_disc_period.gif" alt="기간할인">
+											</a></li>
+									</ul>
+									<p></p>
+									<p class="product_price_css xans-record-">
+										<!-- <span class="title"><span style="font-size: 14px; color: #000000;">판매가</span></span> <span class="value"><span style="font-size: 14px; color: #000000;"><strong id="span_product_price_text";"> <fmt:formatNumber type="number" maxFractionDigits="3" value="${product.pro_price}" /></strong> <input id="product_price" name="product_price" value="" type="hidden"></span></span>  -->
+									</p>				</div>
 							<!--// 색상 버튼 -->
 
 							<!-- 상품 정보 -->
@@ -2667,9 +2694,8 @@ $(document).on('click', '.product_zoom_pop a.pop-zoom-cls', function(){
 										onclick="GA_Event('상품_상세', '브랜드', 'LÄTT');"><span
 										th:text="${productVO.bname}"></span></a>
 								</div>
-
-								<div class="name" th:text="${productVO.pname}"></div>
-
+								<div class="name" th:text="${productVO.pname}">
+								</div>
 								<div class="price">
 									<span th:each="list : ${productVO.pcVO}"
 										th:if="${list.pcid == pcid}" th:text="'₩'+${#numbers.formatInteger(list.pcprice, 0, 'COMMA')}"></span>
@@ -5916,21 +5942,21 @@ function fn_LiveView() {
 }
 
 </script>
-
-				<!-- 하단 플로팅 -->
-				<!-- 사전예약 -->
-				<div class="hs_btm_btnwrap two pre_order1905">
-					<button type="button" class="hs_btm_btn black trigger cart"
-						onclick="GA_Event('상품_상세', '하단 고정 버튼', '쇼핑백담기');">쇼핑백 담기</button>
-					<button type="button" class="hs_btm_btn pink trigger direct"
-						onclick="GA_Event('상품_상세', '하단 고정 버튼', '바로주문');">바로주문</button>
-					<!-- 토스트팝업 190507 -->
-					<div class="toast_popup_pre_order1905">
-						<p>
-							예약 주문이 가능한 옵션(컬러/사이즈)가 있습니다. <br>옵션 선택 후 배송 예정일을 확인해 주세요.
-						</p>
-					</div>
-					<!-- // 토스트팝업 190507 -->
+					<!-- 하단 플로팅 -->
+					<!-- 사전예약 -->
+					<div class="hs_btm_btnwrap two pre_order1905">
+						<button type="button" class="hs_btm_btn black" id="insertcartbutton"
+						  >쇼핑백 담기</button>
+						<button type="button" class="hs_btm_btn pink trigger direct"
+							onclick="GA_Event('상품_상세', '하단 고정 버튼', '바로주문');">바로주문</button>
+						<!-- 토스트팝업 190507 -->
+						<div class="toast_popup_pre_order1905">
+							<p>
+								예약 주문이 가능한 옵션(컬러/사이즈)가 있습니다. <br>옵션 선택 후 배송 예정일을 확인해 주세요.
+							</p>
+						</div>
+						<!-- // 토스트팝업 190507 -->
+					
 				</div>
 				<!--// 하단 플로팅 -->
 

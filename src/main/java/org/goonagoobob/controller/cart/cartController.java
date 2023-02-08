@@ -48,8 +48,11 @@ public class cartController {
 	}
 	
 	@GetMapping("/insert")
-	public void cartInsert( @RequestParam("username") String mid, Model model) {
+	public String cartInsert(@RequestParam(value="psid", required=false) String psid, @RequestParam(value="pquantity", required=false) String pquantity, Principal prin, Model model) {
 		log.info("cartInsert controller");
+		String mid = prin.getName();
+		service.cartInsert(mid);
+		return "cart/list";
 	}
 	
 //	  // 장바구니 전체 삭제
@@ -77,8 +80,11 @@ public class cartController {
 		return "cart/list";
 	}
 	
-//	@PostMapping("/insertCart")
-//	public String insertCart(Principal prin, String)
+	@PostMapping("/insert")
+	public String insertCart(Principal prin) {
+		
+		return "cart/list";
+	}
 
 
 
