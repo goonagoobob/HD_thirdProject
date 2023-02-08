@@ -5,7 +5,7 @@ import org.goonagoobob.domain.product.productCommonVO;
 //* @author : 조일우
 //* @Date : Feb 6. 2023
 //* 상품 상세 Service test 추가 Feb 6. 2023
-//* 
+//* 상품 컬러 변경 Service test 추가 Feb 7. 2023
 //********************************* -->
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,4 +22,11 @@ public class productServiceTests {
 		productCommonVO vo = service.getPDetail("TM2CAKOP661W");
 		System.out.println(vo); 
 	}
+	
+	@Test
+	public void productColorTests() {
+		
+		System.out.println(service.getPColor("TM2CAWPC270W_OH")); 
+	}
+	
 }
