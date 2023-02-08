@@ -62,7 +62,7 @@ public class myPageController {
 	}
 
 	
-	
+	//로그인 안된 상태로 바로 들어가면 principal 오류가 남 ... 
 	@GetMapping("/checkPassword")
 	public void checkPassword(Principal principal, Model model) {
 		
