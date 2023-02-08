@@ -96,6 +96,6 @@ public class myPageController {
 		else System.out.println("불일치");
 		//확인 fail handler
 		
-		return "myPage/checkPasswordForm";
+		return "myPage/changeUserInfo";
 	}
 }

@@ -1,5 +1,6 @@
 package org.goonagoobob.security.configs;
 
+import org.goonagoobob.security.handler.CustomLoginSuccessHandler;
 import org.goonagoobob.security.provider.CustomAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -52,14 +53,19 @@ public class securityConfig extends WebSecurityConfigurerAdapter {
 		//http.csrf().disable();
 		
 		http.authorizeHttpRequests().antMatchers("/member/join").permitAll()
-			.antMatchers("/member/login").permitAll();
-			//anyRequest().authenticated(); // csrf 보안 설정 비활성화
+			.antMatchers("/member/login").permitAll()
+			.antMatchers("/myPage/myPage").permitAll()
+			.antMatchers("/member/findIdPassword").permitAll()
+			.antMatchers("/member/findIdResult").permitAll()
+			.anyRequest().authenticated(); // csrf 보안 설정 비활성화
 		// .addFilter(jwtAuthorizationFilter()) 해야함
 
 		http.formLogin()
 			.loginPage("/member/login")
 			.loginProcessingUrl("/member/login")
-			.defaultSuccessUrl("/");
+			.usernameParameter("username")
+			.passwordParameter("password")
+			.successHandler(new CustomLoginSuccessHandler());
 		
 		http.logout()
 		.logoutSuccessUrl("/")

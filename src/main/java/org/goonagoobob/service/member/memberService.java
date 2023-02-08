@@ -7,4 +7,5 @@ public interface memberService {
 	public int joinMemberAccount(memberJoin mj);
 	public memberAccount selectById(String mid);
 	public String checkPassword(String mid);
+	public String findId(String mname, String mbirth);
 }

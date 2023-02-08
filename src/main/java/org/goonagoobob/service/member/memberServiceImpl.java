@@ -39,4 +39,10 @@ public class memberServiceImpl implements memberService{
 		return mpassword;
 	}
 
+	@Override
+	public String findId(String mname, String mbirth) {
+		String mid = memberMapper.findId(mname, mbirth);
+		return mid;
+	}
+
 }
