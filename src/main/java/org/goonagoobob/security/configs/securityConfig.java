@@ -57,6 +57,9 @@ public class securityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/myPage/myPage").permitAll()
 			.antMatchers("/member/findIdPassword").permitAll()
 			.antMatchers("/member/findIdResult").permitAll()
+			.antMatchers("/").permitAll()
+			.antMatchers("/product/productDetail").permitAll()
+			.antMatchers("product/productList").permitAll()
 			.anyRequest().authenticated(); // csrf 보안 설정 비활성화
 		// .addFilter(jwtAuthorizationFilter()) 해야함
 
