@@ -1,9 +1,11 @@
 package org.goonagoobob.security.configs;
 
+import org.goonagoobob.security.provider.CustomAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -24,15 +26,16 @@ public class securityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private UserDetailsService userDetailsService; //이 모양으로 반납해줄 .,,, bean 설정해놓음
 	
-	// 1. AuthenticationProvider	
-	// 2. authenticationprovider 사용한 생성자?
-	// 3. AuthenticationManagerBuilder	
+	//AuthenticationProvider	
+	 @Bean
+	   public AuthenticationProvider authenticationProvider() {
+	      return new CustomAuthenticationProvider();
+	   }
+
+	// AuthenticationManagerBuilder	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-
-		auth.inMemoryAuthentication().withUser("1111")
-				.password("$2a$10$BjEMRJwzHjGgGQDGCm2ysO.pN4bCaVBLLnHQONc5bGB/S3g6pBav6").roles("user");
-		
+		auth.authenticationProvider(authenticationProvider());
 		//우리가 만든 userDetails 넣어주기
 		auth.userDetailsService(userDetailsService); 
 	}
