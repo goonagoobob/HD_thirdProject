@@ -89,5 +89,30 @@
 		insert into orders(OID, OZIPCODE, OADDRESS1, ORECEIVER, OPHONE, OTEL, OMEMO, OEAMIL, OUSEDMILEAGE, OBEFOREPRICE, OAFTERPRICE, MID, PMCODE, CPID, OADDRESS2)
 		values (order_sequence.nextval, #{ozipcode},#{oaddress1},#{oreceiver},#{ophone},#{otel},#{omemo},#{oemail},#{ousedmileage},#{obeforeprice},#{oafterprice},#{mid},#{pmcode},#{cpid},#{oaddress2})
 	</insert>
+	
+	<update id="orderCancel">
+		update orders set ostatus = '주문 취소' where oid = #{oid} 
+	</update>
+	
+		<select id="removeList" resultMap="orderMap">
+     	<![CDATA[
+		  	select oid, psid, ostatus, odate, oicount, oitotalprice, pname, bname, pccolorcode, pcimg1, pcprice, psize
+		  	from (
+		  		select 
+		  		rownum rn, o.oid, items.psid, o.ostatus, o.odate, oicount, oitotalprice, pname, bname, pccolorcode, pcimg1, pcprice, psize
+		  		from orders o
+		  		left outer join order_item items
+		  		on o.oid = items.oid
+		  		left outer join view_product_detail vpd 
+		  		on items.psid = vpd.psid
+		  	 where
+		  	 mid = #{mid} and
+   		]]>
+		<include refid="criteria"></include> 
+	  	<![CDATA[
+		 	rownum <= #{cri.pageNum} * #{cri.amount})
+			where rn > ( #{cri.pageNum} - 1 ) *  #{cri.amount} and oid = #{oid}
+	 	]]>
+	</select>
 
 </mapper> 

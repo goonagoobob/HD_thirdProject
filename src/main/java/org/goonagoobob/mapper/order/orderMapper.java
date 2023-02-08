@@ -14,8 +14,8 @@ public interface orderMapper {
 	
 	public int getCountByMid(@Param("cri") Criteria cri, @Param("mid") String mid); // 총 주문 갯수
 	
-	public List<orderVO> getList(); // 주문 조회
-	
 	public List<orderVO> getListWithPaging(@Param("cri") Criteria cri, @Param("mid") String mid); // 페이징한 주문 조회
+	
+	public int ordercancel(@Param("oid") String oid);
 	
 }
