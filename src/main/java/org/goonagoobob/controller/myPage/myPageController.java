@@ -22,6 +22,11 @@ public class myPageController {
 	@Autowired
 	private orderService service;
 	
+	@GetMapping("/myPage")
+	public void myPage() {
+		
+	}
+	
 	@GetMapping("/passwordCheck")
 	public void passwordCheck() {
 		

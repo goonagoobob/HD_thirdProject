@@ -31,10 +31,5 @@ public class cartServiceTests {
 		log.info(list);
 	}
 	
-	@Test
-	public void deleteCart() {
-		String mid = "user1";
-		int result = service.deleteCart(mid);
-		log.info(result);
-	}
+
 }
