@@ -8,17 +8,14 @@
 
 package org.goonagoobob.service.cart;
 
-import java.security.Principal;
 import java.util.List;
 
 import org.goonagoobob.domain.cart.cartVO;
 import org.goonagoobob.mapper.cart.cartMapper;
-import org.goonagoobob.mapper.order.orderMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
 
@@ -40,17 +37,17 @@ public class cartServiceImpl implements cartService {
 	}
 	
 	@Override
-	public int selectDelete(String mid, List<String> entryNumber) {
+	public void selectDelete(String mid, List<String> entryNumber) {
 		log.info("cartDelete Service.....");
 		
-		return mapper.selectDelete(mid, entryNumber);
+		mapper.selectDelete(mid, entryNumber);
 		
 	}
 	
 	@Override
-	public String cartInsert(String mid) {
+	public void cartInsert(String mid, String psid, int pquantity) {
 		log.info("cartInsert service....");
 		
-		return mapper.cartInsert(mid);
+		mapper.cartInsert(mid, psid, pquantity);
 	}
 }

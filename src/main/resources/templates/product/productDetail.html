@@ -2648,16 +2648,42 @@ $(document).on('click', '.product_zoom_pop a.pop-zoom-cls', function(){
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
+	  var token = $("meta[name='_csrf']").attr("content");
+	  var header = $("meta[name='_csrf_header']").attr("content");
+
 	$("#insertcartbutton").click(function() {
 		alert("눌려줘");
 		var pquantity = $('#ordQty').attr('value');
 		alert(pquantity);
-		var psid = $("#copy_btn_clipboard").text().replaceAll("_", " ");
-		alert(check);
+		var psid = $("#copy_btn_clipboard").text();
+		alert(psid);
+		let element = {
+				"psid" : psid,
+				"pquantity" : pquantity
+		};
+		
+		$.ajax({
+			url : '/cartRestApi/insert',
+			type : 'post',
+			data : {
+				"psid" : psid,
+				"pquantity" : pquantity
+			},
+		    beforeSend : function(xhr) {
+		        xhr.setRequestHeader(header, token);
+		    },
+			success : function(data) {
+				alert("success");
+			},
+			error : function(){
+				alert("error");
+			
+			}
+		
+		});
 		
 	});	
 }); 
-
 
 </script>
 
@@ -3162,9 +3188,9 @@ if ( reviewCnt > 0 ) {
 					    if ( reviewList[i].profileData == 'THESTAR') {
 					        reviewList[i].profileData = 'THE STAR';
 					    }
-						txtList += '      <p class="grade">'+reviewList[i].profileData+'</p>'; <!-- 고객등급 -->
+						txtList += '<p class="grade">'+reviewList[i].profileData+'</p>'; 
 					} else {
-						//txtList += '      <p class="grade"></p>'; <!-- 고객등급 -->
+						//txtList += ' <p class="grade"></p>'; <!-- 고객등급 -->
 					}
 				}
 				txtList += '      <p class="data">'+reviewList[i].displayCreateDate.replace(/-/gi, '.')+'</p>';
@@ -5946,7 +5972,7 @@ function fn_LiveView() {
 					<!-- 사전예약 -->
 					<div class="hs_btm_btnwrap two pre_order1905">
 						<button type="button" class="hs_btm_btn black" id="insertcartbutton"
-						  >쇼핑백 담기</button>
+						 >쇼핑백 담기</button>
 						<button type="button" class="hs_btm_btn pink trigger direct"
 							onclick="GA_Event('상품_상세', '하단 고정 버튼', '바로주문');">바로주문</button>
 						<!-- 토스트팝업 190507 -->

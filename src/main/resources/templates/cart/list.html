@@ -1,5 +1,7 @@
 <html lang="ko" class="back">
 <head>
+   <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 <meta name="naver-site-verification"
 	content="2f9358e1e36605519854a595f243f0171519dd1d">
 <meta name="google-site-verification"
@@ -181,7 +183,7 @@ ACCMOB.config.CSRFToken = "c7173c07-0f23-459b-9438-53fe8ca983cf";
 </head>
 <body class="back">
 	<script>
-<!--  recoPick  START ---->	
+//<!--  recoPick  START ---->	
 	var birthday = 'Fri May 29 00:00:00 UTC 1998';
 	var splitBirthday = birthday != '' ? birthday.split(" ")[5]: ''; //출생년도
 	var gender   = 'FEMALE';
@@ -467,7 +469,7 @@ var prevSelectEntry = ",";
 	}
 		cartListCheckPrice(entryPkList, true);
 	});
-<!-- 2019.11.12 쇼핑백 최초 진입 시 선택 상품 없도록 수정 - 하단 합계 금액 계산 -->
+//<!-- 2019.11.12 쇼핑백 최초 진입 시 선택 상품 없도록 수정 - 하단 합계 금액 계산 -->
 $('.gl_check_all').click(function(){
 		var cartDivision = $("#ordersheetCartDivision").val();	    
 		var onlyFourPm = $("#onlyFourPm").is(':checked');
@@ -967,10 +969,7 @@ NetFunnel_Action({action_id:"buy_now"},function(ev,ret){
 					</ul>
 				</div>
 				<!-- payment_btn e -->
-				<!-- hsome_divpop_list | í´íëª©ë¡ s -->
-				<!-- hsome_divpop_list | í´íëª©ë¡ s -->
 				<div class="hsome_tooltip_list">
-					<!-- í´í : ì¼íë°±ì¶ê° e -->
 					<div class="tooltip_html">
 						<div class="tooltip_wrap tooltip_buy_delivery_charge">
 							<div class="tltp_close_btn btn_tltp_close">
@@ -1986,15 +1985,22 @@ la.confirmAction = function(){//확인 호출 펑션
   }
   
   entryNumber = entryNumber.substring(0,entryNumber.length-1);
-  
+  var token = $("meta[name='_csrf']").attr("content");
+  var header = $("meta[name='_csrf_header']").attr("content");
+
   $.ajax({
-      type: "GET",
-      url: "cart/seldelete",
-      dataType: "json",
+      type: "POST",
+      url: "/cartRestApi/seldelete",
+      contentType :"application/json",
       async : false,
-      data : {"entryNumber" : entryNumber},
+      beforeSend : function(xhr) {
+          xhr.setRequestHeader(header, token);
+       },
+      data : JSON.stringify({entryNumber : entryNumber,
+    	  mid : 'user1'}),
       success: function(data){
-      if(data == "") {
+    	  console.log(data);
+      if(data == "s") {
           var lc = new layerAlert("삭제가 완료 되었습니다.");
               lc.confirmAction = function(){
             $("a[name='cartDivision']").each(function() {

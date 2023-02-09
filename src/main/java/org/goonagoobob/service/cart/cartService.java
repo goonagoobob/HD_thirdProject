@@ -16,9 +16,9 @@ public interface cartService {
 	//카트 리스트
 	public List<cartVO> getCartList(String mid);
 	
-	//전체 상품 삭제
-	public int selectDelete(String mid, List<String> entryNumber);
+	//선택 상품 삭제
+	public void selectDelete(String mid, List<String> entryNumber);
 	
 	//장바구니 추가
-	public String cartInsert(String mid);
+	public void cartInsert(String mid, String psid, int pquantity);
 }

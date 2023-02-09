@@ -20,12 +20,16 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -47,13 +51,7 @@ public class cartController {
 		
 	}
 	
-	@GetMapping("/insert")
-	public String cartInsert(@RequestParam(value="psid", required=false) String psid, @RequestParam(value="pquantity", required=false) String pquantity, Principal prin, Model model) {
-		log.info("cartInsert controller");
-		String mid = prin.getName();
-		service.cartInsert(mid);
-		return "cart/list";
-	}
+	
 	
 //	  // 장바구니 전체 삭제
 //	  
@@ -67,19 +65,7 @@ public class cartController {
 //	  return "cart/list"; 
 //	 }
 	 
-	
-	@PostMapping("/seldelete") 
-	public String selectDelete(Principal principal, @RequestParam("entryNumber") List<String> entryNumber, Model model) {
-		log.info("cartDelete controller");
-		
-		String mid = principal.getName();
-		int result = service.selectDelete(mid, entryNumber);
-		log.info(result);
-		model.addAttribute(result);
-		
-		return "cart/list";
-	}
-	
+
 	@PostMapping("/insert")
 	public String insertCart(Principal prin) {
 		
