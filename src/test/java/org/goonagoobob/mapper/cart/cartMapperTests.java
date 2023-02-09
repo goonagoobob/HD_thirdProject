@@ -31,6 +31,14 @@ public class cartMapperTests {
 	
 	}
 	
+	@Test
+	public void cartInsert() {
+		String mid = "user1";
+		String psid = "tkdvndfa";
+		int pquantity = 2;
+		mapper.cartInsert(mid, psid, pquantity);
+	}
+
 
 	
 	

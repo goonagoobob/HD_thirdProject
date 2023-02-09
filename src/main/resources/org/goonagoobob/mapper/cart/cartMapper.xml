@@ -23,17 +23,18 @@
 	AND c.mid = 'user1'
 </select>
 
-<insert id = "cartInsert">
+<insert id = "cartInsert" >
 	INSERT INTO cart
 	VALUES(#{mid}, #{psid}, #{pquantity})
 
 </insert>
 
-<delete id = "selectDelete">
-
+<delete id = "selectDelete" parameterType="java.util.List">
 	DELETE cart
 	WHERE mid = #{mid}
-	AND psid = #{entryNumber}
+	<foreach collection="entryNumber" item="item" open="AND" close="" separator="OR"> 
+      (mid = #{mid} AND psid = #{item}) 
+      </foreach> 
 
 </delete>
 

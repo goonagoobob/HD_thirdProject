@@ -416,16 +416,42 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
+	  var token = $("meta[name='_csrf']").attr("content");
+	  var header = $("meta[name='_csrf_header']").attr("content");
+
 	$("#insertcartbutton").click(function() {
 		alert("눌려줘");
 		var pquantity = $('#ordQty').attr('value');
 		alert(pquantity);
-		var psid = $("#copy_btn_clipboard").text().replaceAll("_", " ");
-		alert(check);
+		var psid = $("#copy_btn_clipboard").text();
+		alert(psid);
+		let element = {
+				"psid" : psid,
+				"pquantity" : pquantity
+		};
+		
+		$.ajax({
+			url : '/cartRestApi/insert',
+			type : 'post',
+			data : {
+				"psid" : psid,
+				"pquantity" : pquantity
+			},
+		    beforeSend : function(xhr) {
+		        xhr.setRequestHeader(header, token);
+		    },
+			success : function(data) {
+				alert("success");
+			},
+			error : function(){
+				alert("error");
+			
+			}
+		
+		});
 		
 	});	
 }); 
-
 
 </script>
 
@@ -916,9 +942,9 @@ if ( reviewCnt > 0 ) {
 					    if ( reviewList[i].profileData == 'THESTAR') {
 					        reviewList[i].profileData = 'THE STAR';
 					    }
-						txtList += '      <p class="grade">'+reviewList[i].profileData+'</p>'; <!-- 고객등급 -->
+						txtList += '<p class="grade">'+reviewList[i].profileData+'</p>'; 
 					} else {
-						//txtList += '      <p class="grade"></p>'; <!-- 고객등급 -->
+						//txtList += ' <p class="grade"></p>'; <!-- 고객등급 -->
 					}
 				}
 				txtList += '      <p class="data">'+reviewList[i].displayCreateDate.replace(/-/gi, '.')+'</p>';
@@ -2544,6 +2570,665 @@ $(window).load(function() {
 						id="viewExhibitionPageName" value="WEEKLY BEST">
 				</div>
 				<!-- 사전예약 -->
+				<script type="text/javascript">
+$(document).ready(function() {
+	var cur_scrl_pos = 0;
+	var $buying_type = 0;	
+	
+	/* 쇼핑백담기 vs 바로구매 버튼 클릭 */
+	var hst_btm_btnwrap = false;
+//	$('.hs_btm_btnwrap .trigger').click(function(){
+	$('.hs_btm_btnwrap .trigger').on('click', function(){
+		if ( hst_btm_btnwrap ) return;
+
+		hst_btm_btnwrap = true;
+		//if ( !hst_btm_btnwrap ) {
+			// 현업 요청으로 사이즈 미선택 시 플로팅(레이어팝업) 화면 미노출 기능 제거
+//			if ($('.hs_prd_info_wrap .hs_btn_size_wrap .size_area .size.on').length < 1) {//180716 임시 추가
+//				return false;
+//			}
+
+			if ($(this).attr('class').indexOf('cart') != -1) {			//쇼핑백 담기
+				$buying_type = 0;
+			} else if ($(this).attr('class').indexOf('direct') != -1) {	//바로구매
+				$buying_type = 1;
+			} else {													//원클릭구매
+				$buying_type = 2;
+			
+                var appYn = "N";
+                /*if(appYn == 'N') {
+                    layerAlert("원클릭결제 서비스가 원활하지 않습니다.<br><br>모바일앱을 이용하시거나<br>'일반결제' 또는 '주문서 내 원클릭결제'를<br> 이용해주시길 바랍니다.<br><br> 빠른 시일내에 원활한 서비스를 위해<br> 최선을 다하겠습니다.<br> 이용에 불편을 드려 죄송합니다.");   //원클릭 결제오류 임시얼럿
+                    hst_btm_btnwrap = false;
+                    return;             
+                }*/
+			}
+
+			// cur_scrl_pos = $(window).scrollTop();
+			var $page_url = '/ko/product/prodfloating';
+
+			// setTimeout(function(){
+				jQuery.ajax({
+					url		: $page_url,
+					data	: {productcode : $('.hs_prd_info_wrap .hs_btn_color_chip.infoColor button.chip.on').attr('id').replace("info_",""),
+							   sizecode	   : $('.hs_btn_size_wrap .size_area .size.on .btn').attr('data-value'),
+							   buying_type : $buying_type
+							  },
+					type	: 'get',
+					success	: function(data){
+						$('body .hsome_allContents_wrapper').append(data);
+						setTimeout(function(){
+							$('.hs_pro_view_floating').addClass('active');
+							$('.hs_pro_view_layer').fadeIn('fast');
+							holdBodyShow(); //body 잠그기
+
+							/* 쇼핑백담기 vs 바로구매 페이지 분리로 인해 주석 처리 */
+							//$('.hs_pro_view_floating .floating_box:first-child .hs_btm_btnwrap a').hide();
+							//$('.hs_pro_view_floating .floating_box:first-child .hs_btm_btnwrap a').eq($buying_type).show();
+							/* 쇼핑백담기 vs 바로구매 페이지 분리로 인해 주석 처리 */
+
+							hst_btm_btnwrap = false;
+
+							
+// 							exchangeRateHtml();
+						}, 400);
+					},
+					error	: function(xhr, Status, error) {
+						hst_btm_btnwrap = false;
+
+						var la = new layerAlert('[Error] ' + error);
+					}
+				});
+			// }, 300);
+			
+			return false;
+		//}
+	});	// $('.hs_btm_btnwrap .trigger').click
+	/* 쇼핑백담기 vs 바로구매 버튼 클릭 */
+
+	/* 쇼핑백담기 vs 바로구매 팝업 닫기 */
+	$(document).on('click', '.hs_pro_view_floating .floating_close', function(){
+		$(this).parent().parent().removeClass('active');
+		$(this).parent().parent().addClass('disabled');
+		$('.hs_pro_view_layer').fadeOut('fast');
+		holdBodyHide(); //body 잠그기 해제
+
+		setTimeout(function(){
+			$(this).parent().parent().removeClass('disabled');
+			$('.hs_pro_view_floating').remove();
+		}, 400);
+
+		$delivery_progress = false;
+
+		return false;
+	});
+	/* 쇼핑백담기 vs 바로구매 팝업 닫기 */
+
+
+	function view_floating_slide(num){
+		$('.hs_pro_view_floating .floating_box').removeClass('active');
+		$('.hs_pro_view_floating .floating_box').eq(num).addClass('active');
+	}
+
+	
+	/* 배송 옵션(다른 배송 방식) 선택 */
+	var $delivery_type = 0;		// 매장수령/4PM/앳홈
+	var $deliChangeYn = false;
+	$(document).on('change', '.hs_pro_view_floating .delivery2 input', function(){
+		if ($(this).prop('checked')) {
+			$deliChangeYn=  true;
+			// $delivery_type = $(this).closest('.hs_check01').index();
+			if ( $(this).attr('id') === 'delivery2_01' ) {
+				$delivery_type = 0;
+			} else if ( $(this).attr('id') === 'delivery2_02' ) {
+				$delivery_type = 1;
+			} else if ( $(this).attr('id') === 'delivery2_03' ) {
+				$delivery_type = 2;
+			} else if ( $(this).attr('id') === 'delivery2_04' ) {
+                $delivery_type = 3;
+            }
+		}
+		
+		if($buying_type != 2){
+		    $(this).closest('.floating_box').find('.hs_btm_btnwrap a').hide();
+			if ($delivery_type == 0) {	// 매장수령 선택
+				$(this).closest('.floating_box').find('.hs_btm_btnwrap a').eq(0).show();
+			} else {					// 4PM / 앳홈 선택
+				$(this).closest('.floating_box').find('.hs_btm_btnwrap a').eq(1).show();
+			}
+		}
+	});
+	/* 배송 옵션(다른 배송 방식) 선택 */
+
+	
+	/* 상품옵션 선택 완료 -> 배송 옵션 선택 화면으로 이동 */
+	$(document).on('click', '.hs_pro_view_floating .hs_btm_btnwrap a', function(){
+		if($deliChangeYn == false && $("#delivery02").length > 0){
+			var firstDeliveryId = $('.hs_pro_view_floating .delivery2 input').eq(0).attr('id');
+			if ( firstDeliveryId=== 'delivery2_01' ) {
+                $delivery_type = 0;
+            } else if (firstDeliveryId=== 'delivery2_02' ) {
+                $delivery_type = 1;
+            } else if ( firstDeliveryId=== 'delivery2_03' ) {
+                $delivery_type = 2;
+            } else if (firstDeliveryId === 'delivery2_04' ) {
+                $delivery_type = 3;
+            }
+			
+			if($buying_type != 2){
+	            $('#'+firstDeliveryId).closest('.floating_box').find('.hs_btm_btnwrap a').hide();
+	            if ($delivery_type == 0) {  // 매장수령 선택
+	            	$('#'+firstDeliveryId).closest('.floating_box').find('.hs_btm_btnwrap a').eq(0).show();
+	            } else {                    // 4PM / 앳홈 선택
+	            	$('#'+firstDeliveryId).closest('.floating_box').find('.hs_btm_btnwrap a').eq(1).show();
+	            }
+	        }
+		}
+
+		
+	    if($("#oneclick4pm").val() == "active" && $("#delivery02").is(":checked")){
+	        return;
+	    }
+	    
+		var $this = $(this);
+		var $this_slide = $this.closest('.floating_box');
+		var $next_slide_idx = $this_slide.index() + 1;
+
+		if (($this_slide.index() == 0) && ($this_slide.find('.size_area .size.on').length < 1)) {//180904 첫 번째 floating_box 영역의 size 선택 여부 체크
+			$this_slide.find('.size_area').addClass('warning-comm');
+
+			//181002 플루팅 화면의 사이즈 미선택시 배경 붉게 처리 추가 시작
+			$this_slide.find('.hs_btn_size_wrap').addClass('warning');
+			
+			setTimeout(function(){
+				$this_slide.find('.hs_btn_size_wrap').removeClass('warning');
+			}, 500);
+			//181002 추가 끝
+
+			setTimeout(function(){
+				$this_slide.find('.size_area').removeClass('warning-comm');
+			}, 820);
+			return false;
+		}
+		
+		//다음 슬라이드로 가는 부분
+		if ($next_slide_idx == 1) {
+
+			// 상품 옵션 선택
+			var checkedColor = $('.hs_pro_view_floating .floating_box .hs_btn_color_chip button.chip.on').attr('id');
+			var checkedSize  = $('.hs_pro_view_floating .floating_box .hs_btn_size_wrap .size_area span.size.on').attr('id');
+			
+			if ( checkedColor === null || checkedColor === undefined || checkedColor === "undefined" || checkedColor === "" ) {
+				var la = new layerAlert("주문하실 상품을 선택해주세요.");
+				return false;
+			} else if ( checkedSize === null || checkedSize === undefined || checkedSize === "undefined" || checkedSize === "" ) {
+				var la = new layerAlert("사이즈를 선택해 주세요.");
+				return false;
+			} else {
+				$('#productcode').val(checkedColor+"_"+checkedSize);
+				$('#size').val(checkedSize);
+				
+				var colorClass = "";
+				if ( $(".txt_color_chip").text() === "WHITE" || $(".txt_color_chip").text() === "white" ) {
+					colorClass = " white";
+				} else {
+					colorClass = "";
+				}
+				
+				if($("#imageYn").val() == 'Y') {
+					var txtColor = '<span class="color_chip'+colorClass+'" style="background:'+$('#rgbcode').val()+' url(\''+$('#imageUrl').val()+'/dims/resize/60x60\');"></span>';
+				} else {
+					var txtColor = '<span class="color_chip'+colorClass+'" style="background:'+$('#rgbcode').val()+';"></span>';
+				}
+				$('#prodcolorChip').html(txtColor);
+				var txtSize = $('#rgbname').val() + ' / 사이즈 ' + (checkedSize === 'FR' || checkedSize === 'F' ? 'FREE':$('#size').val()) + ' / ' + $('#ordQty').val() + '개';
+				$('#prodoptions').html(txtSize);
+				var txtPrice= "₩" + numberWithCommas(parseInt($("#price").val()) * (parseInt($('#ordQty').val())));
+				$('#prodprice').html(txtPrice);
+				
+				showExchangeRate2($("#price").val(), $next_slide_idx); ///0922
+					
+				var stockLevel = $('.hs_pro_view_floating .floating_box .hs_btn_size_wrap .size_area span.size.on').attr('data-value');
+				if ( stockLevel < 2 ) {
+					$('.line_box.delivery li').eq(1).hide();
+				} else {
+					$('.line_box.delivery li').eq(1).show();
+				}
+				
+				if ($buying_type == 0) {
+					// Added by Yun
+					// 쇼핑백담기 시에도 배송옵션 선택
+					$this_slide.removeClass('active');
+					view_floating_slide($next_slide_idx);
+				} else if ($buying_type == 1) {
+					$this_slide.removeClass('active');
+					view_floating_slide($next_slide_idx);
+				} else if ($buying_type == 2) { // Added by IDR(원클릭 구매)
+					try{
+	                    ga('gp.send','pageview',{
+	                        'title':'상품상세>원클릭_배송', //가상페이지 화면명
+	                        'location':window.location.protocol + '//' + window.location.host + decodeURI(window.location.pathname) + '?detail_1click=shipping' //가상페이지URL
+	                    });
+	                }catch(e) {
+	                    console.log(e);
+	                }
+					$this_slide.removeClass('active');
+					view_floating_slide($next_slide_idx);
+				} 
+			}
+		} else if ($next_slide_idx == 2) {
+
+			if ($('.hs_pro_view_floating .delivery li').eq(1).find('input').prop('checked')) {
+				// 다른 배송 방식 선택
+				$this_slide.removeClass('active');
+				view_floating_slide($next_slide_idx);
+				
+				return false;
+			} else {
+				// 택배 배송 방식 선택
+			}
+
+		} else if ($next_slide_idx == 3) {
+		
+			if ($delivery_type == 0) {		//매장 수령
+				$delivery_progress = true;
+			
+		    	layerPopupOpen("/ko/store-finder/pickupStorePopup?brandCode=BR31_BR31&layer=lp_depth2", ".hsome_layerpop_contents.lp_depth2", ".hsome_layer_popup.product_store_pop");
+			} else {
+				$delivery_progress = true;
+			}
+
+		}
+		
+		if($(".cont .pre_order_txt1903").css("display") == "block"){
+            $(".hs_check_list .hs_check01:eq(1)").hide();
+        }else{
+            $(".hs_check_list .hs_check01:eq(1)").show();
+        }
+	});
+	/* 상품옵션 선택 완료 -> 배송 옵션 선택 화면으로 이동 */
+
+	/* 수령 매장 선택 팝업 호출 */
+	$('.product_store_pop .hs_pop_btn_wrap .hs_black_comm_btn').click(function(){
+		$(this).closest('.pop-comm-cnts').next().trigger('click');
+		view_floating_slide($('.hs_pro_view_floating .floating_box').length - 1);
+		// $delivery_progress = false;
+
+		return false;
+	});
+	/* 수령 매장 선택 팝업 호출 */
+
+	/* 이전 옵션 선택 화면으로 이동 */
+	$(document).on('click', '.hs_pro_view_floating .prev_link', function(){
+		var $this_slide = $(this).closest('.floating_box');
+		var $prev_slide_idx = $this_slide.index() - 1;
+
+		$this_slide.removeClass('active');
+
+		// 이전 슬라이드로 가는 부분
+		if ( $this_slide.index() == ($('.hs_pro_view_floating .floating_box').length - 1) ) {
+			$prev_slide_idx = 1;
+		}
+		view_floating_slide($prev_slide_idx);
+
+		return false;
+	});
+	/* 이전 옵션 선택 화면으로 이동 */
+
+	/* 수령매장 변경 클릭 */
+	$('.hs_pro_view_floating .txt_under_link.btn_popup_trigger').click(function(){
+		// $delivery_progress = true;
+		return false;
+	});
+	/* 수령매장 변경 클릭 */
+	
+	if("false" == "true") {
+		toastPopupPreOrder();
+	}
+});
+
+
+//180716 추가 시작
+$(document).ready(function(){
+	/* $(document).on('click', '.line_box.hs_btn_size_wrap .size_area .size button', function(){//180904 추가(구매 플로팅 화면의 사이즈 버튼 클래스 토글링)
+			if (!$(this).prop('disabled')) {
+				$('.hs_btn_size_wrap .size_area .size').removeClass('on');
+				$(this).parent().addClass('on');
+			}
+	}); */
+	$('.line_box.hs_btn_size_wrap .size_area .size button').on('click',function(){//180904 추가(구매 플로팅 화면의 사이즈 버튼 클래스 토글링)
+		if (!$(this).prop('disabled')) {
+			$('.hs_btn_size_wrap .size_area .size').removeClass('on');
+			$(this).parent().addClass('on');
+		}
+	});
+/*
+	$('.hs_btn_size_wrap .size_area .size').click(function(){//사이즈 선택 180806 수정
+		var $this = $(this);
+		if (!$this.find('button').attr('disabled')) {
+			$this.siblings().removeClass('on');
+			$this.addClass('on');
+		}
+	});
+*/
+
+	/* 180824 삭제 | 바로구매 시 바닥 페이지의 사이즈 선택 유도 스크립트 삭제
+	$('.hs_btm_btnwrap button').click(function(){//바로구매 버튼 클릭
+		var $parent = $('.hs_prd_info_wrap .hs_btn_size_wrap .size_area');
+		if ($parent.find('.size.on').length < 1) {
+
+			$('html, body').stop().animate({
+				scrollTop: $parent.offset().top - (($(window).height() - $parent.outerHeight())/2)
+			}, 400, function(){
+				setTimeout(function(){
+					$parent.addClass('warning-comm');
+				}, 300);
+			});
+			setTimeout(function(){
+				$parent.removeClass('warning-comm');
+			}, 1520);
+		}
+	}); */
+
+	$(document).on('click', '.hs_number_box .number_change .plus', function(){
+		var $this = $(this);
+		$this.addClass('active');
+		setTimeout(function(){
+			$this.removeClass('active');
+		}, 400)
+	});
+	
+	// 4pm 수량 판단 경고 알럿 추가
+	$(document).on("click","#delivery2_02, #delivery2_03",function(){
+		if(!setFourmpmAthomeProcess(this.id)){
+		    
+		}
+	});
+	
+	$(document).on("click","#delivery2_04",function(){
+	    var checkedSize  = $('.hs_pro_view_floating .floating_box .hs_btn_size_wrap .size_area span.size.on').attr('id');
+		var checkedColor = $('.hs_pro_view_floating .floating_box .hs_btn_color_chip button.chip.on').attr('id');
+		var productCode = checkedColor.replace("info_","")+"_"+checkedSize;
+	    
+	    $.ajax({
+            url: '/ko/shoppingbag/checkQuick',
+            type: "GET",            
+            data: {zipcode:$("#quickPostalcode").val(),productCode:productCode},
+            async : false,
+            success: function(data){
+                if(data == "time"){
+                    var la = new layerAlert('퀵배송 주문이 종료되었습니다.</br>내일 00~10시에 다시 이용해 주세요.');
+                    la.confirmAction = function(){
+                       return;
+                    };
+                    checkQuickProcess = true;
+                }else if(data == "zipcode"){
+                    var la = new layerAlert('퀵배송 서비스 불가능  지역입니다.</br>배송지 변경 후 이용해 주세요.<br/>(서울 전 지역 가능, 향후 서비스 확대 예정입니다.)');
+                    la.confirmAction = function(){
+                       return;
+                    };
+                    checkQuickProcess = true;
+                }else if(data == "MaxQty"){
+                    var la = new layerAlert('퀵배송 주문이 마감되었습니다. 내일 다시 이용해 주세요.');
+                    la.confirmAction = function(){
+                       return;
+                    };
+                    checkQuickProcess = true;
+                }else if(data == "stock"){
+                    var la = new layerAlert('퀵배송 대상 상품의 빠른 재고 소진으로<br/>서비스 대상에서 제외되었습니다.');
+                    la.confirmAction = function(){
+                       return;
+                    };
+                    checkQuickProcess = true;
+                }
+            },
+            error: function(xhr, Status, error) {
+                checkQuickProcess = true;
+                var la = new layerAlert(error);
+                la.confirmAction = function(){
+                       return;
+                };
+            }
+		});
+	});
+});
+
+//4pm 수량 판단 경고 알럿 추가
+function setFourmpmAthomeProcess(id){
+	if($("#"+id).is(":checked") || id == "fourpmRdo" ){
+		var type = "";
+		var code = "";
+		var sizeCode = "";
+		var selectSize = false;
+		
+		var returnFlag = true;
+		
+		if(id == "delivery2_02" || id == "fourpmRdo"){
+			type = "fourpm";
+		}else if(id == "delivery2_03"){
+			type = "athome";
+			
+		}else{
+			alert('오류로 인한 서비스 문제');
+			return false;
+		}
+		
+		var code = $('.hs_pro_view_floating .floating_box .hs_btn_color_chip button.chip.on').attr('id');
+		var selectSize = true;
+		
+		if(type == "fourpm"){
+			if($("#fourpmList").val() != ""){
+				return setFourpmAthomeCode($("#fourpmList").val(),selectSize,type);
+			}
+		}else{
+			if($("#athomeList").val() != ""){
+				return setFourpmAthomeCode($("#athomeList").val(),selectSize,type);
+			}
+		}
+		
+		$.ajax({
+			 url: '/ko/p/checkFourpmAtHome',
+			 type: "GET",
+			 async : false,
+			 data: "productCode="+code+"&type="+type,
+			 success: function(data){
+			     
+				if(data != ""){
+					if(type == "fourpm"){
+						$("#fourpmList").val(data);
+					}else{
+						$("#athomeList").val(data);
+					}
+					
+					returnFlag = setFourpmAthomeCode(data,selectSize,type);
+				}
+			 },
+			 error: function(xhr, Status, error) {
+				var la = new layerAlert(error);
+				la.confirmAction = function(){
+					return false;
+				};
+			 }
+		});	
+		
+		return returnFlag;
+	}
+}
+
+function setFourpmAthomeCode(data,selectSize,type){
+    var checkedSize  = $('.hs_pro_view_floating .floating_box .hs_btn_size_wrap .size_area span.size.on').attr('id');
+    var checkedColor = $('.hs_pro_view_floating .floating_box .hs_btn_color_chip button.chip.on').attr('id');
+    
+    var productCode = checkedColor.replace("info_","")+"_"+checkedSize;
+    
+    var returnFlag = true;
+    
+    if(selectSize){
+        if(data.indexOf(productCode) == -1){
+            returnFlag = false;
+            var msg = "";
+			if(type == "fourpm"){
+			    msg = '선택한 색상,사이즈는 {0}PM 서비스</br>대상이 아닙니다.</br>옵션을 다시 선택해주세요.';
+			}else if(type == "athome"){
+			    msg = '선택한 색상,사이즈는 앳홈 서비스</br>대상이 아닙니다.</br>옵션을 다시 선택해주세요.';
+			}else if(type == "pickup"){
+			    msg = '선택한 사이즈는 매장수령</br>대상이 아닙니다.</br>옵션을 다시 선택해주세요.';
+			}else if(type == "quick"){
+			    msg = '선택한 사이즈는 퀵배송</br>대상이 아닙니다.</br>옵션을 다시 선택해주세요.';
+			}
+			
+			var la = new layerAlert(msg);
+			la.confirmAction = function(){
+			};
+        }
+    }
+    return returnFlag;
+}
+
+//180716 추가 끝
+
+function fn_zipcodecallback(data) {
+	var postal = data.zipcode;
+	var addr1  = data.address1.substring(data.address1.indexOf("]")+1).trim();
+	var addr2  = data.address2;
+
+	var checkCode = postal.substring(0,3);
+	if ("060,061,062,063,065,066,067,068,055,056,057,058,039,040,041,042,043,044,069,070,072,073,074,052,053,054".indexOf(checkCode) > -1) {
+		$("form#addToCartForm input[name=postalcode]").val(postal);
+		$("form#addToCartForm input[name=streetname]").val(addr1);
+		$("form#addToCartForm input[name=streetnumber]").val(addr2);
+		
+		var tempAddr = data.address1.split(" ");
+		var txtAthome = tempAddr[1]+" "+tempAddr[2]+" "+tempAddr[3];
+		$('.athome_add .possible_area').html('서비스 가능 지역<span class="gray_txt">'+txtAthome+'</span>');
+	} else {
+		//var la = new layerAlert("앳홈 서비스 불가능 지역 입니다.<br/>(강남,강동,동작,마포,서초,송파,영등포,용산만 가능)");
+		var la = new layerAlert("앳홈 서비스 불가능 지역 입니다.<br />(강남구/강동구/동작구/마포구<br />/서초구/영등포구/용산구 한정)")
+		return false;
+	}
+}
+
+function fn_zipcodeQuickcallback(data) {
+    var postal = data.zipcode;
+    var addr1  = data.address1.substring(data.address1.indexOf("]")+1).trim();
+    var addr2  = data.address2;
+
+    var checkCode = postal.substring(0,2);
+    if("01,02,03,04,05,06,07,08,09".indexOf(checkCode) > -1){
+        $("form#addToCartForm input[name=quickPostalcode]").val(postal);
+        $("form#addToCartForm input[name=quickStreetname]").val(addr1);
+        $("form#addToCartForm input[name=quickStreetnumber]").val(addr2);
+
+        var tempAddr = data.address1.split(" ");
+        var txtQuick = tempAddr[1]+" "+tempAddr[2]+" "+tempAddr[3];
+        $('.quick_add .possible_area').html('서비스 가능 지역<span class="gray_txt">'+txtQuick+'</span>');
+    } else {
+        //var la = new layerAlert("앳홈 서비스 불가능 지역 입니다.<br/>(강남,강동,동작,마포,서초,송파,영등포,용산만 가능)");
+        var la = new layerAlert("퀵배송 서비스 불가능  지역입니다.</br>배송지 변경 후 이용해 주세요.<br/>(서울 전 지역 가능, 향후 서비스 확대 예정입니다.)")
+        return false;
+    }
+}
+
+//환율 계산 script 추가
+function showExchangeRate2(price, index){
+    exchangeRateHtml(price, $('#ordQty').val(), index);
+}
+function exchangeRateHtml(price, qtyValue, index) {
+	var exchangeRateList = '[{symbol=¥, exchangeRate=181.49, currencyCode=CNY}, {symbol=$, exchangeRate=1219.3, currencyCode=USD}]';
+	
+	var sumPrice = parseFloat(price);
+	var addHtml = ""; 
+	
+	
+		var currecy = "CNY";
+		var rate = "181.49";
+		var simbol = "¥";
+		
+		var exchangeAmt = Math.round(parseFloat(sumPrice * (parseInt(qtyValue || 1))) / parseFloat(rate) * 100) / 100 ;
+		addHtml += "<span>"+simbol+numberWithCommas(exchangeAmt)+"</span>";
+	
+		var currecy = "USD";
+		var rate = "1219.3";
+		var simbol = "$";
+		
+		var exchangeAmt = Math.round(parseFloat(sumPrice * (parseInt(qtyValue || 1))) / parseFloat(rate) * 100) / 100 ;
+		addHtml += "<span>"+simbol+numberWithCommas(exchangeAmt)+"</span>";
+	
+	
+//         $("[id='exchangePrice']").html(addHtml);
+    $('.hs_pro_view_floating .floating_box').eq(index).find("#exchangePrice").html(addHtml);
+}
+
+$.extend($.easing, {//180727 추가
+	easeInOutCirc: function (x, t, b, c, d) {
+		if ((t/=d/2) < 1) return -c/2 * (Math.sqrt(1 - t*t) - 1) + b;
+		return c/2 * (Math.sqrt(1 - (t-=2)*t) + 1) + b;
+	}
+});
+
+//라이브 플로팅 배너 200922
+var liveViewTime = 0;
+var scrollFlag = true;
+$(window).on('scroll',function(){
+    if ( '' != null && '' != '' ) {
+        scrollY = $(window).scrollTop();
+        floatBanner = $('.live_floating_banner202009');
+        floatBanner.fadeOut();
+        if(scrollY > 0){
+            liveViewTime = 1;
+            if ( scrollFlag ) {
+                scrollFlag = false;
+                floatBanner.fadeOut();
+                fn_LiveView();
+            }
+        } else{
+            if ( scrollY == 0 && liveViewTime <= 0 ) {
+                floatBanner.fadeIn();
+            }
+        }
+    }
+});
+
+// 플로팅 배너 보기
+function fn_LiveView() {
+    setTimeout(function(){
+        if ( liveViewTime <= 0 ) {
+            floatBanner.fadeIn();
+            scrollFlag = true;
+        } else {
+            fn_LiveView();
+        }
+    },300, liveViewTime--);
+}
+
+</script>
+					<!-- 하단 플로팅 -->
+					<!-- 사전예약 -->
+					<div class="hs_btm_btnwrap two pre_order1905">
+						<button type="button" class="hs_btm_btn black" id="insertcartbutton"
+						 >쇼핑백 담기</button>
+						<button type="button" class="hs_btm_btn pink trigger direct"
+							onclick="GA_Event('상품_상세', '하단 고정 버튼', '바로주문');">바로주문</button>
+						<!-- 토스트팝업 190507 -->
+						<div class="toast_popup_pre_order1905">
+							<p>
+								예약 주문이 가능한 옵션(컬러/사이즈)가 있습니다. <br>옵션 선택 후 배송 예정일을 확인해 주세요.
+							</p>
+						</div>
+						<!-- // 토스트팝업 190507 -->
+					
+				</div>
+				<!--// 하단 플로팅 -->
+
+				<!-- 라이브 플로팅 배너 200922 -->
+				<div class="live_floating_banner202009" style="display: none;">
+					<a
+						href="https://mall.saucelive.net/broadcast/?sessionKey=&amp;serviceId=thehandsome"
+						onclick="javascript:GA_Event('상품_상세', '라이브방송계속보기', '플로팅배너 클릭');">라이브
+						방송 계속 보기</a>
+				</div>
+				<!--// 라이브 플로팅 배너 200922 -->
+
+
 				<form id="addToCartForm" name="addToCartForm" action="">
 					<!-- <input type="hidden" id="qty"              name="qty"              maxlength="3" size="1" class="qty" /> -->
 					<input type="hidden" id="qty" name="qty" value=""> <input
@@ -2966,7 +3651,8 @@ $(window).load(function() {
 	    $(elem).parent().addClass('on');
 	    
 	    var colorcode = $('.hs_prd_info_wrap .hs_btn_color_chip button.chip.on').attr('id').replace("info_","");
-	    var sizecode  = $(elem).attr('data-value');
+	    var sizecode  = $(elem).text();
+	    sizecode = parseInt(sizecode);
 	    
 	    $('.hs_prd_info_wrap.pv-element .copy').text(colorcode+"_"+sizecode);
 	    $('.hs_prd_info_wrap.pv-element .copy').attr('data-clipboard-text',colorcode+"_"+sizecode); //추가(redmine:914)품번복사 20180910

@@ -31,5 +31,13 @@ public class cartServiceTests {
 		log.info(list);
 	}
 	
+	@Test
+	public void cartInsert() {
+		String mid = "user1";
+		String psid = "tkdvsgna";
+		int pquantity = 2;
+		service.cartInsert(mid, psid, pquantity);
+	}
+	
 
 }
