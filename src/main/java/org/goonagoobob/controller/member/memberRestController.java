@@ -1,13 +1,13 @@
 package org.goonagoobob.controller.member;
 
+import java.io.Writer;
+
 import javax.servlet.http.HttpServletResponse;
 
 import org.goonagoobob.domain.member.memberAccount;
 import org.goonagoobob.domain.member.memberJoin;
 import org.goonagoobob.service.member.memberService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,15 +30,38 @@ public class memberRestController {
 	 * produces = { MediaType.APPLICATION_JSON_VALUE })
 	 */
 	@RequestMapping(value="/joinMemberAccount", method=RequestMethod.POST)
-	public ResponseEntity<String> joinMember(HttpServletResponse response, @RequestBody memberJoin mj) throws Exception {
+	public String joinMember(HttpServletResponse response, @RequestBody memberJoin mj) throws Exception {
 		System.out.println(mj);
 		System.out.println("password?? " + mj.getMpassword());
 		
 		int num = service.joinMemberAccount(mj);
+		System.out.println(num);
+		if (num == 1) {
+			Writer out = response.getWriter();
+			try {
+				response.setContentType("text/html; charset=UTF-8");
+				out.write("<script language='javascript'>");
+				out.write("alert('회원가입 성공')");
+				out.write("</script>");
+			}
+			catch(Exception ignored) {
+				
+			}
+			finally {
+				if(out != null) {
+					out.flush();
+					out.close();
+				}
+			}
+			
+			out.flush();
+			out.close();
+			return "redirect:/";
+		}
 		
-		return num == 1 
-				? new ResponseEntity<>("success", HttpStatus.OK)
-				: new ResponseEntity<> (HttpStatus.INTERNAL_SERVER_ERROR);
+		else {
+			return "/member/join";
+		}
 	}
 
 	@PostMapping(value = "/idCheck", consumes = "application/json", produces = { MediaType.APPLICATION_JSON_VALUE })
