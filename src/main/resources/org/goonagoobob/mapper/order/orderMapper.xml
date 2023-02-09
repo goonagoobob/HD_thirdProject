@@ -32,6 +32,7 @@
 		<result property="pcimg1" column="pcimg1" />
 		<result property="pcprice" column="pcprice" />
 		<result property="psize" column="psize" />
+		<result property="psid" column="psid"/>
 	</resultMap>
 
 	<sql id="criteria">
@@ -85,9 +86,14 @@
 	 	]]>
 	</select>
 
-	<insert id="insert">
+	<insert id="insertOrder">
 		insert into orders(OID, OZIPCODE, OADDRESS1, ORECEIVER, OPHONE, OTEL, OMEMO, OEAMIL, OUSEDMILEAGE, OBEFOREPRICE, OAFTERPRICE, MID, PMCODE, CPID, OADDRESS2)
 		values (order_sequence.nextval, #{ozipcode},#{oaddress1},#{oreceiver},#{ophone},#{otel},#{omemo},#{oemail},#{ousedmileage},#{obeforeprice},#{oafterprice},#{mid},#{pmcode},#{cpid},#{oaddress2})
+	</insert>
+	
+	<insert id="insertOrderItem">
+		insert into order_item
+		values (#{psid}, (select max(oid) from orders where mid = #{mid}), #{oicount}, #{oitotalprice})
 	</insert>
 	
 	<update id="orderCancel">

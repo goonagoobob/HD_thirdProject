@@ -2,6 +2,7 @@ package org.goonagoobob.mapper.order;
 
 
 import org.goonagoobob.domain.order.Criteria;
+import org.goonagoobob.domain.order.orderItemVO;
 import org.goonagoobob.domain.order.orderVO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,10 +51,20 @@ public class orderMapperTests {
 //		log.info(order);
 //	}
 	
-	@Test
-	public void orderRemoveList() {
-		System.out.println(mapper.cancelList("user1", "3"));
-	}
+//	@Test
+//	public void orderRemoveList() {
+//		System.out.println(mapper.cancelList("user1", "3"));
+//	}
 	
+	@Test
+	public void orderItemInsert() {
+		orderItemVO itemVO = new orderItemVO();
+		itemVO.setPsid("TM2C9ASZ094W_GD_245");
+		itemVO.setMid("user1");
+		itemVO.setOicount(3);
+		itemVO.setOitotalprice(10000);
+		mapper.insertOrderItem(itemVO);
+		log.info(itemVO);
+	}
 	
 }

@@ -5,13 +5,16 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.goonagoobob.domain.order.Criteria;
+import org.goonagoobob.domain.order.orderItemVO;
 import org.goonagoobob.domain.order.orderVO;
 import org.goonagoobob.domain.product.productDetailVO;
 
 @Mapper
 public interface orderMapper {
 
-	public void insert(orderVO orders); // 주문 등록
+	public void insertOrder(orderVO orders); // 주문 등록
+	
+	public void insertOrderItem(orderItemVO itemVO, @Param("mid") String mid); //주문 상품 등록
 	
 	public int getCountByMid(@Param("cri") Criteria cri, @Param("mid") String mid); // 총 주문 갯수
 	

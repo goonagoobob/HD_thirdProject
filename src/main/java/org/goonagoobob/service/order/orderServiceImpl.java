@@ -4,12 +4,14 @@ package org.goonagoobob.service.order;
 import java.util.List;
 
 import org.goonagoobob.domain.order.Criteria;
+import org.goonagoobob.domain.order.orderItemVO;
 import org.goonagoobob.domain.order.orderPageDTO;
 import org.goonagoobob.domain.order.orderVO;
 import org.goonagoobob.domain.product.productDetailVO;
 import org.goonagoobob.mapper.order.orderMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -44,12 +46,6 @@ public class orderServiceImpl implements orderService {
 		log.info("order remove list........");
 		return mapper.cancelList(mid, oid);
 	}
-
-	@Override
-	public void insert(orderVO orders) {
-		log.info("insert orders.............");
-	    mapper.insert(orders);
-	}
 	
 	@Override
 	public List<orderVO> getList(Criteria cri, String mid) {
@@ -63,6 +59,14 @@ public class orderServiceImpl implements orderService {
 		return new orderPageDTO(
 				mapper.getCountByMid(cri, mid),
 				mapper.getListWithPaging(cri, mid));
+	}
+
+	@Transactional
+	@Override
+	public int insertOrders(orderVO orders, List<orderItemVO> itemList) {
+		
+		int result = 0;
+		return result;
 	}
 	
 }
