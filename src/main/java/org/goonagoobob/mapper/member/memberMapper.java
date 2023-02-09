@@ -10,5 +10,6 @@ public interface memberMapper {
 		public int joinMemberAccount(memberJoin mJ);
 		public memberAccount selectById(String mid);
 		public String checkPassword(String mid);
+		public String findId(String mname, String mbirth);
 }
 

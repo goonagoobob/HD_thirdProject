@@ -24,4 +24,9 @@ public class memberServiceTests {
 		memberJoin mJ = new memberJoin("self3", "1111", "self3", "self3", "self3", "self3", "self2", "self2", "1998/10/19", 0);
 		System.out.println(service.joinMemberAccount(mJ));
 	}
+	
+	@Test
+	public void findId() {
+		System.out.println(service.findId("user2", "98/10/19"));
+	}
 }

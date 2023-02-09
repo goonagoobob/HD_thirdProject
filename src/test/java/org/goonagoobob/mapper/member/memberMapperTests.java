@@ -58,4 +58,12 @@ public class memberMapperTests {
 		String mid="user1";
 		System.out.println(memberMapper.selectById(mid));
 	}
+	
+	@Test
+	public void findId() {
+		String mname = "user2";
+		String mbirth = "98/10/19";
+		
+		System.out.println(memberMapper.findId(mname, mbirth));
+	}
 }
