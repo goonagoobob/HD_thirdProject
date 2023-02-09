@@ -3,7 +3,7 @@ package org.goonagoobob.mapper.member;
 import java.sql.SQLException;
 import java.text.ParseException;
 
-import org.goonagoobob.domain.member.memberAccount;
+import org.goonagoobob.domain.member.memberChangeInfo;
 import org.goonagoobob.domain.member.memberJoin;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,8 +51,6 @@ public class memberMapperTests {
 		
 	}
 	
-	
-	
 	@Test
 	public void selectByID() {
 		String mid="user1";
@@ -61,9 +59,25 @@ public class memberMapperTests {
 	
 	@Test
 	public void findId() {
-		String mname = "user2";
+		String mname = "user2ChangeName";
 		String mbirth = "98/10/19";
 		
 		System.out.println(memberMapper.findId(mname, mbirth));
+	}
+	
+	
+	@Test
+	public void changeMemberInfo() {
+		memberChangeInfo mCI = new memberChangeInfo();
+		mCI.setMid("user2");
+		mCI.setMemail("user2ChangeEmail@");
+		mCI.setMname("user2ChangeName");
+		mCI.setMbirth("98/10/19");
+		System.out.println(memberMapper.updateMemberInfo(mCI));
+	}
+	
+	@Test
+	public void emailDoubleCheck() {
+		System.out.println(memberMapper.emailDoubleCheck("user1", "user3@email"));
 	}
 }

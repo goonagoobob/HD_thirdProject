@@ -2,14 +2,17 @@ package org.goonagoobob.controller.myPage;
 
 import java.security.Principal;
 
+import javax.servlet.http.HttpSession;
+
 import org.goonagoobob.domain.member.memberAccount;
+import org.goonagoobob.domain.member.memberChangeInfo;
 import org.goonagoobob.domain.order.Criteria;
 import org.goonagoobob.service.member.memberService;
 import org.goonagoobob.service.order.orderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,11 +45,7 @@ public class myPageController {
 	public void passwordCheck() {
 		
 	}
-	
-	@GetMapping("/changeUserInfo")
-	public void changeUserInfo() {
-		
-	}
+
 	
 	@GetMapping("/passwordChange")
 	public void passwordChange() {
@@ -96,6 +95,62 @@ public class myPageController {
 		else System.out.println("불일치");
 		//확인 fail handler
 		
-		return "myPage/changeUserInfo";
+		return "myPage/checkPasswordForm";
 	}
+	
+	
+	@GetMapping("/changeUserInfo") //로그인 필요
+	public void changeUserInfo(Principal principal, Model model) {
+		String mid = principal.getName();
+		System.out.println(mid);
+		
+		memberAccount mA = memberService.selectById(mid);
+		System.out.println(mA);
+		
+		model.addAttribute("memberInfo", mA);
+	}
+	
+	@PostMapping("/changeUserInfoForm")
+	public String changeUserInfoForm(Principal prin,
+			@RequestParam("mid") String mid, 
+			@RequestParam("memail") String memail, 
+			@RequestParam("mname") String mname, 
+			@RequestParam("selYear") String selYear, 
+			@RequestParam("selMonth") String selMonth, 
+			@RequestParam("selDay") String selDay, HttpSession session) {
+		
+		memberChangeInfo mCI = new memberChangeInfo();
+		String mid2 = prin.getName();
+		System.out.println(mid);
+		System.out.println(memail);
+		System.out.println(mname);
+		System.out.println(selYear);
+		System.out.println(selMonth);
+		System.out.println(selDay);
+		
+		//session과 연결
+		//String sessionId = (String) session.getAttribute(mid);
+		
+		
+		String mbirth = selYear + "/" + selMonth + "/" + selDay ;
+		mCI.setMid(mid2);
+		mCI.setMemail(memail);
+		mCI.setMname(mname);
+		mCI.setMbirth(mbirth);
+		
+		int result = memberService.changeMemberInfo(mCI);
+		System.out.println("바뀌었습니깡 ??? " + memberService.changeMemberInfo(mCI));
+		
+		if (result == 1) {
+			return "redirect:/myPage/myPage";
+		}		
+		return "/myPage/changeUserInfo";
+		//예외 처리...
+	}
+	
+	@GetMapping("/memberOut")
+	public void memberOut() {
+		
+	}
+
 }

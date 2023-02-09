@@ -1,6 +1,7 @@
 package org.goonagoobob.mapper.member;
 
 import org.goonagoobob.domain.member.memberAccount;
+import org.goonagoobob.domain.member.memberChangeInfo;
 import org.goonagoobob.domain.member.memberJoin;
 import org.goonagoobob.service.member.memberService;
 import org.junit.jupiter.api.Test;
@@ -28,5 +29,22 @@ public class memberServiceTests {
 	@Test
 	public void findId() {
 		System.out.println(service.findId("user2", "98/10/19"));
+	}
+	
+
+	@Test
+	public void updateMemberInfo() {
+		memberChangeInfo mCI = new memberChangeInfo();
+		mCI.setMid("user2");
+		mCI.setMemail("user2ChangeEmail@");
+		mCI.setMname("user2ChangeName");
+		mCI.setMbirth("98/10/19");
+		
+		System.out.println(service.changeMemberInfo(mCI));
+	}
+	
+	@Test
+	public void emailDoubleCheck() {
+		System.out.println(service.emailDoubleCheck("user1", "user3@email"));
 	}
 }

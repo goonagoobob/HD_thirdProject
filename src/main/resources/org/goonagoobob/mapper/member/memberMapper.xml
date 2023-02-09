@@ -23,11 +23,27 @@
 		where mid = #{mid}
 	</select>
 	
-		<!-- findId -->
+	<!-- findId -->
 	<select id="findId" resultType="String">
 		select mid
 		from member
 		where mname = #{mname} and mbirth = #{mbirth}
+	</select>
+	
+	<!-- 개인정보변경 -->
+	<update id="updateMemberInfo">
+		update member
+		set memail = #{memail}, mname = #{mname}, mbirth = #{mbirth}
+		where mid = #{mid}
+	</update>
+	
+	<!-- email Double Check -->
+	<select id="emailDoubleCheck" resultType="int">
+		<![CDATA[
+			select count(*)
+			from member
+			where memail = #{memail} and mid <> #{mid}
+		]]>
 	</select>
 </mapper>
 
