@@ -9,8 +9,11 @@
 
 <html xmlns:th="http://www.thymeleaf.org" 
 xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <head>
+<meta name="_csrf" th:content="${_csrf.token}"/>
+<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta http-equiv="pragma" content="no-cache">
@@ -414,43 +417,64 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 						<script type="text/javascript"
 							src="//static.criteo.net/js/ld/ld.js" async="true"></script>
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
-<script type="text/javascript">
-$(document).ready(function(){
-	  var token = $("meta[name='_csrf']").attr("content");
-	  var header = $("meta[name='_csrf_header']").attr("content");
 
-	$("#insertcartbutton").click(function() {
-		alert("눌려줘");
+
+<!-- <div class="dvp_container" id="dvp_container">	
+<div class="dvp_close_btn b-close" id="confirmCloseDiv"><span>닫기</span></div>	
+<div class="dvp_content">		
+<div class="desc_box">쇼핑백에 담겼습니다.<br>확인하시겠습니까?</div>	</div>	
+<div class="btn_wrap btns">		<button class="btn btn_bd_g btn-alert-close">계속 쇼핑하기</button>		
+<button class="btn btn_bg_b btn-alert-confirm">쇼핑백 바로가기</button>	</div></div> -->
+<script type="text/javascript">
+var display = true;
+ function doDisplay(){
+	var con = document.getElementById("popAlertConfirmDiv");
+	if (con.style.display == "none") {
+		con.style.display == "block";
+	}else {
+		con.style.display = "none";
+	}
+ }
+ 
+
+
+$(document).ready(function(){
+	
+
+ 	$("#insertcartbutton").click(function() {
 		var pquantity = $('#ordQty').attr('value');
 		alert(pquantity);
 		var psid = $("#copy_btn_clipboard").text();
 		alert(psid);
-		let element = {
-				"psid" : psid,
-				"pquantity" : pquantity
-		};
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		/* var form = $("#insertcartForm").val(); */
+		/* form.submit(); */
 		
-		$.ajax({
-			url : '/cartRestApi/insert',
-			type : 'post',
-			data : {
-				"psid" : psid,
-				"pquantity" : pquantity
-			},
+	
+        	
+ 		$.ajax({
+			type : "POST",
+			url : "/cartRestApi/insert",
 		    beforeSend : function(xhr) {
 		        xhr.setRequestHeader(header, token);
 		    },
+			data : {
+				psid : psid, 
+				pquantity : pquantity
+ 				},
 			success : function(data) {
-				alert("success");
+				alert("성공");
+				window.location.href = "/cart/list";
+				
 			},
-			error : function(){
-				alert("error");
-			
+			error : function(xhr, Status, error){
+				alert('sendRequest error : ' + xhr.status + " ( " + error + " ) " );
 			}
 		
 		});
 		
-	});	
+	});	 
 }); 
 
 </script>
@@ -855,7 +879,19 @@ $(document).ready(function(){
 						/*]]>*/
 
 </script>
-
+<div class="divpop_wrap_dev pop_mbr pop_alert_confirm" id="popAlertConfirmDiv" style="left: 0px; position: fixed; top: 89.5px; z-index: 9999; opacity: 1; display: none;">
+  <div class="dvp_container">	<div class="dvp_close_btn b-close" id="confirmCloseDiv">
+    <span>닫기</span>
+  </div>	
+  <div class="dvp_content">		
+    <div class="desc_box">쇼핑백에 담겼습니다.<br>확인하시겠습니까?</div>	
+  </div>	
+  <div class="btn_wrap btns">		
+  <button class="btn btn_bd_g btn-alert-close" onclick="/">계속 쇼핑하기</button>		
+  <button class="btn btn_bg_b btn-alert-confirm" id="gocart">쇼핑백 바로가기</button>	
+</div>
+</div>
+</div>
 
 					<!-- 팝업 링크 -->
 					<div class="vw_prd_tgMore pv-element">
@@ -2569,41 +2605,6 @@ $(window).load(function() {
 						value="8799632053944"> <input type="hidden"
 						id="viewExhibitionPageName" value="WEEKLY BEST">
 				</div>
-<<<<<<< HEAD
-=======
-
-				<!-- 하단 플로팅 -->
-				<script src="https://code.jquery.com/jquery-latest.min.js"></script>
-        <script type="text/javascript">
-          $(document).ready(function() {
-            $("#directOrder").on("click", function(e) {
-              console.log("바로 주문 클릭");
-
-              let psid = $("#copy_btn_clipboard").text();
-              let pamount = document.getElementById('ordQty').value;
-
-              console.log(psid)
-              console.log(pamount);
-
-              $.ajax({
-                url : "/order/form",
-                type : "get",
-                data : {
-                  psid : psid,
-                  pamount : pamount
-                },
-                success : function(date) {
-                  console.log("잘 넘어감 !");
-                  window.location.href="/order/form?psid="+psid+"&pamount="+pamount;
-                },
-                error : function() {
-                  console.log("바로 구매 오류 남");
-                }
-              });
-            });
-          });
-        </script>
->>>>>>> minsoo_order
 				<!-- 사전예약 -->
 				<script type="text/javascript">
 $(document).ready(function() {
@@ -3238,9 +3239,13 @@ function fn_LiveView() {
 </script>
 					<!-- 하단 플로팅 -->
 					<!-- 사전예약 -->
-					<div class="hs_btm_btnwrap two pre_order1905">
-						<button type="button" class="hs_btm_btn black" id="insertcartbutton">쇼핑백 담기</button>
-						<button type="button" class="hs_btm_btn pink trigger direct" id="directOrder">바로주문</button>
+					<div class="hs_btm_btnwrap two pre_order1905"> 
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+						<input type="hidden" name="psid" value="$('#copy_btn_clipboard').text()" /> 
+						<input type="hidden" name="pquantity" value="$('#ordQty').attr('value')" />
+						<button type="button" class="hs_btm_btn black" id="insertcartbutton" onclick="location.href='javascript:doDisplay();' ">쇼핑백 담기</button>
+						<button type="button" class="hs_btm_btn pink trigger direct"
+							onclick="GA_Event('상품_상세', '하단 고정 버튼', '바로주문');">바로주문</button>
 						<!-- 토스트팝업 190507 -->
 						<div class="toast_popup_pre_order1905">
 							<p>

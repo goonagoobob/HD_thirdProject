@@ -51,7 +51,18 @@ public class cartController {
 		
 	}
 	
-	
+	@PostMapping("/insert")
+	public String cartInsert(Principal principal, cartVO cart) {
+		log.info("cartInsert controller");
+		String mid = principal.getName();
+		String psid = cart.getPsid();
+		int pquantity = cart.getPquantity();
+		log.info(psid);
+		log.info(pquantity);
+		
+		service.cartInsert(mid, psid, pquantity);
+		return "/cart/list";
+	}
 	
 //	  // 장바구니 전체 삭제
 //	  
@@ -64,13 +75,6 @@ public class cartController {
 //	  model.addAttribute("result", result);
 //	  return "cart/list"; 
 //	 }
-	 
-
-	@PostMapping("/insert")
-	public String insertCart(Principal prin) {
-		
-		return "cart/list";
-	}
 
 
 
