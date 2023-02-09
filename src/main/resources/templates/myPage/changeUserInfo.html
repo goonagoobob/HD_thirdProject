@@ -1,9 +1,59 @@
-<html lang="ko" class="back">
+<html lang="ko" class="back" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
-
-
+<meta name="_csrf" th:content="${_csrf.token}">
+<meta name="_csrf_header" th:content="${_csrf.headerName}">
 <title>개인정보 변경 | 더한섬닷컴</title>
+<script type="text/javascript">
+	function emailDoubleCheck(element) {
+		var email = $("#email").val()
+		console.log(email); 
+		var header = $("meta[name='_csrf_header']").attr("content");
+		var token = $("meta[name='_csrf']").attr("content");
+		console.log("header" + header);
+		console.log("token" + token);
+		
+		
+		console.log(element);
+		$.ajax({
+			type:"POST",
+			url : "/myPageRestAPI/emailDoubleCheck",
+			dataType : "text",
+			contentType : 'application/json; charset=utf-8',
+			data : email,
+			beforeSend : function(xhr){
+				xhr.setRequestHeader(header, token);
+			},
+			success : function(result) {
+				alert("emailDoubleCheck success");
+				if (result > 0){
+					$(".feedback").html(" 다른 사람이 사용하고 있는 이메일입니다.");
+					$(".feedback").attr("style", "display:block; color:red");
+				}
+				else if (result == 0){
+					console.log("num -> 0");
+					$(".feedback").html(" 사용 가능한 이메일입니다.");
+					$(".feedback").attr("style", "display:block;");
+					
+				}
+			},
+			error : function(request, error){
+				alert("code: " + request.status + "\n" + 
+						"message : " + request.responseText + "\n" +
+						"eroor : " + error);
+			}
+		});
+	}
+	
+	
+	function memberOut(element) {
+		console.log("회원탈퇴");
+	}
+
+</script>
+
+
 <link rel="shortcut icon"
 	href="http://www.thehandsome.com/_ui/mobile/common/images/common/thehandsome_ic_16x16.ico">
 <link rel="apple-touch-icon"
@@ -78,9 +128,6 @@
 	src="http://www.thehandsome.com/_ui/handsomemobile/js/json2.js"></script>
 <script type="text/javascript"
 	src="http://www.thehandsome.com/_ui/handsomemobile/js/SsoAjax.js"></script>
-
-<script type="text/javascript"
-	src="http://www.thehandsome.com/_ui/handsomemobile/js/instagramAPI.js"></script>
 <script type="text/javascript"
 	src="http://www.thehandsome.com/_ui/handsomemobile/js/makePCookie.js"></script>
 <script type="text/javascript"
@@ -201,9 +248,10 @@
 					type="hidden" name="ci" value=""> <input type="hidden"
 					name="ptcoReqnMdaInf" id="ptcoReqnMdaInf" value="">
 			</form>
-			<form id="updateProfileForm"
-				action="/ko/mypage/personInfomationChange" method="post">
-				<input type="hidden" name="prk" id="prk" value="8953805963268">
+
+
+			<form id="changeUserInfoForm"
+				th:action="@{/myPage/changeUserInfoForm}" method="post">
 				<input type="hidden" name="emailDuplChk" id="emailDuplChk" value="Y"
 					title="이메일 중복"> <input type="hidden" id="emailAddress"
 					name="emailAddress" value=""> <input type="hidden"
@@ -228,10 +276,13 @@
 								<span>아이디</span>
 							</div>
 							<div class="ipt_con">
-								<input type="text" value="[로그인 아이디]"
-									readonly="readonly">
+								<input type="text" th:value="${memberInfo.mid}"
+									readonly="readonly" name="mid">
 							</div>
 						</div>
+
+
+						<!-- form -->
 
 						<div class="input_box">
 							<div class="ipt_tit">
@@ -243,51 +294,33 @@
 								</p>
 								<ul class="input_email_stl">
 									<li class="inp_email1"><input type="text" id="email"
-										value="mic*********" title="이메일"></li>
-									<li class="inp_email2">@</li>
-									<li class="inp_email3"><input type="text" id="emailDomain"
-										value="naver.com" title="이메일"></li>
-									<li class="inp_email4">
-										<div class="select_box">
-											<select id="emailDomainSel">
-												<option value="">직접입력</option>
-												<option value="naver.com">naver.com</option>
-												<option value="daum.net">daum.net</option>
-												<option value="gmail.com">gmail.com</option>
-												<option value="yahoo.co.kr">yahoo.co.kr</option>
-												<option value="lycos.co.kr">lycos.co.kr</option>
-												<option value="nate.com">nate.com</option>
-												<option value="empas.com">empas.com</option>
-												<option value="hotmail.com">hotmail.com</option>
-												<option value="msn.com">msn.com</option>
-												<option value="hanmir.com">hanmir.com</option>
-												<option value="chol.net">chol.net</option>
-												<option value="korea.com">korea.com</option>
-												<option value="netsgo.com">netsgo.com</option>
-												<option value="dreamwiz.com">dreamwiz.com</option>
-												<option value="hanafos.com">hanafos.com</option>
-												<option value="freechal.com">freechal.com</option>
-												<option value="hitel.net">hitel.net</option>
-											</select>
-										</div>
-									</li>
+										th:value="${memberInfo.memail}" title="이메일" name="memail"
+										required></li>
+									<div class="feedback" id="feedback" name="feedback"></div>
 								</ul>
 							</div>
 							<p class="err_box" id="emailMsg">
 								<!-- 이메일을 입력하세요. -->
 							</p>
 							<div class="btn_wrap btn_wrap_div1">
-								<a href="#none" class="btnstl3 border_btn_blk btn_chk_email mb0"
-									id="emailDubChkBtn">이메일 중복확인</a>
+								<button type="button"
+									class="btnstl3 border_btn_blk btn_chk_email mb0"
+									onclick="emailDoubleCheck(this)" id="emailDubChkBtn">이메일
+									중복확인</button>
+								<!-- <a href="#none" class="btnstl3 border_btn_blk btn_chk_email mb0"
+									id="emailDubChkBtn">이메일 중복확인</a> -->
 							</div>
 						</div>
+						<!-- form 끝 -->
+
 
 						<div class="input_box">
 							<div class="ipt_tit">
 								<span class="point_star_r">이름</span>
 							</div>
 							<div class="ipt_con">
-								<input type="text" id="name" name="name" value="이*은">
+								<input type="text" id="name" name="mname"
+									th:value="${memberInfo.mname}" required>
 							</div>
 							<p class="err_box" id="nameMsg"></p>
 						</div>
@@ -299,7 +332,7 @@
 							<div class="ipt_con input_user_bday mb40">
 								<div class="bday_year">
 									<div class="select_box select_box_selected">
-										<select name="bday_01" id="selYear">
+										<select name="selYear" id="selYear" required>
 											<option value="">년</option>
 											<option value="2009">2009</option>
 											<option value="2008">2008</option>
@@ -416,7 +449,7 @@
 								</div>
 								<div class="bday_month">
 									<div class="select_box select_box_selected">
-										<select name="bday_02" id="selMonth">
+										<select name="selMonth" id="selMonth" required>
 											<option value="">월</option>
 											<option value="01">01</option>
 											<option value="02">02</option>
@@ -435,7 +468,7 @@
 								</div>
 								<div class="bday_day">
 									<div class="select_box">
-										<select name="bday_03" id="selDay">
+										<select name="selDay" id="selDay" required>
 											<option value="default" selected="">**</option>
 											<option value="01">01</option>
 											<option value="02">02</option>
@@ -478,16 +511,19 @@
 
 					<div class="mp_input_wrap last_box">
 						<div class="btn_wrap btn_wrap_div1">
-							<a href="#none" class="btnstl3 border_btn_gray"
-								id="memberSecessionBtn">회원탈퇴</a>
+							<a href="/myPage/memberOut" class="btnstl3 border_btn_gray">회원탈퇴</a>
 						</div>
+						<br>
+						<div class="btn_wrap btn_wrap_div1">
+							<button type="submit"
+								class="btnstl3 solid_btn_blk btn_layerpopup_call"
+								id="memberInfoSave">저장</button>
+						</div>
+
 					</div>
 				</div>
 				<!-- contents e -->
-				<div>
-					<input type="hidden" name="CSRFToken"
-						value="c47141b8-975b-469c-9a11-160e9cfac816">
-				</div>
+
 			</form>
 			<form id="autologinForm" name="autologinForm"
 				action="/ko/hp/autologin" method="get">
@@ -676,6 +712,7 @@
 		</div>
 	</div>
 	<iframe id="groobeeBox" name="groobeeBox" style="display: none;"></iframe>
+
 </body>
 <!-- This script is for AceCounter START -->
 

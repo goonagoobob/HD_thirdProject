@@ -64,8 +64,7 @@ public class memberController {
 	
 	@PostMapping("/findIdResult")
 	public void findId(@RequestParam("iUserName") String name, @RequestParam("selYear") String selYear, @RequestParam("selMonth") String selMonth, @RequestParam("selDay") String selDay, Model model) {
-		System.out.println(name);
-		
+		System.out.println("name: " + name);
 		selYear = selYear.substring(2);
 		System.out.println(selYear);
 		System.out.println(selMonth);
@@ -75,10 +74,15 @@ public class memberController {
 		System.out.println(mbirth);
 		
 		String mid = service.findId(name, mbirth);
-		
-		model.addAttribute("mname", name);
-		model.addAttribute("mbirth", mbirth);
-		model.addAttribute("mid", mid);
+		System.out.println("@@@@@@@@@" + mid);
+		if(mid != null) {
+			model.addAttribute("mname", name);
+			model.addAttribute("mbirth", mbirth);
+			model.addAttribute("mid", mid);
+		}
+		else {
+			System.out.println("찾을 수 없음");
+		}
 	}
 	
 }

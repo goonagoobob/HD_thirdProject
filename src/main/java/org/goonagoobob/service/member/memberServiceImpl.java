@@ -1,6 +1,7 @@
 package org.goonagoobob.service.member;
 
 import org.goonagoobob.domain.member.memberAccount;
+import org.goonagoobob.domain.member.memberChangeInfo;
 import org.goonagoobob.domain.member.memberJoin;
 import org.goonagoobob.mapper.member.memberMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,22 @@ public class memberServiceImpl implements memberService{
 	public String findId(String mname, String mbirth) {
 		String mid = memberMapper.findId(mname, mbirth);
 		return mid;
+	}
+	
+
+
+	@Override
+	public int changeMemberInfo(memberChangeInfo memberChangeInfo) {
+		int result = memberMapper.updateMemberInfo(memberChangeInfo);
+		return result;
+	}
+
+
+
+	@Override
+	public int emailDoubleCheck(String mid, String memail) {
+		int result = memberMapper.emailDoubleCheck(mid, memail);
+		return result;
 	}
 
 }
