@@ -1,11 +1,14 @@
 package org.goonagoobob.controller.order;
 
+import java.util.List;
+
 import org.goonagoobob.domain.order.orderVO;
+import org.goonagoobob.domain.product.productDetailVO;
+import org.goonagoobob.service.member.memberService;
 import org.goonagoobob.service.order.orderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +26,9 @@ public class orderController {
 
 	@Autowired
 	private orderService orderService;
+	
+	@Autowired
+	private memberService memberService;
 	
 	@GetMapping("/complete")
 	public void orderComplete() {
@@ -52,11 +58,16 @@ public class orderController {
 	}
 	
 	@GetMapping("/form")
-	public void orderForm(Model model) {
+	public void orderForm(@RequestParam("psid") String psid, @RequestParam("pamount") int pamount, Model model) {
 		log.info("orderForm controller");
+		List<productDetailVO> directOrderList = orderService.orderProductList(psid);
 		Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
 		String mid = loggedInUser.getName();
-		model.addAttribute("username", mid);
+		
+		model.addAttribute("username", memberService.selectById(mid));
+		model.addAttribute("directOrderList", directOrderList);
+		model.addAttribute("pamount", pamount);
+
 	}
 
 }

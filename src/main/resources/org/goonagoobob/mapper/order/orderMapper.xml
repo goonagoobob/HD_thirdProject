@@ -110,10 +110,10 @@
 		  	)
 	</select>
 	
-	<select id="orderList" resultMap="itemMap">
+	<select id="orderList" resultMap="productMap">
 		select *
 		from view_product_detail
-		where pisd = #{psid}
+		where psid = #{psid}
 	</select>
 
 </mapper> 
