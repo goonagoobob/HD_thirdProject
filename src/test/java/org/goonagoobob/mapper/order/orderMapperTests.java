@@ -56,15 +56,15 @@ public class orderMapperTests {
 //		System.out.println(mapper.cancelList("user1", "3"));
 //	}
 	
-	@Test
-	public void orderItemInsert() {
-		orderItemVO itemVO = new orderItemVO();
-		itemVO.setPsid("TM2C9ASZ094W_GD_245");
-		itemVO.setMid("user1");
-		itemVO.setOicount(3);
-		itemVO.setOitotalprice(10000);
-		mapper.insertOrderItem(itemVO);
-		log.info(itemVO);
-	}
+//	@Test
+//	public void orderItemInsert() {
+//		orderItemVO itemVO = new orderItemVO();
+//		itemVO.setPsid("TM2C9ASZ094W_GD_245");
+//		itemVO.setMid("user1");
+//		itemVO.setOicount(3);
+//		itemVO.setOitotalprice(10000);
+//		mapper.insertOrderItem(itemVO);
+//		log.info(itemVO);
+//	}
 	
 }

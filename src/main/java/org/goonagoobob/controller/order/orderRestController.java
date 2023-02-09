@@ -22,6 +22,6 @@ public class orderRestController {
 		System.out.println("order 결제까지 옴");
 
 		orders.setOdate(new Date());
-		orderService.insert(orders);
+//		orderService.insert(orders);
 	}
 }
