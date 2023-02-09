@@ -1,42 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.goonagoobob.mapper.member.memberMapper">	
-	
+<mapper namespace="org.goonagoobob.mapper.member.memberMapper">
+
 	<!-- 회원정보 insert -->
 	<insert id="joinMemberAccount">
-		insert into member(mid, mpassword, mname, memail, mphone, mzipcode, maddress1, maddress2, mbirth, mgender, mlogintype, mtosno, menabled, mrole, mgrade, mmileage)
-		values(#{mid},#{mpassword},#{mname},#{memail},#{mphone},#{mzipcode}, #{maddress1}, #{maddress2}, #{mbirth}, #{mgender}, 'normal', 1, 1, 'user', 1, 1000)
+		insert into member(mid, mpassword, mname, memail,
+		mphone, mzipcode, maddress1, maddress2, mbirth, mgender, mlogintype,
+		mtosno, menabled, mrole, mgrade, mmileage)
+		values(#{mid},#{mpassword},#{mname},#{memail},#{mphone},#{mzipcode},
+		#{maddress1}, #{maddress2}, #{mbirth}, #{mgender}, 'normal', 1, 1,
+		'user', 1, 1000)
 	</insert>
-	
+
 	<!-- mid(id)를 통해서 정보 찾기 -->
-	<select id="selectById" resultType="org.goonagoobob.domain.member.memberAccount">
-		select mid, mpassword, mname, memail, mphone, mtel, mzipcode, maddress1, maddress2, mbirth, mgender, mrefid, mlogintype, mtosno, menabled, mrole, mgrade, mmileage
+	<select id="selectById"
+		resultType="org.goonagoobob.domain.member.memberAccount">
+		select mid, mpassword, mname, memail, mphone, mtel,
+		mzipcode, maddress1, maddress2, mbirth, mgender, mrefid, mlogintype,
+		mtosno, menabled, mrole, mgrade, mmileage
 		from member
 		where mid = #{mid}
 	</select>
-	
+
 	<!-- 비밀번호 입력하면 맞는지 확인 -->
 	<select id="checkPassword" resultType="String">
 		select mpassword
-		from member
+		from
+		member
 		where mid = #{mid}
 	</select>
-	
+
 	<!-- findId -->
 	<select id="findId" resultType="String">
 		select mid
 		from member
-		where mname = #{mname} and mbirth = #{mbirth}
+		where mname
+		= #{mname} and mbirth = #{mbirth}
 	</select>
-	
+
 	<!-- 개인정보변경 -->
 	<update id="updateMemberInfo">
 		update member
-		set memail = #{memail}, mname = #{mname}, mbirth = #{mbirth}
+		set memail = #{memail}, mname =
+		#{mname}, mbirth = #{mbirth}
 		where mid = #{mid}
 	</update>
-	
+
 	<!-- email Double Check -->
 	<select id="emailDoubleCheck" resultType="int">
 		<![CDATA[
@@ -45,13 +55,16 @@
 			where memail = #{memail} and mid <> #{mid}
 		]]>
 	</select>
+
+	<!-- 회원 탈퇴 -->
+	<update id="memberOut">
+		update member
+		set menabled = 0
+		where mid = #{mid}
+	</update>
+
 </mapper>
 
-<!--*********************************
- * @function : 회원정보 관련 SQL
- * @author : 이세은
- * @Date : Feb 1. 2023
- * 회원정보 추가 Feb 3. 2023
- * 로그인 기능 구현 Feb 6. 2022
- * 
- ********************************* -->
+<!--********************************* * @function : 회원정보 관련 SQL * @author 
+	: 이세은 * @Date : Feb 1. 2023 * 회원정보 추가 Feb 3. 2023 * 로그인 기능 구현 Feb 6. 2022 
+	* ********************************* -->

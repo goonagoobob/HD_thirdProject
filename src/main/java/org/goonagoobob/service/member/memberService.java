@@ -11,4 +11,5 @@ public interface memberService {
 	public String findId(String mname, String mbirth);
 	public int changeMemberInfo(memberChangeInfo memberChangeInfo);
 	public int emailDoubleCheck(String mid, String memail);
+	public int memberOut(String mid);
 }

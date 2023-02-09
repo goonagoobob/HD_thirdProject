@@ -35,4 +35,14 @@ public class myPageRestController {
 		return num;
 	}
 	
+	
+	@RequestMapping(value="/memberOutForm", method=RequestMethod.POST)
+	@ResponseBody
+	public int memberOutForm(Principal principal, HttpServletResponse response, @RequestBody String element) throws Exception {
+		System.out.println(element);
+		String mid = principal.getName();
+		int num = service.memberOut(mid);
+		System.out.println("num" + num);
+		return num;
+	}
 }

@@ -1,7 +1,8 @@
-<html lang="ko" class="" xmlns:th="http://www.thymeleaf.org" 
+<html lang="ko" class="" xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <head>
+<sec:authentication property="principal" var="minfo"/>
   <!-- #2894 - 카카오광고 집행 위한 픽셀&SDK 삽입 -->
   <script type="text/javascript" async=""
     src="https://www.googletagmanager.com/gtag/js?id=G-RPZ82BN53C&amp;l=dataLayer&amp;cx=c"></script>
@@ -1349,7 +1350,7 @@ STAR / MANIA / CREW / FRIEND
       </div>
 
       <div class="mypage_card_footer">
-        <span class="u_name"><a href="" sec:authorize:isAuthenticated()>[로그인 되면 로그인 회원정보]님</a></span>
+        <span sec:authentication="name"></span>
         <a class="u_profile_setting btn_popup_btot" href=".hs_mpg_profile_pop"
           onclick="GA_Event('마이페이지','푸터','프로필 설정')">프로필 설정</a>
         <div class="u_setting">
@@ -1358,6 +1359,8 @@ STAR / MANIA / CREW / FRIEND
           <a href="javascript:noLink();" class="set" onclick="mypageConfigClick();GA_Event('마이페이지', '푸터', '설정');">설정</a>
         </div>
       </div>
+      
+      
       <div class="mypage_card_footer_logout2008">
 				<a href="/member/logout" class="u_logout"
 					onclick="" sec:authorize="isAuthenticated()">로그아웃</a>
@@ -1389,7 +1392,7 @@ STAR / MANIA / CREW / FRIEND
           <div class="name_wrap">
             <div class="hs_check01">
               <input type="radio" id="pro_name_check_id" name="pro_name_check" checked="checked">
-              <label for="pro_name_check_id">joilwoo</label>
+              <label for="pro_name_check_id" sec:authentication="name"></label>
             </div>
             <div class="hs_check01 nick_check">
               <input type="radio" id="pro_name_check_nickname" name="pro_name_check">
