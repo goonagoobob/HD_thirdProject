@@ -356,6 +356,7 @@ if(only4pm == false) {
 }
 var selectProductCount = entryPkList.split(",").length -2; // ,로 시작해서 , 로 끝나므로 -2
 $("#selectProductCount").text(selectProductCount);
+console.log(entryPkList);
 }
 function checkTotalPrice(obj){
 	var isCartListCheckPrice = true;
@@ -515,7 +516,7 @@ location.href="/ko/";
 						<!-- 주문 가능 상품 -->
 						<li th:each="list, i:${list}">
 							<div class="gl_item " id="entryProductInfo"
-								data-pk="11140707450924" data-deliverykind=""
+								data-pk= 456 data-deliverykind=""
 								data-outofstock="false">
 
 								<!-- 옵션 변경 -->
@@ -603,7 +604,7 @@ $('select.sodsb').selectOrDie();
 									<!-- 2019.11.12 쇼핑백 진입 시 선택 상품 없도록 수정 -->
 									<input type="checkbox"
 										th:id="${'gl_check_'+ i.count}"
-										name="cartlist" data-pk="11140707450924" data-division=""
+										name="cartlist" data-pk=123 data-division=""
 										data-deliverykind="" th:value="${list.psid}" data-soldout="N"
 										onclick="checkTotalPrice(this);"> <label
 										th:for="${'gl_check_' + i.count}"></label>
@@ -1996,8 +1997,7 @@ la.confirmAction = function(){//확인 호출 펑션
       beforeSend : function(xhr) {
           xhr.setRequestHeader(header, token);
        },
-      data : JSON.stringify({entryNumber : entryNumber,
-    	  mid : 'user1'}),
+      data : JSON.stringify({entryNumber : entryNumber}),
       success: function(data){
     	  console.log(data);
       if(data == "s") {
