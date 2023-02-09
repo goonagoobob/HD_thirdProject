@@ -16,6 +16,7 @@ public class productDetailVO {
 	   private int pcprice; // 물품색테이블 판매가격
 	      
 	   private String psize; // 물품재고테이블 사이즈
+	   private String psid; // 물풀 psid
 	
 }
 

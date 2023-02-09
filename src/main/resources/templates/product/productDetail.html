@@ -553,7 +553,8 @@ $(document).ready(function(){
 											onclick="javascript:qtyPlus();"
 											style="position: relative; display: inline-block; width: 39px; height: 38px; vertical-align: top;">+</button>
 									</div>
-									<p id="strPrice" class="price"
+									<p id="strPrice" class="price" th:each="list : ${productVO.pcVO}"
+										th:if="${list.pcid == pcid}" th:text="'₩'+${#numbers.formatInteger(list.pcprice, 0, 'COMMA')}"
 										style="display: table-cell; padding-left: 10px; font-size: 18px; color: #222; font-weight: bold; text-align: right; vertical-align: middle;">₩145,000</p>
 								</div>
 
