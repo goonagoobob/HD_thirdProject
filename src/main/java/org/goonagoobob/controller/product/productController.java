@@ -27,8 +27,15 @@ public class productController {
 	@Autowired
 	private productService service;
 	@GetMapping("/productList")
-	public void ProductList() {
-		
+	public void ProductList(@RequestParam(value = "pid", required=false) String pid, @RequestParam(value = "pcid", required=false) String pcid,Model model) {
+        pid = "TM2CAWPC270W";
+		pcid = "TM2CAWPC270W_OH";
+
+		productCommonVO vo = service.getPDetail(pid);
+		System.out.println(vo);
+		System.out.println("conrotller");
+		model.addAttribute("productVO", vo);
+		model.addAttribute("pcid", pcid);
 	}
 	@GetMapping("/productDetail")
 	public void Productdetail(@RequestParam(value = "pid", required=false) String pid, @RequestParam(value = "pcid", required=false) String pcid,Model model) {
@@ -45,6 +52,15 @@ public class productController {
 	@GetMapping("/colorChg")
 	@ResponseBody
 	public productColorVO colorChg(@RequestParam(value = "pcid", required=false) String pcid) {
+		System.out.println("ajax in");
+		productColorVO vo = service.getPColor(pcid);
+		System.out.println(vo);
+		return vo;
+	}
+	
+	@GetMapping("/getBrdCtgr")
+	@ResponseBody
+	public productColorVO getBrdCtgr(@RequestParam(value = "pcid", required=false) String pcid) {
 		System.out.println("ajax in");
 		productColorVO vo = service.getPColor(pcid);
 		System.out.println(vo);
