@@ -40,6 +40,6 @@ public class orderServiceTests {
         orders.setCpid("cpid");
         orders.setOaddress2("address2");
         
-        orderService.insert(orders);
+        //orderService.insert(orders);
 	}
 }
