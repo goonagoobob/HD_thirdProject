@@ -2569,6 +2569,41 @@ $(window).load(function() {
 						value="8799632053944"> <input type="hidden"
 						id="viewExhibitionPageName" value="WEEKLY BEST">
 				</div>
+<<<<<<< HEAD
+=======
+
+				<!-- 하단 플로팅 -->
+				<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+        <script type="text/javascript">
+          $(document).ready(function() {
+            $("#directOrder").on("click", function(e) {
+              console.log("바로 주문 클릭");
+
+              let psid = $("#copy_btn_clipboard").text();
+              let pamount = document.getElementById('ordQty').value;
+
+              console.log(psid)
+              console.log(pamount);
+
+              $.ajax({
+                url : "/order/form",
+                type : "get",
+                data : {
+                  psid : psid,
+                  pamount : pamount
+                },
+                success : function(date) {
+                  console.log("잘 넘어감 !");
+                  window.location.href="/order/form?psid="+psid+"&pamount="+pamount;
+                },
+                error : function() {
+                  console.log("바로 구매 오류 남");
+                }
+              });
+            });
+          });
+        </script>
+>>>>>>> minsoo_order
 				<!-- 사전예약 -->
 				<script type="text/javascript">
 $(document).ready(function() {
@@ -3204,10 +3239,8 @@ function fn_LiveView() {
 					<!-- 하단 플로팅 -->
 					<!-- 사전예약 -->
 					<div class="hs_btm_btnwrap two pre_order1905">
-						<button type="button" class="hs_btm_btn black" id="insertcartbutton"
-						 >쇼핑백 담기</button>
-						<button type="button" class="hs_btm_btn pink trigger direct"
-							onclick="GA_Event('상품_상세', '하단 고정 버튼', '바로주문');">바로주문</button>
+						<button type="button" class="hs_btm_btn black" id="insertcartbutton">쇼핑백 담기</button>
+						<button type="button" class="hs_btm_btn pink trigger direct" id="directOrder">바로주문</button>
 						<!-- 토스트팝업 190507 -->
 						<div class="toast_popup_pre_order1905">
 							<p>

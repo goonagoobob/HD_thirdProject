@@ -182,27 +182,26 @@
                   }
                 });
               /**
-                         * end of 결품 여부 확인
-                         */
+                           * end of 결품 여부 확인
+                           */
               </script>
 
 
               <!-- ########## main goods info ########## -->
-              <ul class="order_gl_item goods_list_wrap">
+              <ul class="order_gl_item goods_list_wrap" th:each="list:${directOrderList}">
                 <li class="ogl_main_item item_info">
                   <a href="/ko/p/CM2D1WOT105W_LE_88">
                     <div class="ogl_item gl_item">
                       <div class="gl_tit">
-                        <img src="http://newmedia.thehandsome.com/CM/2D/SS/CM2D1WOT105W_LE_S01.jpg" alt=""
-                          class="gl_thumbimg">
+                        <img th:src="${list.pcimg1}" alt="" class="gl_thumbimg">
                       </div>
                       <ul class="gl_con">
-                        <li class="gl_con_brand">the CASHMERE</li>
-                        <li class="gl_con_name">
-                          린넨 블렌드 오버사이즈 재킷
+                        <li class="gl_con_brand" th:text="${list.bname}"></li>
+                        <li class="gl_con_name" th:text="${list.pname}">
                         </li>
-                        <li class="gl_con_option">LIGHT BEIGE / 88 / 1개</li>
-                        <li class="gl_con_price"><span> ₩745,000</span></li>
+                        <li class="gl_con_option">[[${list.pccolorcode}]] / [[${list.psize}]] / [[${pamount}]]개</li>
+                        <li class="gl_con_price"><span
+                            th:text="${#numbers.formatInteger(list.pcprice*pamount, 3, 'COMMA')} + ' 원'"></span></li>
                       </ul>
                     </div>
                   </a>
@@ -231,7 +230,7 @@
                 <tbody>
                   <tr>
                     <th><label for="ordrr_name">주문자</label></th>
-                    <td><span class="view_data">김주혜</span></td>
+                    <td><span class="view_data" th:text="${username.mid}"></span></td>
                   </tr>
                   <tr>
                     <th><label for="ordrr_phone">휴대폰</label></th>
@@ -268,9 +267,9 @@
             <!-- ########## shipping info start ########## -->
             <div class="df_box">
               <h3 class="df_box_tit">
-                배송지 정보<!-- tootip s 배송지안내 툴팁 삽입 20191022 남일희-->
+                배송지 정보
+                <!-- tootip s 배송지안내 툴팁 삽입 20191022 남일희-->
                 <span class="dpIB">
-                  <div class="icon_help btn_tooltip" data-tooltip-target="tooltip_deliverymode_info"></div>
                 </span>
                 <!-- tootip : contents_area s -->
                 <div class="tooltip_contens">
@@ -281,15 +280,10 @@
                     <h1 class="tltp_header">포인트 사용</h1>
                     <div class="tltp_content">
                       <ul class="ul_dot_blk">
-                        <li>
-                          기본배송지 변경은
-                          <strong>마이페이지&gt; [배송지관리]</strong>에서
+                        <li>기본배송지 변경은 <strong>마이페이지&gt; [배송지관리]</strong>에서
                           가능합니다.
                         </li>
-                        <li>
-                          기본배송지 설정 시 기본배송지가 최우선으로 노출
-                          됩니다.
-                        </li>
+                        <li>기본배송지 설정 시 기본배송지가 최우선으로 노출 됩니다.</li>
                       </ul>
                     </div>
                   </div>
@@ -299,51 +293,28 @@
               </h3>
               <!-- tootip : contents_area e -->
               <!-- select_list : 배송지리스트 s -->
-
-
-              <!-- select_list : selected_item s -->
-              <div class="delivery_selected_item_area slcted_item">
-                <div class="slct_con">
-
-                  <div>
-                    <div class="input_item" data-v-1c44afeb="">
-                      <div>
-                        <input name="user_address_num" autocomplete="off" value="" class="input_txt" data-v-1c44afeb=""
-                          id="sample6_postcode" placeholder="우편번호" readonly="readonly" required>
-                      </div>
-
-                    </div>
-                    <div class="input_item" data-v-1c44afeb="">
-                      <div>
-                        <input name="address" autocomplete="off" value="" class="input_txt" data-v-1c44afeb=""
-                          id="sample6_address" placeholder="주소" readonly="readonly" required onkeyup="checkedInput()">
-                      </div>
-
-                    </div>
-                    <div class="input_item" data-v-1c44afeb="">
-                      <div>
-                        <input name="address_detail" autocomplete="off" value="" class="input_txt" data-v-1c44afeb=""
-                          id="sample6_detailAddress" placeholder="상세주소" required onkeyup="checkedInput()">
-                      </div>
-
-                    </div>
-                    <div class="input-box">
-                      <input type="hidden" id="sample6_extraAddress" placeholder="참고항목">
-                    </div>
+              <input type="hidden" id="defaultShipmentAddressPk" value="">
+              <div class="select_list_wrap select_list_dlvr_adrs">
+                <!-- select_list : selected_item s -->
+                <div class="delivery_selected_item_area">
+                  <div class="slct_con">
+                    <span class="dlvr_adrs_name" th:text="${username.mid}"></span> / <span class="dlvr_adrs_phone" th:text="${#strings.substring(username.mphone, 0, 3)} + ' - ' + ${#strings.substring(username.mphone, 3, 7)} + ' - ' + ${#strings.substring(username.mphone, 7, 11)}"></span><br>
+                    (<span class="dlvr_adrs_zipcode" th:text="${username.mzipcode}"></span>)
+                    <input type="hidden" id="sample6_postcode">
+                    <span class="dlvr_adrs_adrs"> <span class="address_line1"></span>
+                      <input type="hidden" id="sample6_address" value="">
+                    </span>
                   </div>
                 </div>
+                <input type="text" name="addr_detail" placeholder="상세 주소를 적어주세요.">
               </div>
-              <!-- select_list : selected_item e -->
-              <!-- select_list : list_item s -->
 
-              <!-- select_list : list_item s -->
-
-
-              <!-- select_list : 배송지리스트 e -->
+              <a href="#none" data-layerpop-depth="depth1" onclick="sample6_execDaumPostcode()"
+                class="btnstl arrow_btn btn_layerpopup_call btn_other_dlvr call_link_registe_mydelivery">다른
+                배송지 찾기</a>
 
               <!-- select_list : 배송지메세지리스트 s -->
-              <input type="hidden" id="selectedCompany" name="selectedCompany" value="">
-              <input type="hidden" id="isPermanentCompany" name="isPermanentCompany" value="">
+
               <!-- 211026 공동현관 출입방법 S -->
               <h3 class="df_box_tit enter-door211026">
                 배송 요청사항
@@ -971,96 +942,80 @@
     };
   </script>
   <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
   <script>
-
-    /*동적으로 form 태그를 생성해서 데이터를 넘기는 과정*/
-    function order() {
-      var tag_postcode = $('#sample6_postcode').val();
-      var tag_address = $('#sample6_address').val();
-      var tag_detailAddress = $('#sample6_detailAddress').val();
-      var total_address = tag_address + " " + tag_detailAddress;
-      console.log(tag_postcode);
-      console.log(tag_address);
-      console.log(tag_detailAddress);
-      console.log(total_address);
-      if (tag_postcode == '') {
-        alert("우편번호를 입력하세요!")
-        return;
+     /*동적으로 form 태그를 생성해서 데이터를 넘기는 과정*/
+      function order() {
+         var tag_postcode= $('#sample6_postcode').val();
+         var tag_address= $('#sample6_address').val();
+         var tag_detailAddress= $('#sample6_detailAddress').val();
+         var total_address = tag_address+" "+tag_detailAddress;
+         console.log(tag_postcode);
+         console.log(tag_address);
+         console.log(tag_detailAddress);
+         console.log(total_address);
+         
+         if(tag_postcode==''){
+            alert("우편번호를 입력하세요!")
+            return;
+         }
+         
+         if(tag_address==''){
+            alert("주소를 입력하세요!")
+            return;
+         }
+         
+         if(tag_detailAddress==''){
+            alert("상세주소를 입력하세요!")
+            return;
+         }
+         
+          var data_form = $('<form></form>');
+   
+          data_form.attr("name", "test_form");
+          data_form.attr("method", "POST");
+          data_form.attr("action", "${contextPath}/Hfashion?command=order") ;
+   
+          data_form.append($('<input/>', {type: 'hidden', name: 'postCode', value: tag_postcode}));
+          data_form.append($('<input/>', {type: 'hidden', name: 'address', value: total_address}));
+          
+          
+          
+         
+          data_form.appendTo('body');
+   
+          data_form.submit();
       }
-      if (tag_address == '') {
-        alert("주소를 입력하세요!")
-        return;
-      }
-      if (tag_detailAddress == '') {
-        alert("상세주소를 입력하세요!")
-        return;
-      }
-      var data_form = $('<form></form>');
-      data_form.attr("name", "test_form");
-      data_form.attr("method", "POST");
-      data_form.attr("action", "${contextPath}/kabart/join");
-      data_form.append($('<input/>', {
-        type: 'hidden',
-        name: 'postCode',
-        value: tag_postcode
-      }));
-      data_form.append($('<input/>', {
-        type: 'hidden',
-        name: 'address',
-        value: total_address
-      }));
-      data_form.appendTo('body');
-      data_form.submit();
-    }
   </script>
   <script>
-    function sample6_execDaumPostcode() {
-      new daum.Postcode(
-        {
-          oncomplete: function (data) {
-            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-            // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-            // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-            var addr = ''; // 주소 변수
-            var extraAddr = ''; // 참고항목 변수
-            //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-            if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-              addr = data.roadAddress;
-            } else { // 사용자가 지번 주소를 선택했을 경우(J)
-              addr = data.jibunAddress;
-            }
-            // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
-            if (data.userSelectedType === 'R') {
-              // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-              // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-              if (data.bname !== ''
-                && /[동|로|가]$/g.test(data.bname)) {
-                extraAddr += data.bname;
+  
+  function sample6_execDaumPostcode() {
+      new daum.Postcode({
+          oncomplete: function(data) {
+              // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+  
+              // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+              // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+              var addr = ''; // 주소 변수
+              var extraAddr = ''; // 참고항목 변수
+  
+              //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+              if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                  addr = data.roadAddress;
+              } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                  addr = data.jibunAddress;
               }
-              if (data.buildingName !== ''
-                && data.apartment === 'Y') {
-                extraAddr += (extraAddr !== '' ? ', '
-                  + data.buildingName
-                  : data.buildingName);
-              }
-              // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-              if (extraAddr !== '') {
-                extraAddr = ' (' + extraAddr + ')';
-              }
-              // 조합된 참고항목을 해당 필드에 넣는다.
-              document.getElementById("sample6_extraAddress").value = extraAddr;
-            } else {
-              document.getElementById("sample6_extraAddress").value = '';
-            }
-            // 우편번호와 주소 정보를 해당 필드에 넣는다.
-            document.getElementById('sample6_postcode').value = data.zonecode;
-            document.getElementById("sample6_address").value = addr;
-            // 커서를 상세주소 필드로 이동한다.
-            document.getElementById("sample6_detailAddress")
-              .focus();
+  
+              // 우편번호와 주소 정보를 해당 필드에 넣는다.
+              $("#sample6_postcode").val(data.zonecode);
+              $("#sample6_address").val(addr);
+              $(".address_line1").html(addr);
+              $(".dlvr_adrs_zipcode").html(data.zonecode);
+              // 커서를 상세주소 필드로 이동한다.
+              $("#sample6_detailAddress").focus();
           }
-        }).open();
-    }
+      }).open();
+  }
   </script>
 </body>
 
