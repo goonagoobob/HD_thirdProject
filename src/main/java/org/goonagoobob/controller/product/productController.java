@@ -4,10 +4,15 @@
  * @Date : Feb 6. 2023
  * 상품 상세 Controller 추가 Feb 6. 2023
  * 상품 컬러 변경 기능 추가 Feb 7. 2023
+ * 상품 카테고리 리스트 호출 Feb 7. 2023
  *********************************/
 
 package org.goonagoobob.controller.product;
 
+import java.util.List;
+
+import org.goonagoobob.domain.product.brandVO;
+import org.goonagoobob.domain.product.depth1VO;
 import org.goonagoobob.domain.product.productColorVO;
 import org.goonagoobob.domain.product.productCommonVO;
 import org.goonagoobob.service.product.productService;
@@ -60,10 +65,15 @@ public class productController {
 	
 	@GetMapping("/getBrdCtgr")
 	@ResponseBody
-	public productColorVO getBrdCtgr(@RequestParam(value = "pcid", required=false) String pcid) {
-		System.out.println("ajax in");
-		productColorVO vo = service.getPColor(pcid);
-		System.out.println(vo);
+	public List<brandVO> getBrdCtgr() {
+		List<brandVO> vo = service.getBrd();
+		return vo;
+	}
+	
+	@GetMapping("/getCtgr")
+	@ResponseBody
+	public List<depth1VO> getCtgr() {
+		List<depth1VO> vo = service.getCtgr();
 		return vo;
 	}
 //	@GetMapping("/productDetail")

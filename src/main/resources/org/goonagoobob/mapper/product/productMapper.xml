@@ -30,8 +30,32 @@
 		<result property="psize" column="psize"></result>
 	</resultMap>
 	
+	<resultMap type="org.goonagoobob.domain.product.brandVO" id="brandMap">
+		<result property="brand" column="bname"></result>
+		<collection property="depth1VO" resultMap="depth1Map"></collection>
+	</resultMap>
+	<resultMap type="org.goonagoobob.domain.product.depth1VO" id="depth1Map">
+		<result property="depth1" column="depth1name"></result>
+		<collection property="depth2VO" resultMap="depth2Map"></collection>
+	</resultMap>
+	<resultMap type="org.goonagoobob.domain.product.depth2VO" id="depth2Map">
+		<result property="depth2" column="depth2name"></result>
+		<collection property="depth3VO" resultMap="depth3Map"></collection>
+	</resultMap>
+	<resultMap type="org.goonagoobob.domain.product.depth3VO" id="depth3Map">
+		<result property="depth3" column="depth3name"></result>
+	</resultMap>
+	
 	<select id="getPDetail" resultMap="pc1Map">
 		select * from allproduct where #{pid} = pid
+	</select>
+	
+	<select id="getBrd" resultMap="brandMap">
+		select * from allcategory
+	</select>
+	
+	<select id="getCtgr" resultMap="depth1Map">
+		select depth1name, depth2name, depth3name from allcategory
 	</select>
 	
 	<select id="getPColor" resultMap="pc2Map">
@@ -46,5 +70,5 @@ psid, psstock, psize from allproduct where #{pcid} = pcid
  * @Date : Feb 6. 2023.
  * 상품 상세 정보 Mapper Feb 6. 2022
  * 상품 컬러 변경 Mapper Feb 7. 2022
- * 아이디 비밀번호 저장 구현
+ * 상품 카테고리 리스트 Mapper Feb 8. 2022
  *********************************/ -->

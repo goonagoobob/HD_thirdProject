@@ -4,13 +4,18 @@
 // * @Date : Feb 6. 2023
 // * 상품 상세 Mapper 추가 Feb 6. 2023
 // * 상품 컬러변경 Mapper 추가 Feb 7. 2023
+// * 상품 카테고리 리스트 Mapper 추가 Feb 9. 2023
 // ********************************* -->
 
 package org.goonagoobob.mapper.product;
 
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.goonagoobob.domain.product.brandVO;
+import org.goonagoobob.domain.product.depth1VO;
 import org.goonagoobob.domain.product.productColorVO;
 import org.goonagoobob.domain.product.productCommonVO;
 
@@ -21,4 +26,8 @@ public interface productMapper {
 	public productCommonVO getPDetail(@Param("pid") String pid);
 
 	public productColorVO getPColor(@Param("pcid") String pcid);
+
+	public List<brandVO> getBrd();
+
+	public List<depth1VO> getCtgr();
 }
