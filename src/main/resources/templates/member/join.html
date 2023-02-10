@@ -901,7 +901,63 @@ rotate
 </head>
 
 <body>
+<script type="text/javascript">
+	function idCheckOnlyOne(){
+		console.log("hello");
+		
+		var mid = document.getElementById("mid").value;
+		console.log(mid);
+		let element = {"mid" : mid}
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		
+		$.ajax({
+			type : 'post',
+			url : '/memberRestAPI/idDoubleCheck',
+			data : JSON.stringify(element),
+			contentType : "application/json; charset=utf-8",
+			dataType : "text",
+			beforeSend: function(jqXHR){
+				jqXHR.setRequestHeader(header, token);
+			},
+			success : function(num) {
+				console.log("success");
+				if(num == 1){
+					$(".feedback").html(" 사용 가능한 아이디입니다.");
+					$(".feedback").attr("style", "display:block;");
+				}
+				else{
+					$(".feedback").html(" 다른 사람이 사용하고 있는 아이디입니다.");
+					$(".feedback").attr("style", "display:block; color:red");
+				}
+			},
+			error : function(jqxHR) {
+				console.log("error");
+			}
+		});
+		
+	}
 	
+	
+	function isSame() {
+		
+		console.log("hello");
+		console.log(document.getElementById('mpassword').value);
+		console.log(document.getElementById('pwc').value);
+		
+		if(document.getElementById('mpassword').value  != '' && document.getElementById('pwc').value != ''){
+			if(document.getElementById('mpassword').value == document.getElementById('pwc').value){
+				document.getElementById('same').innerHTML='비밀번호가 일치합니다.';
+				document.getElementById('same').style.color='blue';
+			}
+			else {
+				document.getElementById('same').innerHTML='비밀번호가 일치하지 않습니다.';
+				document.getElementById('same').style.color='red';
+			}
+		}
+	}
+	
+</script>	
 	
 <script type="text/javascript">
 	window.onload = function() {
@@ -1108,6 +1164,7 @@ rotate
 							<h5>
 								아이디<i class="txt_point">*</i>
 							</h5>
+							<p class="feedback" id="feedback" name="feedback"></p>
 							<div style="float: left;">
 								<input type="text" id="mid" name="mid" class="user_id"
 									placeholder="아이디를 입력하세요." title="아이디를 입력하세요." maxlength="100">
@@ -1133,7 +1190,7 @@ rotate
 
 									<input type="password" id="mpassword" name="mpassword"
 										class="user_pw" placeholder="비밀번호를 입력하세요."
-										title="비밀번호를 입력하세요." maxlength="100">
+										title="비밀번호를 입력하세요." maxlength="100" onChange="JavaScript:isSame();">
 								</div>
 								<!-- [TO DEV] Error msg here. -->
 								<div class="err_wrap">
@@ -1142,8 +1199,11 @@ rotate
 								<div class="input_user_pw">
 									<input type="password" id="pwc" class="user_pw"
 										placeholder="비밀번호를 한번 더 입력하세요." title="비밀번호를 한번 더 입력하세요."
-										maxlength="100">
+										maxlength="100" onChange="JavaScript:isSame();">
 								</div>
+								<p id="same"></p>
+								
+								
 								<!-- [TO DEV] Error msg here. -->
 								<div class="err_wrap">
 									<p class="err_txt" id="pwcMsg"></p>
@@ -1153,11 +1213,8 @@ rotate
 									<i class="txt_point">*</i>표시는 필수항목입니다.
 								</div>
 								<h5 class="w_helper">
-									이메일(정보수신용)
-									<div class="check_stl no_bg">
-										<input type="checkbox" id="chk_email"> <label
-											for="chk_email">이메일 아이디와 동일</label>
-									</div>
+									이메일
+									
 									<!-- tootip s -->
 									<span class="cmt_email">
 										<div class="icon_help btn_tooltip"
