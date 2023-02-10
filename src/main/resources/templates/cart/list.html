@@ -231,11 +231,7 @@ ACCMOB.config.CSRFToken = "c7173c07-0f23-459b-9438-53fe8ca983cf";
 	</script>
 	<script>
 	</script>
-	<meta property="groobee:member_id" content="rlawngp124">
-	<meta property="groobee:member_grade" content="FRIEND">
-	<meta property="groobee:member_gender" content="여성">
-	<meta property="groobee:member_type" content="통합회원">
-	<meta property="groobee:member_age" content="26">
+
 	<link rel="stylesheet" type="text/css"
 		href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
 	<link rel="stylesheet" type="text/css"
@@ -507,7 +503,8 @@ location.href="/ko/";
 						<div class="check_stl gl_check_all_wrap">
 							<!-- 2019.11.12 쇼핑백 진입 시 선택 상품 없도록 수정 -->
 							<input type="checkbox" id="gl_check_all" class="gl_check_all"
-								value=""> <label for="gl_check_all">담은 상품<span
+								value=""> 
+								<label for="gl_check_all">담은 상품<span
 								th:text="${list.size}"> 0</span>개
 							</label>
 						</div>
@@ -515,9 +512,12 @@ location.href="/ko/";
 					<ul class="goods_list_wrap">
 						<!-- 주문 가능 상품 -->
 						<li th:each="list, i:${list}">
+						<input type="hidden" name="pquantity" value="${list.pquantity}" id="${list.pid } +'q'"/>
+								<input type="hidden" name="pcprice" value="${list.pcprice}" id="${list.pid} + 'p'"/>
 							<div class="gl_item " id="entryProductInfo"
 								data-pk= 456 data-deliverykind=""
 								data-outofstock="false">
+								
 
 								<!-- 옵션 변경 -->
 								<script type="text/javascript">
@@ -602,11 +602,14 @@ $('select.sodsb').selectOrDie();
 								<!-- goods_check s -->
 								<div class="check_stl" style="top: 30px;">
 									<!-- 2019.11.12 쇼핑백 진입 시 선택 상품 없도록 수정 -->
+									<input type="hidden" name="pquantity" th:value="${list.pquantity}" id="quantity"/>
+									<input type="hidden" name="pcprice" th:value="${list.pcprice}"/>
 									<input type="checkbox"
 										th:id="${'gl_check_'+ i.count}"
 										name="cartlist" data-pk=123 data-division=""
 										data-deliverykind="" th:value="${list.psid}" data-soldout="N"
-										onclick="checkTotalPrice(this);"> <label
+										onclick="checkTotalPrice(this);"> 
+										<label
 										th:for="${'gl_check_' + i.count}"></label>
 								</div>
 								<!-- goods_check e -->
@@ -636,8 +639,7 @@ $('select.sodsb').selectOrDie();
 											<li class="gl_con_brand" th:text="${list.bname}">브랜드</li>
 											<li class="gl_con_name" th:text="${list.pname}">헤어리 크리스탈 버튼 가디건</li>
 										</a>
-										<form>
-										</form>
+										
 										<li class="gl_con_price" th:text="'₩'+${#numbers.formatInteger(list.pcprice, 3, 'COMMA')}">
 											₩595,000<input type="hidden" id="checkZeroPrice1" name="checkZeroPrice" value="595000.0">
 										</li>
@@ -659,21 +661,24 @@ $('select.sodsb').selectOrDie();
 										<li><div class="gl_tit">적립 마일리지</div>
 											<div class="gl_con" th:text = "${#numbers.formatInteger(list.pcprice*0.05, 3)} + 'M'">29,750M</div></li>
 									</ul>
-									<a href="javascript:void(0);"
-										class="border_btn btn_option_edit"
-										id="optOpenLayer^1^OB2C7KCD762WP2_ZB"><span>변경</span></a>
+
+								<form th:action="@{/cart/list}" id="psidForm" method="post">
+											<input type="hidden" name="psid" value="${list.psid}"/>
+								</form>
+										<a href="javascript:void(0);"
+											class="border_btn btn_option_edit"
+											id="changebtn"><span>변경</span></a>
 								</div>
 								<!-- goods_option_info_btm e -->
 
 
 
-
 								<form id="updateCartForm1" data-cart="{&quot;cartCode&quot; : &quot;463452555&quot;,&quot;productPostPrice&quot;:&quot;595000.0&quot;,&quot;productName&quot;:&quot;헤어리 크리스탈 버튼 가디건&quot;}"
-									action="/ko/shoppingbag/update" method="post">
+									action="/cart/update" method="post">
 									<input type="hidden" name="entryNumber" value="2"> 
-									<input type="hidden" name="productCode" value="OB2C7KCD762WP2_ZB_90">
-									<input type="hidden" name="initialQuantity" value="1">
-									<input type="hidden" name="chgProductCode" value="OB2C7KCD762WP2_ZB_90"> 
+									<input type="hidden" name="productCode" value="${list.psid}">
+									<input type="hidden" name="initialQuantity" value="${list.pquantity}">
+									<input type="hidden" name="chgProductCode" value=""> 
 									<input type="hidden" name="quantity" value="1"> 
 									<input type="hidden" name="curSize" value="90"> 
 									<input type="hidden" name="storeId" value=""> 
@@ -776,7 +781,7 @@ $('select.sodsb').selectOrDie();
 								<li>
 									<div class="ttpd_tit">상품 합계</div>
 									<div class="ttpd_con">
-										<span id="cartDataSubtotal">₩0</span>
+										<span id="checkprice">₩0</span>
 									</div>
 								</li>
 								<li>
@@ -788,7 +793,7 @@ $('select.sodsb').selectOrDie();
 								<li class="total_sum">
 									<div class="ttpd_tit">합계</div>
 									<div class="ttpd_con">
-										<span id="cartDataTotalPrice">₩0</span>
+										₩<span id="checkprice">₩0</span>
 									</div>
 								</li>
 							</ul>
@@ -829,7 +834,6 @@ var timeCheck = '';
 						<li class="pymt_order_apply" style="display: none;"><a
 							href="javascript:checkoutPage('checkout');"
 							class="btnstl6 solid_btn_point " id="oderBtn"></a></li>
-						<!-- 			<li class="pymt_order_apply"><a href="/shoppingbag/oderType" class="btnstl6 solid_btn_point btn_layerpopup_call" data-layerpop-depth="depth1" data-layerpop-style="lp_stl_black" id="oderBtn"></a></li> -->
 						<div style="display: none">
 							<script type="text/javascript">
 var varUA = navigator.userAgent.toLowerCase();
@@ -1953,12 +1957,19 @@ document.writeln("<scr"+"ipt language='javascript' src='" + TRS_URL + "'></scr"+
 	// ]]>
 </script>
 
-	//선택삭제
 	<script>
+	//색상 뿌리기 츄라이
+$(document).ready(function(){
+	var psid = $('input[name=rpsid]').val();
+	$("#optOpenLayer^1^OB2C7KCD762WP2_ZB").click(function() {
+		alert("버튼 눌렸당");
+		alert(psid);
+		$("#psidForm").submit();
+	});
+});
+	
+// 선택삭제
 function selectRemove(entryNumber) {
-	
-	
-
 var msgStr = "";
 
 if(entryNumber == "" || entryNumber == null){
@@ -2023,6 +2034,25 @@ la.confirmAction = function(){//확인 호출 펑션
 
 };
 }
+
+var totalcheckprice = 0;
+$("input[name='cartlist']").on('click', function(){
+		if($(this).prop("checked") == true) {
+			var chkquantity = $(this).prev().prev().attr('value');
+			var chkprice = $(this).prev().attr('value');
+			totalcheckprice += chkquantity * chkprice;
+			$('#checkprice').html(totalcheckprice);
+		}else{
+			var chkquantity = $(this).prev().prev().attr('value');
+			var chkprice = $(this).prev().attr('value');
+			totalcheckprice -= chkquantity * chkprice;
+			$('#checkprice').html(totalcheckprice);
+		}
+	});
+
+
+
+
 
 </script>
 

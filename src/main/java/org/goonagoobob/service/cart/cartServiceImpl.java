@@ -46,11 +46,11 @@ public class cartServiceImpl implements cartService {
 	}
 	//카트 상품별 색상
 	@Override
-	public List<cartcolorVO> colorList(String mid) {
+	public List<cartcolorVO> colorList(String mid, String psid) {
 		log.info("colorList Service....");
 		
-		List<cartcolorVO> colorList = mapper.colorList(mid);
-		return colorList;
+		List<cartcolorVO> cList = mapper.colorList(mid, psid);
+		return cList;
 	}
 	
 	/*

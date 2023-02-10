@@ -14,7 +14,7 @@
 
 <!-- cartList 가져오기 -->
 <select id="getCartList" resultType="org.goonagoobob.domain.cart.cartVO">
-	SELECT ps.psid, substr(ps.psid,-5,2) as psid1, pcol.pcimg1, b.bname, pc.pname, pcol.pcprice, pcol.pccolorcode, substr(ps.psize, 0, 2) as psize, c.pquantity
+	SELECT ps.psid, substr(ps.psid,-5,2) as psid1, pcol.pcimg1, b.bname, pc.pname, pc.pid, pcol.pcprice, pcol.pccolorcode, substr(ps.psize, 0, 2) as psize, c.pquantity
 	FROM brand b, product_common pc, product_color pcol, product_stock ps, cart c
 	WHERE c.psid = ps.psid
 	AND ps.pcid = pcol.pcid
@@ -24,15 +24,12 @@
 </select>
 
 <select id="colorList" resultType="org.goonagoobob.domain.cart.cartcolorVO">
-	select product_color.pcchipimg
-	from product_color, 
-	(select pc.pid
-	from cart c, product_stock ps, product_color pcol, product_common pc
-	where c.mid = #{mid}
-	and c.psid = ps.psid                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
-	and ps.pcid = pcol.pcid
-	and pc.pid = pcol.pid) p
-	where p.pid = product_color.pid
+	SELECT pcchipimg, SUBSTR(pcid, INSTR(pcid, '_')+1, 2) AS colorname
+	FROM (
+	select mid, psid, SUBSTR(psid, 1, INSTR(psid, '_') -1) AS pid, pquantity FROM cart WHERE mid= #{mid}
+	) c RIGHT JOIN product_color pc ON c.pid=pc.pid
+	WHERE pc.pid = c.pid
+	AND c.psid = #{psid}
 </select>
 
 <insert id="cartInsert" >
