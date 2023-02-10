@@ -32,15 +32,15 @@ public class productController {
 	@Autowired
 	private productService service;
 	@GetMapping("/productList")
-	public void ProductList(@RequestParam(value = "pid", required=false) String pid, @RequestParam(value = "pcid", required=false) String pcid,Model model) {
-        pid = "TM2CAWPC270W";
-		pcid = "TM2CAWPC270W_OH";
-
-		productCommonVO vo = service.getPDetail(pid);
-		System.out.println(vo);
-		System.out.println("conrotller");
-		model.addAttribute("productVO", vo);
-		model.addAttribute("pcid", pcid);
+	public void ProductList(@RequestParam(value = "brand", required=false) String brand,
+			@RequestParam(value = "ctgr", required=false) String ctgr,
+			@RequestParam(value = "depth1", required=false) String depth1,
+			@RequestParam(value = "depth2", required=false) String depth2,
+			@RequestParam(value = "depth3", required=false) String depth3,
+			Model model) {
+        brand = "TIME";
+		depth1 = "여성";
+		System.out.println(depth2);
 	}
 	@GetMapping("/productDetail")
 	public void Productdetail(@RequestParam(value = "pid", required=false) String pid, @RequestParam(value = "pcid", required=false) String pcid,Model model) {
@@ -74,6 +74,7 @@ public class productController {
 	@ResponseBody
 	public List<depth1VO> getCtgr() {
 		List<depth1VO> vo = service.getCtgr();
+		System.out.println(vo);
 		return vo;
 	}
 //	@GetMapping("/productDetail")
