@@ -67,5 +67,13 @@ public class memberServiceImpl implements memberService{
 		int result = memberMapper.memberOut(mid);
 		return result;
 	}
+	
+	@Override
+	public int changePassword(String mid, String mpassword) {
+		String password = passwordEncoder.encode(mpassword);
+		System.out.println(password);
+		int result = memberMapper.changePassword(mid, password);
+		return result;
+	}
 
 }

@@ -12,4 +12,5 @@ public interface memberService {
 	public int changeMemberInfo(memberChangeInfo memberChangeInfo);
 	public int emailDoubleCheck(String mid, String memail);
 	public int memberOut(String mid);
+	public int changePassword(String mid, String mpassword);
 }

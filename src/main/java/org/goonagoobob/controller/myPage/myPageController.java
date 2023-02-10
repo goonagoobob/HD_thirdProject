@@ -47,9 +47,11 @@ public class myPageController {
 	}
 
 	
-	@GetMapping("/passwordChange")
+	@GetMapping("/changePassword")
 	public void passwordChange() {
 	}
+	
+	
 	
 	@GetMapping(value = "/orderList")
 	public void getList(Criteria cri, Model model) {

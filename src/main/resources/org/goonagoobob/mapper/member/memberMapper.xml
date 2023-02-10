@@ -62,9 +62,20 @@
 		set menabled = 0
 		where mid = #{mid}
 	</update>
+	
+	<!-- 비밀번호 변경 -->
+	<update id="changePassword">
+		update member
+		set mpassword = #{mpassword}
+		where mid = #{mid} and menabled = 1
+	</update>
 
 </mapper>
 
-<!--********************************* * @function : 회원정보 관련 SQL * @author 
-	: 이세은 * @Date : Feb 1. 2023 * 회원정보 추가 Feb 3. 2023 * 로그인 기능 구현 Feb 6. 2022 
-	* ********************************* -->
+<!--********************************* * 
+@function : 회원정보 관련 SQL * 
+@author : 이세은 * 
+@Date : Feb 1. 2023 * 회원정보 추가 
+		Feb 3. 2023 * 로그인 기능 구현 
+		Feb 6. 2022 
+* ********************************* -->

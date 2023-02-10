@@ -85,4 +85,11 @@ public class memberMapperTests {
 	public void memberOut() {
 		System.out.println(memberMapper.memberOut("user8"));
 	}
+	
+	@Test
+	public void changePassword() {
+		String mid = "user5";
+		String mpassword = "789456";
+		System.out.println(memberMapper.changePassword(mid, mpassword));
+	}
 }
