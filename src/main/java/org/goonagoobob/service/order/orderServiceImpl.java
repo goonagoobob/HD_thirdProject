@@ -67,10 +67,12 @@ public class orderServiceImpl implements orderService {
 		
 		int result = 0;
 		mapper.insertOrder(orders);
+		result += mapper.orderMileage(orders.getOusedmileage(), orders.getOafterprice(), orders.getMid());
 		for (int i = 0; i < itemList.size(); i++) {
 			result += mapper.insertOrderItem(itemList.get(i).getPsid(), itemList.get(i).getOicount(), itemList.get(i).getOitotalprice(), orders.getMid());
 			System.out.println("order Insert" + itemList.get(i).getPsid());
 		}
+		System.out.println(result);
 		return result;
 	}
 	

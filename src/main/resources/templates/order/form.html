@@ -185,7 +185,7 @@
                       </li>
                       <li class="gl_con_option">[[${list.pccolorcode}]] / [[${list.psize}]] / [[${pamount}]]개</li>
                       <li class="gl_con_price"><span
-                          th:text="${#numbers.formatInteger(list.pcprice*pamount, 3, 'COMMA')} + ' 원'"></span></li>
+                          th:text="'₩ ' + ${#numbers.formatInteger(list.pcprice*pamount, 3, 'COMMA')}"></span></li>
                     </ul>
                   </div>
                 </a>
@@ -327,7 +327,7 @@
             <div class="select_list_wrap select_list_dlvr_msg">
               <!-- select_list : selected_item s -->
               <div class="slcted_item">
-                <div class="slct_con">
+                <div class="slct_con" id="omemo">
                   <span class="gray_fc">배송메세지를 선택해주세요. (선택)</span>
                 </div>
               </div>
@@ -384,56 +384,19 @@
                     </label>
                   </div>
                 </li>
-                
+
               </ul>
               <!-- select_list : list_item e -->
             </div>
-            
 
-   
+
+
             <!-- 211026 공동현관 출입방법 E -->
             <a href="javascript:sample6_execDaumPostcode();" class="btnstl arrow_btn  btn_other_dlvr">다른 배송지 찾기</a>
             <!-- select_list : 배송지메세지리스트 s -->
             <!--         </div> -->
             <!-- ########## shipping info end ########## -->
-            <!-- ########## coupon start ########## -->
-            <div class="df_box">
-              <h3 class="df_box_tit">쿠폰 및 혜택 적용</h3>
-              <div id="voucherArea" class="couponselectArea">
-                <div class="text_coupon_slct_wrap online_coupon_box">
-                  <div class="select_box">
-                    <select id="selectVoucher">
-                      <option value="">쿠폰을 선택해 주세요.</option>
-                      <option value="VP2-302-FM1-A03-51TXSE">
-                        [1만원] FRIEND 등급 축하 바우처 / ₩10,000
-                        (
-                        2023.02.01
-                        ~ 2023.07.31
-                        )
-                      </option>
-                      <option value="VP2-302-FP1-0A0-35199SN">
-                        [10%] FRIEND 등급 축하 바우처 / 10%
-                        (
-                        2023.02.01
-                        ~ 2023.07.31
-                        )
-                      </option>
-                    </select>
-                  </div>
-                </div>
-              </div>
 
-              <div class="coupon_insert">
-                <input type="text" name="voucherCode" id="voucherCode" placeholder="쿠폰 코드를 입력해 주세요.">
-                <a href="#none" class="btnstl2 border_btn_blk btn_input_apply">적용</a>
-                <a href="#none" class="btn_input_reset"><span>초기화</span></a>
-              </div>
-
-              <div id="pvoucherArea" class="couponselectArea">
-              </div>
-
-            </div>
-            <!-- ########## coupon end ########## -->
 
             <!-- ########## mileage start ########## -->
             <div class="df_box" id="secondaryPaymentArea">
@@ -456,34 +419,22 @@
 
               <!-- ########## mileage tooltip start ########## -->
               <ul class="mpg_list_wrap list_secondary_payment">
-                <li class="mpg_li_mileage" style="display:none">
-                  <div class="mpg_tit">
-                    한섬마일리지</div>
-                  <div class="mpg_input">
-                    <input type="tel" id="pointpay" name="usePoint" class="only_number set_comma" value="" data-unit="M"
-                      placeholder="0 M" autocomplete="nope" max-point="0">
-                    <a href="#none" class="btnstl2 border_btn_blk btn_input_apply" id="btnUsePoint"
-                      data-poptarget="">적용</a>
-                    <a href="#none" class="btn_input_reset"><span>초기화</span></a>
-                    <div class="check_stl">
-                      <input type="checkbox" id="mpg_all_use_1" value="">
-                      <label for="mpg_all_use_1">전액사용 (<span>0</span> M)</label>
-                    </div>
-                  </div>
-                </li>
+
                 <!-- mileage -->
                 <li class="mpg_li_point mt0">
                   <div class="mpg_tit">
                     mileage</div>
                   <div class="mpg_input">
                     <input type="tel" id="hpointpay" name="useHPoint" class="only_number set_comma" data-unit="P"
-                      placeholder="0 P" autocomplete="nope" max-point="62">
+                      placeholder="0 P" autocomplete="nope" max-point="62" value="">
                     <a href="#none" class="btnstl2 border_btn_blk btn_input_apply" id="btnUseHPoint"
                       data-poptarget="">적용</a>
                     <a href="#none" class="btn_input_reset"><span>초기화</span></a>
                     <div class="check_stl">
                       <input type="checkbox" id="mpg_all_use_2" value="">
-                      <label for="mpg_all_use_2">전액사용 (<span th:text="${username.mmileage}"></span> P)</label>
+                      <label for="mpg_all_use_2">전액사용 (<span
+                          th:text="${#numbers.formatInteger(username.mmileage, 3, 'COMMA')}" id="totalmileage"></span>
+                        P)</label>
                     </div>
                   </div>
                 </li>
@@ -579,18 +530,19 @@
               <div class="df_box total_price_wrap">
                 <h3 class="df_box_tit">
                   최종 결제금액
-                  <div class="pay_price"
-                    th:text="${#numbers.formatInteger(directOrderList[0].pcprice*pamount, 3, 'COMMA')} + ' 원'" id="oafterprice"></div>
+                  <div class="pay_price" id="oafterprice"
+                    th:text="'₩ ' + ${#numbers.formatInteger(directOrderList[0].pcprice*pamount, 3, 'COMMA')}"></div>
                 </h3>
                 <ul class="total_price_detail">
                   <li id="subtotal" class="sub_total190816">
                     <div class="ttpd_tit">상품 합계</div>
                     <div class="ttpd_con"
-                      th:text="${#numbers.formatInteger(directOrderList[0].pcprice*pamount, 3, 'COMMA')} + ' 원'" id="obeforeprice"></div>
+                      th:text="'₩ ' + ${#numbers.formatInteger(directOrderList[0].pcprice*pamount, 3, 'COMMA')}"
+                      id="obeforeprice"></div>
                   </li>
                   <li>
-                    <div class="ttpd_tit">프로모션/쿠폰</div>
-                    <div class="ttpd_con">- ₩10,000 (적용 아직)</div>
+                    <div class="ttpd_tit">마일리지</div>
+                    <div class="ttpd_con" id="usedmilegae">₩ 0</div>
                   </li>
                   <li>
                     <div class="ttpd_tit">
@@ -664,9 +616,9 @@
               </div>
               <ul class="ul_dot point_back_wrap ">
                 <li>
-                  <div class="udot_tit">한섬마일리지</div>
+                  <div class="udot_tit">마일리지</div>
                   <div class="udot_con"><span id="txtAccumulationPoint"
-                      th:text="${#numbers.formatInteger(directOrderList[0].pcprice*pamount*0.05, 3, 'COMMA')}"></span> M
+                      th:text="${#numbers.formatInteger(directOrderList[0].pcprice*pamount*0.05, 3, 'COMMA')}"></span> P
                   </div>
                 </li>
               </ul>
@@ -693,9 +645,9 @@
               </div>
               <ul class="btn_wrap btn_wrap_div1">
                 <li class="pymt_call_pg">
-                  <a href="#none" class="btnstl6 solid_btn_point" id="doOrderBtn"><span><b
-                        th:text="${#numbers.formatInteger(directOrderList[0].pcprice*pamount, 3, 'COMMA')} + ' 원'"></b>
-                      원&nbsp;주문하기</span></a>
+                  <a href="#none" class="btnstl6 solid_btn_point" id="doOrderBtn"><span><b id="payPrice"
+                        th:text="'₩ ' + ${#numbers.formatInteger(directOrderList[0].pcprice*pamount, 3, 'COMMA')}"></b>
+                      &nbsp;주문하기</span></a>
                 </li>
               </ul>
             </div>
@@ -812,10 +764,69 @@
 
       <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
       <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-
+      <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
       <script th:inline="javascript">
-        $("#doOrderBtn").on("click", function(e){
+
+        function agree_check() {
+          let agree = document.getElementById("agree");
+          if (!agree.checked) {
+            alert("구매 동의를 해주세요.")
+            console.log("필수 동의 체크 안 함")
+
+            return false;
+          };
+        }
+        $("#mpg_all_use_2").on("click", function (e) {
+          var totalmileage = $("#totalmileage").text();
+          console.log(totalmileage);
+          if ($(this).is(':checked')) {
+            console.log("전액 사용 체크");
+            $('input[name=useHPoint]').val(totalmileage + " P");
+            $('input[name=useHPoint]').text(totalmileage + " P");
+            console.log($('input[name=useHPoint]').val());
+            return;
+          }
+          console.log("전액 사용 체크 해제");
+          $('input[name=useHPoint]').val(null);
+          console.log($('input[name=useHPoint]').val(null));
+          $('input[name=useHPoint]').text(null);
+
+        });
+
+        $("#btnUseHPoint").on("click", function (e) {
+          var regex = /[^0-9]/g;
+          console.log("마일리지 적용 버튼 눌림");
+          let mileage = $("input[name=useHPoint]").val();
+          mileage = mileage.replace(regex, "");
+          console.log(mileage);
+          if (mileage === "") {
+            console.log("마일리지 입력 안 됨");
+            document.getElementById("usedmilegae").innerHTML = "₩ 0";
+          }
+          document.getElementById("usedmilegae").innerHTML = "- ₩ " + mileage.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+          let obeforeprice = $("#obeforeprice").text();
+          obeforeprice = obeforeprice.replace(regex, "");
+          let omileage = $("#usedmilegae").text();
+          omileage = omileage.replace(regex, "");
+          let oafterprice = obeforeprice - omileage;
+          document.getElementById("oafterprice").innerText = "₩ " + oafterprice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+          document.getElementById("payPrice").innerText = "₩ " + oafterprice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+          let newmileage = Math.floor(oafterprice * 0.05);
+          document.getElementById("txtAccumulationPoint").innerText = "₩ " + newmileage.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+        });
+
+        $("#doOrderBtn").on("click", function (e) {
+
           e.preventDefault();
+          let agree = document.getElementById("agree");
+          if (!agree.checked) {
+            alert("구매 동의를 해주세요.")
+            console.log("필수 동의 체크 안 함")
+
+            return false;
+          };
+
           var token = $("meta[name='_csrf']").attr("content");
           var header = $("meta[name='_csrf_header']").attr("content");
           var regex = /[^0-9]/g;
@@ -827,15 +838,16 @@
           let hp0_num2 = $("input[name=hp0_num2]").val();
           let hp0_num3 = $("input[name=hp0_num3]").val();
           let ophone = hp0_num1 + hp0_num2 + hp0_num3;
-          let omemo = $("input[name=gl_radio_dlvr_msg]").val();
-          let ousedmileage = $("input[name=useHPoint]").val();
+          let omemo = $("#omemo").text();
+          let oemail = /*[[${username.memail}]]*/;
+          let ousedmileage = $("#usedmilegae").text();
+          ousedmileage = ousedmileage.replace(regex, "");
           let obeforeprice = $("#obeforeprice").text();
           obeforeprice = obeforeprice.replace(regex, "");
           let oafterprice = $("#oafterprice").text();
           oafterprice = oafterprice.replace(regex, "");
           let mid = /*[[${username.mid}]]*/;
           let pmcode = $(".on").children('a').attr('data-g-pay-mode');
-
 
           let gaOrderArrayArg = new Array();
           let gaOrderGoodsinfo = new Object();
@@ -847,43 +859,78 @@
           gaOrderArrayArg.push(gaOrderGoodsinfo);
           /*[/]*/
           console.log(ozipcode);
+          console.log(oaddress1);
+          console.log(oaddress2);
+          console.log(oreceiver);
           console.log(ophone);
+          console.log(omemo);
+          console.log(oemail);
+          console.log(ousedmileage);
+          console.log(obeforeprice);
+          console.log(oafterprice);
+          console.log(mid);
           console.log(pmcode);
-		  
-          
-          
-          $.ajax({
-            url : '/order/form',
-            type : 'post',
-            data : JSON.stringify({
-              ozipcode : ozipcode,
-              oaddress1 : oaddress1,
-              oaddress2 : oaddress2,
-              oreceiver : oreceiver,
-              ophone : ophone,
-              omemo : omemo,
-              ousedmileage : ousedmileage,
-              obeforeprice : obeforeprice,
-              oafterprice : oafterprice,
-              mid : mid,
-              pmcode : pmcode,
-              gaOrderArrayArg : gaOrderArrayArg
-            })
-            ,beforeSend : function(xhr) {
-                xhr.setRequestHeader(header, token);
-            },
-            contentType : "application/json",
-            success : function(data) {
-              console.log("주문하기 잘 넘어감")
-              window.location.href="/myPage/orderList";
-            },
-            error : function() {
-              console.log("주문하기 ajax 오류 발생")
+          console.log(gaOrderArrayArg);
+
+          let IMP = window.IMP;
+          IMP.init('imp08862324');
+          IMP.request_pay({
+            //카카오페이 결제시 사용할 정보 입력
+            pg: 'kakaopay.TC0ONETIME',
+            paymentCode: "kakaopay",
+            customer_uid : mid,
+            buyer_name : mid,
+            buyer_tel : ophone,
+            buyer_email : oemail,
+            name : "test"
+
+          }, function (rsp) {
+            if (rsp.success) {
+              var msg = '결제가 완료되었습니다.';
+              $.ajax({
+                url: '/order/form',
+                type: 'post',
+                data: JSON.stringify({
+                  ozipcode: ozipcode,
+                  oaddress1: oaddress1,
+                  oaddress2: oaddress2,
+                  oreceiver: oreceiver,
+                  ophone: ophone,
+                  omemo: omemo,
+                  ousedmileage: ousedmileage,
+                  obeforeprice: obeforeprice,
+                  oafterprice: oafterprice,
+                  mid: mid,
+                  pmcode: pmcode,
+                  oemail: oemail,
+                  gaOrderArrayArg: gaOrderArrayArg
+                })
+                , beforeSend: function (xhr) {
+                  xhr.setRequestHeader(header, token);
+                },
+                contentType: "application/json",
+                success: function (data) {
+                  console.log("주문하기 잘 넘어감")
+                  window.location.href = "/myPage/orderList";
+                },
+                error: function () {
+                  console.log("주문하기 ajax 오류 발생")
+                }
+              });
             }
+            else {
+              //결제 실패시
+              var msg = '결제에 실패하였습니다.';
+              msg += '에러내용 : ' + rsp.error_msg;
+
+              alert(msg);
+            }
+
+
           });
         });
       </script>
-        
+
       <script>
         /*동적으로 form 태그를 생성해서 데이터를 넘기는 과정*/
         function order() {

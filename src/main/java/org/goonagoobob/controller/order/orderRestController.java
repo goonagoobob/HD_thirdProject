@@ -53,7 +53,8 @@ public class orderRestController {
 		orderVO.setOmemo((String)map.get("omemo"));
 		orderVO.setOusedmileage(Integer.parseInt((String)map.get("ousedmileage")));
 		orderVO.setObeforeprice(Integer.parseInt((String)map.get("obeforeprice")));
-		orderVO.setObeforeprice(Integer.parseInt((String)map.get("oafterprice")));
+		orderVO.setOafterprice(Integer.parseInt((String)map.get("oafterprice")));
+		orderVO.setOemail((String)map.get("oemail"));
 		orderVO.setMid((String)map.get("mid"));
 		orderVO.setPmcode((String)map.get("pmcode"));
 		orderVO.setOaddress2((String)map.get("oaddress2"));

@@ -87,8 +87,8 @@
 	</select>
 
 	<insert id="insertOrder">
-		insert into orders(OID, OZIPCODE, OADDRESS1, ORECEIVER, OPHONE, OMEMO, OUSEDMILEAGE, OBEFOREPRICE, OAFTERPRICE, MID, PMCODE, OADDRESS2)
-		values (order_sequence.nextval, #{ozipcode},#{oaddress1},#{oreceiver},#{ophone},#{omemo},#{ousedmileage},#{obeforeprice},#{oafterprice},#{mid},#{pmcode},#{oaddress2})
+		insert into orders(OID, OZIPCODE, OADDRESS1, ORECEIVER, OPHONE, OMEMO, OUSEDMILEAGE, OBEFOREPRICE, OAFTERPRICE, MID, PMCODE, OADDRESS2, OEAMIL)
+		values (order_sequence.nextval, #{ozipcode},#{oaddress1},#{oreceiver},#{ophone},#{omemo},#{ousedmileage},#{obeforeprice},#{oafterprice},#{mid},#{pmcode},#{oaddress2},#{oemail})
 	</insert>
 	
 	<insert id="insertOrderItem">
@@ -97,9 +97,12 @@
 	</insert>
 	
 	<update id="orderCancel">
-		update orders set ostatus = '주문 취소' and odate = sysdate where oid = #{oid} 
+		update orders set ostatus = '주문 취소', odate = sysdate where oid = #{oid} 
 	</update>
 	
+	<update id="orderMileage">
+		update member set mmileage = (mmileage - #{usedmileage} + (#{oafterprice}*0.05))  where mid = #{mid} 
+	</update>
 	<select id="cancelList" resultMap="orderMap">
      	
 		select oid, psid, ostatus, odate, oicount, oitotalprice, pname, bname, pccolorcode, pcimg1, pcprice, psize, obeforeprice, oafterprice, ousedmileage

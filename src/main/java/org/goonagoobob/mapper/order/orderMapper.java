@@ -26,4 +26,6 @@ public interface orderMapper {
 	
 	public List<productDetailVO> orderList(@Param("psid") String psid); //주문할 상품 리스트 조회
 	
+	public int orderMileage(@Param("usedmileage") int usedmileage, @Param("oafterprice") int oafterprice, @Param("mid") String mid);
+	
 }
