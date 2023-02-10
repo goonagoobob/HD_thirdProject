@@ -15,5 +15,4 @@ public class orderItemVO {
 	private int oicount; // 각각의 상품 갯수
 	private int oitotalprice; // 각각의 상품에 대한 가격	
 	private productDetailVO productDetail; // 상품 정보
-
 }

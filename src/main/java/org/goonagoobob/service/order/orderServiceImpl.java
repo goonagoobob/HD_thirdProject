@@ -66,6 +66,11 @@ public class orderServiceImpl implements orderService {
 	public int insertOrders(orderVO orders, List<orderItemVO> itemList) {
 		
 		int result = 0;
+		mapper.insertOrder(orders);
+		for (int i = 0; i < itemList.size(); i++) {
+			result += mapper.insertOrderItem(itemList.get(i).getPsid(), itemList.get(i).getOicount(), itemList.get(i).getOitotalprice(), orders.getMid());
+			System.out.println("order Insert" + itemList.get(i).getPsid());
+		}
 		return result;
 	}
 	
