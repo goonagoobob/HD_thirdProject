@@ -87,8 +87,8 @@
 	</select>
 
 	<insert id="insertOrder">
-		insert into orders(OID, OZIPCODE, OADDRESS1, ORECEIVER, OPHONE, OTEL, OMEMO, OEAMIL, OUSEDMILEAGE, OBEFOREPRICE, OAFTERPRICE, MID, PMCODE, CPID, OADDRESS2)
-		values (order_sequence.nextval, #{ozipcode},#{oaddress1},#{oreceiver},#{ophone},#{otel},#{omemo},#{oemail},#{ousedmileage},#{obeforeprice},#{oafterprice},#{mid},#{pmcode},#{cpid},#{oaddress2})
+		insert into orders(OID, OZIPCODE, OADDRESS1, ORECEIVER, OPHONE, OMEMO, OUSEDMILEAGE, OBEFOREPRICE, OAFTERPRICE, MID, PMCODE, OADDRESS2)
+		values (order_sequence.nextval, #{ozipcode},#{oaddress1},#{oreceiver},#{ophone},#{omemo},#{ousedmileage},#{obeforeprice},#{oafterprice},#{mid},#{pmcode},#{oaddress2})
 	</insert>
 	
 	<insert id="insertOrderItem">

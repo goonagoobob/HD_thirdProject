@@ -3245,8 +3245,7 @@ function fn_LiveView() {
 						<input type="hidden" name="psid" value="$('#copy_btn_clipboard').text()" /> 
 						<input type="hidden" name="pquantity" value="$('#ordQty').attr('value')" />
 						<button type="button" class="hs_btm_btn black" id="insertcartbutton" onclick="location.href='javascript:doDisplay();' ">쇼핑백 담기</button>
-						<button type="button" class="hs_btm_btn pink trigger direct"
-							onclick="GA_Event('상품_상세', '하단 고정 버튼', '바로주문');">바로주문</button>
+						<button type="button" class="hs_btm_btn pink trigger direct" id="directOrder">바로주문</button>
 						<!-- 토스트팝업 190507 -->
 						<div class="toast_popup_pre_order1905">
 							<p>
@@ -3257,7 +3256,35 @@ function fn_LiveView() {
 					
 				</div>
 				<!--// 하단 플로팅 -->
+				<script type="text/javascript">
+          $(document).ready(function() {
+            $("#directOrder").on("click", function(e) {
+              console.log("바로 주문 클릭");
 
+              let psid = $("#copy_btn_clipboard").text();
+              let pamount = document.getElementById('ordQty').value;
+
+              console.log(psid)
+              console.log(pamount);
+
+              $.ajax({
+                url : "/order/form",
+                type : "get",
+                data : {
+                  psid : psid,
+                  pamount : pamount
+                },
+                success : function(date) {
+                  console.log("잘 넘어감 !");
+                  window.location.href = "/order/form?psid="+psid+"&pamount="+pamount;
+                },
+                error : function() {
+                  console.log("바로 구매 오류 남");
+                }
+              });
+            });
+          });
+        </script>
 				<!-- 라이브 플로팅 배너 200922 -->
 				<div class="live_floating_banner202009" style="display: none;">
 					<a

@@ -818,7 +818,7 @@
           e.preventDefault();
           var token = $("meta[name='_csrf']").attr("content");
           var header = $("meta[name='_csrf_header']").attr("content");
-
+          var regex = /[^0-9]/g;
           let ozipcode = $("input[name=ozipcode]").val();
           let oaddress1 = $("input[name=oaddress1]").val();
           let oaddress2 = $("input[name=oaddress2]").val();
@@ -830,22 +830,58 @@
           let omemo = $("input[name=gl_radio_dlvr_msg]").val();
           let ousedmileage = $("input[name=useHPoint]").val();
           let obeforeprice = $("#obeforeprice").text();
+          obeforeprice = obeforeprice.replace(regex, "");
           let oafterprice = $("#oafterprice").text();
+          oafterprice = oafterprice.replace(regex, "");
           let mid = /*[[${username.mid}]]*/;
           let pmcode = $(".on").children('a').attr('data-g-pay-mode');
 
+
+          let gaOrderArrayArg = new Array();
+          let gaOrderGoodsinfo = new Object();
+
           /*[# th:each="list : ${directOrderList}"]*/
-          let psid = /*[[${list.psid}]]*/;
-          let oicount = /*[[${pamount}]]*/;
-          let oitoal = /*[[${list.pcprice*pamount}]]*/;
-          console.log(psid);
-          console.log(oicount);
-          console.log(oitoal);
+          gaOrderGoodsinfo.psid = /*[[${list.psid}]]*/;
+          gaOrderGoodsinfo.oicount = /*[[${pamount}]]*/;
+          gaOrderGoodsinfo.oitotalprice = /*[[${list.pcprice*pamount}]]*/;
+          gaOrderArrayArg.push(gaOrderGoodsinfo);
           /*[/]*/
           console.log(ozipcode);
           console.log(ophone);
           console.log(pmcode);
-        })
+		  
+          
+          
+          $.ajax({
+            url : '/order/form',
+            type : 'post',
+            data : JSON.stringify({
+              ozipcode : ozipcode,
+              oaddress1 : oaddress1,
+              oaddress2 : oaddress2,
+              oreceiver : oreceiver,
+              ophone : ophone,
+              omemo : omemo,
+              ousedmileage : ousedmileage,
+              obeforeprice : obeforeprice,
+              oafterprice : oafterprice,
+              mid : mid,
+              pmcode : pmcode,
+              gaOrderArrayArg : gaOrderArrayArg
+            })
+            ,beforeSend : function(xhr) {
+                xhr.setRequestHeader(header, token);
+            },
+            contentType : "application/json",
+            success : function(data) {
+              console.log("주문하기 잘 넘어감")
+              window.location.href="/myPage/orderList";
+            },
+            error : function() {
+              console.log("주문하기 ajax 오류 발생")
+            }
+          });
+        });
       </script>
         
       <script>

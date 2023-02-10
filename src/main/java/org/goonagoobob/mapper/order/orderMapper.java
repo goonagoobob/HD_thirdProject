@@ -12,9 +12,9 @@ import org.goonagoobob.domain.product.productDetailVO;
 @Mapper
 public interface orderMapper {
 
-	public void insertOrder(orderVO orders); // 주문 등록
+	public int insertOrder(orderVO orders); // 주문 등록
 	
-	public void insertOrderItem(orderItemVO itemVO, @Param("mid") String mid); //주문 상품 등록
+	public int insertOrderItem(@Param("psid") String psid, @Param("oicount") int oicount, @Param("oitotalprice") int oitotalprice, @Param("mid") String mid); //주문 상품 등록
 	
 	public int getCountByMid(@Param("cri") Criteria cri, @Param("mid") String mid); // 총 주문 갯수
 	
