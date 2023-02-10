@@ -11,5 +11,10 @@ public class cartcolorVO {
 	
 	private String pcchipimg;
 	private String psid;
+	private String pid;
+	private String colorname;
+	private String mid;
+	private int pquantity;
+	
 
 }

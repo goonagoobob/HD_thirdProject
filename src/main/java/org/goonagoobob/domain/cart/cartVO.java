@@ -26,4 +26,5 @@ public class cartVO {
 	private String pname;
 	private String pccolorcode;
 	private String psize;
+	private String pid;
 }
