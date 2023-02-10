@@ -278,7 +278,7 @@ ACCMOB.config.CSRFToken = "c7173c07-0f23-459b-9438-53fe8ca983cf";
 				<ul class="tab_head_num3 gray_tab shoppingbag_tab rm">
 					<li class="tab_li_delivery on"><a
 						href="javascript:tabClick('');" name="cartDivision"
-						data-division=""><span>택배(2)</span></a></li>
+						data-division=""><span th:text="'택배('+${list.size}+')'">0</span></a></li>
 				</ul>
 				<!-- tab s -->
 				<!-- 활성화 : li에 클래스 on 추가/삭제 -->
@@ -657,9 +657,7 @@ $('select.sodsb').selectOrDie();
 
 										</li>
 										<li><div class="gl_tit">적립 마일리지</div>
-											<div class="gl_con">29,750M</div></li>
-										<li><div class="gl_tit">적립 H.Point</div>
-											<div class="gl_con">595P</div></li>
+											<div class="gl_con" th:text = "${#numbers.formatInteger(list.pcprice*0.05, 3)} + 'M'">29,750M</div></li>
 									</ul>
 									<a href="javascript:void(0);"
 										class="border_btn btn_option_edit"
@@ -2009,7 +2007,7 @@ la.confirmAction = function(){//확인 호출 펑션
               }
             });
             setEcommerceData(entryNumber, "Remove From Cart");
-            window.location.reload();
+            window.location.href = "/cart/list";
               };
       } else {
         var lc = new layerAlert("삭제를 실패하였습니다.");

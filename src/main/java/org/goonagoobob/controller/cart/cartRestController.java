@@ -56,7 +56,7 @@ public class cartRestController {
 		String mid = principal.getName();
 		
 		service.selectDelete(mid, entryNumber);
-		
+	
 		return new ResponseEntity<>("s",HttpStatus.OK);
 	}
 	

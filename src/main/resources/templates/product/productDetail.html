@@ -861,8 +861,13 @@ $(document).ready(function(){
 						function qtyPlus(){
 							var qty = $('#ordQty').val();	
 							qty++;
-							$('#ordQty').attr('value',qty);
-							$('#strPrice').text(comma(price*qty));
+							if(qty<3){
+								$('#ordQty').attr('value',qty);
+								$('#strPrice').text(comma(price*qty));
+							}else{
+								alert("3개 이상부터 주문하실 수 없습니다");
+							}
+							
 							
 						}
 						function qtyMinus(){
