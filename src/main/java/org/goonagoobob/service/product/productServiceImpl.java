@@ -5,6 +5,7 @@
 // * 상품 상세 Service Class 추가 Feb 6. 2023
 // * 상품 컬러 변경 Service Class 추가 Feb 7. 2023
 // * 상품 카테고리 리스트 Service Class 추가 Feb 9. 2023
+// * 상품 리스트 Service Class 추가 Feb 10. 2023
 // ********************************* -->
 
 package org.goonagoobob.service.product;
@@ -50,6 +51,26 @@ public class productServiceImpl implements productService {
 	@Override
 	public List<depth1VO> getCtgr() {
 		return mapper.getCtgr();
+	}
+
+	@Override
+	public List<productCommonVO> getList(String brand, String depth1, String depth2, String depth3, int orderBy, int Piter, int productNum) {
+		String orderByString = "";
+		if(orderBy == 1) {
+			orderByString = "order by pcprice";
+		}else if(orderBy == 2) {
+			orderByString = "order by pcprice desc";
+		}else if (orderBy == 3) {
+			orderByString = "order by preleasedate";
+		}
+		productNum += Piter;
+		return mapper.getList(brand, depth1, depth2, depth3, orderByString, Piter, productNum);
+	}
+
+	@Override
+	public List<String> getCtgrList(String brand, String depth1, String depth2, String depth3) {
+		
+		return mapper.getCtgrList(brand,depth1,depth2,depth3);
 	}
 
 }

@@ -60,7 +60,159 @@
 	
 	<select id="getPColor" resultMap="pc2Map">
 		select pcid, pcimg1, pcimg2, pcimg3, pcchipimg, pccolorcode, pcprice, preleasedate, 
-psid, psstock, psize from allproduct where #{pcid} = pcid
+		psid, psstock, psize from allproduct where #{pcid} = pcid
+	</select>
+
+	<select id="getList" resultMap="pc1Map">
+	
+
+	<choose>
+			<when test="brand != null">
+				<choose>
+					<when test="depth1 != null">
+						<choose>
+							<when test="depth2 != null">
+								<choose>
+									<when test="depth3 != null">
+									<![CDATA[
+                                        select pid, pname, pnote, bname, pcid, pcimg1, pcimg2, pcimg3, pcchipimg, pccolorcode, pcprice, preleasedate, 
+										psid, psstock, psize from allproduct where pid in (select pid from(select distinct pid from (select rownum, p.pid from allproduct 
+                                        p,product_category pc, category c
+										where p.pid = pc.pid and pc.cateno = c.cateno and
+										p.bname = #{brand} and depth1name = #{depth1} and depth2name = #{depth2} and depth3name = #{depth3}
+                                        ${orderBy}
+										))
+                                        where
+										rownum >= #{Piter} and rownum < #{productNum})
+										]]>
+									</when>
+									<otherwise>
+									<![CDATA[
+                                        select pid, pname, pnote, bname, pcid, pcimg1, pcimg2, pcimg3, pcchipimg, pccolorcode, pcprice, preleasedate, 
+										psid, psstock, psize from allproduct where pid in (select pid from(select distinct pid from (select rownum, p.pid from allproduct 
+                                        p,product_category pc, category c
+										where p.pid = pc.pid and pc.cateno = c.cateno and
+										p.bname = #{brand} and depth1name = #{depth1} and depth2name = #{depth2}
+                                        ${orderBy}
+										))
+                                        where
+										rownum >= #{Piter} and rownum < #{productNum})
+										]]>
+									</otherwise>
+								</choose>
+							</when>
+							<otherwise>
+							<![CDATA[
+										select pid, pname, pnote, bname, pcid, pcimg1, pcimg2, pcimg3, pcchipimg, pccolorcode, pcprice, preleasedate, 
+										psid, psstock, psize from
+										(select p.pid, pname, pnote, b.bname, pcid, pcimg1, pcimg2, pcimg3, pcchipimg, pccolorcode, pcprice, preleasedate, 
+										psid, psstock, psize, depth1name, depth2name, depth3name from brand b, allproduct p, product_category pc, category c
+										where b.bname = p.bname and p.pid = pc.pid and pc.cateno = c.cateno and
+										p.bname = #{brand} and depth1name = #{depth1}
+                                        ${orderBy}
+										)
+                                        where
+										rownum >= #{Piter} and rownum < #{productNum}
+										]]>
+							</otherwise>
+						</choose>
+					</when>
+					<otherwise>
+					<![CDATA[
+                                        select pid, pname, pnote, bname, pcid, pcimg1, pcimg2, pcimg3, pcchipimg, pccolorcode, pcprice, preleasedate, 
+										psid, psstock, psize from allproduct where pid in (select pid from(select distinct pid from (select rownum, p.pid from allproduct 
+                                        p,product_category pc, category c
+										where p.pid = pc.pid and pc.cateno = c.cateno and
+										p.bname = #{brand}
+                                        ${orderBy}
+										))
+                                        where
+										rownum >= #{Piter} and rownum < #{productNum})
+										]]>
+					</otherwise>
+				</choose>
+				
+			</when>
+			<otherwise>
+						<choose>
+							<when test="depth2 != null">
+								<choose>
+									<when test="depth3 != null">
+									<![CDATA[
+										                                        select pid, pname, pnote, bname, pcid, pcimg1, pcimg2, pcimg3, pcchipimg, pccolorcode, pcprice, preleasedate, 
+										psid, psstock, psize from allproduct where pid in (select pid from(select distinct pid from (select rownum, p.pid from allproduct 
+                                        p,product_category pc, category c
+										where p.pid = pc.pid and pc.cateno = c.cateno and
+										depth1name = #{depth1} and depth2name = #{depth2} and depth3name = #{depth3}
+                                        ${orderBy}
+										))
+                                        where
+										rownum >= #{Piter} and rownum < #{productNum})
+										]]>
+									</when>
+									<otherwise>
+									<![CDATA[
+                                        select pid, pname, pnote, bname, pcid, pcimg1, pcimg2, pcimg3, pcchipimg, pccolorcode, pcprice, preleasedate, 
+										psid, psstock, psize from allproduct where pid in (select pid from(select distinct pid from (select rownum, p.pid from allproduct 
+                                        p,product_category pc, category c
+										where p.pid = pc.pid and pc.cateno = c.cateno and
+										depth1name = #{depth1} and depth2name = #{depth2}
+                                        ${orderBy}
+										))
+                                        where
+										rownum >= #{Piter} and rownum < #{productNum})
+										]]>
+									</otherwise>
+								</choose>
+							</when>
+							<otherwise>
+							<![CDATA[
+                                        select pid, pname, pnote, bname, pcid, pcimg1, pcimg2, pcimg3, pcchipimg, pccolorcode, pcprice, preleasedate, 
+										psid, psstock, psize from allproduct where pid in (select pid from(select distinct pid from (select rownum, p.pid from allproduct 
+                                        p,product_category pc, category c
+										where p.pid = pc.pid and pc.cateno = c.cateno and
+										depth1name = #{depth1}
+                                        ${orderBy}
+										))
+                                        where
+										rownum >= #{Piter} and rownum < #{productNum})
+										]]>
+							</otherwise>
+						</choose>
+
+			</otherwise>
+		</choose>
+	</select>
+	<select id="getCtgrList" resultType="String">
+		<choose>
+			<when test="brand != null">
+				<choose>
+					<when test="depth1 != null">
+						<choose>
+							<when test="depth2 != null">
+								select distinct depth3name from allcategory where bname = #{brand} and depth1name = #{depth1} and depth2name = #{depth2}
+							</when>
+							<otherwise>
+								select distinct depth2name from allcategory where bname = #{brand} and depth1name = #{depth1}
+							</otherwise>
+						</choose>
+					</when>
+					<otherwise>
+						select distinct bname from allcategory where bname = #{brand}
+					</otherwise>
+				</choose>
+			</when>
+			<otherwise>
+						<choose>
+							<when test="depth2 != null">
+								select distinct depth3name from allcategory where depth1name = #{depth1} and depth2name = #{depth2}
+							</when>
+							<otherwise>
+								select distinct depth2name from allcategory where depth1name = #{depth1}
+							</otherwise>
+						</choose>
+			</otherwise>
+		</choose>
 	</select>
 </mapper>
 
@@ -71,4 +223,5 @@ psid, psstock, psize from allproduct where #{pcid} = pcid
  * 상품 상세 정보 Mapper Feb 6. 2022
  * 상품 컬러 변경 Mapper Feb 7. 2022
  * 상품 카테고리 리스트 Mapper Feb 8. 2022
+ * 상품 리스트 Mapper Feb 10. 2022
  *********************************/ -->

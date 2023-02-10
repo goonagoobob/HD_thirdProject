@@ -35,5 +35,9 @@ public class productServiceTests {
 		System.out.println(service.getBrd());
 		System.out.println(service.getCtgr());
 	}
-	
+	@Test
+	public void getListTests() {
+		System.out.println(service.getList(null,"여성",null,null,1,1,8));
+		System.out.println(service.getList(null,"여성",null,null,1,1,8).size());
+	}
 }
