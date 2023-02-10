@@ -37,25 +37,7 @@ public class memberRestController {
 		int num = service.joinMemberAccount(mj);
 		System.out.println(num);
 		if (num == 1) {
-			Writer out = response.getWriter();
-			try {
-				response.setContentType("text/html; charset=UTF-8");
-				out.write("<script language='javascript'>");
-				out.write("alert('회원가입 성공')");
-				out.write("</script>");
-			}
-			catch(Exception ignored) {
-				
-			}
-			finally {
-				if(out != null) {
-					out.flush();
-					out.close();
-				}
-			}
-			
-			out.flush();
-			out.close();
+			//왜 redirect 안되지 ,, 
 			return "redirect:/";
 		}
 		
