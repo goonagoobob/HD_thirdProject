@@ -11,6 +11,7 @@ package org.goonagoobob.service.cart;
 import java.util.List;
 
 import org.goonagoobob.domain.cart.cartVO;
+import org.goonagoobob.domain.cart.cartcolorVO;
 import org.goonagoobob.mapper.cart.cartMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,7 +36,7 @@ public class cartServiceImpl implements cartService {
 		
 		return list;
 	}
-	
+	//카트 선택 삭제
 	@Override
 	public void selectDelete(String mid, List<String> entryNumber) {
 		log.info("cartDelete Service.....");
@@ -43,6 +44,21 @@ public class cartServiceImpl implements cartService {
 		mapper.selectDelete(mid, entryNumber);
 		
 	}
+	//카트 상품별 색상
+	@Override
+	public List<cartcolorVO> colorList(String mid) {
+		log.info("colorList Service....");
+		
+		List<cartcolorVO> colorList = mapper.colorList(mid);
+		return colorList;
+	}
+	
+	/*
+	 * @Override public List<cartVO> selectprice(String mid, List<String>
+	 * entryNumber) { log.info("selectprice Service....");
+	 * 
+	 * List<cartVO> total = mapper.selectprice(mid, entryNumber); return total; }
+	 */
 	
 	@Override
 	public void cartInsert(String mid, String psid, int pquantity) {

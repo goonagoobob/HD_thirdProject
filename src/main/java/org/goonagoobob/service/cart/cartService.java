@@ -11,6 +11,7 @@ package org.goonagoobob.service.cart;
 import java.util.List;
 
 import org.goonagoobob.domain.cart.cartVO;
+import org.goonagoobob.domain.cart.cartcolorVO;
 
 public interface cartService {
 	//카트 리스트
@@ -21,4 +22,9 @@ public interface cartService {
 	
 	//장바구니 추가
 	public void cartInsert(String mid, String psid, int pquantity);
+	
+	//색상 select
+	public List<cartcolorVO> colorList(String mid);
+	//총금액
+	//public List<cartVO> selectprice(String mid, List<String> entryNumber);
 }

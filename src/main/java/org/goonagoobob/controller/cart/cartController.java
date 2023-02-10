@@ -14,6 +14,7 @@ import java.security.Principal;
 import java.util.List;
 
 import org.goonagoobob.domain.cart.cartVO;
+import org.goonagoobob.domain.cart.cartcolorVO;
 import org.goonagoobob.service.cart.cartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -48,6 +49,11 @@ public class cartController {
 		log.info(mid);
 		List<cartVO> list = service.getCartList(mid);
 		model.addAttribute("list", list);
+		List<cartcolorVO> clist = service.colorList(mid);
+		/*
+		 * service.selectDelete(mid, entryNumber); List<cartVO> total =
+		 * service.selectprice(mid, entryNumber); model.addAttribute("total", total);
+		 */
 		
 	}
 	

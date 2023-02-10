@@ -13,29 +13,51 @@
 <mapper namespace="org.goonagoobob.mapper.cart.cartMapper">	
 
 <!-- cartList 가져오기 -->
-<select id = "getCartList" resultType="org.goonagoobob.domain.cart.cartVO">
+<select id="getCartList" resultType="org.goonagoobob.domain.cart.cartVO">
 	SELECT ps.psid, substr(ps.psid,-5,2) as psid1, pcol.pcimg1, b.bname, pc.pname, pcol.pcprice, pcol.pccolorcode, substr(ps.psize, 0, 2) as psize, c.pquantity
 	FROM brand b, product_common pc, product_color pcol, product_stock ps, cart c
 	WHERE c.psid = ps.psid
 	AND ps.pcid = pcol.pcid
 	AND pcol.pid = pc.pid
 	AND pc.bno = b.bno
-	AND c.mid = 'user1'
+	AND c.mid = #{mid}
 </select>
 
-<insert id = "cartInsert" >
+<select id="colorList" resultType="org.goonagoobob.domain.cart.cartcolorVO">
+	select product_color.pcchipimg
+	from product_color, 
+	(select pc.pid
+	from cart c, product_stock ps, product_color pcol, product_common pc
+	where c.mid = #{mid}
+	and c.psid = ps.psid                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+	and ps.pcid = pcol.pcid
+	and pc.pid = pcol.pid) p
+	where p.pid = product_color.pid
+</select>
+
+<insert id="cartInsert" >
 	INSERT INTO cart
 	VALUES(#{mid}, #{psid}, #{pquantity})
 
 </insert>
 
-<delete id = "selectDelete" parameterType="java.util.List">
+<delete id="selectDelete" parameterType="java.util.List">
 	DELETE cart
 	WHERE mid = #{mid}
 	<foreach collection="entryNumber" item="item" open="AND" close="" separator="OR"> 
       (mid = #{mid} AND psid = #{item}) 
       </foreach> 
-
 </delete>
+
+<!-- <select id="selectprice" resultType="org.goonagoobob.domain.cart.cartVO">
+	select pc.pcprice, c.pquantity
+	from product_stock ps, product_color pc, cart c
+	where ps.pcid = pc.pcid
+	and c.psid = ps.psid
+	and c.mid = #{mid}
+	<foreach collection ="entryNumber" item="item" open="AND" close="" separator="OR">
+		(ps.psid = #{item})
+	</foreach>
+</select> -->
 
 </mapper>

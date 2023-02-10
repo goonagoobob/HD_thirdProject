@@ -13,6 +13,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.goonagoobob.domain.cart.cartVO;
+import org.goonagoobob.domain.cart.cartcolorVO;
 
 @Mapper
 public interface cartMapper {
@@ -22,4 +23,8 @@ public interface cartMapper {
 	public int selectDelete(@Param("mid") String mid, @Param("entryNumber") List<String> entryNumber);
 	//장바구니 추가
 	public void cartInsert(String mid, String psid, int pquantity);
+	//상품별 색상
+	public List<cartcolorVO> colorList(String mid);
+	//총금액
+	//public List<cartVO> selectprice(String mid, List<String> entryNumber);
 }
