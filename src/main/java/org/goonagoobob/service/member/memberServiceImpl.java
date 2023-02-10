@@ -61,5 +61,11 @@ public class memberServiceImpl implements memberService{
 		int result = memberMapper.emailDoubleCheck(mid, memail);
 		return result;
 	}
+	
+	@Override
+	public int memberOut(String mid) {
+		int result = memberMapper.memberOut(mid);
+		return result;
+	}
 
 }

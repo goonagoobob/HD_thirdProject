@@ -14,5 +14,6 @@ public interface memberMapper {
 		public String findId(String mname, String mbirth);
 		public int updateMemberInfo(memberChangeInfo mCI);
 		public int emailDoubleCheck(String mid, String memail);
+		public int memberOut(String mid);
 }
 

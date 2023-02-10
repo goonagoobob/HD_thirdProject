@@ -1,4 +1,4 @@
-package org.goonagoobob.mapper.member;
+package org.goonagoobob.service.member;
 
 import org.goonagoobob.domain.member.memberAccount;
 import org.goonagoobob.domain.member.memberChangeInfo;
@@ -46,5 +46,10 @@ public class memberServiceTests {
 	@Test
 	public void emailDoubleCheck() {
 		System.out.println(service.emailDoubleCheck("user1", "user3@email"));
+	}
+	
+	@Test
+	public void memberOut() {
+		System.out.println(service.memberOut("user7"));
 	}
 }

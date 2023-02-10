@@ -1,8 +1,42 @@
-<html lang="ko" class="">
+<html lang="ko" class="" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <!-- #2894 - 카카오광고 집행 위한 픽셀&SDK 삽입 END -->
+<meta name="_csrf" th:content="${_csrf.token}">
+<meta name="_csrf_header" th:content="${_csrf.headerName}">
 
 <title>더한섬닷컴</title>
+
+<script>
+	function memberOut(element) {
+		console.log("hello" + element);
+		var ddd = "hello";
+		var header = $("meta[name='_csrf_header']").attr("content");
+	    var token = $("meta[name='_csrf']").attr("content");
+		$.ajax({
+			type:'post',
+			url: '/myPageRestAPI/memberOutForm',
+			data : ddd,
+			contentType : "application/json; charset=utf-8",
+			dataType : "text",
+			beforeSend : function(jqXHR, settings) {
+		         jqXHR.setRequestHeader(header, token);
+			},
+			success : function(num) {
+				console.log("success");
+				if (num == 1) {
+					alert("회원을 탈퇴하였습니다.");
+					window.location.replace("/");
+				}
+			},
+			error : function(jqXHR) {
+				console.log("error");
+			}
+		});
+	}
+</script>
+
+
 <link rel="shortcut icon"
 	href="http://thehandsome.com/_ui/mobile/common/images/common/thehandsome_ic_16x16.ico">
 <link rel="apple-touch-icon"
@@ -46,55 +80,54 @@
 	rel="stylesheet" type="text/css">
 
 <script type="text/javascript">
-    /*<![CDATA[*/
+	/*<![CDATA[*/
 
-    var ACCMOB = { config: {} };
-    ACCMOB.config.contextPath = "";
-    ACCMOB.config.encodedContextPath = "/ko";
-    ACCMOB.config.commonResourcePath = "http://thehandsome.com/_ui/handsomemobile/common";
-    ACCMOB.config.themeResourcePath = "http://thehandsome.com/_ui/handsomemobile/theme-blue";
-    ACCMOB.config.siteResourcePath = "http://thehandsome.com/_ui/handsomemobile/site-handsome";
-    ACCMOB.config.rootPath = "http://thehandsome.com/_ui/handsomemobile";
-    ACCMOB.config.CSRFToken = "ff1ace6c-c889-4ecd-aafd-758131632ab3";
+	var ACCMOB = {
+		config : {}
+	};
+	ACCMOB.config.contextPath = "";
+	ACCMOB.config.encodedContextPath = "/ko";
+	ACCMOB.config.commonResourcePath = "http://thehandsome.com/_ui/handsomemobile/common";
+	ACCMOB.config.themeResourcePath = "http://thehandsome.com/_ui/handsomemobile/theme-blue";
+	ACCMOB.config.siteResourcePath = "http://thehandsome.com/_ui/handsomemobile/site-handsome";
+	ACCMOB.config.rootPath = "http://thehandsome.com/_ui/handsomemobile";
+	ACCMOB.config.CSRFToken = "ff1ace6c-c889-4ecd-aafd-758131632ab3";
 
-
-    /*]]>*/
-  </script>
+	/*]]>*/
+</script>
 <script type="text/javascript">
-    /*<![CDATA[*/
-    ACCMOB.addons = {};	//JS holder for addons properties
+	/*<![CDATA[*/
+	ACCMOB.addons = {}; //JS holder for addons properties
 
-
-    /*]]>*/
-  </script>
+	/*]]>*/
+</script>
 <script type="text/javascript">
-    var handsomePageId = "memberSecessionStep1";
-    var main_bul = false;
-  </script>
-
-<script type="text/javascript">
-    var goToMySmartFilterYn = "N";
-    var gnbType = "br";
-    var UserAgent = navigator.platform;
-    var userPhoneOs = "";
-    if (UserAgent.match(/i(Phone|Pod|Pad)/i) != null) {
-      userPhoneOs = "IOS";
-    } else {
-      userPhoneOs = "ANDROID";
-    }
-  </script>
+	var handsomePageId = "memberSecessionStep1";
+	var main_bul = false;
+</script>
 
 <script type="text/javascript">
+	var goToMySmartFilterYn = "N";
+	var gnbType = "br";
+	var UserAgent = navigator.platform;
+	var userPhoneOs = "";
+	if (UserAgent.match(/i(Phone|Pod|Pad)/i) != null) {
+		userPhoneOs = "IOS";
+	} else {
+		userPhoneOs = "ANDROID";
+	}
+</script>
 
-    var handsomeUserLoginYn = "Y";
-  </script>
 <script type="text/javascript">
-    var isoKoYn = "Y";
-  </script>
+	var handsomeUserLoginYn = "Y";
+</script>
 <script type="text/javascript">
-    var handsomeIsoCode = "ko";
-    var handsomeContextPath = "/ko"; 
-  </script>
+	var isoKoYn = "Y";
+</script>
+<script type="text/javascript">
+	var handsomeIsoCode = "ko";
+	var handsomeContextPath = "/ko";
+</script>
 
 <script type="text/javascript"
 	src="http://thehandsome.com/_ui/handsomemobile/js/jquery.min.js"></script>
@@ -157,546 +190,560 @@
 	src="http://thehandsome.com/_ui/handsomemobile/js/unorm.js"></script>
 
 <script type="text/javascript">
-    var setDimensionData = function () {
-      //GA 설정 sessionStorage 페이지 이동시 초기화 
-      window.sessionStorage.removeItem('main_new_ecommerceDataList');
-      window.sessionStorage.removeItem('main_best_ecommerceDataList');
-      var smartListSize = window.sessionStorage.getItem('smart_ecommerceDataList_size');
-      for (var i = 0; i <= smartListSize; i++) {
-        window.sessionStorage.removeItem('smart_ecommerceDataList_' + i);
-      }
-      window.sessionStorage.removeItem('smart_ecommerceDataList_size');
-      window.sessionStorage.removeItem('smart_more_ecommerceDataList');
-      window.sessionStorage.removeItem('search_recommend_ecommerceDataList');
-      window.sessionStorage.removeItem('ecommerceDataList');
-      window.sessionStorage.removeItem('yours_lately_ecommerceDataList');
-      window.sessionStorage.removeItem('yours_shoppingbag_ecommerceDataList');
-      window.sessionStorage.removeItem('yours_wish_ecommerceDataList');
-      window.sessionStorage.removeItem('yours_recommend_ecommerceDataList');
-      window.sessionStorage.removeItem('ou_main_ecommerceDataList');
+	var setDimensionData = function() {
+		//GA 설정 sessionStorage 페이지 이동시 초기화 
+		window.sessionStorage.removeItem('main_new_ecommerceDataList');
+		window.sessionStorage.removeItem('main_best_ecommerceDataList');
+		var smartListSize = window.sessionStorage
+				.getItem('smart_ecommerceDataList_size');
+		for (var i = 0; i <= smartListSize; i++) {
+			window.sessionStorage.removeItem('smart_ecommerceDataList_' + i);
+		}
+		window.sessionStorage.removeItem('smart_ecommerceDataList_size');
+		window.sessionStorage.removeItem('smart_more_ecommerceDataList');
+		window.sessionStorage.removeItem('search_recommend_ecommerceDataList');
+		window.sessionStorage.removeItem('ecommerceDataList');
+		window.sessionStorage.removeItem('yours_lately_ecommerceDataList');
+		window.sessionStorage.removeItem('yours_shoppingbag_ecommerceDataList');
+		window.sessionStorage.removeItem('yours_wish_ecommerceDataList');
+		window.sessionStorage.removeItem('yours_recommend_ecommerceDataList');
+		window.sessionStorage.removeItem('ou_main_ecommerceDataList');
 
-      var categoryListSize = window.sessionStorage.getItem('category_ecommerceDataList_size');
-      for (var i = 0; i <= categoryListSize; i++) {
-        window.sessionStorage.removeItem('normal_cate_ecommerceDataList_' + i);
-      }
-      window.sessionStorage.removeItem('category_ecommerceDataList_size');
+		var categoryListSize = window.sessionStorage
+				.getItem('category_ecommerceDataList_size');
+		for (var i = 0; i <= categoryListSize; i++) {
+			window.sessionStorage.removeItem('normal_cate_ecommerceDataList_'
+					+ i);
+		}
+		window.sessionStorage.removeItem('category_ecommerceDataList_size');
 
-      var cid = getCid();
-      var device = "";
+		var cid = getCid();
+		var device = "";
 
-      if (getCookie2("app") == null || getCookie2("app") == "") {
-        device = "MO_WEB";
-      } else {
-        device = "APP";
-      }
+		if (getCookie2("app") == null || getCookie2("app") == "") {
+			device = "MO_WEB";
+		} else {
+			device = "APP";
+		}
 
-      var entrySite = "";
+		var entrySite = "";
 
-      entrySite = "KO";
+		entrySite = "KO";
 
+		var oneDepthPage; // 없을 경우 undifined 그대로 넘겨야 하기 때문에 초기화 X
+		var pageTitle = "";
+		var tmp = getPageDepth();
+		if (tmp != "") {
+			oneDepthPage = tmp;
+			pageTitle = getGAPageTitle(oneDepthPage);
+			if (pageTitle == "") {
+				oneDepthPage = undefined;
+				pageTitle = document.title;
+			}
+		} else {
+			pageTitle = document.title;
+		}
 
-      var oneDepthPage;   // 없을 경우 undifined 그대로 넘겨야 하기 때문에 초기화 X
-      var pageTitle = "";
-      var tmp = getPageDepth();
-      if (tmp != "") {
-        oneDepthPage = tmp;
-        pageTitle = getGAPageTitle(oneDepthPage);
-        if (pageTitle == "") {
-          oneDepthPage = undefined;
-          pageTitle = document.title;
-        }
-      } else {
-        pageTitle = document.title;
-      }
+		var pageviewObj = new Object();
+		pageviewObj.dimension1 = cid; //고객_ClientID
+		pageviewObj.dimension15 = device; //채널_채널유형
+		pageviewObj.dimension16 = entrySite; //채널_언어 - #2846 삭제요청 hychung, #2846 복원요청 hychung
+		pageviewObj.dimension18 = oneDepthPage; //페이지_1Depth (페이지depth 없는경우 undefined처리)
+		pageviewObj.title = pageTitle; //페이지제목     (페이지제목 없는경우 document.title 입력)
 
-      var pageviewObj = new Object();
-      pageviewObj.dimension1 = cid;                          //고객_ClientID
-      pageviewObj.dimension15 = device;                       //채널_채널유형
-      pageviewObj.dimension16 = entrySite;                  //채널_언어 - #2846 삭제요청 hychung, #2846 복원요청 hychung
-      pageviewObj.dimension18 = oneDepthPage;                 //페이지_1Depth (페이지depth 없는경우 undefined처리)
-      pageviewObj.title = pageTitle;                          //페이지제목     (페이지제목 없는경우 document.title 입력)
+		//로그인 했을경우만 추가 dimension 세팅
 
-      //로그인 했을경우만 추가 dimension 세팅
+		pageviewObj.dimension2 = ""; //고객_회원번호
+		pageviewObj.dimension3 = "간편"; //고객_회원구분
+		pageviewObj.dimension4 = ""; //고객_지역
+		pageviewObj.dimension5 = "F"; //고객_성별
+		pageviewObj.dimension6 = "25"; //고객_연령대
+		pageviewObj.dimension7 = ""; //고객_생년 => 고객_통합멤버십번호 변경됨
+		pageviewObj.dimension8 = ""; //고객_온라인등급
+		pageviewObj.dimension9 = ""; //고객_한섬통합등급
+		pageviewObj.dimension10 = "0"; //고객_구매횟수
+		pageviewObj.dimension11 = ""; //고객_구매금액대
+		pageviewObj.dimension12 = ""; //고객_첫구매일자
+		pageviewObj.dimension13 = ""; //고객_최종구매일자
+		pageviewObj.dimension14 = "20230130"; //고객_회원가입일
+		pageviewObj.userId = ""; //사용자ID
 
-      pageviewObj.dimension2 = "";                  //고객_회원번호
-      pageviewObj.dimension3 = "간편";                  //고객_회원구분
-      pageviewObj.dimension4 = "";                  //고객_지역
-      pageviewObj.dimension5 = "F";                  //고객_성별
-      pageviewObj.dimension6 = "25";                  //고객_연령대
-      pageviewObj.dimension7 = "";                  //고객_생년 => 고객_통합멤버십번호 변경됨
-      pageviewObj.dimension8 = "";                  //고객_온라인등급
-      pageviewObj.dimension9 = "";                  //고객_한섬통합등급
-      pageviewObj.dimension10 = "0";                //고객_구매횟수
-      pageviewObj.dimension11 = "";                //고객_구매금액대
-      pageviewObj.dimension12 = "";                //고객_첫구매일자
-      pageviewObj.dimension13 = "";                //고객_최종구매일자
-      pageviewObj.dimension14 = "20230130";                //고객_회원가입일
-      pageviewObj.userId = "";                      //사용자ID
+		// 검색 결과 페이지 일 경우만 처리
+		if (window.location.pathname.indexOf("/hssearch/searchCount") > -1) {
+			pageviewObj.dimension17 = ""; //검색_검색어(검색결과페이지일때 사용)
+		}
 
+		return pageviewObj;
+	};
 
-      // 검색 결과 페이지 일 경우만 처리
-      if (window.location.pathname.indexOf("/hssearch/searchCount") > -1) {
-        pageviewObj.dimension17 = "";                     //검색_검색어(검색결과페이지일때 사용)
-      }
+	// 고객_ClientID
+	function getCid() {
+		var cookieData = document.cookie;
+		var Cookies = cookieData.split(';')
+		var clientId = "";
+		for (var i = 0; i < Cookies.length; i++) {
+			if (Cookies[i].split('=')[0] == '_ga'
+					|| Cookies[i].split('=')[0] == ' _ga') {
+				clientId = Cookies[i].split('=')[1];
+			}
+		}
+		if (clientId != "") {
+			clientId = clientId.substring(6);
+		}
+		if (clientId == "") {
+			try {
+				ga(function(tracker) {
+					clientId = tracker.get('clientId');
+				});
+			} catch (e) {
+				console.log(e);
+			}
+		}
+		return clientId;
+	}
 
-      return pageviewObj;
-    };
+	function getPageDepth() {
+		var returnDepth = "";
+		var target_url = document.location.href;
 
-    // 고객_ClientID
-    function getCid() {
-      var cookieData = document.cookie;
-      var Cookies = cookieData.split(';')
-      var clientId = "";
-      for (var i = 0; i < Cookies.length; i++) {
-        if (Cookies[i].split('=')[0] == '_ga' || Cookies[i].split('=')[0] == ' _ga') {
-          clientId = Cookies[i].split('=')[1];
-        }
-      }
-      if (clientId != "") {
-        clientId = clientId.substring(6);
-      }
-      if (clientId == "") {
-        try {
-          ga(function (tracker) {
-            clientId = tracker.get('clientId');
-          });
-        } catch (e) {
-          console.log(e);
-        }
-      }
-      return clientId;
-    }
+		if (target_url.substring(target_url.indexOf("/ko/") + 4) == "") {
+			returnDepth = "메인";
+		} else if (target_url.substring(target_url.indexOf("/ko") + 3) == "") {
+			returnDepth = "메인";
+		} else if (target_url.indexOf("/p/") > -1) {
+			returnDepth = "상품상세";
+		} else if (target_url.indexOf("/b/") > -1) {
 
-    function getPageDepth() {
-      var returnDepth = "";
-      var target_url = document.location.href;
+			returnDepth = "브랜드";
 
-      if (target_url.substring(target_url.indexOf("/ko/") + 4) == "") {
-        returnDepth = "메인";
-      } else if (target_url.substring(target_url.indexOf("/ko") + 3) == "") {
-        returnDepth = "메인";
-      } else if (target_url.indexOf("/p/") > -1) {
-        returnDepth = "상품상세";
-      } else if (target_url.indexOf("/b/") > -1) {
+		} else if (target_url.indexOf("/c/ou_") > -1) {
+			returnDepth = "아울렛";
+		} else if (target_url.indexOf("/c/") > -1) {
+			// if'/c/카테고리코드' : /가 한개면
 
-        returnDepth = "브랜드";
+			if (target_url.substring(target_url.indexOf("/c/") + 3)
+					.indexOf("/") > -1) {
+				if (target_url.toLowerCase().substring(
+						target_url.indexOf("/c/") + 3).indexOf("br") > -1) {
+					returnDepth = "브랜드";
+				} else {
+					returnDepth = "카테고리";
+				}
+			} else {
+				returnDepth = "카테고리";
+			}
 
-      } else if (target_url.indexOf("/c/ou_") > -1) {
-        returnDepth = "아울렛";
-      } else if (target_url.indexOf("/c/") > -1) {
-        // if'/c/카테고리코드' : /가 한개면
+		} else if (target_url.indexOf("/mypage/care/") > -1) {
+			returnDepth = "케어";
+		} else if (target_url.indexOf("/mypage") > -1) {
+			returnDepth = "마이페이지";
+		} else if (target_url.indexOf("/magazine/events") > -1) {
+			returnDepth = "이벤트";
+		} else if (target_url.indexOf("/magazine/") > -1) {
+			returnDepth = "매거진";
+		} else if (target_url.indexOf("/shoppingbag") > -1) {
+			returnDepth = "쇼핑백";
+		} else if (target_url.indexOf("/ou/") > -1) {
+			returnDepth = "아울렛";
+		} else if (target_url.indexOf("/checkout/") > -1) {
+			returnDepth = "주문";
+		} else if (target_url.indexOf("/member/") > -1) {
+			returnDepth = "로그인";
+		} else if (target_url.indexOf("/login/") > -1) {
+			returnDepth = "로그인";
+		} else if (target_url.indexOf("/sns/") > -1) {
+			returnDepth = "SNS";
+		} else if (target_url.indexOf("/prodqna/") > -1) {
+			returnDepth = "상품Q&A";
+		} else if (target_url.indexOf("/svcenter/") > -1) {
+			returnDepth = "고객센터";
+		} else if (target_url.indexOf("/item/") > -1) {
+			returnDepth = "아이템";
+		} else if (target_url.indexOf("/store-finder/") > -1) {
+			returnDepth = "매장안내";
+		} else if (target_url.indexOf("/footer/") > -1) {
+			returnDepth = "FOOTER";
+		} else if (target_url.indexOf("/appDownloadSMS/") > -1) {
+			returnDepth = "APP 다운로드";
+		} else if (target_url.indexOf("/intro/") > -1) {
+			returnDepth = "당신만의 한섬";
+		} else if (target_url.indexOf("/mobilecommon/mainIntro") > -1) {
+			returnDepth = "공통";
+		} else if (target_url.indexOf("/mobilecommon/search") > -1) {
+			returnDepth = "공통";
+		} else if (target_url.indexOf("/hssearch") > -1) {
+			returnDepth = "검색";
+		} else if (target_url.indexOf("/product/") > -1) {
+			returnDepth = "상품";
+		} else if (target_url.indexOf("/globalMain") > -1) {
+			returnDepth = "메인";
+		} else if (target_url.indexOf("/main") > -1) {
+			returnDepth = "메인";
+		} else {
+			returnDepth = "";
+		}
+		return returnDepth;
+	}
 
-        if (target_url.substring(target_url.indexOf("/c/") + 3).indexOf("/") > -1) {
-          if (target_url.toLowerCase().substring(target_url.indexOf("/c/") + 3).indexOf("br") > -1) {
-            returnDepth = "브랜드";
-          } else {
-            returnDepth = "카테고리";
-          }
-        } else {
-          returnDepth = "카테고리";
-        }
+	function getGAPageTitle(oneDepthPage) {
+		var returnTitle = "";
+		var target_url = document.location.href;
+		//if(target_url.substring(target_url.indexOf("/ko/")+4).indexOf("/") == -1){
+		if (target_url.substring(target_url.indexOf("/ko/") + 4) == "") {
+			returnTitle = oneDepthPage;
+		} else if (target_url.substring(target_url.indexOf("/ko") + 3) == "") {
+			returnTitle = oneDepthPage;
+		} else if (target_url.indexOf("/p/") > -1) {
+			returnTitle = oneDepthPage + ">";
+		} else if (target_url.indexOf("/c//") > -1) {
+			returnTitle = oneDepthPage + ">>전체보기";
+		} else if (target_url.indexOf("/b/fourmMain") > -1) {
+			returnTitle = oneDepthPage + ">FOURM 메인";
+		} else if (target_url.indexOf("/b//brand") > -1) {
+			returnTitle = oneDepthPage + ">>소개";
+		} else if (target_url.indexOf("/b//storeInformation") > -1) {
+			returnTitle = oneDepthPage + ">>매장";
+		} else if (target_url.indexOf("/b//lookBookDetail?lookBookCode=") > -1) {
+			returnTitle = oneDepthPage + ">>룩북>";
+		} else if (target_url.indexOf("/b//lookBook") > -1) {
+			returnTitle = oneDepthPage + ">>룩북";
+		} else if (target_url.indexOf("/b/") > -1) {
+			returnTitle = oneDepthPage + ">>브랜드 메인";
+		} else if (target_url.indexOf("/c//ou") > -1) {
+			returnTitle = oneDepthPage;
 
-      } else if (target_url.indexOf("/mypage/care/") > -1) {
-        returnDepth = "케어";
-      } else if (target_url.indexOf("/mypage") > -1) {
-        returnDepth = "마이페이지";
-      } else if (target_url.indexOf("/magazine/events") > -1) {
-        returnDepth = "이벤트";
-      } else if (target_url.indexOf("/magazine/") > -1) {
-        returnDepth = "매거진";
-      } else if (target_url.indexOf("/shoppingbag") > -1) {
-        returnDepth = "쇼핑백";
-      } else if (target_url.indexOf("/ou/") > -1) {
-        returnDepth = "아울렛";
-      } else if (target_url.indexOf("/checkout/") > -1) {
-        returnDepth = "주문";
-      } else if (target_url.indexOf("/member/") > -1) {
-        returnDepth = "로그인";
-      } else if (target_url.indexOf("/login/") > -1) {
-        returnDepth = "로그인";
-      } else if (target_url.indexOf("/sns/") > -1) {
-        returnDepth = "SNS";
-      } else if (target_url.indexOf("/prodqna/") > -1) {
-        returnDepth = "상품Q&A";
-      } else if (target_url.indexOf("/svcenter/") > -1) {
-        returnDepth = "고객센터";
-      } else if (target_url.indexOf("/item/") > -1) {
-        returnDepth = "아이템";
-      } else if (target_url.indexOf("/store-finder/") > -1) {
-        returnDepth = "매장안내";
-      } else if (target_url.indexOf("/footer/") > -1) {
-        returnDepth = "FOOTER";
-      } else if (target_url.indexOf("/appDownloadSMS/") > -1) {
-        returnDepth = "APP 다운로드";
-      } else if (target_url.indexOf("/intro/") > -1) {
-        returnDepth = "당신만의 한섬";
-      } else if (target_url.indexOf("/mobilecommon/mainIntro") > -1) {
-        returnDepth = "공통";
-      } else if (target_url.indexOf("/mobilecommon/search") > -1) {
-        returnDepth = "공통";
-      } else if (target_url.indexOf("/hssearch") > -1) {
-        returnDepth = "검색";
-      } else if (target_url.indexOf("/product/") > -1) {
-        returnDepth = "상품";
-      } else if (target_url.indexOf("/globalMain") > -1) {
-        returnDepth = "메인";
-      } else if (target_url.indexOf("/main") > -1) {
-        returnDepth = "메인";
-      } else {
-        returnDepth = "";
-      }
-      return returnDepth;
-    }
+		} else if (target_url.indexOf("/c//") > -1) {
+			returnTitle = oneDepthPage;
 
-    function getGAPageTitle(oneDepthPage) {
-      var returnTitle = "";
-      var target_url = document.location.href;
-      //if(target_url.substring(target_url.indexOf("/ko/")+4).indexOf("/") == -1){
-      if (target_url.substring(target_url.indexOf("/ko/") + 4) == "") {
-        returnTitle = oneDepthPage;
-      } else if (target_url.substring(target_url.indexOf("/ko") + 3) == "") {
-        returnTitle = oneDepthPage;
-      } else if (target_url.indexOf("/p/") > -1) {
-        returnTitle = oneDepthPage + ">";
-      } else if (target_url.indexOf("/c//") > -1) {
-        returnTitle = oneDepthPage + ">>전체보기";
-      } else if (target_url.indexOf("/b/fourmMain") > -1) {
-        returnTitle = oneDepthPage + ">FOURM 메인";
-      } else if (target_url.indexOf("/b//brand") > -1) {
-        returnTitle = oneDepthPage + ">>소개";
-      } else if (target_url.indexOf("/b//storeInformation") > -1) {
-        returnTitle = oneDepthPage + ">>매장";
-      } else if (target_url.indexOf("/b//lookBookDetail?lookBookCode=") > -1) {
-        returnTitle = oneDepthPage + ">>룩북>";
-      } else if (target_url.indexOf("/b//lookBook") > -1) {
-        returnTitle = oneDepthPage + ">>룩북";
-      } else if (target_url.indexOf("/b/") > -1) {
-        returnTitle = oneDepthPage + ">>브랜드 메인";
-      } else if (target_url.indexOf("/c//ou") > -1) {
-        returnTitle = oneDepthPage;
+		} else if (target_url.indexOf("/c/") > -1) {
+			returnTitle = oneDepthPage;
 
-      } else if (target_url.indexOf("/c//") > -1) {
-        returnTitle = oneDepthPage;
+		} else if (target_url.indexOf("/mypage/order/myordersAthome") > -1) {
+			returnTitle = oneDepthPage + ">앳홈신청 및 결제";
+		} else if (target_url.indexOf("/mypage/order/myorders") > -1) {
+			returnTitle = oneDepthPage + ">주문/배송조회";
+		} else if (target_url.indexOf("/mypage/myGradeInfo") > -1) {
+			returnTitle = oneDepthPage + ">나의 회원등급";
+		} else if (target_url.indexOf("/mypage/voucher") > -1) {
+			returnTitle = oneDepthPage + ">쿠폰";
+		} else if (target_url.indexOf("/mypage/mypoint") > -1) {
+			returnTitle = oneDepthPage + ">혜택관리>나의 한섬마일리지";
+		} else if (target_url.indexOf("/mypage/myEGiftCard") > -1) {
+			returnTitle = oneDepthPage + ">혜택관리>e-giftcard";
+		} else if (target_url.indexOf("/mypage/myWish") > -1) {
+			returnTitle = oneDepthPage + ">위시리스트";
+		} else if (target_url.indexOf("/mypage/rsalarm") > -1) {
+			returnTitle = oneDepthPage + ">재입고 알림";
+		} else if (target_url.indexOf("/mypage/personInfomationChangePWCheck") > -1) {
+			returnTitle = oneDepthPage + ">개인정보 변경/탈퇴";
+		} else if (target_url.indexOf("/mypage/mydelivery") > -1) {
+			returnTitle = oneDepthPage + ">배송지 관리";
+		} else if (target_url.indexOf("/mypage/oneClick") > -1) {
+			returnTitle = oneDepthPage + ">나의 정보관리>원클릭 결제 관리";
+		} else if (target_url.indexOf("/mypage/myreview") > -1) {
+			returnTitle = oneDepthPage + ">내 상품평";
+		} else if (target_url.indexOf("/mypage/myqna") > -1) {
+			returnTitle = oneDepthPage + ">상품 Q&A";
+		} else if (target_url.indexOf("/mypage/mymantomaninquiry") > -1) {
+			returnTitle = oneDepthPage + ">1:1 문의";
+		} else if (target_url.indexOf("/mypage/mypageFloatingPopup") > -1) {
+			returnTitle = oneDepthPage + ">메인";
+		} else if (target_url.indexOf("/mypage/mypoint/mobile") > -1) {
+			returnTitle = oneDepthPage + ">나의 혜택";
+		} else if (target_url.indexOf("/mypage/event/myevents") > -1) {
+			returnTitle = oneDepthPage + ">나의 이벤트";
+		} else if (target_url.indexOf("/mypage/oneBuy") > -1) {
+			returnTitle = oneDepthPage + ">원클릭 결제 설정";
+		} else if (target_url.indexOf("/mypage/care/mycares") > -1) {
+			returnTitle = oneDepthPage + ">내역조회";
+		} else if (target_url.indexOf("/mypage/care/careRequestComplete") > -1) {
+			returnTitle = oneDepthPage + ">신청완료";
+		} else if (target_url.indexOf("/mypage/care/careRequest") > -1) {
+			returnTitle = oneDepthPage + ">신청하기";
+		} else if (target_url.endsWith("/ko/mypage/", target_url.length)) {
+			returnTitle = oneDepthPage + ">메인";
+		} else if (target_url.endsWith("/ko/mypage", target_url.length)) {
+			returnTitle = oneDepthPage + ">메인";
+		} else if (target_url.indexOf("/magazine/events/") > -1) {
+			returnTitle = oneDepthPage + ">상세>";
+		} else if (target_url.indexOf("/magazine/events") > -1) {
+			if (getCookie2("app") == null || getCookie2("app") == "") {
+				returnTitle = oneDepthPage + ">리스트";
+			} else {
+				returnTitle = oneDepthPage + ">모바일썸네일";
+			}
+		} else if (target_url.indexOf("/magazine/editorials/") > -1) {
+			returnTitle = oneDepthPage + ">에디토리얼>상세>";
+		} else if (target_url.indexOf("/magazine/editorials") > -1) {
+			returnTitle = oneDepthPage + ">에디토리얼>리스트";
+		} else if (target_url.indexOf("/magazine/exhibitions/") > -1) {
+			returnTitle = oneDepthPage + ">기획전>상세>";
+		} else if (target_url.indexOf("/magazine/exhibitions") > -1) {
+			returnTitle = oneDepthPage + ">기획전>리스트";
+		} else if (target_url.indexOf("/magazine/handpeople") > -1) {
+			returnTitle = oneDepthPage + ">핸썸피플 리스트";
+		} else if (target_url.indexOf("/magazine/instagram") > -1) {
+			returnTitle = oneDepthPage + ">인스타그램";
+		} else if (target_url.indexOf("/magazine/lookbookDetail/") > -1) {
+			returnTitle = oneDepthPage + ">룩북>상세>";
+		} else if (target_url.indexOf("/magazine/lookbook") > -1) {
+			returnTitle = oneDepthPage + ">룩북>리스트";
+		} else if (target_url.indexOf("/magazine/newsDetailtemplatetype") > -1) {
+			returnTitle = oneDepthPage + ">뉴스>상세>";
+		} else if (target_url.indexOf("/magazine/news") > -1) {
+			returnTitle = oneDepthPage + ">뉴스>리스트";
+		} else if (target_url.indexOf("/magazine/weeklypick") > -1) {
+			returnTitle = oneDepthPage + ">위클리 픽 리스트";
+		} else if (target_url.indexOf("/magazine/submain") > -1) {
+			returnTitle = oneDepthPage + ">THE매거진 메인";
+		} else if (target_url.indexOf("/magazine/youtubeList") > -1) {
+			returnTitle = oneDepthPage + ">비디오";
+		} else if (target_url.indexOf("/shoppingbag") > -1) {
+			returnTitle = oneDepthPage;
+		} else if (target_url.indexOf("/ou/outletMain") > -1) {
+			returnTitle = oneDepthPage + ">메인";
+		} else if (target_url.indexOf("/c/ou_/ou") > -1) {
+			returnTitle = oneDepthPage + ">";
+		} else if (target_url.indexOf("/mobilecommon/search") > -1) {
+			returnTitle = oneDepthPage + ">키워드";
+		} else if (target_url.indexOf("/hssearch/") > -1) {
+			returnTitle = oneDepthPage + ">검색결과";
+		} else if (target_url.indexOf("/checkout/ordersheet") > -1) {
+			returnTitle = oneDepthPage + ">주문서 작성";
+		} else if (target_url.indexOf("/checkout/orderConfirmation") > -1) {
+			returnTitle = oneDepthPage + ">주문 완료";
+		} else if (target_url.indexOf("/member/login") > -1) {
+			returnTitle = oneDepthPage;
+		} else if (target_url.indexOf("/login/checkout") > -1) {
+			returnTitle = oneDepthPage + ">미로그인시로그인유도";
+		} else if (target_url.indexOf("/member/pwChange") > -1) {
+			returnTitle = oneDepthPage + ">비밀번호 변경 대상";
+		} else if (target_url.indexOf("/member/findIdPwPage") > -1) {
+			returnTitle = oneDepthPage + ">한섬회원 아이디/비밀번호 찾기";
+		} else if (target_url.indexOf("/member/globaljoincomplete") > -1) {
+			returnTitle = oneDepthPage + ">가입완료";
+		} else if (target_url.indexOf("/member/joincomplete") > -1) {
+			returnTitle = oneDepthPage + ">가입완료";
+		} else if (target_url.indexOf("/member/joinGuidePage") > -1) {
+			returnTitle = oneDepthPage + ">회원가입안내";
+		} else if (target_url.indexOf("/member/joininfoform") > -1) {
+			returnTitle = oneDepthPage + ">간편회원 정보입력";
+		} else if (target_url.indexOf("/member/joinstart") > -1) {
+			returnTitle = oneDepthPage + ">간편회원 이메일";
+		} else if (target_url.indexOf("/member/nonMemberLogin") > -1) {
+			returnTitle = oneDepthPage + ">비회원 주문조회";
+		} else if (target_url.indexOf("/sns/main") > -1) {
+			returnTitle = oneDepthPage + ">메인";
+		} else if (target_url.indexOf("/sns/detail?") > -1) {
+			returnTitle = oneDepthPage + ">포스트상세보기";
+		} else if (target_url.indexOf("/sns/myNotice") > -1) {
+			returnTitle = oneDepthPage + ">나의알림";
+		} else if (target_url.indexOf("/sns/collectionDetail?") > -1) {
+			returnTitle = oneDepthPage + ">콜렉션상세";
+		} else if (target_url.indexOf("/sns/followerList?") > -1) {
+			returnTitle = oneDepthPage + ">팔로워리스트";
+		} else if (target_url.indexOf("/sns/followingList?") > -1) {
+			returnTitle = oneDepthPage + ">팔로윙리스트";
+		} else if (target_url.indexOf("/sns/snsSearch?searchWord=") > -1) {
+			returnTitle = oneDepthPage + ">태그검색";
+		} else if (target_url.indexOf("/sns/message?") > -1) {
+			returnTitle = oneDepthPage + ">메시지";
+		} else if (target_url.indexOf("/sns/messageList") > -1) {
+			returnTitle = oneDepthPage + ">메시지리스트";
+		} else if (target_url.indexOf("/sns/myLevel") > -1) {
+			returnTitle = oneDepthPage + ">나의레벨";
+		} else if (target_url.indexOf("/sns/myProfile?") > -1) {
+			returnTitle = oneDepthPage + ">나의프로필";
+		} else if (target_url.indexOf("/sns/weeklyBest") > -1) {
+			returnTitle = oneDepthPage + ">위클리베스트";
+		} else if (target_url.indexOf("/sns/write") > -1) {
+			returnTitle = oneDepthPage + ">포스팅작성";
+		} else if (target_url.indexOf("/mobilecommon/mainIntro") > -1) {
+			returnTitle = oneDepthPage + ">인트로";
+		} else if (target_url.indexOf("/prodqna/listProdQnA?") > -1) {
+			returnTitle = oneDepthPage + ">";
+		} else if (target_url.indexOf("/svcenter/submain") > -1) {
+			returnTitle = oneDepthPage + ">서브메인";
+		} else if (target_url.indexOf("/svcenter/notice") > -1) {
+			returnTitle = oneDepthPage + ">공지사항";
+		} else if (target_url.indexOf("/svcenter/mantomaninquiry") > -1) {
+			returnTitle = oneDepthPage + ">1:1 문의";
+		} else if (target_url.indexOf("/svcenter/faq") > -1) {
+			returnTitle = oneDepthPage + ">FAQ";
+		} else if (target_url.indexOf("/svcenter/mending") > -1) {
+			returnTitle = oneDepthPage + ">수선진행조회";
+		} else if (target_url.indexOf("/svcenter/memberjoinguide") > -1) {
+			returnTitle = oneDepthPage + ">쇼핑가이드>회원가입";
+		} else if (target_url.indexOf("/svcenter/theClubInfo") > -1) {
+			returnTitle = oneDepthPage + ">쇼핑가이드>온라인 멤버십";
+		} else if (target_url.indexOf("/svcenter/memberbenefitguide") > -1) {
+			returnTitle = oneDepthPage + ">쇼핑가이드>한섬 VVIP 혜택";
+		} else if (target_url.indexOf("/svcenter/pointguide") > -1) {
+			returnTitle = oneDepthPage + ">쇼핑가이드>한섬마일리지 혜택";
+		} else if (target_url.indexOf("/svcenter/couponguide") > -1) {
+			returnTitle = oneDepthPage + ">쇼핑가이드>쿠폰";
+		} else if (target_url.indexOf("/svcenter/asguide") > -1) {
+			returnTitle = oneDepthPage + ">쇼핑가이드>배송/반품/AS";
+		} else if (target_url.indexOf("/svcenter/paymentguide") > -1) {
+			returnTitle = oneDepthPage + ">쇼핑가이드>주문/결제";
+		} else if (target_url.indexOf("/svcenter/athomeInfo") > -1) {
+			returnTitle = oneDepthPage + ">at HOME";
+		} else if (target_url.indexOf("/svcenter/footerAthomeInfo") > -1) {
+			returnTitle = oneDepthPage + ">딜리버리서비스";
+		} else if (target_url.indexOf("/svcenter/mobilemain") > -1) {
+			returnTitle = oneDepthPage + ">메인";
+		} else if (target_url.indexOf("/svcenter/mobilenotice") > -1) {
+			returnTitle = oneDepthPage + ">공지사항";
+		} else if (target_url.indexOf("/svcenter/mobilefaq") > -1) {
+			returnTitle = oneDepthPage + ">FAQ";
+		} else if (target_url.indexOf("/svcenter/mobilemending") > -1) {
+			returnTitle = oneDepthPage + ">수선진행조회";
+		} else if (target_url.indexOf("/svcenter/serviceguide?targetSlide=0") > -1) {
+			returnTitle = oneDepthPage + ">서비스소개>간편서비스";
+		} else if (target_url.indexOf("/svcenter/serviceguide?targetSlide=1") > -1) {
+			returnTitle = oneDepthPage + ">서비스소개>스마트쇼핑";
+		} else if (target_url.indexOf("/svcenter/serviceguide?targetSlide=2") > -1) {
+			returnTitle = oneDepthPage + ">서비스소개>유니크한섬";
+		} else if (target_url.indexOf("/svcenter/serviceguide") > -1) {
+			returnTitle = oneDepthPage + ">서비스소개";
+		} else if (target_url.indexOf("/product/reviewList/") > -1) {
+			returnTitle = oneDepthPage + ">상품평>";
+		} else if (target_url.indexOf("/item/we") > -1) {
+			returnTitle = oneDepthPage + ">WE";
+		} else if (target_url.indexOf("/item/me") > -1) {
+			returnTitle = oneDepthPage + ">ME";
+		} else if (target_url.indexOf("/store-finder/") > -1) {
+			returnTitle = oneDepthPage;
+		} else if (target_url.indexOf("/footer/footerBrandintro") > -1) {
+			returnTitle = oneDepthPage + ">브랜드소개";
+		} else if (target_url.indexOf("/footer/footerCEOGreetings") > -1) {
+			returnTitle = oneDepthPage + ">CEO 메시지";
+		} else if (target_url.indexOf("/footer/footerCompanyIntro") > -1) {
+			returnTitle = oneDepthPage + ">회사소개>한섬소개";
+		} else if (target_url.indexOf("/footer/footerCEOGreetings") > -1) {
+			returnTitle = oneDepthPage + ">회사소개>CEO 메시지";
+		} else if (target_url.indexOf("/footer/footerBrandintro") > -1) {
+			returnTitle = oneDepthPage + ">회사소개>브랜드소개";
+		} else if (target_url.indexOf("/footer/footerGovernance") > -1) {
+			returnTitle = oneDepthPage + ">투자정보>기업지배구조";
+		} else if (target_url.indexOf("/footer/footerFinancialInfo") > -1) {
+			returnTitle = oneDepthPage + ">투자정보>재무정보";
+		} else if (target_url.indexOf("/footer/footerStockInfo") > -1) {
+			returnTitle = oneDepthPage + ">투자정보>주가정보";
+		} else if (target_url.indexOf("/footer/footerIR") > -1) {
+			returnTitle = oneDepthPage + ">투자정보>IR";
+		} else if (target_url.indexOf("/footer/footerCorporatePartnership") > -1) {
+			returnTitle = oneDepthPage + ">동반성장>소개";
+		} else if (target_url.indexOf("/footer/footerCoreFourPractices") > -1) {
+			returnTitle = oneDepthPage + ">동반성장>4대 실천사항";
+		} else if (target_url.indexOf("/footer/footerCooperatorSelection") > -1) {
+			returnTitle = oneDepthPage + ">동반성장>협력업체 선정";
+		} else if (target_url.indexOf("/footer/footerSupportProgram") > -1) {
+			returnTitle = oneDepthPage + ">동반성장>지원제도";
+		} else if (target_url.indexOf("/footer/footerContactUs") > -1) {
+			returnTitle = oneDepthPage + ">동반성장>소통의 장";
+		} else if (target_url.indexOf("/appDownloadSMS/") > -1) {
+			returnTitle = oneDepthPage;
+		} else if (target_url.indexOf("/intro/mainYours") > -1) {
+			returnTitle = oneDepthPage;
+		} else if (target_url.indexOf("/globalMain") > -1) {
+			returnTitle = oneDepthPage;
+		} else if (target_url.indexOf("/main") > -1) {
+			returnTitle = oneDepthPage;
+		}
 
-      } else if (target_url.indexOf("/c/") > -1) {
-        returnTitle = oneDepthPage;
+		return returnTitle;
+	}
 
-      } else if (target_url.indexOf("/mypage/order/myordersAthome") > -1) {
-        returnTitle = oneDepthPage + ">앳홈신청 및 결제";
-      } else if (target_url.indexOf("/mypage/order/myorders") > -1) {
-        returnTitle = oneDepthPage + ">주문/배송조회";
-      } else if (target_url.indexOf("/mypage/myGradeInfo") > -1) {
-        returnTitle = oneDepthPage + ">나의 회원등급";
-      } else if (target_url.indexOf("/mypage/voucher") > -1) {
-        returnTitle = oneDepthPage + ">쿠폰";
-      } else if (target_url.indexOf("/mypage/mypoint") > -1) {
-        returnTitle = oneDepthPage + ">혜택관리>나의 한섬마일리지";
-      } else if (target_url.indexOf("/mypage/myEGiftCard") > -1) {
-        returnTitle = oneDepthPage + ">혜택관리>e-giftcard";
-      } else if (target_url.indexOf("/mypage/myWish") > -1) {
-        returnTitle = oneDepthPage + ">위시리스트";
-      } else if (target_url.indexOf("/mypage/rsalarm") > -1) {
-        returnTitle = oneDepthPage + ">재입고 알림";
-      } else if (target_url.indexOf("/mypage/personInfomationChangePWCheck") > -1) {
-        returnTitle = oneDepthPage + ">개인정보 변경/탈퇴";
-      } else if (target_url.indexOf("/mypage/mydelivery") > -1) {
-        returnTitle = oneDepthPage + ">배송지 관리";
-      } else if (target_url.indexOf("/mypage/oneClick") > -1) {
-        returnTitle = oneDepthPage + ">나의 정보관리>원클릭 결제 관리";
-      } else if (target_url.indexOf("/mypage/myreview") > -1) {
-        returnTitle = oneDepthPage + ">내 상품평";
-      } else if (target_url.indexOf("/mypage/myqna") > -1) {
-        returnTitle = oneDepthPage + ">상품 Q&A";
-      } else if (target_url.indexOf("/mypage/mymantomaninquiry") > -1) {
-        returnTitle = oneDepthPage + ">1:1 문의";
-      } else if (target_url.indexOf("/mypage/mypageFloatingPopup") > -1) {
-        returnTitle = oneDepthPage + ">메인";
-      } else if (target_url.indexOf("/mypage/mypoint/mobile") > -1) {
-        returnTitle = oneDepthPage + ">나의 혜택";
-      } else if (target_url.indexOf("/mypage/event/myevents") > -1) {
-        returnTitle = oneDepthPage + ">나의 이벤트";
-      } else if (target_url.indexOf("/mypage/oneBuy") > -1) {
-        returnTitle = oneDepthPage + ">원클릭 결제 설정";
-      } else if (target_url.indexOf("/mypage/care/mycares") > -1) {
-        returnTitle = oneDepthPage + ">내역조회";
-      } else if (target_url.indexOf("/mypage/care/careRequestComplete") > -1) {
-        returnTitle = oneDepthPage + ">신청완료";
-      } else if (target_url.indexOf("/mypage/care/careRequest") > -1) {
-        returnTitle = oneDepthPage + ">신청하기";
-      } else if (target_url.endsWith("/ko/mypage/", target_url.length)) {
-        returnTitle = oneDepthPage + ">메인";
-      } else if (target_url.endsWith("/ko/mypage", target_url.length)) {
-        returnTitle = oneDepthPage + ">메인";
-      } else if (target_url.indexOf("/magazine/events/") > -1) {
-        returnTitle = oneDepthPage + ">상세>";
-      } else if (target_url.indexOf("/magazine/events") > -1) {
-        if (getCookie2("app") == null || getCookie2("app") == "") {
-          returnTitle = oneDepthPage + ">리스트";
-        } else {
-          returnTitle = oneDepthPage + ">모바일썸네일";
-        }
-      } else if (target_url.indexOf("/magazine/editorials/") > -1) {
-        returnTitle = oneDepthPage + ">에디토리얼>상세>";
-      } else if (target_url.indexOf("/magazine/editorials") > -1) {
-        returnTitle = oneDepthPage + ">에디토리얼>리스트";
-      } else if (target_url.indexOf("/magazine/exhibitions/") > -1) {
-        returnTitle = oneDepthPage + ">기획전>상세>";
-      } else if (target_url.indexOf("/magazine/exhibitions") > -1) {
-        returnTitle = oneDepthPage + ">기획전>리스트";
-      } else if (target_url.indexOf("/magazine/handpeople") > -1) {
-        returnTitle = oneDepthPage + ">핸썸피플 리스트";
-      } else if (target_url.indexOf("/magazine/instagram") > -1) {
-        returnTitle = oneDepthPage + ">인스타그램";
-      } else if (target_url.indexOf("/magazine/lookbookDetail/") > -1) {
-        returnTitle = oneDepthPage + ">룩북>상세>";
-      } else if (target_url.indexOf("/magazine/lookbook") > -1) {
-        returnTitle = oneDepthPage + ">룩북>리스트";
-      } else if (target_url.indexOf("/magazine/newsDetailtemplatetype") > -1) {
-        returnTitle = oneDepthPage + ">뉴스>상세>";
-      } else if (target_url.indexOf("/magazine/news") > -1) {
-        returnTitle = oneDepthPage + ">뉴스>리스트";
-      } else if (target_url.indexOf("/magazine/weeklypick") > -1) {
-        returnTitle = oneDepthPage + ">위클리 픽 리스트";
-      } else if (target_url.indexOf("/magazine/submain") > -1) {
-        returnTitle = oneDepthPage + ">THE매거진 메인";
-      } else if (target_url.indexOf("/magazine/youtubeList") > -1) {
-        returnTitle = oneDepthPage + ">비디오";
-      } else if (target_url.indexOf("/shoppingbag") > -1) {
-        returnTitle = oneDepthPage;
-      } else if (target_url.indexOf("/ou/outletMain") > -1) {
-        returnTitle = oneDepthPage + ">메인";
-      } else if (target_url.indexOf("/c/ou_/ou") > -1) {
-        returnTitle = oneDepthPage + ">";
-      } else if (target_url.indexOf("/mobilecommon/search") > -1) {
-        returnTitle = oneDepthPage + ">키워드";
-      } else if (target_url.indexOf("/hssearch/") > -1) {
-        returnTitle = oneDepthPage + ">검색결과";
-      } else if (target_url.indexOf("/checkout/ordersheet") > -1) {
-        returnTitle = oneDepthPage + ">주문서 작성";
-      } else if (target_url.indexOf("/checkout/orderConfirmation") > -1) {
-        returnTitle = oneDepthPage + ">주문 완료";
-      } else if (target_url.indexOf("/member/login") > -1) {
-        returnTitle = oneDepthPage;
-      } else if (target_url.indexOf("/login/checkout") > -1) {
-        returnTitle = oneDepthPage + ">미로그인시로그인유도";
-      } else if (target_url.indexOf("/member/pwChange") > -1) {
-        returnTitle = oneDepthPage + ">비밀번호 변경 대상";
-      } else if (target_url.indexOf("/member/findIdPwPage") > -1) {
-        returnTitle = oneDepthPage + ">한섬회원 아이디/비밀번호 찾기";
-      } else if (target_url.indexOf("/member/globaljoincomplete") > -1) {
-        returnTitle = oneDepthPage + ">가입완료";
-      } else if (target_url.indexOf("/member/joincomplete") > -1) {
-        returnTitle = oneDepthPage + ">가입완료";
-      } else if (target_url.indexOf("/member/joinGuidePage") > -1) {
-        returnTitle = oneDepthPage + ">회원가입안내";
-      } else if (target_url.indexOf("/member/joininfoform") > -1) {
-        returnTitle = oneDepthPage + ">간편회원 정보입력";
-      } else if (target_url.indexOf("/member/joinstart") > -1) {
-        returnTitle = oneDepthPage + ">간편회원 이메일";
-      } else if (target_url.indexOf("/member/nonMemberLogin") > -1) {
-        returnTitle = oneDepthPage + ">비회원 주문조회";
-      } else if (target_url.indexOf("/sns/main") > -1) {
-        returnTitle = oneDepthPage + ">메인";
-      } else if (target_url.indexOf("/sns/detail?") > -1) {
-        returnTitle = oneDepthPage + ">포스트상세보기";
-      } else if (target_url.indexOf("/sns/myNotice") > -1) {
-        returnTitle = oneDepthPage + ">나의알림";
-      } else if (target_url.indexOf("/sns/collectionDetail?") > -1) {
-        returnTitle = oneDepthPage + ">콜렉션상세";
-      } else if (target_url.indexOf("/sns/followerList?") > -1) {
-        returnTitle = oneDepthPage + ">팔로워리스트";
-      } else if (target_url.indexOf("/sns/followingList?") > -1) {
-        returnTitle = oneDepthPage + ">팔로윙리스트";
-      } else if (target_url.indexOf("/sns/snsSearch?searchWord=") > -1) {
-        returnTitle = oneDepthPage + ">태그검색";
-      } else if (target_url.indexOf("/sns/message?") > -1) {
-        returnTitle = oneDepthPage + ">메시지";
-      } else if (target_url.indexOf("/sns/messageList") > -1) {
-        returnTitle = oneDepthPage + ">메시지리스트";
-      } else if (target_url.indexOf("/sns/myLevel") > -1) {
-        returnTitle = oneDepthPage + ">나의레벨";
-      } else if (target_url.indexOf("/sns/myProfile?") > -1) {
-        returnTitle = oneDepthPage + ">나의프로필";
-      } else if (target_url.indexOf("/sns/weeklyBest") > -1) {
-        returnTitle = oneDepthPage + ">위클리베스트";
-      } else if (target_url.indexOf("/sns/write") > -1) {
-        returnTitle = oneDepthPage + ">포스팅작성";
-      } else if (target_url.indexOf("/mobilecommon/mainIntro") > -1) {
-        returnTitle = oneDepthPage + ">인트로";
-      } else if (target_url.indexOf("/prodqna/listProdQnA?") > -1) {
-        returnTitle = oneDepthPage + ">";
-      } else if (target_url.indexOf("/svcenter/submain") > -1) {
-        returnTitle = oneDepthPage + ">서브메인";
-      } else if (target_url.indexOf("/svcenter/notice") > -1) {
-        returnTitle = oneDepthPage + ">공지사항";
-      } else if (target_url.indexOf("/svcenter/mantomaninquiry") > -1) {
-        returnTitle = oneDepthPage + ">1:1 문의";
-      } else if (target_url.indexOf("/svcenter/faq") > -1) {
-        returnTitle = oneDepthPage + ">FAQ";
-      } else if (target_url.indexOf("/svcenter/mending") > -1) {
-        returnTitle = oneDepthPage + ">수선진행조회";
-      } else if (target_url.indexOf("/svcenter/memberjoinguide") > -1) {
-        returnTitle = oneDepthPage + ">쇼핑가이드>회원가입";
-      } else if (target_url.indexOf("/svcenter/theClubInfo") > -1) {
-        returnTitle = oneDepthPage + ">쇼핑가이드>온라인 멤버십";
-      } else if (target_url.indexOf("/svcenter/memberbenefitguide") > -1) {
-        returnTitle = oneDepthPage + ">쇼핑가이드>한섬 VVIP 혜택";
-      } else if (target_url.indexOf("/svcenter/pointguide") > -1) {
-        returnTitle = oneDepthPage + ">쇼핑가이드>한섬마일리지 혜택";
-      } else if (target_url.indexOf("/svcenter/couponguide") > -1) {
-        returnTitle = oneDepthPage + ">쇼핑가이드>쿠폰";
-      } else if (target_url.indexOf("/svcenter/asguide") > -1) {
-        returnTitle = oneDepthPage + ">쇼핑가이드>배송/반품/AS";
-      } else if (target_url.indexOf("/svcenter/paymentguide") > -1) {
-        returnTitle = oneDepthPage + ">쇼핑가이드>주문/결제";
-      } else if (target_url.indexOf("/svcenter/athomeInfo") > -1) {
-        returnTitle = oneDepthPage + ">at HOME";
-      } else if (target_url.indexOf("/svcenter/footerAthomeInfo") > -1) {
-        returnTitle = oneDepthPage + ">딜리버리서비스";
-      } else if (target_url.indexOf("/svcenter/mobilemain") > -1) {
-        returnTitle = oneDepthPage + ">메인";
-      } else if (target_url.indexOf("/svcenter/mobilenotice") > -1) {
-        returnTitle = oneDepthPage + ">공지사항";
-      } else if (target_url.indexOf("/svcenter/mobilefaq") > -1) {
-        returnTitle = oneDepthPage + ">FAQ";
-      } else if (target_url.indexOf("/svcenter/mobilemending") > -1) {
-        returnTitle = oneDepthPage + ">수선진행조회";
-      } else if (target_url.indexOf("/svcenter/serviceguide?targetSlide=0") > -1) {
-        returnTitle = oneDepthPage + ">서비스소개>간편서비스";
-      } else if (target_url.indexOf("/svcenter/serviceguide?targetSlide=1") > -1) {
-        returnTitle = oneDepthPage + ">서비스소개>스마트쇼핑";
-      } else if (target_url.indexOf("/svcenter/serviceguide?targetSlide=2") > -1) {
-        returnTitle = oneDepthPage + ">서비스소개>유니크한섬";
-      } else if (target_url.indexOf("/svcenter/serviceguide") > -1) {
-        returnTitle = oneDepthPage + ">서비스소개";
-      } else if (target_url.indexOf("/product/reviewList/") > -1) {
-        returnTitle = oneDepthPage + ">상품평>";
-      } else if (target_url.indexOf("/item/we") > -1) {
-        returnTitle = oneDepthPage + ">WE";
-      } else if (target_url.indexOf("/item/me") > -1) {
-        returnTitle = oneDepthPage + ">ME";
-      } else if (target_url.indexOf("/store-finder/") > -1) {
-        returnTitle = oneDepthPage;
-      } else if (target_url.indexOf("/footer/footerBrandintro") > -1) {
-        returnTitle = oneDepthPage + ">브랜드소개";
-      } else if (target_url.indexOf("/footer/footerCEOGreetings") > -1) {
-        returnTitle = oneDepthPage + ">CEO 메시지";
-      } else if (target_url.indexOf("/footer/footerCompanyIntro") > -1) {
-        returnTitle = oneDepthPage + ">회사소개>한섬소개";
-      } else if (target_url.indexOf("/footer/footerCEOGreetings") > -1) {
-        returnTitle = oneDepthPage + ">회사소개>CEO 메시지";
-      } else if (target_url.indexOf("/footer/footerBrandintro") > -1) {
-        returnTitle = oneDepthPage + ">회사소개>브랜드소개";
-      } else if (target_url.indexOf("/footer/footerGovernance") > -1) {
-        returnTitle = oneDepthPage + ">투자정보>기업지배구조";
-      } else if (target_url.indexOf("/footer/footerFinancialInfo") > -1) {
-        returnTitle = oneDepthPage + ">투자정보>재무정보";
-      } else if (target_url.indexOf("/footer/footerStockInfo") > -1) {
-        returnTitle = oneDepthPage + ">투자정보>주가정보";
-      } else if (target_url.indexOf("/footer/footerIR") > -1) {
-        returnTitle = oneDepthPage + ">투자정보>IR";
-      } else if (target_url.indexOf("/footer/footerCorporatePartnership") > -1) {
-        returnTitle = oneDepthPage + ">동반성장>소개";
-      } else if (target_url.indexOf("/footer/footerCoreFourPractices") > -1) {
-        returnTitle = oneDepthPage + ">동반성장>4대 실천사항";
-      } else if (target_url.indexOf("/footer/footerCooperatorSelection") > -1) {
-        returnTitle = oneDepthPage + ">동반성장>협력업체 선정";
-      } else if (target_url.indexOf("/footer/footerSupportProgram") > -1) {
-        returnTitle = oneDepthPage + ">동반성장>지원제도";
-      } else if (target_url.indexOf("/footer/footerContactUs") > -1) {
-        returnTitle = oneDepthPage + ">동반성장>소통의 장";
-      } else if (target_url.indexOf("/appDownloadSMS/") > -1) {
-        returnTitle = oneDepthPage;
-      } else if (target_url.indexOf("/intro/mainYours") > -1) {
-        returnTitle = oneDepthPage;
-      } else if (target_url.indexOf("/globalMain") > -1) {
-        returnTitle = oneDepthPage;
-      } else if (target_url.indexOf("/main") > -1) {
-        returnTitle = oneDepthPage;
-      }
+	function getCookie2(cname) {
+		var name = cname + "=";
+		var decodedCookie = unescape(document.cookie);
+		var ca = decodedCookie.split(';');
+		var cookieValue = "";
+		for (var i = 0; i < ca.length; i++) {
+			var c = ca[i];
+			while (c.charAt(0) == ' ') {
+				c = c.substring(1);
+			}
+			if (c.indexOf(name) == 0) {
+				cookieValue = c.substring(name.length, c.length);
+			}
+		}
+		return cookieValue;
+	}
 
-      return returnTitle;
-    }
+	function GA_Event(Category, Action, Label) {
 
-    function getCookie2(cname) {
-      var name = cname + "=";
-      var decodedCookie = unescape(document.cookie);
-      var ca = decodedCookie.split(';');
-      var cookieValue = "";
-      for (var i = 0; i < ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' ') {
-          c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-          cookieValue = c.substring(name.length, c.length);
-        }
-      }
-      return cookieValue;
-    }
+		Label = unescape(Label).replace(/\&#039;/gi, "'").replace(/\&amp;/g,
+				"&");
 
-    function GA_Event(Category, Action, Label) {
+		var v_Label = Label;
+		var v_Category = Category;
+		var v_Action = Action;
+		//공백처리을  _ 처리
+		if (Category != null) {
+			v_Category = Category.replace(/\s{2,}/gi, ' ').trim().replace(
+					/\s/gi, '_');
+		}
+		if (Action != null) {
+			v_Action = Action.replace(/\s{2,}/gi, ' ').trim().replace(/\s/gi,
+					'_');
+		}
+		if (Label != null) {
+			v_Label = Label.replace(/\s{2,}/gi, ' ').trim()
+					.replace(/\s/gi, '_');
+		}
+		console.log(v_Category, v_Action, v_Label);
+		ga('gp.send', 'event', v_Category, v_Action, v_Label);
+	}
 
-      Label = unescape(Label).replace(/\&#039;/gi, "'").replace(/\&amp;/g, "&");
+	if (!String.prototype.endsWith) {
+		String.prototype.endsWith = function(searchString, position) {
+			var subjectString = this.toString();
+			if (typeof position !== 'number' || !isFinite(position)
+					|| Math.floor(position) !== position
+					|| position > subjectString.length) {
+				position = subjectString.length;
+			}
+			position -= searchString.length;
+			var lastIndex = subjectString.indexOf(searchString, position);
+			return lastIndex !== -1 && lastIndex === position;
+		};
+	}
 
-      var v_Label = Label;
-      var v_Category = Category;
-      var v_Action = Action;
-      //공백처리을  _ 처리
-      if (Category != null) {
-        v_Category = Category.replace(/\s{2,}/gi, ' ').trim().replace(/\s/gi, '_');
-      }
-      if (Action != null) {
-        v_Action = Action.replace(/\s{2,}/gi, ' ').trim().replace(/\s/gi, '_');
-      }
-      if (Label != null) {
-        v_Label = Label.replace(/\s{2,}/gi, ' ').trim().replace(/\s/gi, '_');
-      }
-      console.log(v_Category, v_Action, v_Label);
-      ga('gp.send', 'event', v_Category, v_Action, v_Label);
-    }
-
-    if (!String.prototype.endsWith) {
-      String.prototype.endsWith = function (searchString, position) {
-        var subjectString = this.toString();
-        if (typeof position !== 'number' || !isFinite(position) || Math.floor(position) !== position || position > subjectString.length) {
-          position = subjectString.length;
-        }
-        position -= searchString.length;
-        var lastIndex = subjectString.indexOf(searchString, position);
-        return lastIndex !== -1 && lastIndex === position;
-      };
-    }
-
-    function gaIsoCodeEncoding(isoCode) {
-      if (isoCode.toLowerCase() == "ko") {
-        GA_Event('공통', '푸터_CNT', 'LANGUAGE_한국어');
-      } else if (isoCode.toLowerCase() == "en") {
-        GA_Event('공통', '푸터_CNT', 'LANGUAGE_영어');
-      } else if (isoCode.toLowerCase() == "zh") {
-        GA_Event('공통', '푸터_CNT', 'LANGUAGE_중국어');
-      }
-    }
-
-  </script>
+	function gaIsoCodeEncoding(isoCode) {
+		if (isoCode.toLowerCase() == "ko") {
+			GA_Event('공통', '푸터_CNT', 'LANGUAGE_한국어');
+		} else if (isoCode.toLowerCase() == "en") {
+			GA_Event('공통', '푸터_CNT', 'LANGUAGE_영어');
+		} else if (isoCode.toLowerCase() == "zh") {
+			GA_Event('공통', '푸터_CNT', 'LANGUAGE_중국어');
+		}
+	}
+</script>
 <script>
-    var ko_time = '20230209164037'; // 현재시간
+	var ko_time = '20230209164037'; // 현재시간
 
-    // 스타일라이브 (20210901 이전 접근불가)
-    if (Number(ko_time) < 20210901000000 && 'https://www.thehandsome.com/WEB-INF/views/handsomemobile/pages/mypage/memberSecessionStep1.jsp'.indexOf('/sns/') > -1) {
-      location.replace("http://www.thehandsome.com/ko/magazine/newsDetailtemplatetype4?newsCode=8802187958044");
-    }
-  </script>
+	// 스타일라이브 (20210901 이전 접근불가)
+	if (Number(ko_time) < 20210901000000
+			&& 'https://www.thehandsome.com/WEB-INF/views/handsomemobile/pages/mypage/memberSecessionStep1.jsp'
+					.indexOf('/sns/') > -1) {
+		location
+				.replace("http://www.thehandsome.com/ko/magazine/newsDetailtemplatetype4?newsCode=8802187958044");
+	}
+</script>
 
 
 <!-- Groobee -->
 <script type="text/javascript">
-      (function (a, i, u, e, o) {
-        a[u] = a[u] || function () { (a[u].q = a[u].q || []).push(arguments) };
-      })(window, document, "groobee");
-    groobee("serviceKey", "446b3d48b07e41f68624bf7f3457f33d");
-    groobee("siteType", "custom");
-  </script>
+	(function(a, i, u, e, o) {
+		a[u] = a[u] || function() {
+			(a[u].q = a[u].q || []).push(arguments)
+		};
+	})(window, document, "groobee");
+	groobee("serviceKey", "446b3d48b07e41f68624bf7f3457f33d");
+	groobee("siteType", "custom");
+</script>
 <script charset="utf-8"
 	src="//static.groobee.io/dist/g2/groobee.init.min.js"></script>
 <!-- End of Groobee -->
@@ -706,13 +753,14 @@
 <meta property="groobee:member_type" content="간편회원">
 <meta property="groobee:member_age" content="26">
 <script>
-    // 검색 결과 페이지
-    if (window.location.pathname.indexOf("/hssearch/searchCount") > -1) {
-      var groobeeKeyword = "";                     //검색_검색어(검색결과페이지일때 사용)
-      groobee("SE", { keyword: groobeeKeyword });
-    }
-
-  </script>
+	// 검색 결과 페이지
+	if (window.location.pathname.indexOf("/hssearch/searchCount") > -1) {
+		var groobeeKeyword = ""; //검색_검색어(검색결과페이지일때 사용)
+		groobee("SE", {
+			keyword : groobeeKeyword
+		});
+	}
+</script>
 <script type="text/javascript" async=""
 	src="https://googleads.g.doubleclick.net/pagead/viewthroughconversion/943253288/?random=1675928437193&amp;cv=9&amp;fst=1675928437193&amp;num=1&amp;guid=ON&amp;resp=GooglemKTybQhCsO&amp;eid=375603261%2C466465926&amp;u_h=1067&amp;u_w=1707&amp;u_ah=1019&amp;u_aw=1707&amp;u_cd=24&amp;u_his=24&amp;u_tz=540&amp;u_java=false&amp;u_nplug=5&amp;u_nmime=2&amp;sendb=1&amp;ig=1&amp;frm=0&amp;url=https%3A%2F%2Fwww.thehandsome.com%2Fmypage%2FmemberSecessionStep1&amp;ref=https%3A%2F%2Fwww.thehandsome.com%2Fko%2Fmypage%2FpersonInfomationChange&amp;tiba=%EB%8D%94%ED%95%9C%EC%84%AC%EB%8B%B7%EC%BB%B4&amp;hn=www.googleadservices.com&amp;rfmt=3&amp;fmt=4"></script>
 <script
@@ -728,30 +776,34 @@
 
 <body>
 	<script>
-    (function () {
-      if (document.cookie.indexOf('thehyundai=true') > -1) {
-        var d = new Date();
-        d.setTime(d.getTime() + (365 * 24 * 60 * 60 * 1000));
-        document.cookie = 'sslvisit=true; expires=' + d.toUTCString() + '; path=/';
-      } else if (document.cookie.indexOf('rakuten=') > -1) {
-        var d = new Date();
-        d.setTime(d.getTime() + (365 * 24 * 60 * 60 * 1000));
-        document.cookie = 'sslvisit1=true; expires=' + d.toUTCString() + '; path=/';
-      } else if (document.cookie.indexOf('hyundaihmall=true') > -1) {
-        var d = new Date();
-        d.setTime(d.getTime() + (365 * 24 * 60 * 60 * 1000));
-        document.cookie = 'sslvisit2=true; expires=' + d.toUTCString() + '; path=/';
-      } else if (document.cookie.indexOf('fromSite') > -1) {
-        var d = new Date();
-        d.setTime(d.getTime() + (365 * 24 * 60 * 60 * 1000));
-        document.cookie = 'sslvisit3=' + "" + '; expires=' + d.toUTCString() + '; path=/';
-      } else if (document.cookie.indexOf('recommender') > -1) {
-        var d = new Date();
-        d.setTime(d.getTime() + (365 * 24 * 60 * 60 * 1000));
-        document.cookie = 'sslvisit4=' + "" + '; path=/';
-      }
-    })();
-  </script>
+		(function() {
+			if (document.cookie.indexOf('thehyundai=true') > -1) {
+				var d = new Date();
+				d.setTime(d.getTime() + (365 * 24 * 60 * 60 * 1000));
+				document.cookie = 'sslvisit=true; expires=' + d.toUTCString()
+						+ '; path=/';
+			} else if (document.cookie.indexOf('rakuten=') > -1) {
+				var d = new Date();
+				d.setTime(d.getTime() + (365 * 24 * 60 * 60 * 1000));
+				document.cookie = 'sslvisit1=true; expires=' + d.toUTCString()
+						+ '; path=/';
+			} else if (document.cookie.indexOf('hyundaihmall=true') > -1) {
+				var d = new Date();
+				d.setTime(d.getTime() + (365 * 24 * 60 * 60 * 1000));
+				document.cookie = 'sslvisit2=true; expires=' + d.toUTCString()
+						+ '; path=/';
+			} else if (document.cookie.indexOf('fromSite') > -1) {
+				var d = new Date();
+				d.setTime(d.getTime() + (365 * 24 * 60 * 60 * 1000));
+				document.cookie = 'sslvisit3=' + "" + '; expires='
+						+ d.toUTCString() + '; path=/';
+			} else if (document.cookie.indexOf('recommender') > -1) {
+				var d = new Date();
+				d.setTime(d.getTime() + (365 * 24 * 60 * 60 * 1000));
+				document.cookie = 'sslvisit4=' + "" + '; path=/';
+			}
+		})();
+	</script>
 	<!-- Loading -->
 	<div style="display: none;">
 		<div id="loadingBarDiv" style="display: none;"></div>
@@ -778,11 +830,11 @@
 
 		<div class="hsome_allContents">
 			<script type="text/javascript">
-        function goMainpage() {
-          window.sessionStorage.removeItem('moveYn');
-          location.href = "/ko/main";
-        }
-      </script>
+				function goMainpage() {
+					window.sessionStorage.removeItem('moveYn');
+					location.href = "/ko/main";
+				}
+			</script>
 
 			<!-- ################## header ################## -->
 			<header class="hsome_header">
@@ -798,20 +850,26 @@
 			</header>
 			<!-- //################## header ################## -->
 			<script type="text/javascript">
-        //<![CDATA[ 
-        $(document).ready(function () {
+				//<![CDATA[ 
+				$(document)
+						.ready(
+								function() {
 
-          $("#hpSecessionBtn").click(function () {
-            location.href = "https://www.h-point.co.kr/cu/mem/showCustInfo.shd";
-          });
+									$("#hpSecessionBtn")
+											.click(
+													function() {
+														location.href = "https://www.h-point.co.kr/cu/mem/showCustInfo.shd";
+													});
 
-          $("#secessionStep2Btn").click(function () {
-            location.href = "/mypage/memberSecessionStep2";
-          });
-        });
+									$("#secessionStep2Btn")
+											.click(
+													function() {
+														location.href = "/mypage/memberSecessionStep2";
+													});
+								});
 
-//]]>
-      </script>
+				//]]>
+			</script>
 
 			<!-- contents s -->
 			<div id="contents" class="hsome_contents mp_withdraw_wrap">
@@ -834,11 +892,16 @@
 					<div class="btn_wrap btn_wrap_div1">
 						<a href="" class="btnstl3 border_btn_blk"><span>취소하기</span></a>
 					</div>
+
 					<div class="btn_wrap btn_wrap_div1">
+						<button type="button" name="outClick" id="outClick" class="btnstl3 solid_btn_blk"
+							onclick="memberOut(this)">탈퇴하기</button>
+						<!-- 				
 						<a href="#none" class="btnstl3 solid_btn_blk"
 							id="secessionStep2Btn"> <span> 탈퇴하기</span>
-						</a>
+						</a> -->
 					</div>
+
 
 				</div>
 			</div>
@@ -847,6 +910,98 @@
 		</div>
 
 	</div>
+
+
+
+	<div style="display: none">
+		<a href="javascript:;" id="btnWpayCookieSetting"
+			class="btn_plusbox btn_popup" data-poptarget="pop_wpay_cookie_info"><span></span></a>
+		<div class="divpop_wrap dvp_style_2 pop_wpay_cookie_info">
+			<div class="dvp_container">
+				<div class="dvp_close_btn b-close">
+					<span>닫기</span>
+				</div>
+				<h1 class="dvp_header">
+					등록 및 결제창이 잘 안 열릴 경우,<br> <span class="point_fc">[브라우저
+						쿠키 설정]</span>을 <span class="point_fc">‘항상허용’</span>으로<br>변경해주세요.
+				</h1>
+				<div class="dvp_content">
+					<div class="dvp_tit">iOS</div>
+					<ul class="ul_dot_blk">
+						<li>홈 화면의 [설정] 메뉴 실행</li>
+						<li>설정의 Safari 선택<br>
+							<ul>
+								<li>① [방문기록 및 웹사이트 데이터 지우기]&gt;[방문기록 및 데이터 지우기] 선택</li>
+								<li>② [쿠키차단] 항목을 항상 허용으로 선택</li>
+								<li>③ [사이트간 추적방지]를 미허용으로 선택</li>
+								<li>④ [고급] 메뉴의 [javascript] 항목을 허용으로 설정</li>
+							</ul>
+						</li>
+						<li>Safari 실행 후 [개인정보 브라우징] 미허용</li>
+						<li>브라우저 새로 고침</li>
+					</ul>
+					<div class="dvp_tit">Android(갤럭시 기준)</div>
+					<ul class="ul_dot_blk">
+						<li>홈 화면의 [인터넷] 실행</li>
+						<li>우측상단(또는 좌측상단) 목록 버튼&gt;[설정] 선택<br>
+							<ul>
+								<li>① 개인정보보호&gt;[쿠키허용] 항목 선택</li>
+								<li>② 개인정보보호&gt;개인데이터삭제&gt;[방문기록, 캐시, 쿠키 및 사이트데이터] 삭제</li>
+								<li>③ 고급&gt;자바스크립트 사용, 팝업차단 해제 선택 브라우저 새로 고침</li>
+							</ul>
+						</li>
+						<li>인터넷 실행 후 [개인정보 브라우징] 미허용</li>
+						<li>브라우저 새로 고침</li>
+					</ul>
+					<div class="btn_wrap btn_wrap_div1">
+						<a href="#none" class="btnstl3 solid_btn_blk b-close"><span>확인</span></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<script>
+		//$("#new_btn").click(function(){ $(this).parents(".sns_comment_ipt_pop").siblings(".lp_depth1").css("z-index","1002"); });
+	</script>
+	<!-- 컬렉션에 담기// -->
+	<div class="hsome_layer_popup02 hs_collection_put_pop"
+		style="display: none;">
+		<div class="pop-comm-cnts">
+			<p class="tit">콜렉션에 담기</p>
+			<div class="collection_put_wrap">
+				<form id="collectionform" name="collectionform" data-ajax="false"
+					action="javascript:addCollection()" method="POST">
+					<ul class="collection_list" id="collectionNameList">
+					</ul>
+					<!-- <p class="no_collection">생성된 콜렉션이 없습니다.</p> -->
+					<div class="collection_input">
+						<div class="inp">
+							<input type="text" id="newCollectionName" placeholder="새 콜렉션 이름">
+						</div>
+						<div class="btn">
+							<button type="button" class="hs_btm_btn black"
+								onclick="addCollection(event)">생성</button>
+						</div>
+					</div>
+					<input type="hidden" name="inputCollectionPostId"
+						id="inputCollectionPostId"> <input type="hidden"
+						name="inputCollectionId" id="inputCollectionId">
+					<div>
+						<input type="hidden" name="CSRFToken"
+							value="ff1ace6c-c889-4ecd-aafd-758131632ab3">
+					</div>
+				</form>
+			</div>
+			<a href="" class="pop-comm-cls">닫기</a>
+		</div>
+	</div>
+	<script>
+		collectionform.action = "javascript:addCollection()";
+	</script>
+	<!-- //컬렉션에 담기 -->
+
 
 	<div id="mainPopwrap1908"
 		style="position: absolute; top: 50%; left: 50%; width: 90%; transform: translate(-50%, -50%); z-index: 999;"></div>
@@ -859,12 +1014,81 @@
 	</div>
 
 	<iframe id="f" style="display: none;"></iframe>
+	<!-- adinsight 공통스크립트 start -->
+	<script type="text/javascript">
+		var TRS_AIDX = 11865;
+		var TRS_PROTOCOL = document.location.protocol;
+		document.writeln();
+		var TRS_URL = TRS_PROTOCOL
+				+ '//'
+				+ ((TRS_PROTOCOL == 'https:') ? 'analysis.adinsight.co.kr'
+						: 'adlog.adinsight.co.kr') + '/emnet/trs_esc.js';
+		document
+				.writeln("<scr" + "ipt language='javascript' src='" + TRS_URL + "'></scr" + "ipt>");
+	</script>
+	<script language="javascript"
+		src="http://adlog.adinsight.co.kr/emnet/trs_esc.js"></script>
 
+	<script language="javascript"
+		src="https://analysis.adinsight.co.kr/emnet/trs_esc.js"></script>
+
+	<!-- adinsight 공통스크립트 end -->
 
 	<!-- //Mobile Smart Banner for Anroid Device -->
 
 	<iframe id="groobeeBox" name="groobeeBox" style="display: none;"></iframe>
 	<!-- Code injected by live-server -->
+	<script>
+		// <![CDATA[  <-- For SVG support
+		if ('WebSocket' in window) {
+			(function() {
+				function refreshCSS() {
+					var sheets = [].slice.call(document
+							.getElementsByTagName("link"));
+					var head = document.getElementsByTagName("head")[0];
+					for (var i = 0; i < sheets.length; ++i) {
+						var elem = sheets[i];
+						var parent = elem.parentElement || head;
+						parent.removeChild(elem);
+						var rel = elem.rel;
+						if (elem.href && typeof rel != "string"
+								|| rel.length == 0
+								|| rel.toLowerCase() == "stylesheet") {
+							var url = elem.href.replace(
+									/(&|\?)_cacheOverride=\d+/, '');
+							elem.href = url
+									+ (url.indexOf('?') >= 0 ? '&' : '?')
+									+ '_cacheOverride='
+									+ (new Date().valueOf());
+						}
+						parent.appendChild(elem);
+					}
+				}
+				var protocol = window.location.protocol === 'http:' ? 'ws://'
+						: 'wss://';
+				var address = protocol + window.location.host
+						+ window.location.pathname + '/ws';
+				var socket = new WebSocket(address);
+				socket.onmessage = function(msg) {
+					if (msg.data == 'reload')
+						window.location.reload();
+					else if (msg.data == 'refreshcss')
+						refreshCSS();
+				};
+				if (sessionStorage
+						&& !sessionStorage
+								.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+					console.log('Live reload enabled.');
+					sessionStorage.setItem(
+							'IsThisFirstTime_Log_From_LiveServer', true);
+				}
+			})();
+		} else {
+			console
+					.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+		}
+		// ]]>
+	</script>
 
 
 	<iframe id="groobeeBox" name="groobeeBox" style="display: none;"></iframe>

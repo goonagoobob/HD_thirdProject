@@ -90,12 +90,14 @@ public class myPageController {
 		if (passwordEncoder.matches(password, mA.getMpassword()))
 		{
 			System.out.println("일치");
-			return "/myPage/changeUserInfo";
+			return "redirect:/myPage/changeUserInfo";
+			//return "/myPage/changeUserInfo";
 		}
 		else System.out.println("불일치");
 		//확인 fail handler
 		
-		return "myPage/checkPasswordForm";
+		return null;
+		//return "myPage/checkPasswordForm";
 	}
 	
 	
@@ -139,7 +141,7 @@ public class myPageController {
 		mCI.setMbirth(mbirth);
 		
 		int result = memberService.changeMemberInfo(mCI);
-		System.out.println("바뀌었습니깡 ??? " + memberService.changeMemberInfo(mCI));
+		System.out.println("바뀌었습니깡 ??? " + result + "!!!!");
 		
 		if (result == 1) {
 			return "redirect:/myPage/myPage";

@@ -80,4 +80,9 @@ public class memberMapperTests {
 	public void emailDoubleCheck() {
 		System.out.println(memberMapper.emailDoubleCheck("user1", "user3@email"));
 	}
+	
+	@Test
+	public void memberOut() {
+		System.out.println(memberMapper.memberOut("user8"));
+	}
 }
