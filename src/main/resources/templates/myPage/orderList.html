@@ -605,34 +605,10 @@
 //]]>
       </script>
 
-      <input type="hidden" id="tempCheckQuick">
+      
       <div id="contents" class="hsome_contents mp_order_list_wrap">
 
-        <form id="orderSearchForm" action="/ko/mypage/order/myorderlist">
-          <input type="hidden" id="searchDeliveryType" name="searchDeliveryType" value="">
-          <div class="gray_tab_grid">
-            <div>
-              <ul class="border_tab_1 grid_4">
-                <li class="on"><a href="javascript:;" id="setDateBtn1"
-                    onclick="GA_Event('주문/배송조회', '탭', '1주일');">1주일</a></li>
-                <li><a href="javascript:;" id="setDateBtn2" onclick="GA_Event('주문/배송조회', '탭', '1개월');">1개월</a></li>
-                <li><a href="javascript:;" id="setDateBtn3" onclick="GA_Event('주문/배송조회', '탭', '3개월');">3개월</a></li>
-                <li><a href="javascript:;" class="sort_date" onclick="GA_Event('주문/배송조회', '탭', '조건검색');">조건검색</a></li>
-              </ul>
-
-              <div class="sort_date_input_wrap">
-                <ul class="sort_date_input">
-                  <li class="sort_date_start"><input type="date" name="sterm" class="hs_datepicker"
-                      title="mypage.order.history.serch.term.insert" id="sterm"></li>
-                  <li class="blt_gubun">~</li>
-                  <li class="sort_date_end"><input type="date" name="eterm" class="hs_datepicker"
-                      title="mypage.order.history.serch.term.insert" id="eterm"></li>
-                </ul>
-                <a href="javascript:;" class="btnstl3 border_btn_gray btn_term_search searchBtn"><span>검색</span></a>
-              </div>
-            </div>
-          </div>
-        </form>
+        
 
 
         <div class="mp_order_dlvr_list_wrap" id="listBody">
@@ -674,11 +650,7 @@
               </li>
             </ul>
           </div>
-          <div class="hs_paging assist">
-            <a href="javascript:void(0);" class="pre disabled">이전</a>
-            <a href="javascript:void(0);" class="cur">1</a>
-            <a href="javascript:void(0);" class="nxt disabled">다음</a>
-          </div>
+          
 
 
           <div class="df_box mp_order_dvlr_guide_wrap last_box">
