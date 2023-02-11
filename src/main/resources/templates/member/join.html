@@ -8,6 +8,56 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
 <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
 
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<script>
+  // 카카오 주소 API
+  function execPostCode() {
+    new daum.Postcode(
+      {
+        oncomplete: function (data) {
+          // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+          // 도로명 주소의 노출 규칙에 따라 주소를 조합한다.
+          // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+          let fullRoadAddr = data.roadAddress; // 도로명 주소 변수
+          let extraRoadAddr = ''; // 도로명 조합형 주소 변수
+
+          // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+          // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+          if (data.bname !== ''
+            && /[동|로|가]$/g.test(data.bname)) {
+            extraRoadAddr += data.bname;
+          }
+          // 건물명이 있고, 공동주택일 경우 추가한다.
+          if (data.buildingName !== ''
+            && data.apartment === 'Y') {
+            extraRoadAddr += (extraRoadAddr !== '' ? ', '
+              + data.buildingName
+              : data.buildingName);
+          }
+          // 도로명, 지번 조합형 주소가 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+          if (extraRoadAddr !== '') {
+            extraRoadAddr = ' (' + extraRoadAddr
+              + ')';
+          }
+          // 도로명, 지번 주소의 유무에 따라 해당 조합형 주소를 추가한다.
+          if (fullRoadAddr !== '') {
+            fullRoadAddr += extraRoadAddr;
+          }
+
+          // 우편번호와 주소 정보를 해당 필드에 넣는다.
+          console.log(data.zonecode);
+          console.log(fullRoadAddr);
+
+          $("[name=mzipcode]").val(data.zonecode);
+          $("[name=maddress1]").val(fullRoadAddr);
+        }
+      }).open();
+  }
+</script>
+
+
+
 <script type="text/javascript" async=""
 	src="https://www.googletagmanager.com/gtag/js?id=G-RPZ82BN53C&amp;l=dataLayer&amp;cx=c"></script>
 <script type="text/javascript" async=""
@@ -1042,6 +1092,15 @@ rotate
 		console.log(maddress2);
 		console.log(mgender);
 		console.log(mbirth);
+		
+		if(mid == null || mpassword == null|| mpwc == null ||
+		   memail == null || mphone == null || mname == null||
+		   mzipcode == null || maddress1 == null || maddress2 == null || mgender || null || mbirth == null){
+			
+			alert("빈 칸을 채워주세요");	
+			return;
+			
+		}
 
 		let memberJoinObj = {
 			"mid" : mid,
@@ -1083,6 +1142,8 @@ rotate
 			},
 			success : function(jqXHR) {
 				console.log("success");
+				alert("회원가입을 성공하였습니다.");
+				window.location.replace("/member/login");
 			},
 			error : function(jqXHR) {
 				console.log("error");
@@ -1167,7 +1228,7 @@ rotate
 							<p class="feedback" id="feedback" name="feedback"></p>
 							<div style="float: left;">
 								<input type="text" id="mid" name="mid" class="user_id"
-									placeholder="아이디를 입력하세요." title="아이디를 입력하세요." maxlength="100">
+									placeholder="아이디를 입력하세요." title="아이디를 입력하세요." maxlength="100" required/>
 							</div>
 							<div style="float: left;">
 								<button type="button" class="btnstl3 solid_btn_blk btn_agree"
@@ -1190,16 +1251,16 @@ rotate
 
 									<input type="password" id="mpassword" name="mpassword"
 										class="user_pw" placeholder="비밀번호를 입력하세요."
-										title="비밀번호를 입력하세요." maxlength="100" onChange="JavaScript:isSame();">
+										title="비밀번호를 입력하세요." maxlength="100" onChange="JavaScript:isSame();" required>
 								</div>
 								<!-- [TO DEV] Error msg here. -->
 								<div class="err_wrap">
 									<p class="err_txt" id="pwMsg"></p>
 								</div>
 								<div class="input_user_pw">
-									<input type="password" id="pwc" class="user_pw"
+									<input type="password" id="pwc" class="user_pw" name="pwc"
 										placeholder="비밀번호를 한번 더 입력하세요." title="비밀번호를 한번 더 입력하세요."
-										maxlength="100" onChange="JavaScript:isSame();">
+										maxlength="100" onChange="JavaScript:isSame();" required>
 								</div>
 								<p id="same"></p>
 								
@@ -1240,7 +1301,7 @@ rotate
 								</h5>
 								<div class="input_user_email">
 									<input type="text" id="memail" name="memail" class="user_email"
-										placeholder="이메일을 입력하세요." title="이메일을 입력하세요." maxlength="100">
+										placeholder="이메일을 입력하세요." title="이메일을 입력하세요." maxlength="100" required>
 								</div>
 								<div class="err_wrap">
 									<p class="err_txt" id="emailMsg">이미 사용중인 이메일입니다.</p>
@@ -1258,7 +1319,7 @@ rotate
 								</h5>
 								<div class="input_user_name">
 									<input type="text" id="mname" name="mname" class="user_name"
-										placeholder="이름을 입력하세요." title="이름을 입력하세요." maxlength="100">
+										placeholder="이름을 입력하세요." title="이름을 입력하세요." maxlength="100" required>
 								</div>
 								<!-- [TO DEV] Error msg here. -->
 								<div class="err_wrap">
@@ -1270,7 +1331,7 @@ rotate
 								<div class="input_user_bday">
 									<div class="bday_year">
 										<div class="select_box">
-											<select id="selYear">
+											<select id="selYear" required>
 												<option value="">년</option>
 												<option value="2009">2009</option>
 												<option value="2008">2008</option>
@@ -1387,7 +1448,7 @@ rotate
 									</div>
 									<div class="bday_month">
 										<div class="select_box">
-											<select id="selMonth">
+											<select id="selMonth" required>
 												<option value="">월</option>
 												<option value="01">01</option>
 												<option value="02">02</option>
@@ -1406,7 +1467,7 @@ rotate
 									</div>
 									<div class="bday_day">
 										<div class="select_box">
-											<select id="selDay">
+											<select id="selDay" required>
 												<option value="">일</option>
 												<option value="01">01</option>
 												<option value="02">02</option>
@@ -1481,7 +1542,7 @@ rotate
 							</div>
 							<div style="float: left;">
 								<button type="button" class="btnstl3 solid_btn_blk btn_agree"
-									id="findAddress">주소찾기</button>
+									id="findAddress" onclick="execPostCode()">주소찾기</button>
 							</div>
 							<div>
 								<input type="text" id="maddress1" name="maddress1"
