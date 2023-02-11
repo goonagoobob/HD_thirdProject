@@ -2,9 +2,12 @@ package org.goonagoobob.controller.member;
 
 import java.security.Principal;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.goonagoobob.components.mailComponents;
+import org.goonagoobob.service.member.mailNansu;
 import org.goonagoobob.service.member.memberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,13 +19,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
 @Controller
 @Log4j2
+@RequiredArgsConstructor
 @RequestMapping("/member")
 public class memberController {
-	
+	private final mailComponents mailComponents;
 	@Autowired
 	private memberService service;
 	
@@ -83,6 +88,23 @@ public class memberController {
 		else {
 			System.out.println("찾을 수 없음");
 		}
+	}
+	
+	@PostMapping("/findPasswordForm")
+	public void findPassword(@RequestParam("pUserId") String Id, @RequestParam("pUserEmail") String email) throws MessagingException {
+		System.out.println(Id);
+		
+		if(service.selectById(Id) != null) {
+			//난수 생성
+			String sendNansu = mailNansu.nanSu();		
+			//이 값을 다시 update 합니다.
+			service.changePassword(Id, sendNansu);
+			//이후 메일로 보냅니다.
+			mailComponents.sendMailTest(email, sendNansu);
+		}	
+		else {	
+		}
+		System.out.println(email);
 	}
 	
 }
