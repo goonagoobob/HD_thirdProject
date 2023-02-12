@@ -7,6 +7,8 @@
 
 package org.goonagoobob.domain.cart;
 
+import java.util.List;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -27,4 +29,7 @@ public class cartVO {
 	private String pccolorcode;
 	private String psize;
 	private String pid;
+	private String colorname;
+	
+	private List<cartcolorVO> colList;
 }

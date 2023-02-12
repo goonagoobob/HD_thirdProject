@@ -25,6 +25,4 @@ public interface cartService {
 	
 	//색상 select
 	public List<cartcolorVO> colorList(String mid, String psid);
-	//총금액
-	//public List<cartVO> selectprice(String mid, List<String> entryNumber);
 }

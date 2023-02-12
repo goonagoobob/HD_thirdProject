@@ -25,6 +25,4 @@ public interface cartMapper {
 	public void cartInsert(String mid, String psid, int pquantity);
 	//상품별 색상
 	public List<cartcolorVO> colorList(String mid, String psid);
-	//총금액
-	//public List<cartVO> selectprice(String mid, List<String> entryNumber);
 }

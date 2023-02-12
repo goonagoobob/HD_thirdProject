@@ -8,13 +8,9 @@ import lombok.ToString;
 @Setter
 @Getter
 public class cartcolorVO {
-	
 	private String pcchipimg;
-	private String psid;
+	private String pccolorcode;
 	private String pid;
 	private String colorname;
-	private String mid;
-	private int pquantity;
-	
-
+	private String mid;	
 }
