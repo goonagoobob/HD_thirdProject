@@ -1,6 +1,5 @@
 package org.goonagoobob.controller.order;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -52,7 +51,7 @@ public class orderRestController {
 		List<orderItemVO> al = mapper.convertValue(map.get("gaOrderArrayArg"), new TypeReference<List<orderItemVO>>() {});
 		
 		result = orderService.insertOrders(orderVO, al);
-		
+		System.out.println(result);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
