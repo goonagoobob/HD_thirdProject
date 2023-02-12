@@ -20,6 +20,7 @@ public interface orderService {
 	
 	public orderVO orderRemoveList(String mid, String oid);
 	
-	public List<productDetailVO> orderProductList(String psid);
+	public productDetailVO orderProduct(String psid);
 	
+	public int cartCount(String mid);
 }

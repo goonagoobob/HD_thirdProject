@@ -36,7 +36,7 @@ public class Criteria {
 
 	// 기본 페이지를 1페이지에 10개씩 보여줌
 	public Criteria() {
-		this(1, 10);
+		this(1, 100);
 	}// end cri...
 
 	// 매개변수로 들어오는 값을 이용하여 조정할 수 있음

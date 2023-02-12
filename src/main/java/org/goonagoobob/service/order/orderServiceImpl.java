@@ -25,19 +25,23 @@ public class orderServiceImpl implements orderService {
 	private orderMapper mapper;
 	
 	@Override
-	public List<productDetailVO> orderProductList(String psid) {
+	public productDetailVO orderProduct(String psid) {
 		log.info("order product list........");
 		return mapper.orderList(psid);
 	}
 	
+	@Transactional
 	@Override
 	public int orderRemove(String oid) {
 		int result = 0;
 		log.info("order remove..............");
-		result = mapper.orderCancel(oid);
+		orderVO order = mapper.orderCancelInfo(oid);
+		result += mapper.orderCancel(oid);
+		result += mapper.orderCancelMileage(order.getOusedmileage(), order.getOafterprice(), order.getMid());
 		if (result == 0) {
 			log.info("service에서 취소가 잘 되지 않았습니다.");
 		}
+		System.out.println(result);
 		return result;
 	}
 	
@@ -74,6 +78,13 @@ public class orderServiceImpl implements orderService {
 		}
 		System.out.println(result);
 		return result;
+	}
+
+	@Override
+	public int cartCount(String mid) {
+		int count = 0;
+		count = mapper.cartCount(mid);
+		return count;
 	}
 	
 }

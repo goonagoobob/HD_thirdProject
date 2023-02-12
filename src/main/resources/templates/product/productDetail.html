@@ -3271,22 +3271,8 @@ function fn_LiveView() {
 
               console.log(psid)
               console.log(pamount);
-
-              $.ajax({
-                url : "/order/form",
-                type : "get",
-                data : {
-                  psid : psid,
-                  pamount : pamount
-                },
-                success : function(date) {
-                  console.log("잘 넘어감 !");
-                  window.location.href = "/order/form?psid="+psid+"&pamount="+pamount;
-                },
-                error : function() {
-                  console.log("바로 구매 오류 남");
-                }
-              });
+              window.location.href = "/order/form?psid="+psid+"&pamount="+pamount;
+             
             });
           });
         </script>

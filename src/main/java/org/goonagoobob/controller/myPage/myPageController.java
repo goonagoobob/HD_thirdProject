@@ -30,6 +30,7 @@ import lombok.extern.log4j.Log4j2;
 public class myPageController {
 	@Autowired
 	private memberService memberService;
+	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	

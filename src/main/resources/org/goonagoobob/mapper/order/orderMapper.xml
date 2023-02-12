@@ -82,7 +82,7 @@
 	  	<![CDATA[
 		 	rownum <= #{cri.pageNum} * #{cri.amount})
 			where rn > ( #{cri.pageNum} - 1 ) *  #{cri.amount}
-			order by odate desc
+			order by oid desc
 	 	]]>
 	</select>
 
@@ -102,6 +102,10 @@
 	
 	<update id="orderMileage">
 		update member set mmileage = (mmileage - #{usedmileage} + (#{oafterprice}*0.05))  where mid = #{mid} 
+	</update>
+	
+	<update id="orderCancelMileage">
+		update member set mmileage = (mmileage - (#{oafterprice}*0.05) + #{usedmileage}) where mid = #{mid} 
 	</update>
 	<select id="cancelList" resultMap="orderMap">
      	
@@ -123,6 +127,18 @@
 		select *
 		from view_product_detail
 		where psid = #{psid}
+	</select>
+	
+	<select id="cartCount" resultType="int">
+		select count(*)
+		from cart
+		where mid = #{mid}
+	</select>
+	
+	<select id="orderCancelInfo" resultType="org.goonagoobob.domain.order.orderVO">
+		select oid, ostatus, mid, ousedmileage, oafterprice, odate
+		from orders
+		where oid = #{oid}
 	</select>
 
 </mapper> 
