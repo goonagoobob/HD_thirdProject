@@ -36,7 +36,7 @@ var appOs = ""; //ios, android
 var uid = "";
 	var pageUid = "cartPage";
 	var chkScreenPage = [];
-	if(appYn == 'Y'){  //appì¼ëë§ ì²´í¬
+	if(appYn == 'Y'){  
 			if(uid == "snsMain" || uid == "snsDetail" || uid == "snsMyProfile" || uid == "snsCollectionDetail" || uid == "snsSearchList"
 			|| chkScreenPage.indexOf(pageUid) > -1) { //íì©íì´ì§
 					if(appOs == "ios"){ //ios
@@ -259,7 +259,7 @@ ACCMOB.config.CSRFToken = "c7173c07-0f23-459b-9438-53fe8ca983cf";
 			<!-- ################## header ################## -->
 			<header class="hsome_header">
 				<h1 class="h_ttl ellipsis" id="headerTitle">쇼핑백</h1>
-				<a href="/ko/main" class="h_top_home"><span>홈</span></a> <a
+				<a href="/" class="h_top_home"><span>홈</span></a> <a
 					href="javascript:noLink();" onclick="goBack();" class="h_prev">이전
 					페이지로 가기</a>
 				<ul class="h_gnbMenu">
@@ -292,9 +292,9 @@ if(typeof kakaoPixel !== 'undefined'){
 }
 </script>
 <!-- 상품 선택 -->
-								<script type="text/javascript">
+<script type="text/javascript">
 
-function deleteBtnEvent(param){
+/* function deleteBtnEvent(param){
 var la = new layerConfirm('선택하신 상품을 쇼핑백에서 삭제하시겠습니까?','확인','취소');
 la.confirmAction = function(){//확인 호출 펑션
 			var form = $('#updateCartForm' + param);
@@ -310,7 +310,7 @@ la.confirmAction = function(){//확인 호출 펑션
 			form.submit();
 			setEcommerceData(param, "Remove From Cart");
 };
-}
+} */
 /* ======================================================================
 Function : 체크박스 선택시 가격 및 수량 정보 변경
 Return   : 
@@ -509,15 +509,14 @@ location.href="/ko/";
 							</label>
 						</div>
 					</h3>
+					
 					<ul class="goods_list_wrap">
 						<!-- 주문 가능 상품 -->
 						<li th:each="list, i:${list}">
-						<input type="hidden" name="pquantity" value="${list.pquantity}" id="${list.pid } +'q'"/>
-								<input type="hidden" name="pcprice" value="${list.pcprice}" id="${list.pid} + 'p'"/>
 							<div class="gl_item " id="entryProductInfo"
 								data-pk= 456 data-deliverykind=""
 								data-outofstock="false">
-								
+							
 
 								<!-- 옵션 변경 -->
 								<script type="text/javascript">
@@ -573,27 +572,6 @@ if(prodid[0] == 'UpdateCart'){
 		return;
 	}
 }
-if(prodid[0] == 'deliveryTypeChange'){
-	var checkedVal = "";
-	var storeInfo = "";
-	$("input[type='radio'][name='deliveryType"+prodid[1]+"']:checked").each(function(){
-		if($(this).prop("checked") == true) {
-			checkedVal = $(this).val();
-			storeInfo = $(this).data("storeinfo");
-			return false;
-		}
-	});
-	if(checkedVal == "") {
-		layerAlert("선택되지 않았습니다.");
-		return false;
-	}
-	if(checkedVal == "store") {
-		//layerAlert('개발중입니다.');
-		deliveryKindChange(prodid[1], "store", storeInfo);
-	} else {
-		deliveryKindChange(prodid[1], "", "");
-	}
-}
 }
 function setSelectbox(){ //selectbox http://rwdb.kr/selectjquery_plugin/ 참조
 $('select.sodsb').selectOrDie();
@@ -602,7 +580,7 @@ $('select.sodsb').selectOrDie();
 								<!-- goods_check s -->
 								<div class="check_stl" style="top: 30px;">
 									<!-- 2019.11.12 쇼핑백 진입 시 선택 상품 없도록 수정 -->
-									<input type="hidden" name="pquantity" th:value="${list.pquantity}" id="quantity"/>
+									<input type="hidden" name="pquantity" th:value="${list.pquantity}"/>
 									<input type="hidden" name="pcprice" th:value="${list.pcprice}"/>
 									<input type="checkbox"
 										th:id="${'gl_check_'+ i.count}"
@@ -662,22 +640,15 @@ $('select.sodsb').selectOrDie();
 											<div class="gl_con" th:text = "${#numbers.formatInteger(list.pcprice*0.05, 3)} + 'M'">29,750M</div></li>
 									</ul>
 
-								<form th:action="@{/cart/list}" id="psidForm" method="post">
-											<input type="hidden" name="psid" value="${list.psid}"/>
-								</form>
-										<a href="javascript:void(0);"
-											class="border_btn btn_option_edit"
-											id="changebtn"><span>변경</span></a>
+										<a href="javascript:void(0);" class="border_btn btn_option_edit" id="changebtn" th:onclick="selectColor([[${list.psid}]], [[${i.index}]])"><span>변경</span></a>
 								</div>
 								<!-- goods_option_info_btm e -->
-
-
 
 								<form id="updateCartForm1" data-cart="{&quot;cartCode&quot; : &quot;463452555&quot;,&quot;productPostPrice&quot;:&quot;595000.0&quot;,&quot;productName&quot;:&quot;헤어리 크리스탈 버튼 가디건&quot;}"
 									action="/cart/update" method="post">
 									<input type="hidden" name="entryNumber" value="2"> 
-									<input type="hidden" name="productCode" value="${list.psid}">
-									<input type="hidden" name="initialQuantity" value="${list.pquantity}">
+									<input type="hidden" name="productCode" th:value="${list.psid}">
+									<input type="hidden" name="initialQuantity" th:value="${list.pquantity}">
 									<input type="hidden" name="chgProductCode" value=""> 
 									<input type="hidden" name="quantity" value="1"> 
 									<input type="hidden" name="curSize" value="90"> 
@@ -691,25 +662,11 @@ $('select.sodsb').selectOrDie();
 										<ul class="gl_edit">
 											<li>
 												<div class="gl_tit">색상</div>
-												<ul class="gl_con btn_color_wrap">
-													<!-- function setColorRadio 참조 -->
-													<li><input type="radio" checked="checked"
-														id="gl_rd_color_01_02" name="gl_rd_color_01"
-														onclick="setOptions(this, '1', 'OB2C7KCD762WP2_ZB', 'style');">
-														<label for="gl_rd_color_01_02"></label> <span
-														class="gl_color_val"
-														style="background: rgb(0, 0, 0); border: 1px solid rgb(0, 0, 0);">#000000</span>
-													</li>
-													<li><input type="radio" id="gl_rd_color_01_01"
-														name="gl_rd_color_01"
-														onclick="setOptions(this, '1', 'OB2C7KCD762WP2_IV', 'style');">
-														<label for="gl_rd_color_01_01"></label> <span
-														class="gl_color_val"
-														style="background: rgb(251, 250, 234); border: 1px solid rgb(251, 250, 234);">#fbfaea</span>
-													</li>
+												<ul class="gl_con btn_color_wrap" th:id="${'colorchip_'+i.index}">
+												
 												</ul>
 												<div class="gl_con selected_color_txt">
-													<span class="sct_v">ZET BLACK</span>
+													<span class="sct_v">머선색</span>
 												</div>
 											</li>
 											<li>
@@ -781,7 +738,7 @@ $('select.sodsb').selectOrDie();
 								<li>
 									<div class="ttpd_tit">상품 합계</div>
 									<div class="ttpd_con">
-										<span id="checkprice">₩0</span>
+										₩<span id="checkprice">0</span>
 									</div>
 								</li>
 								<li>
@@ -793,7 +750,7 @@ $('select.sodsb').selectOrDie();
 								<li class="total_sum">
 									<div class="ttpd_tit">합계</div>
 									<div class="ttpd_con">
-										₩<span id="checkprice">₩0</span>
+										₩<span id="rcheckprice">0</span>
 									</div>
 								</li>
 							</ul>
@@ -832,8 +789,10 @@ var timeCheck = '';
 							href="#none" class="btnstl6 solid_btn_gray"><span>주문하실
 									상품을 선택해 주세요</span></a></li>
 						<li class="pymt_order_apply" style="display: none;"><a
-							href="javascript:checkoutPage('checkout');"
-							class="btnstl6 solid_btn_point " id="oderBtn"></a></li>
+							href="javascript:checkoutPage('checkout');" class="btnstl6 solid_btn_point " id="oderBtn">
+							<span class="btn_t_1"><b>375,000</b> 원</span>
+							<span class="btn_t_2">주문하기</span>
+							</a></li>
 						<div style="display: none">
 							<script type="text/javascript">
 var varUA = navigator.userAgent.toLowerCase();
@@ -1957,18 +1916,59 @@ document.writeln("<scr"+"ipt language='javascript' src='" + TRS_URL + "'></scr"+
 	// ]]>
 </script>
 
-	<script>
-	//색상 뿌리기 츄라이
-$(document).ready(function(){
-	var psid = $('input[name=rpsid]').val();
-	$("#optOpenLayer^1^OB2C7KCD762WP2_ZB").click(function() {
-		alert("버튼 눌렸당");
-		alert(psid);
-		$("#psidForm").submit();
-	});
-});
+<script>
+//색상 뿌리기-김주혜
+function selectColor(psid, idx){
+	console.log("Aaaa");
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajax({
+		type : "POST",
+		url : "/cartRestApi/list",
+	    beforeSend : function(xhr) {
+	        xhr.setRequestHeader(header, token);
+	    },
+		data : {
+			psid : psid, 
+				},
+		success : function(data) {
+			console.log(data);
+			console.log(data.length);
+			var colchip="";
+			var colcode="";	
+			var tag="";
+			for(var i =0; i<data.length; i++){
+				colchip = data[i].pcchipimg;
+				colcode = data[i].pccolorcode;
+				tag += `<li><input type="radio" id="gl_rd_color_01_0`
+				tag += i+1
+				tag += `" name="gl_rd_color_0`
+				tag += i+1
+				tag += `" onclick="setOptions(this, '1', 'OB2C7KCD762WP2_ZB', 'style');"> <label for="gl_rd_color_01_0`
+				tag += i+1
+				tag += `"></label>`
+				tag += `<span class "gl_color_val" style="background:`
+				tag += colcode
+				tag += ` url('`
+				tag += colchip
+				tag += `')"></li>`
+			}
+			console.log(tag);
+			
+			
+			
+			$("#colorchip_" + idx).html(tag); 
+		
+		},
+		error : function(e){
+			console.log(e);
+		}
 	
-// 선택삭제
+	});
+		
+}
+	
+// 선택삭제-김주혜
 function selectRemove(entryNumber) {
 var msgStr = "";
 
@@ -2008,6 +2008,7 @@ la.confirmAction = function(){//확인 호출 펑션
        },
       data : JSON.stringify({entryNumber : entryNumber}),
       success: function(data){
+          window.location.reload();
     	  console.log(data);
       if(data == "s") {
           var lc = new layerAlert("삭제가 완료 되었습니다.");
@@ -2018,7 +2019,7 @@ la.confirmAction = function(){//확인 호출 펑션
               }
             });
             setEcommerceData(entryNumber, "Remove From Cart");
-            window.location.href = "/cart/list";
+
               };
       } else {
         var lc = new layerAlert("삭제를 실패하였습니다.");
@@ -2034,26 +2035,32 @@ la.confirmAction = function(){//확인 호출 펑션
 
 };
 }
-
+// 선택 상품 total price - 김주혜
 var totalcheckprice = 0;
+/*  $(".gl_chek_all").on('click', function(){
+	if($(this).prop("checked") == true) {
+		$("input[name='cartlist']").prop("checked") == true;
+	}else{
+		$("input[name='cartlist']").prop("checked") == false;
+	}
+})  */
 $("input[name='cartlist']").on('click', function(){
 		if($(this).prop("checked") == true) {
 			var chkquantity = $(this).prev().prev().attr('value');
 			var chkprice = $(this).prev().attr('value');
 			totalcheckprice += chkquantity * chkprice;
-			$('#checkprice').html(totalcheckprice);
+			$('#checkprice').html(totalcheckprice.toLocaleString());
+			$('#rcheckprice').html(totalcheckprice.toLocaleString());
+			$('.btn_t_1').html(totalcheckprice.toLocaleString());
 		}else{
 			var chkquantity = $(this).prev().prev().attr('value');
 			var chkprice = $(this).prev().attr('value');
-			totalcheckprice -= chkquantity * chkprice;
-			$('#checkprice').html(totalcheckprice);
+			totalcheckprice -=  chkquantity * chkprice;
+			$('#checkprice').html(totalcheckprice.toLocaleString());
+			$('#rcheckprice').html(totalcheckprice.toLocaleString());
+			$('.btn_t_1').html(totalcheckprice.toLocaleString());
 		}
 	});
-
-
-
-
-
 </script>
 
 	<div class="divpop_wrap_dev pop_mbr pop_alert_confirm"

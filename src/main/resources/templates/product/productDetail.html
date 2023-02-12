@@ -439,20 +439,12 @@ var display = true;
 
 
 $(document).ready(function(){
-	
-
+	// 장바구니 추가-김주혜
  	$("#insertcartbutton").click(function() {
 		var pquantity = $('#ordQty').attr('value');
-		alert(pquantity);
 		var psid = $("#copy_btn_clipboard").text();
-		alert(psid);
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
-		/* var form = $("#insertcartForm").val(); */
-		/* form.submit(); */
-		
-	
-        	
  		$.ajax({
 			type : "POST",
 			url : "/cartRestApi/insert",
@@ -464,12 +456,12 @@ $(document).ready(function(){
 				pquantity : pquantity
  				},
 			success : function(data) {
-				alert("성공");
+				alert("상품이 장바구니에 담겼습니다.");
 				window.location.href = "/cart/list";
 				
 			},
 			error : function(xhr, Status, error){
-				alert('sendRequest error : ' + xhr.status + " ( " + error + " ) " );
+				alert("해당 상품이 이미 장바구니에 있습니다." );
 			}
 		
 		});
@@ -515,11 +507,6 @@ $(document).ready(function(){
 
 								<div class="number">
 									품번
-									<!-- 수정(redmine:914) : 20180910 s -->
-									<!-- before -->
-									<!-- <button type="button" class="copy">IL2C9TTO870N_BK</button> -->
-									<!-- after -->
-
 									<button type="button" class="copy btn_clipboard"
 										id="copy_btn_clipboard" data-clipboard-action="copy"
 										data-clipboard-text="IL2C9TTO870N_BK"
