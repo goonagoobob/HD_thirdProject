@@ -22,10 +22,15 @@ public interface orderMapper {
 	
 	public int orderCancel(@Param("oid") String oid); // 주문 상태를 주문 취소로 변경 => 주문 삭제임
 	
+	public int orderCancelMileage(@Param("usedmileage") int usedmileage, @Param("oafterprice") int oafterprice, @Param("mid") String mid);
+	
 	public orderVO cancelList(@Param("mid") String mid, @Param("oid") String oid); // 주문 취소할 주문 상품 리스트를 조회
 	
-	public List<productDetailVO> orderList(@Param("psid") String psid); //주문할 상품 리스트 조회
+	public productDetailVO orderList(@Param("psid") String psid); //주문할 상품 리스트 조회
 	
 	public int orderMileage(@Param("usedmileage") int usedmileage, @Param("oafterprice") int oafterprice, @Param("mid") String mid);
 	
+	public int cartCount(@Param("mid") String mid);
+	
+	public orderVO orderCancelInfo(@Param("oid") String oid);
 }

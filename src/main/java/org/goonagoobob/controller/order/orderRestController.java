@@ -1,6 +1,5 @@
 package org.goonagoobob.controller.order;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -11,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,15 +28,6 @@ public class orderRestController {
 
 	@Autowired
 	private orderService orderService;
-
-	@GetMapping("/orderPay")
-	public void orderPay(orderVO orders) {
-		System.out.println(orders);
-		System.out.println("order 결제까지 옴");
-
-		orders.setOdate(new Date());
-//		orderService.insert(orders);
-	}
 	
 	@ResponseBody
 	@PostMapping(value = "/form", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
@@ -62,7 +51,9 @@ public class orderRestController {
 		List<orderItemVO> al = mapper.convertValue(map.get("gaOrderArrayArg"), new TypeReference<List<orderItemVO>>() {});
 		
 		result = orderService.insertOrders(orderVO, al);
-		
+		System.out.println(result);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
+	
+	
 }

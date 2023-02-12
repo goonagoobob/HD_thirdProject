@@ -632,7 +632,7 @@ $('select.sodsb').selectOrDie();
 											<div class="gl_con">
 												<span th:text="${list.psid1}">ZET BLACK&nbsp;</span><span
 													class="and_line">/</span> <span th:text="${list.psize}"></span>/
-												<span th:text="${list.pquantity}"></span>개
+												<span th:text="${list.pquantity}" id="pamount"></span>개
 											</div>
 
 										</li>
@@ -906,8 +906,8 @@ NetFunnel_Action({action_id:"buy_now"},function(ev,ret){
 								<div class="lyrpp_mid">
 									<ul id="lpOrderApplyBtns"
 										class="btn_wrap btn_wrap_div1 lp_order_apply_btns">
-										<li><a href="javascript:paymentProcess('checkout');"
-											class="btnstl4 border_btn_blk">배송&amp;결제정보 입력</a></li>
+										<li><a href="#"
+											class="btnstl4 border_btn_blk" onclick="orderProduct();">배송&amp;결제정보 입력</a></li>
 										<li><div class="lyrpp_desc ta_c">
 												해외 배송을 원할 경우 thehandsome.com 의 <br> 글로벌 서비스를 이용해주세요.
 											</div></li>
@@ -1967,6 +1967,46 @@ function selectColor(psid, idx){
 	});
 		
 }
+function orderProduct(entryNumber) {
+      
+      console.log("주문하기 버튼 클릭");
+      var msgStr = "";
+
+      if (entryNumber == "" || entryNumber == null) {
+        msgStr = "선택 상품을 주문하시겠습니까?";
+      } else {
+        msgStr = "쇼핑백에서 삭제됩니다. 계속하시겠습니까?";
+      }
+
+      var la = new layerConfirm(msgStr, '확인', '취소');
+      la.confirmAction = function () {//확인 호출 펑션
+        let psid = [];
+        let pamount = [];
+        if ($.trim(entryNumber) == "") {
+          entryNumber = "";
+          productCount ="";
+          $("input:checkbox[name='cartlist']:checked").each(function () {
+            entryNumber += $(this).val() + ",";
+            productCount += $("#pamount").text() + ",";
+          });
+          console.log(entryNumber);
+          console.log(productCount);
+        }
+
+        if (entryNumber == "") {
+          layerAlert("선택된 상품이 없습니다. <br /> 삭제할 상품을 선택해 주세요.");
+          return false;
+        }
+      
+        entryNumber = entryNumber.substr(0, entryNumber.length-1);
+        console.log(entryNumber);
+        productCount = productCount.substr(0, productCount.length-1);
+        console.log(productCount);
+        window.location.href="/order/form?psid="+entryNumber+"&pamount="+productCount;
+
+      }
+    }
+
 	
 // 선택삭제-김주혜
 function selectRemove(entryNumber) {

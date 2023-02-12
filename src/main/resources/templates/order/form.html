@@ -115,65 +115,13 @@
 
           <!-- ########## df_box div start ########## -->
           <div id="__div_sl" class="df_box df_box_slide df_box_slide_on">
-            <h3 class="df_box_tit ">주문상품<span class="df_box_tit_sub">(1개)</span></h3>
-            <script type="text/javascript">
-              /**
-               * 2020.01.22 hmk
-               * 결품 여부 확인
-               */
-              var sa = [];
-              function getOnlineStock(code) {
-                $.ajax({
-                  type: "get"
-                  , url: "/ko/mypage/order/getOnlineStock?code=" + code
-                  , dataType: "json"
-                  , success: function (r) {
-                    if (!sa.includes(code)) {
-                      sa.push(code);
-                    }
-                    if ($.parseJSON(r)[code]) {
-                      $("p[name=__p_" + code + "]").show();
-                    }
-                  }
-                });
-              }
-              function setOnlineStockPHide() {
-                var s = false;
-                $(".__p_sc").each(function () {
-                  if (!s) {
-                    if ($(this).is(":visible")) {
-                      s = true;
-                    }
-                  } else {
-                    $(this).hide();
-                  }
-                });
-              }
-              var ph = true;
-              $(document).ajaxComplete(function () {
-                if (ph) {
-                  setOnlineStockPHide();
-                }
-              });
-              $("#__div_sl").on("click", function () {
-                if ($("#__div_sl").attr("class").indexOf("df_box_slide_on") < 0) {
-                  ph = false;
-                  sa.forEach(function (code) {
-                    getOnlineStock(code);
-                  });
-                } else {
-                  setOnlineStockPHide();
-                }
-              });
-              /**
-                           * end of 결품 여부 확인
-                           */
-            </script>
+            <h3 class="df_box_tit ">주문상품<span class="df_box_tit_sub" th:text="'(' + ${#lists.size(directOrderList)} + ' 개)'"></span></h3>
+            
 
 
             <!-- ########## main goods info ########## -->
-            <ul class="order_gl_item goods_list_wrap" th:each="list:${directOrderList}">
-              <li class="ogl_main_item item_info">
+            <ul class="order_gl_item goods_list_wrap">
+              <li class="ogl_main_item item_info" th:each="list : ${directOrderList}">
                 <a href="/ko/p/CM2D1WOT105W_LE_88">
                   <div class="ogl_item gl_item">
                     <div class="gl_tit">
@@ -183,9 +131,9 @@
                       <li class="gl_con_brand" th:text="${list.bname}"></li>
                       <li class="gl_con_name" th:text="${list.pname}">
                       </li>
-                      <li class="gl_con_option">[[${list.pccolorcode}]] / [[${list.psize}]] / [[${pamount}]]개</li>
+                      <li class="gl_con_option">[[${list.pccolorcode}]] / [[${list.psize}]] / [[${pamount[listStat.index]}]]개</li>
                       <li class="gl_con_price"><span
-                          th:text="'₩ ' + ${#numbers.formatInteger(list.pcprice*pamount, 3, 'COMMA')}"></span></li>
+                          th:text="'₩ ' + ${#numbers.formatInteger(list.pcprice*pamount[listStat.index], 3, 'COMMA')}"></span></li>
                     </ul>
                   </div>
                 </a>
@@ -446,7 +394,7 @@
             <!-- ########## Payment choose start ########## -->
             <!-- ########## Payment choose start ########## -->
             <div class="df_box payment_choice_wrap" style="overflow:hidden">
-              <h3 class="df_box_tit">결제수단선택</h3>
+              
               <!-- tab_head s -->
 
               <!-- tab_head e -->
@@ -474,13 +422,11 @@
                 <div class="cont  on" id="general_pay">
                   <div class="general_pay_wrap" style="overflow:hidden;">
                     <ul class="general_pay_list gpd_tab_w3">
-                      <li class="on"><a href="#none" class="gpd_a_credit" data-g-pay-kind="credit"
-                          data-g-pay-mode="KO001">신용카드</a></li>
+                      <li class="on" style="width: 100%;"><a href="#none" class="gpd_a_credit" data-g-pay-kind="credit"
+                          data-g-pay-mode="KO001">카카오페이 간편결제</a></li>
 
                       <!-- #2610 [주문] 가상계좌 결제수단 제외 및 중복 구매 제한 처리 요청 건 (가상계좌 선택 삭제) 50268 -->
-                      <li class="on"><a href="#none" class="gpd_a_real_account" data-g-pay-kind="real_account"
-                          data-g-pay-mode="KO002">실시간 계좌이체</a></li>
-                      </li>
+                    
                     </ul>
                     <!-- 추가(redmine:1173) : 20180912 s -->
                     <!-- 								<p class="text_box desc_box2">※ 카카오페이는 곧 서비스 예정입니다.</p> -->
@@ -531,13 +477,12 @@
                 <h3 class="df_box_tit">
                   최종 결제금액
                   <div class="pay_price" id="oafterprice"
-                    th:text="'₩ ' + ${#numbers.formatInteger(directOrderList[0].pcprice*pamount, 3, 'COMMA')}"></div>
+                    th:text="'₩ '"></div>
                 </h3>
                 <ul class="total_price_detail">
                   <li id="subtotal" class="sub_total190816">
                     <div class="ttpd_tit">상품 합계</div>
                     <div class="ttpd_con"
-                      th:text="'₩ ' + ${#numbers.formatInteger(directOrderList[0].pcprice*pamount, 3, 'COMMA')}"
                       id="obeforeprice"></div>
                   </li>
                   <li>
@@ -618,7 +563,7 @@
                 <li>
                   <div class="udot_tit">마일리지</div>
                   <div class="udot_con"><span id="txtAccumulationPoint"
-                      th:text="${#numbers.formatInteger(directOrderList[0].pcprice*pamount*0.05, 3, 'COMMA')}"></span> P
+                      th:text="'d'"></span> P
                   </div>
                 </li>
               </ul>
@@ -646,7 +591,7 @@
               <ul class="btn_wrap btn_wrap_div1">
                 <li class="pymt_call_pg">
                   <a href="#none" class="btnstl6 solid_btn_point" id="doOrderBtn"><span><b id="payPrice"
-                        th:text="'₩ ' + ${#numbers.formatInteger(directOrderList[0].pcprice*pamount, 3, 'COMMA')}"></b>
+                        th:text="'₩ '"></b>
                       &nbsp;주문하기</span></a>
                 </li>
               </ul>
@@ -766,7 +711,16 @@
       <script src="http://code.jquery.com/jquery-latest.min.js"></script>
       <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
       <script th:inline="javascript">
-
+        $(document).ready(function() {
+          let obeforeprice = 0;
+          /*[# th:each="list : ${directOrderList}"]*/
+          obeforeprice += /*[[${list.pcprice*pamount[listStat.index]}]]*/;
+          /*[/]*/
+          console.log(obeforeprice);
+          
+          $("#obeforeprice").text('₩ ' + obeforeprice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+        });
+        
         function agree_check() {
           let agree = document.getElementById("agree");
           if (!agree.checked) {
@@ -854,8 +808,8 @@
 
           /*[# th:each="list : ${directOrderList}"]*/
           gaOrderGoodsinfo.psid = /*[[${list.psid}]]*/;
-          gaOrderGoodsinfo.oicount = /*[[${pamount}]]*/;
-          gaOrderGoodsinfo.oitotalprice = /*[[${list.pcprice*pamount}]]*/;
+          gaOrderGoodsinfo.oicount = 1;
+          gaOrderGoodsinfo.oitotalprice = 1;
           gaOrderArrayArg.push(gaOrderGoodsinfo);
           /*[/]*/
           console.log(ozipcode);
@@ -882,7 +836,8 @@
             buyer_name : mid,
             buyer_tel : ophone,
             buyer_email : oemail,
-            name : "test"
+            name : /*[[${directOrderList[0].pname}]]*/ + " 외" + /*${#lists.size(directOrderList)} - 1*/ + " 건",
+            amount : oafterprice
 
           }, function (rsp) {
             if (rsp.success) {

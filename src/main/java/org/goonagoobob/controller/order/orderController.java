@@ -1,5 +1,6 @@
 package org.goonagoobob.controller.order;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.goonagoobob.domain.order.orderVO;
@@ -42,6 +43,7 @@ public class orderController {
 		Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
 		String mid = loggedInUser.getName();
 		model.addAttribute("removeList", orderService.orderRemoveList(mid, oid));
+		model.addAttribute("username", mid);
 	}
 	
 	@PostMapping("/cancel")
@@ -50,7 +52,7 @@ public class orderController {
 		log.info("주문 취소 => 주문 상태를 주문 취소로 변경, 주문 번호 :" + oid);
 		int result = orderService.orderRemove(oid);
 		
-		if (result == 1) {
+		if (result != 0) {
 			rttr.addFlashAttribute("result", "success");
 		}
 		
@@ -58,16 +60,21 @@ public class orderController {
 	}
 	
 	@GetMapping("/form")
-	public void orderForm(@RequestParam("psid") String psid, @RequestParam("pamount") int pamount, Model model) {
+	public void orderForm(@RequestParam(value = "psid",required = false) List<String> psid, @RequestParam(value="pamount",required = false) List<Integer> pamount, Model model) {
 		log.info("orderForm controller");
-		List<productDetailVO> directOrderList = orderService.orderProductList(psid);
+		List<productDetailVO> orderList = new ArrayList<productDetailVO>();
 		Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
-		String mid = loggedInUser.getName();
+		String userMid = loggedInUser.getName();
+			for (String id : psid) {
+			System.out.println(id);
+			orderList.add(orderService.orderProduct(id));
+		}
+		System.out.println("주문서 컨트롤러까지 옴");
 		
-		model.addAttribute("username", memberService.selectById(mid));
-		model.addAttribute("directOrderList", directOrderList);
+		model.addAttribute("directOrderList", orderList);
+		model.addAttribute("username", memberService.selectById(userMid));
 		model.addAttribute("pamount", pamount);
-
 	}
-
+	
+	
 }

@@ -199,6 +199,7 @@
       </script>
       <input type="hidden" id="tempCheckQuick" value="">
       <div id="contents" class="hsome_contents mp_order_view_wrap mp_order_view_goods_back_detail_wrap">
+
         <!-- 주문번호 s -->
         <div class="order_view_msg_wrap gray_box">
           <p class="ovm_num">
@@ -907,7 +908,7 @@
           <div class="df_box df_box_slide df_box_slide_v2 refund_info_wrap atHomeDisabled">
             <h3 class="df_box_tit">환불 예상내역</h3>
             <div class="payment_total_info df_box_slide_v2_anchor">
-              <span id="oname">국민카드</span>&nbsp;<span class="pay_total_price" id="refundRealPayPriceInfo"
+              <span id="oname">카카오페이</span>&nbsp;<span class="pay_total_price" id="refundRealPayPriceInfo"
                 th:text="${#numbers.formatInteger(list.oafterprice, 0, 'COMMA')} + ' 원'"></span>
             </div>
             <input type="hidden" name="refundRealPayPrice2" id="refundRealPayPrice2" value="110250">
@@ -1074,7 +1075,7 @@
               <li>
                 <button type="submit" data-oper="remove" style="width: 100%;" class="orderCancelBtn">
                   <a href="#" id="returnRequestCancelBtn" class="btnstl6 solid_btn_point btn_save">
-                    <span>국민카드
+                    <span>카카오페이
                       <b th:text="${#numbers.formatInteger(list.oafterprice, 0, 'COMMA')} + '원'"></b>
                       주문 취소
                     </span>
@@ -1096,10 +1097,10 @@
   <!-- 버츄 사이즈 공통스크립트 -->
   <script src="https://code.jquery.com/jquery-latest.min.js"></script>
   <script type="text/javascript">
-    $(document).ready(function(){
+    $(document).ready(function () {
       let formObj = $(".removeBtn");
 
-      $(".orderCancelBtn").on("click", function(e) {
+      $(".orderCancelBtn").on("click", function (e) {
         e.preventDefault();
         let operation = $(this).data("oper");
         console.log(operation);
