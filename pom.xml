@@ -19,6 +19,12 @@
 		<java.version>1.8</java.version>
 	</properties>
 	<dependencies>
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+	
 		<!-- https://mvnrepository.com/artifact/net.minidev/json-smart -->
 		<dependency>
 			<groupId>net.minidev</groupId>

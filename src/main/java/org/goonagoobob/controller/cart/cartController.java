@@ -39,48 +39,20 @@ public class cartController {
 		log.info(mid);
 		List<cartVO> list = service.getCartList(mid);
 		model.addAttribute("list", list);
-
+//		String psid = "TM2CAWPC270W_SG_64";
+//		List<cartcolorVO> cList = service.colorList(mid, psid);
+//		model.addAttribute("cList", cList);
 	}
 	
-	/*
-	 * @PostMapping("/insert") public String cartInsert(Principal principal, cartVO
-	 * cart) { log.info("cartInsert controller"); String mid = principal.getName();
-	 * String psid = cart.getPsid(); int pquantity = cart.getPquantity();
-	 * log.info(psid); log.info(pquantity);
-	 * 
-	 * service.cartInsert(mid, psid, pquantity); return "/cart/list"; }
-	 */
-	@PostMapping("/list")
-	public void cartColor(Principal prin, @RequestParam("rpsid") String psid, Model model) {
-		log.info("postcartList controller...");
-		String mid = prin.getName();
-		System.out.print("mid" + mid + " psid" + psid);
-		List<cartcolorVO> cList = service.colorList(mid, psid);
-		model.addAttribute("cList", cList);
-		
-	}
-//	  // 장바구니 전체 삭제
+	  //psid 상품의 색상 종류 뿌려주기
 //	  
-//	  @PostMapping("/delete") public String cartDelete(Principal principal, Model model) throws Exception{ 
-//	  log.info("cartDelete controller"); 
-//	  String mid = principal.getName(); 
-//	  HttpHeaders headers = new HttpHeaders();
-//	  headers.setContentType(new MediaType("text", "html", Charset.forName("UTF-8")));
-//	  int result = service.deleteCart(mid); log.info(result);
-//	  model.addAttribute("result", result);
-//	  return "cart/list"; 
-//	 }
-
-
-
-
-
-
-
-
-
-
-
-
-
+//	  @PostMapping("/list") 
+//	  public void cartColor(Principal prin, @RequestParam("psid") String psid, Model model) {
+//		  log.info("postcartList controller...");
+//		  String mid = prin.getName(); System.out.print("mid" + mid + " psid" + psid);
+//		  List<cartcolorVO> cList = service.colorList(mid, psid);
+//		  log.info(cList);
+//		  model.addAttribute("cList", cList); 
+//	  }
+//	 
 }

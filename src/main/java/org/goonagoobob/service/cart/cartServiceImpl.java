@@ -42,7 +42,6 @@ public class cartServiceImpl implements cartService {
 		log.info("cartDelete Service.....");
 		
 		mapper.selectDelete(mid, entryNumber);
-		
 	}
 	//카트 상품별 색상
 	@Override
@@ -52,14 +51,7 @@ public class cartServiceImpl implements cartService {
 		List<cartcolorVO> cList = mapper.colorList(mid, psid);
 		return cList;
 	}
-	
-	/*
-	 * @Override public List<cartVO> selectprice(String mid, List<String>
-	 * entryNumber) { log.info("selectprice Service....");
-	 * 
-	 * List<cartVO> total = mapper.selectprice(mid, entryNumber); return total; }
-	 */
-	
+	//카트 담기
 	@Override
 	public void cartInsert(String mid, String psid, int pquantity) {
 		log.info("cartInsert service....");
