@@ -34,4 +34,10 @@ public interface productService {
 	public List<productCommonVO> getList(String brand, String depth1, String depth2, String depth3, int orderBy, int Piter, int productNum);
 
 	public List<String> getCtgrList(String brand, String depth1, String depth2, String depth3);
+
+	public List<productCommonVO> getNewList();
+
+	public List<productCommonVO> getBestList();
+
+	public int newCount();
 }

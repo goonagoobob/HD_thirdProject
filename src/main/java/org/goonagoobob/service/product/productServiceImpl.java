@@ -55,7 +55,7 @@ public class productServiceImpl implements productService {
 
 	@Override
 	public List<productCommonVO> getList(String brand, String depth1, String depth2, String depth3, int orderBy, int Piter, int productNum) {
-		String orderByString = "";
+		String orderByString ="";
 		if(orderBy == 1) {
 			orderByString = "order by pcprice";
 		}else if(orderBy == 2) {
@@ -69,8 +69,23 @@ public class productServiceImpl implements productService {
 
 	@Override
 	public List<String> getCtgrList(String brand, String depth1, String depth2, String depth3) {
-		
+
 		return mapper.getCtgrList(brand,depth1,depth2,depth3);
+	}
+
+	@Override
+	public List<productCommonVO> getNewList() {
+		return mapper.getNewList();
+	}
+
+	@Override
+	public List<productCommonVO> getBestList() {
+		return mapper.getBestList();
+	}
+
+	@Override
+	public int newCount() {
+		return mapper.newCount();
 	}
 
 }

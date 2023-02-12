@@ -64,7 +64,10 @@
 	</select>
 
 	<select id="getList" resultMap="pc1Map">
-	
+	                                        select pid, pname, pnote, bname, pcid, pcimg1, pcimg2, pcimg3, pcchipimg, pccolorcode, pcprice, preleasedate, 
+										psid, psstock, psize from allproduct where pid in (select  pid from(select rownum as row_num, pid from(select distinct pid from (select rownum, p.pid from allproduct 
+                                        p,product_category pc, category c
+										where p.pid = pc.pid and pc.cateno = c.cateno and
 
 	<choose>
 			<when test="brand != null">
@@ -75,59 +78,42 @@
 								<choose>
 									<when test="depth3 != null">
 									<![CDATA[
-                                        select pid, pname, pnote, bname, pcid, pcimg1, pcimg2, pcimg3, pcchipimg, pccolorcode, pcprice, preleasedate, 
-										psid, psstock, psize from allproduct where pid in (select pid from(select distinct pid from (select rownum, p.pid from allproduct 
-                                        p,product_category pc, category c
-										where p.pid = pc.pid and pc.cateno = c.cateno and
 										p.bname = #{brand} and depth1name = #{depth1} and depth2name = #{depth2} and depth3name = #{depth3}
                                         ${orderBy}
 										))
                                         where
-										rownum >= #{Piter} and rownum < #{productNum})
+										rownum < #{productNum}) where row_num >= #{Piter})
 										]]>
 									</when>
 									<otherwise>
 									<![CDATA[
-                                        select pid, pname, pnote, bname, pcid, pcimg1, pcimg2, pcimg3, pcchipimg, pccolorcode, pcprice, preleasedate, 
-										psid, psstock, psize from allproduct where pid in (select pid from(select distinct pid from (select rownum, p.pid from allproduct 
-                                        p,product_category pc, category c
-										where p.pid = pc.pid and pc.cateno = c.cateno and
 										p.bname = #{brand} and depth1name = #{depth1} and depth2name = #{depth2}
                                         ${orderBy}
 										))
                                         where
-										rownum >= #{Piter} and rownum < #{productNum})
+										rownum < #{productNum}) where row_num >= #{Piter})
 										]]>
 									</otherwise>
 								</choose>
 							</when>
 							<otherwise>
 							<![CDATA[
-										select pid, pname, pnote, bname, pcid, pcimg1, pcimg2, pcimg3, pcchipimg, pccolorcode, pcprice, preleasedate, 
-										psid, psstock, psize from
-										(select p.pid, pname, pnote, b.bname, pcid, pcimg1, pcimg2, pcimg3, pcchipimg, pccolorcode, pcprice, preleasedate, 
-										psid, psstock, psize, depth1name, depth2name, depth3name from brand b, allproduct p, product_category pc, category c
-										where b.bname = p.bname and p.pid = pc.pid and pc.cateno = c.cateno and
 										p.bname = #{brand} and depth1name = #{depth1}
                                         ${orderBy}
-										)
+										))
                                         where
-										rownum >= #{Piter} and rownum < #{productNum}
+										rownum < #{productNum}) where row_num >= #{Piter})
 										]]>
 							</otherwise>
 						</choose>
 					</when>
 					<otherwise>
 					<![CDATA[
-                                        select pid, pname, pnote, bname, pcid, pcimg1, pcimg2, pcimg3, pcchipimg, pccolorcode, pcprice, preleasedate, 
-										psid, psstock, psize from allproduct where pid in (select pid from(select distinct pid from (select rownum, p.pid from allproduct 
-                                        p,product_category pc, category c
-										where p.pid = pc.pid and pc.cateno = c.cateno and
 										p.bname = #{brand}
                                         ${orderBy}
 										))
                                         where
-										rownum >= #{Piter} and rownum < #{productNum})
+										rownum < #{productNum}) where row_num >= #{Piter})
 										]]>
 					</otherwise>
 				</choose>
@@ -139,43 +125,31 @@
 								<choose>
 									<when test="depth3 != null">
 									<![CDATA[
-										                                        select pid, pname, pnote, bname, pcid, pcimg1, pcimg2, pcimg3, pcchipimg, pccolorcode, pcprice, preleasedate, 
-										psid, psstock, psize from allproduct where pid in (select pid from(select distinct pid from (select rownum, p.pid from allproduct 
-                                        p,product_category pc, category c
-										where p.pid = pc.pid and pc.cateno = c.cateno and
 										depth1name = #{depth1} and depth2name = #{depth2} and depth3name = #{depth3}
                                         ${orderBy}
 										))
                                         where
-										rownum >= #{Piter} and rownum < #{productNum})
+										rownum < #{productNum}) where row_num >= #{Piter})
 										]]>
 									</when>
 									<otherwise>
 									<![CDATA[
-                                        select pid, pname, pnote, bname, pcid, pcimg1, pcimg2, pcimg3, pcchipimg, pccolorcode, pcprice, preleasedate, 
-										psid, psstock, psize from allproduct where pid in (select pid from(select distinct pid from (select rownum, p.pid from allproduct 
-                                        p,product_category pc, category c
-										where p.pid = pc.pid and pc.cateno = c.cateno and
 										depth1name = #{depth1} and depth2name = #{depth2}
                                         ${orderBy}
 										))
                                         where
-										rownum >= #{Piter} and rownum < #{productNum})
+										rownum < #{productNum}) where row_num >= #{Piter})
 										]]>
 									</otherwise>
 								</choose>
 							</when>
 							<otherwise>
 							<![CDATA[
-                                        select pid, pname, pnote, bname, pcid, pcimg1, pcimg2, pcimg3, pcchipimg, pccolorcode, pcprice, preleasedate, 
-										psid, psstock, psize from allproduct where pid in (select pid from(select distinct pid from (select rownum, p.pid from allproduct 
-                                        p,product_category pc, category c
-										where p.pid = pc.pid and pc.cateno = c.cateno and
 										depth1name = #{depth1}
                                         ${orderBy}
 										))
                                         where
-										rownum >= #{Piter} and rownum < #{productNum})
+										rownum < #{productNum}) where row_num >= #{Piter})
 										]]>
 							</otherwise>
 						</choose>
@@ -198,7 +172,7 @@
 						</choose>
 					</when>
 					<otherwise>
-						select distinct bname from allcategory where bname = #{brand}
+						select distinct depth1name from allcategory where bname = #{brand}
 					</otherwise>
 				</choose>
 			</when>
@@ -214,6 +188,35 @@
 			</otherwise>
 		</choose>
 	</select>
+		<select id="getNewList" resultMap="pc1Map">
+		<![CDATA[
+	select * from allproduct where pid in 
+	(select * from 
+	(select pid from 
+	(select rownum ,pid from allproduct order by preleasedate desc) 
+	group by pid) 
+	where rownum < 10)
+	]]>
+	</select>
+	<select id="getBestList" resultMap="pc1Map">
+	<![CDATA[
+		select * from allproduct where pid in (select pid from 
+                         (select pid ,count(pid) from order_item o , allproduct p 
+                         where o.psid = p.psid 
+                         group by pid 
+                         order by count(pid) desc) 
+                         where rownum < 10)
+                         ]]>
+	</select>
+		<select id="newCount" resultType="int">
+	<![CDATA[
+	
+                                       select count(*) from product_color where preleasedate between (SELECT SYSDATE - 1 FROM dual) and sysdate
+                                       
+                         ]]>
+	</select>
+	
+	
 </mapper>
 
 <!-- /*********************************

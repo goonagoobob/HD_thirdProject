@@ -38,4 +38,10 @@ public interface productMapper {
 
 	public List<String> getCtgrList(@Param("brand")String brand, @Param("depth1")String depth1, 
 			@Param("depth2")String depth2, @Param("depth3") String depth3);
+
+	public List<productCommonVO> getNewList();
+
+	public List<productCommonVO> getBestList();
+
+	public int newCount();
 }

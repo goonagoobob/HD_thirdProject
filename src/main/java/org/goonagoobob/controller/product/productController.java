@@ -27,8 +27,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("/product")
 public class productController {
-//	@Autowired
-//	private ProductService productService;
 	@Autowired
 	private productService service;
 	@GetMapping("/productList")
@@ -39,34 +37,98 @@ public class productController {
 			@RequestParam(value = "Piter", required=false, defaultValue = "1") int Piter,
 			@RequestParam(value = "productNum", required=false, defaultValue = "8") int productNum,
 			@RequestParam(value = "orderBy", required=false, defaultValue = "0") int orderBy,
-			@RequestParam(value = "depth", required=false, defaultValue = "0") int depth,
 			Model model
 			) {
-		depth1 = "남성";
-		depth = 2;
+		String depth0 ="";
+		if (brand != "") {
+			
+			if(depth1 == "") {
+				depth0 = brand;
+			}
+			else {
+				if(depth2 == "") {
+					depth0 = depth1;
+				}
+				else {
+					if(depth3 == "") {
+						depth0 = depth3;
+					}
+					else {
+						depth0 = depth2;
+					}
+				}
+			}
+		}
+		else {
+				if(depth2 == "") {
+					if(depth3 == "") {
+						depth0 = depth3;
+					}
+					else {
+						depth0 = depth1;
+						
+					}
+				}
+				else {
+					if(depth1 == "") {
+						depth0 = brand;
+					}
+					else {
+						depth0 = depth1;
+					}
+				}
+		}
+		if (brand == "") {
+			brand =null;
+		}
+		if (depth1 == "") {
+			depth1 =null;
+		}
+		if (depth2 == "") {
+			depth2 =null;
+		}if (depth3 == "") {
+			depth3 =null;
+		}
 		List<productCommonVO> VOList = service.getList(brand, depth1, depth2, depth3, orderBy, Piter, productNum);
 		List<String> ctgr = service.getCtgrList(brand, depth1, depth2, depth3);
 		System.out.println(VOList);
+		System.out.println(depth0);
 		model.addAttribute("brand",brand);
+		model.addAttribute("depth0",depth0);
 		model.addAttribute("depth1",depth1);
 		model.addAttribute("depth2",depth2);
 		model.addAttribute("depth3",depth3);
+		model.addAttribute("orderBy",orderBy);
+		model.addAttribute("Piter",Piter);
+		model.addAttribute("productNum",productNum);
 		model.addAttribute("productVO", VOList);
 		model.addAttribute("ctgrList", ctgr);
-		if(depth == 1) {
-			model.addAttribute("depth",brand);
-		} else if(depth == 2) {
+		if(brand == null) {
 			model.addAttribute("depth",depth1);
+		} else  {
+			model.addAttribute("depth",brand);
 		}
+	
+	}
+	@GetMapping("/productListMore")
+	@ResponseBody
+	public List<productCommonVO> ProductListMore(@RequestParam(value = "brand", required=false) String brand,
+			@RequestParam(value = "depth1", required=false) String depth1,
+			@RequestParam(value = "depth2", required=false) String depth2,
+			@RequestParam(value = "depth3", required=false) String depth3,
+			@RequestParam(value = "Piter", required=false, defaultValue = "1") int Piter,
+			@RequestParam(value = "productNum", required=false, defaultValue = "8") int productNum,
+			@RequestParam(value = "orderBy", required=false, defaultValue = "0") int orderBy
+			) {
+		
+		List<productCommonVO> VOList = service.getList(brand, depth1, depth2, depth3, orderBy, Piter, productNum);
+		System.out.println(VOList);
+		return VOList;
 	}
 	@GetMapping("/productDetail")
 	public void Productdetail(@RequestParam(value = "pid", required=false) String pid, @RequestParam(value = "pcid", required=false) String pcid,Model model) {
-        pid = "TM2CAWPC270W";
-		pcid = "TM2CAWPC270W_OH";
-
 		productCommonVO vo = service.getPDetail(pid);
 		System.out.println(vo);
-		System.out.println("conrotller");
 		model.addAttribute("productVO", vo);
 		model.addAttribute("pcid", pcid);
 	}
@@ -94,8 +156,15 @@ public class productController {
 		System.out.println(vo);
 		return vo;
 	}
-//	@GetMapping("/productDetail")
-//	public void prod() {
-//		
-//	}
+	@GetMapping("/main1")
+	public void getdsdsCtgr(Model model) {
+		List<productCommonVO> newVO = service.getNewList();
+		List<productCommonVO>	bestVO = service.getBestList();
+		int newCount = service.newCount();
+		System.out.println(newVO);
+		System.out.println(bestVO);
+		model.addAttribute("bestVO",bestVO);
+		model.addAttribute("newVO",newVO);
+		model.addAttribute("newCount",newCount);
+	}
 }

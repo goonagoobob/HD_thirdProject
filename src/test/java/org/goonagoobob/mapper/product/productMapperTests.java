@@ -34,8 +34,8 @@ public class productMapperTests {
 	}
 	@Test
 	public void getListTests() {
-		System.out.println(mapper.getList("TIME", "여성", null, null, "order by pcprice", 1, 8));
-		System.out.println(mapper.getList("TIME", "여성", null, null, "order by pcprice", 1, 8).size());
+		System.out.println(mapper.getList(null, "여성", null, null, "order by pcprice", 9, 17));
+		System.out.println(mapper.getList(null, "여성", null, null, "order by pcprice", 9, 17).size());
 	
 	}
 }
