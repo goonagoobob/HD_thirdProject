@@ -90,9 +90,9 @@
 							placeholder="비밀번호를 입력하세요." title="비밀번호를 입력하세요.">
 					</div>
 					<!-- [TO DEV] Error msg here. -->
-					<div class="err_wrap">
-						<p id="hpErrMsg" class="err_txt"></p>
-					</div>
+					<div class="err_wrap" th:if="error">
+                         <p id="valid" style="color: red; font-size:12px;"><a style="color: red;" th:text="${exception}"></a></p>
+                     </div>
 					<div class="btn_wrap">
 						<button type="submit" id="login_btn"
 							class="btn btn_bg_b btn_login btn_popup">로그인</button>

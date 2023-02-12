@@ -43,6 +43,23 @@ public class memberController {
 			
 	}
 	
+	//로그인 실패 컨트롤러 setDeaultFailreURL()이 호출되었을 때 url을 매핑해줄 컨트롤러
+	@GetMapping("/auth/login")
+	public String login(@RequestParam(value = "error", required = false) String error,
+						@RequestParam(value = "exception", required = false) String exception,
+						Model model) {
+		
+		System.out.println("auth/login HERE !!!");
+		
+		System.out.println("error 내용 : " + error);
+		System.out.println("exception 내용 : " + exception);
+		/* 에러와 예외를 모델에 담아 view resolve */
+		model.addAttribute("error", error);
+		model.addAttribute("exception", exception);
+		return "/member/login"; //redirect이면 바로 넘어감 
+	}
+	
+	
 	@GetMapping("/join")
 	public void memberJoin() {
 		
