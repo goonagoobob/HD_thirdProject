@@ -52,12 +52,18 @@ public class securityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		// http.csrf().disable();
 
-		http.authorizeHttpRequests().antMatchers("/member/join").permitAll()
-				.antMatchers("/memberRestAPI/joinMemberAccount").permitAll().antMatchers("/memberRestAPI/idDoubleCheck")
-				.permitAll().antMatchers("/member/login").permitAll().antMatchers("/member/auth/login").permitAll()
-				.antMatchers("/member/findIdPassword").permitAll().antMatchers("/member/findIdResult").permitAll()
-				.antMatchers("/member/findPasswordForm").permitAll().antMatchers("/").permitAll()
-				.antMatchers("/product/productDetail").permitAll().antMatchers("/product/productList").permitAll()
+		http.authorizeHttpRequests()
+				.antMatchers("/member/join").permitAll()
+				.antMatchers("/memberRestAPI/joinMemberAccount").permitAll()
+				.antMatchers("/memberRestAPI/idDoubleCheck").permitAll()
+				.antMatchers("/member/login").permitAll()
+				.antMatchers("/member/auth/login").permitAll()
+				.antMatchers("/member/findIdPassword").permitAll()
+				.antMatchers("/member/findIdResult").permitAll()
+				.antMatchers("/member/findPasswordForm").permitAll()
+				.antMatchers("/").permitAll()
+				.antMatchers("/product/productDetail").permitAll()
+				.antMatchers("/product/productList").permitAll()
 				.antMatchers("/product/productListMore").permitAll()
 				.anyRequest().authenticated(); // csrf 보안 설정 비활성화
 		// .addFilter(jwtAuthorizationFilter()) 해야함
