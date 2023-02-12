@@ -4,6 +4,21 @@
 <meta name="_csrf" th:content="${_csrf.token}">
 <meta name="_csrf_header" th:content="${_csrf.headerName}">
 
+		<script>
+			function clickChangePassword() {
+				window.location.replace("http://localhost/myPage/changePassword");
+			}
+			
+			function formCheck() {
+				console.log("helllo");
+				alert($("#email").val());
+			}
+			
+		
+			
+		</script>
+
+
 		<!-- #2894 - 카카오광고 집행 위한 픽셀&SDK 삽입 -->
 		<script async="" defer="" src="https://cdn.megadata.co.kr/dist/prod/enp_tracker_self_hosted.min.js"></script><script type="text/javascript" async="" src="https://www.googletagmanager.com/gtag/js?id=G-RPZ82BN53C&amp;l=dataLayer&amp;cx=c"></script><script type="text/javascript" async="" src="https://www.google-analytics.com/analytics.js"></script><script async="" src="https://www.googletagmanager.com/gtm.js?id=GTM-KSHFVVQ"></script><script async="" src="https://www.google-analytics.com/analytics.js"></script><script async="" charset="utf-8" src="//static.recopick.com/dist/production.min.js"></script><script type="text/javascript" charset="UTF-8" src="//t1.daumcdn.net/adfit/static/kp.js"></script>
 		<script type="text/javascript">
@@ -156,7 +171,6 @@
     <script type="text/javascript" src="http://thehandsome.com/_ui//handsomemobile/js/json2.js"></script>
     <script type="text/javascript" src="http://thehandsome.com/_ui//handsomemobile/js/SsoAjax.js"></script>
     
-    <script type="text/javascript" src="http://thehandsome.com/_ui//handsomemobile/js/instagramAPI.js"></script>
     <script type="text/javascript" src="http://thehandsome.com/_ui//handsomemobile/js/makePCookie.js"></script>
     <script type="text/javascript" src="http://thehandsome.com/_ui//handsomemobile/js/content.js"></script>
     <script type="text/javascript" src="http://thehandsome.com/_ui//handsomemobile/js/e-smart-zoom-jquery.min.js"></script>
@@ -937,7 +951,6 @@ function gaIsoCodeEncoding(isoCode){
 				<a href="javascript:noLink();" onclick="goBack();" class="h_prev">이전
 					페이지로 가기</a>
 				<ul class="h_gnbMenu">
-					<li class="search"><a href="/ko/mobilecommon/search"><span>search</span></a></li>
 					<li class="cart"><a href="/ko/shoppingbag"><span>cart</span><i>1</i></a></li>
 				</ul>
 			</header>
@@ -959,8 +972,8 @@ function gaIsoCodeEncoding(isoCode){
 
 
 			<form id="changeUserInfoForm"
-				th:action="@{/myPage/changeUserInfoForm}" method="post">
-				<input type="hidden" name="emailDuplChk" id="emailDuplChk" value="Y"
+			 th:action="@{/myPage/changeUserInfoForm}" method="post">
+ 				<input type="hidden" name="emailDuplChk" id="emailDuplChk" value="Y"
 					title="이메일 중복"> <input type="hidden" id="emailAddress"
 					name="emailAddress" value=""> <input type="hidden"
 					id="sBirthday" name="sBirthday" value=""> <input
@@ -972,8 +985,9 @@ function gaIsoCodeEncoding(isoCode){
 					<div class="gray_tab">
 						<h4 class="title">비밀번호를 변경하고 싶으세요?</h4>
 						<div class="btn_wrap btn_wrap_div1">
-							<a href="#none" class="btnstl3 solid_btn_blk btn_layerpopup_call"
-								id="pwChangeBtn">비밀번호 변경</a>
+							<!-- <button type="button" class="btnstl3 solid_btn_blk btn_layerpopup_call" onclick="clickChangePassword()">비밀번호 변경</button> -->
+							<!-- <a href="/myPage/changePassword" class="btnstl3 solid_btn_blk btn_layerpopup_call"
+								id="pwChangeBtn">비밀번호 변경</a> -->
 						</div>
 					</div>
 					<div class="mp_input_wrap">
@@ -990,7 +1004,7 @@ function gaIsoCodeEncoding(isoCode){
 						</div>
 
 
-						<!-- form -->
+						
 
 						<div class="input_box">
 							<div class="ipt_tit">
@@ -1019,7 +1033,7 @@ function gaIsoCodeEncoding(isoCode){
 									id="emailDubChkBtn">이메일 중복확인</a> -->
 							</div>
 						</div>
-						<!-- form 끝 -->
+						
 
 
 						<div class="input_box">

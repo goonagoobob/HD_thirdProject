@@ -124,6 +124,9 @@ public class myPageController {
 			@RequestParam("selMonth") String selMonth, 
 			@RequestParam("selDay") String selDay, HttpSession session) {
 		
+		System.out.println("@@@@@@changeUserInfoForm 들어옴@@@@@@");
+		
+		
 		memberChangeInfo mCI = new memberChangeInfo();
 		String mid2 = prin.getName();
 		System.out.println(mid);

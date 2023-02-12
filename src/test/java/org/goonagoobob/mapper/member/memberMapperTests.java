@@ -92,4 +92,6 @@ public class memberMapperTests {
 		String mpassword = "789456";
 		System.out.println(memberMapper.changePassword(mid, mpassword));
 	}
+	
+	
 }

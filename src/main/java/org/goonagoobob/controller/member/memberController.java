@@ -104,6 +104,13 @@ public class memberController {
 		}
 		else {
 			System.out.println("찾을 수 없음");
+			String message = "아이디를 찾을 수 없습니다.";
+			String error = "true";
+			
+			System.out.println(message +"," + error);
+			model.addAttribute("error", error);
+			model.addAttribute("message", message);
+			
 		}
 	}
 	
