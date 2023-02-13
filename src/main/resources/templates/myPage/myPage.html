@@ -1229,11 +1229,22 @@ rotate(
                   <b>주문조회</b>
                   <a href="/ko/mypage/order/myorders" class="more">주문배송조회</a>
                 </div>
-                <p class="mypage_card_nodata">주문 내역이 없습니다.</p>
+            </div>
+            <div class="stage coupon_stage" id="myCouponList">
+                <div class="card_type_inner1903">
+              		<div class="s-tit"> <b>마일리지</b></div>
+		              <div id="mypageCouponList">
+		                <div class="s-coupon">
+		                  <div class="s-coupon-inner"> <strong>당신의 마일리지는</strong><b>[[${mileage}]]</b> <span th:text="${mileage}">2023-02-01
+		                      ~ 2023-07-31</span></div>
+		                      <span th:text="*{mileage}"></span>
+		                </div>
+		              </div>
+              	</div>
               </div>
             </div>
           </div>
-          <!-- 혜택// -->
+          <!-- <!-- 혜택// 
           <div class="swiper-slide card-type benefit start e-gift swiper-slide-next" data-index="0" style="width: 330px; margin-right: 30px;">
             <div class="stage coupon_stage" id="myCouponList">
               <div class="card_type_inner1903">
@@ -1251,7 +1262,7 @@ rotate(
 
           </div>
 	
-          <!-- //혜택 -->
+          혜택 -->
 
           <!-- 정보// -->
           <!-- 
