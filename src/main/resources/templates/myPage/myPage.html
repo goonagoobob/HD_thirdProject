@@ -1,6 +1,6 @@
 <html lang="ko" class="" xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
 <sec:authentication property="principal" var="minfo" />
 <!-- #2894 - 카카오광고 집행 위한 픽셀&SDK 삽입 -->
@@ -794,22 +794,103 @@ keyframes target_image { 0% {
 	transform: rotate(-2deg);
 }
 50
+
+
+
+
+
+
 %
 {
 transform
+
+
+
+
+
+
 :
-rotate(
+
+
+
+
+
+
+rotate
+
+
+
+
+(
+
+
+
+
+
+
 9deg
+
+
+
+
+
+
 )
+
+
+
+
+
+
 }
 100
+
+
+
+
+
+
 %
 {
 transform
+
+
+
+
+
+
 :
-rotate(
+
+
+
+
+
+
+rotate
+
+
+
+
+(
+
+
+
+
+
+
 -1deg
-);
+
+
+
+
+
+
+)
+
+
+
+
+;
 }
 }
 </style>
@@ -1053,7 +1134,7 @@ rotate(
 			$.cookie("handsomeappreturnurl", "/ko/", {
 				path : "/"
 			});
-			location.href = "/ko/mypage/mypageFloatingPopup";
+			location.href = "/myPage/myPage"
 			//}
 		}
 
@@ -1067,58 +1148,35 @@ rotate(
 			window.sessionStorage.removeItem('moveYn');
 			window.sessionStorage.removeItem('width');
 			window.sessionStorage.removeItem('height');
-			location.href = "/ko/main";
+			location.href = "/";
 		}
 	</script>
 
 	<!-- ################## hsome_quickMenu | 퀵메뉴 ################## -->
-	<aside class="hsome_quickMenu hsome_quickMenu1909">
+	<aside class="hsome_quickMenu hsome_quickMenu1909 active">
 		<ul>
-			<li class="shop "><a href="/ko/mobilecommon/navShop"
-				onclick="GA_Event('공통', '네비게이션_바', '샵');"><i>메뉴</i></a></li>
-			<li class="sns "><a href="/ko/sns/main"
-				onclick="GA_Event('공통', '네비게이션_바', '타임라인');"><i>스타일 LIVE</i></a></li>
-			<li class="home "><a href="javascript:noLink();"
-				onclick="goMainpage();GA_Event('공통', '네비게이션_바', '홈');"><i>홈</i></a></li>
-			<li class="myheart " id="gnbMyheartBtn"><a
-				href="/ko/mypage/myWish"
-				onclick="GA_Event('공통', '네비게이션_바', '마이하트');"><i>마이하트</i></a></li>
-			<li class="mypage active" id="gnbMyPageBtn"><a
+			<li class="shop active" style="width: 33.3%;"><a
+				onclick="layerUp()"><i>메뉴</i></a></li>
+			<li class="home" style="width: 33.3%;"><a
 				href="javascript:noLink();"
-				onclick="goMypage();GA_Event('공통', '네비게이션_바', '마이페이지');"><i>마이페이지</i></a></li>
-			<li class="mypage pageMove" style="display: none;"><a href=""
+				onclick="goMainpage();GA_Event('공통', '네비게이션_바', '홈');"><i>홈</i></a>
+			</li>
+			<li class="mypage" id="gnbMyPageBtn" style="width: 33.3%;"><a
+				href="/myPage/myPage;"
+				onclick="goMypage();GA_Event('공통', '네비게이션_바', '마이페이지');"><i>마이페이지</i></a>
+			</li>
+			<li class="mypage pageMove" style="display: none"><a href=""
 				id="gnbMypageBtn"></a></li>
-			<li class="mypage" style="display: none;"><a
-				href="/ko/mobilecommon/myPagePopup" id="gnbMypagePopupBtn"></a></li>
+			<li class="mypage" style="display: none"><a
+				href="https://www.thehandsome.com/ko/mobilecommon/myPagePopup"
+				id="gnbMypagePopupBtn"></a></li>
 		</ul>
 	</aside>
 	<!-- ################## //hsome_quickMenu | 퀵메뉴 ################## -->
 
-	<div class="fixed_dim_layer" onclick="familySiteSelectClosed();"></div>
-	<div class="family_site_popup_191108">
-		<ul>
-			<li><a href="http://m.hfashionmall.com/sfmmbl/mbl/main.do"
-				target="_blank"
-				onclick="GA_Event('공통', '푸터_CNT', 'FAMILYSITE_H패션몰');">H패션몰<!-- H패션몰 --></a></li>
-			<li><a href="https://m.hyundaihmall.com/front/index.do"
-				target="_blank"
-				onclick="GA_Event('공통', '푸터_CNT', 'FAMILYSITE_현대홈쇼핑');">현대홈쇼핑<!-- (주)현대홈쇼핑 --></a></li>
-			<li><a href="https://m.thehyundai.com/Home.html" target="_blank"
-				onclick="GA_Event('공통', '푸터_CNT', 'FAMILYSITE_더현대닷컴');">더현대닷컴<!-- 더현대닷컴 --></a></li>
-			<li><a href="http://mall.hyundailivart.co.kr/front/index_org.lv"
-				target="_blank"
-				onclick="GA_Event('공통', '푸터_CNT', 'FAMILYSITE_현대리바트');">현대리바트<!-- (주)현대 리바트 --></a></li>
-			<li><a href="https://www.h-point.co.kr/cu/main/index.nhd"
-				target="_blank"
-				onclick="GA_Event('공통', '푸터_CNT', 'FAMILYSITE_H.Point');">H.Point</a></li>
-			<li><a href="http://www.ehyundai.com/newPortal/ir/main.do"
-				target="_blank"
-				onclick="GA_Event('공통', '푸터_CNT', 'FAMILYSITE_현대백화점그룹');">현대백화점그룹<!-- 현대백화점 그룹 --></a></li>
-		</ul>
-		<a href="" class="family_site_popup_close"
-			onclick="familySiteSelectClosed();">닫기<!-- 닫기 --></a>
-	</div>
 	<!-- ################## hsome_quickMenu_contents | 퀵메뉴 컨텐츠 영역 ################## -->
+	<th:block th:replace="fragments/footer :: footerFragment"></th:block>
+	<!--// ################## hsome_quickMenu_contents | 퀵메뉴 컨텐츠 영역 ################## -->
 	<!-- Contents -->
 	<div class="hand_footer_gnb_wrap mypage">
 		<div class="header">
@@ -1171,80 +1229,121 @@ rotate(
 			</h2>
 		</div>
 
-<div class="container">
+		<div class="container">
 
-      <div class="swiper-container mypage_card_container mpgCardCon1903 swiper-container-horizontal swiper-container-android swiper-container-wp8-horizontal">
-        <div class="swiper-wrapper" style="transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;">
+			<div
+				class="swiper-container mypage_card_container mpgCardCon1903 swiper-container-horizontal swiper-container-android swiper-container-wp8-horizontal">
+				<div class="swiper-wrapper"
+					style="transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;">
 
-          <script type="text/javascript">
-            $(document).ready(function () {
-              $(".address_cont .address").each(function () {
-                var arrAddress = $(this).html().split(" ");
-                var replaceAddr = "";
-                if (arrAddress.length > 3) {
-                  replaceAddr = arrAddress[0] + " " + arrAddress[1] + " " + arrAddress[2] + " " + arrAddress[3];
-                }
+					<script type="text/javascript">
+						$(document)
+								.ready(
+										function() {
+											$(".address_cont .address")
+													.each(
+															function() {
+																var arrAddress = $(
+																		this)
+																		.html()
+																		.split(
+																				" ");
+																var replaceAddr = "";
+																if (arrAddress.length > 3) {
+																	replaceAddr = arrAddress[0]
+																			+ " "
+																			+ arrAddress[1]
+																			+ " "
+																			+ arrAddress[2]
+																			+ " "
+																			+ arrAddress[3];
+																}
 
-                for (var i = 4; i < arrAddress.length; i++) {
-                  var temp = "";
-                  for (var j = 0; j < arrAddress[i].length; j++) {
-                    temp += "*";
-                  }
-                  replaceAddr += " " + temp;
-                }
-                $(this).html(replaceAddr);
-              });
+																for (var i = 4; i < arrAddress.length; i++) {
+																	var temp = "";
+																	for (var j = 0; j < arrAddress[i].length; j++) {
+																		temp += "*";
+																	}
+																	replaceAddr += " "
+																			+ temp;
+																}
+																$(this)
+																		.html(
+																				replaceAddr);
+															});
 
-              $(".address_cont .info").each(function () {
-                var temp = $(this).html().split("/");
-                var hpTemp = $.trim(temp[1]);
-                var arrHp = hpTemp.split("-");
+											$(".address_cont .info")
+													.each(
+															function() {
+																var temp = $(
+																		this)
+																		.html()
+																		.split(
+																				"/");
+																var hpTemp = $
+																		.trim(temp[1]);
+																var arrHp = hpTemp
+																		.split("-");
 
-                $(this).html(maskingName(temp[0]) + " / " + arrHp[0] + "-" + maskingStr(arrHp[1]) + "-" + arrHp[2]);
-              });
-            });
+																$(this)
+																		.html(
+																				maskingName(temp[0])
+																						+ " / "
+																						+ arrHp[0]
+																						+ "-"
+																						+ maskingStr(arrHp[1])
+																						+ "-"
+																						+ arrHp[2]);
+															});
+										});
 
-            /**
-            * 2020.01.22 hmk
-            * 결품 여부 확인
-            */
-            function getOnlineStock(code) {
-              $.ajax({
-                type: "get"
-                , url: "/ko/mypage/order/getOnlineStock?code=" + code
-                , dataType: "json"
-                , success: function (r) {
-                  if ($.parseJSON(r)[code]) {
-                    $("p[name=__p_" + code + "]").show();
-                  }
-                }
-              });
-            } 
-          </script>
-          <!--  -->
-          <div class="swiper-slide card-type order swiper-slide-active" data-index="0" style="width: 330px; margin-right: 30px;">
-            <div class="stage order_stage">
-              <div class="card_type_inner1903">
-                <div class="s-tit">
-                  <b>주문조회</b>
-                  <a href="/myPage/orderList" class="more">주문/배송조회</a>
-                </div>
-            </div>
-            <div class="stage coupon_stage" id="myCouponList">
-                <div class="card_type_inner1903">
-              		<div class="s-tit"> <b>마일리지</b></div>
-		              <div id="mypageCouponList">
-		                <div class="s-coupon">
-		                  <div class="s-coupon-inner"> <strong>당신의 마일리지는</strong><b>[[${mileage}]] Point</b> <span>2023-02-01
-		                      ~ 2023-07-31</span></div>
-		  
-		                </div>
-		              </div>
-              	</div>
-              </div>
-            </div>
-          </div>
-          <!-- <!-- 혜택// 
+						/**
+						 * 2020.01.22 hmk
+						 * 결품 여부 확인
+						 */
+						function getOnlineStock(code) {
+							$.ajax({
+								type : "get",
+								url : "/ko/mypage/order/getOnlineStock?code="
+										+ code,
+								dataType : "json",
+								success : function(r) {
+									if ($.parseJSON(r)[code]) {
+										$("p[name=__p_" + code + "]").show();
+									}
+								}
+							});
+						}
+					</script>
+					<!--  -->
+					<div class="swiper-slide card-type order swiper-slide-active"
+						data-index="0" style="width: 330px; margin-right: 30px;">
+						<div class="stage order_stage">
+							<div class="card_type_inner1903">
+								<div class="s-tit">
+									<b>주문조회</b> <a href="/myPage/orderList" class="more">주문/배송조회</a>
+								</div>
+							</div>
+							<div class="stage coupon_stage" id="myCouponList">
+								<div class="card_type_inner1903">
+									<div class="s-tit">
+										<b>마일리지</b>
+									</div>
+									<div id="mypageCouponList">
+										<div class="s-coupon">
+											<div class="s-coupon-inner">
+												<strong>당신의 마일리지는</strong><b>[[${mileage}]] Point</b> <span>2023-02-01
+													~ 2023-07-31</span>
+											</div>
+
+										</div>
+									</div>
+								</div>
+								
+							</div>
+						</div>
+					</div>
+					<!-- <!-- 혜택// 
           <div class="swiper-slide card-type benefit start e-gift swiper-slide-next" data-index="0" style="width: 330px; margin-right: 30px;">
             <div class="stage coupon_stage" id="myCouponList">
               <div class="card_type_inner1903">
@@ -1264,8 +1363,8 @@ rotate(
 	
           혜택 -->
 
-          <!-- 정보// -->
-          <!-- 
+					<!-- 정보// -->
+					<!-- 
 V1 : THE FIRST1
 V2 : THE FIRST2
 V3 : THE FIRST3
@@ -1275,205 +1374,288 @@ V6 : SILVER
 
 STAR / MANIA / CREW / FRIEND
 -->
-          <script type="text/javascript">
-            // 하단 메뉴 슬라이드
-            $(document).ready(function () {
-              //barCodeClickEvent();
-              var flagWrapSwiper2 = new Swiper('.flag_wrap.case.swiper-container.e-gift1811', {
-                slidesPerView: 'auto',
-                freeMode: true,
-                spaceBetween: 6
-              });
-              flagWrapSwiper2.update();
+					<script type="text/javascript">
+						// 하단 메뉴 슬라이드
+						$(document)
+								.ready(
+										function() {
+											//barCodeClickEvent();
+											var flagWrapSwiper2 = new Swiper(
+													'.flag_wrap.case.swiper-container.e-gift1811',
+													{
+														slidesPerView : 'auto',
+														freeMode : true,
+														spaceBetween : 6
+													});
+											flagWrapSwiper2.update();
 
-              $(document).on("click", ".grade_stage .barCode1902 .card_img", function () {
-                $(this).stop().hide();
-                $(this).next('.s-guide').stop().hide();
-                $(this).closest('.barCode1902').find('.bar1902').stop().show();
-              });
-              $(document).on("click", ".grade_stage .barCode1902 .cl_btn", function () {
-                $(this).closest('.barCode1902').find('.bar1902').stop().hide();
-                $(this).closest('.barCode1902').find('.card_img').stop().show();
-                $(this).closest('.barCode1902').find('.card_img').next('.s-guide').stop().show();
-              });
-            });
+											$(document)
+													.on(
+															"click",
+															".grade_stage .barCode1902 .card_img",
+															function() {
+																$(this).stop()
+																		.hide();
+																$(this)
+																		.next(
+																				'.s-guide')
+																		.stop()
+																		.hide();
+																$(this)
+																		.closest(
+																				'.barCode1902')
+																		.find(
+																				'.bar1902')
+																		.stop()
+																		.show();
+															});
+											$(document)
+													.on(
+															"click",
+															".grade_stage .barCode1902 .cl_btn",
+															function() {
+																$(this)
+																		.closest(
+																				'.barCode1902')
+																		.find(
+																				'.bar1902')
+																		.stop()
+																		.hide();
+																$(this)
+																		.closest(
+																				'.barCode1902')
+																		.find(
+																				'.card_img')
+																		.stop()
+																		.show();
+																$(this)
+																		.closest(
+																				'.barCode1902')
+																		.find(
+																				'.card_img')
+																		.next(
+																				'.s-guide')
+																		.stop()
+																		.show();
+															});
+										});
 
-            /*
-            var vipGraph; 
-            var onGraph; 
-            
-            if('' == 'SILVER'){
-              vipGraph = 25;
-            }else if('' == 'GOLD'){
-              vipGraph = 50;
-            }else if('' == 'PLATINUM'){
-              vipGraph = 75;
-            }else if('' == 'V1' || '' == 'V2' || '' == 'V3'){
-              vipGraph = 100;
-            }
-            
-            if('' == 'FRIEND' || '' == '' || '' == null){
-              onGraph = 25;
-            }else if('' == 'CREW'){
-              onGraph = 50;
-            }else if('' == 'MANIA'){
-              onGraph = 75;
-            }else if('' == 'STAR'){
-              onGraph = 100;
-            } */
+						/*
+						var vipGraph; 
+						var onGraph; 
+						
+						if('' == 'SILVER'){
+						  vipGraph = 25;
+						}else if('' == 'GOLD'){
+						  vipGraph = 50;
+						}else if('' == 'PLATINUM'){
+						  vipGraph = 75;
+						}else if('' == 'V1' || '' == 'V2' || '' == 'V3'){
+						  vipGraph = 100;
+						}
+						
+						if('' == 'FRIEND' || '' == '' || '' == null){
+						  onGraph = 25;
+						}else if('' == 'CREW'){
+						  onGraph = 50;
+						}else if('' == 'MANIA'){
+						  onGraph = 75;
+						}else if('' == 'STAR'){
+						  onGraph = 100;
+						} */
 
-            /*
-            function barCodeClickEvent(){
-              var myPageCardBar = $('.grade_stage .barCode1902');
-              myPageCardBar.find('.card_img').on('click',function(){
-                  $(this).stop().hide();
-                  $(this).next('.s-guide').stop().hide();
-                  $(this).closest('.barCode1902').find('.bar1902').stop().show();
-              });
-              myPageCardBar.find('.cl_btn').on('click',function(){
-                  $(this).closest('.barCode1902').find('.bar1902').stop().hide();
-                  $(this).closest('.barCode1902').find('.card_img').stop().show();
-                  $(this).closest('.barCode1902').find('.card_img').next('.s-guide').stop().show();
-              });
-            } */
-          </script>
+						/*
+						function barCodeClickEvent(){
+						  var myPageCardBar = $('.grade_stage .barCode1902');
+						  myPageCardBar.find('.card_img').on('click',function(){
+						      $(this).stop().hide();
+						      $(this).next('.s-guide').stop().hide();
+						      $(this).closest('.barCode1902').find('.bar1902').stop().show();
+						  });
+						  myPageCardBar.find('.cl_btn').on('click',function(){
+						      $(this).closest('.barCode1902').find('.bar1902').stop().hide();
+						      $(this).closest('.barCode1902').find('.card_img').stop().show();
+						      $(this).closest('.barCode1902').find('.card_img').next('.s-guide').stop().show();
+						  });
+						} */
+					</script>
 
-          <form id="userHiddenForm" method="post" target="transMember">
-            <input type="hidden" name="prtnrReqGb" value="03">
-            <input type="hidden" name="prtnrId" value="D080">
-            <input type="hidden" name="chnnlId" value="1705">
-            <input type="hidden" name="custNm" value="조일우">
-            <input type="hidden" name="birthDt" value="19950628">
-            <input type="hidden" name="mophNo" value="01028949294">
-            <input type="hidden" name="chId" value="joilwoo">
-            <input type="hidden" name="custUniqKey" value="joilwoo">
-            <input type="hidden" name="email" value="joilwoo123@gmail.com">
-            <input type="hidden" name="sexGbCd" value="1">
-            <input type="hidden" name="ci" value="">
-            <input type="hidden" name="ptcoReqnMdaInf" id="ptcoReqnMdaInf" value="">
-          </form>
-
-
-
-
-          <div class="swiper-slide card-type infomation" id="myPagePopupDelivery" data-index="2" style="width: 330px; margin-right: 30px;">
-            <div class="card_type_inner1903">
-              <div class="stage delivery_stage">
-                <div class="s-tit">
-                  <b>배송지 관리</b>
-                </div>
-
-           
-                <div class="s-btn">
-                <span th:text="${address}"></span>
-                  <!-- <a href="/ko/mypage/mydelivery">배송지 관리</a> -->
-                </div>
-              </div>
-
-              <div class="stage delivery_stage">
-                <div class="s-tit">
-                  <b>정보 관리</b>
-                </div>
-
-                <div class="s-btn">
-                  <a href="/myPage/checkPassword">개인정보 변경/탈퇴</a>
-                </div>
-
-                <div class="s-txt2">
-                  현대백화점 그룹 계열사의 다양한<br> 혜택을 하나의 ID로!
-                </div>
-
-              </div>
-            </div>
-          </div><!-- //정보 -->
-
-        </div>
-      </div>
-
-      <!--add indicator-->
-
-      <div class="flag_wrap case swiper-container e-gift1811 swiper-container-horizontal swiper-container-free-mode swiper-container-android swiper-container-wp8-horizontal" style="padding:25px 0 10px 10px; height: 69px;">
-      </div>
-
-      <div class="mypage_card_footer">
-        <span sec:authentication="name"></span>
-        <a class="u_profile_setting btn_popup_btot" href=".hs_mpg_profile_pop" onclick="GA_Event('마이페이지','푸터','프로필 설정')">프로필 설정</a>
-        <div class="u_setting">
-          <!-- 알림 있으면 has 클래스 붙음 -->
-          <a href="/ko/mypage/noticebox" class="alt" onclick="GA_Event('마이페이지', '푸터', '알림');">알림</a>
-          <a href="javascript:noLink();" class="set" onclick="mypageConfigClick();GA_Event('마이페이지', '푸터', '설정');">설정</a>
-        </div>
-      </div>
+					<form id="userHiddenForm" method="post" target="transMember">
+						<input type="hidden" name="prtnrReqGb" value="03"> <input
+							type="hidden" name="prtnrId" value="D080"> <input
+							type="hidden" name="chnnlId" value="1705"> <input
+							type="hidden" name="custNm" value="조일우"> <input
+							type="hidden" name="birthDt" value="19950628"> <input
+							type="hidden" name="mophNo" value="01028949294"> <input
+							type="hidden" name="chId" value="joilwoo"> <input
+							type="hidden" name="custUniqKey" value="joilwoo"> <input
+							type="hidden" name="email" value="joilwoo123@gmail.com">
+						<input type="hidden" name="sexGbCd" value="1"> <input
+							type="hidden" name="ci" value=""> <input type="hidden"
+							name="ptcoReqnMdaInf" id="ptcoReqnMdaInf" value="">
+					</form>
 
 
-      <div class="mypage_card_footer_logout2008">
-        <a href="/member/logout" class="u_logout" onclick="">로그아웃</a>
-        
-      </div>
-    </div><div class="footer">
-			<a href="/" class="close"
-				onclick="mypagePopupClose(this);">닫기</a>
-		</div>
-	</div>
-	<!-- 프로필 관리 팝업 -->
-	<div class="hsome_layer_popup03 hs_mpg_profile_pop">
-		<h2 class="pop-comm-ttl">프로필 관리</h2>
-		<p class="t_info">서비스(스타일 LIVE, 핸썸 TV) 이용 시 적용됩니다</p>
-		<div class="pop-comm-cnts">
-			<form id="profileEditForm" name="profileEditForm" data-ajax="false"
-				action="javascript:saveProfile()" method="POST"
-				enctype="multipart/form-data">
-				<input type="hidden" name="CSRFToken"
-					value="8fb80cab-3522-4faf-b475-418384537c5a"> <input
-					type="hidden" name="profileId" value="8904756689476">
-				<div class="pop_profile_cont">
-					<div class="pro_cont">
-						<div class="img">
-							<img
-								src="http://thehandsome.com/_ui/handsomemobile/images/content/no_pro_img.png"
-								alt="">
+					<div class="swiper-slide card-type order swiper-slide-active"
+						data-index="1" style="width: 330px; margin-right: 30px;">
+						<div class="stage order_stage">
+							<div class="card_type_inner1903">
+								
+									<div class="stage delivery_stage">
+										<div class="s-tit">
+											<b>등록된 배송지</b>
+										</div>
+										<span th:text="${address}"></span>
+
+										<div class="s-btn" style="z-index: 1;">
+											<span th:text="${address}"></span> <a>[[${address}]]</a>
+										</div>
+									</div>
+
+								
+								<div class="stage delivery_stage">
+									<div class="s-tit">
+										<b>정보 관리</b>
+									</div>
+
+									<div class="s-btn">
+										<a href="/myPage/checkPassword">개인정보 변경/탈퇴</a>
+									</div>
+
+									<div class="s-txt2">
+										현대백화점 그룹 계열사의 다양한<br> 혜택을 하나의 ID로!
+									</div>
+
+								</div>
+							
+							</div>
+							
 						</div>
-						<input id="profileImg" name="attachFilePath" type="file"
-							accept="image/*" class="pro_file_btn">
 					</div>
-					<div class="name_wrap">
-						<div class="hs_check01">
-							<input type="radio" id="pro_name_check_id" name="pro_name_check"
-								checked="checked"> <label for="pro_name_check_id"
-								sec:authentication="name"></label>
-						</div>
-						<div class="hs_check01 nick_check">
-							<input type="radio" id="pro_name_check_nickname"
-								name="pro_name_check"> <label
-								for="pro_name_check_nickname"><span class="nick_label">닉네임</span><span
-								class="nick_edit">편집</span></label>
-							<div class="hs_default_input">
-								<input id="profileNickname" type="text" placeholder="닉네임">
+
+
+
+
+
+
+
+
+					<div class="swiper-slide card-type infomation"
+						id="myPagePopupDelivery" data-index="2"
+						style="width: 330px; margin-right: 30px;">
+						<div class="card_type_inner1903">
+							<div class="stage order_stage">
+								<div class="stage delivery_stage">
+									<div class="s-tit">
+										<b>등록된 배송지</b>
+									</div>
+									<span th:text="${address}"></span>
+
+									<div class="s-btn" style="z-index: 1;">
+										<span th:text="${address}"></span> <a
+											href="/ko/mypage/mydelivery">배송지 관리</a>
+									</div>
+
+								</div>
 							</div>
 						</div>
-					</div>
-					<div class="hs_default_input">
-						<p class="textarea_placeholder2008" onclick="vocOpn();">
-							자기소개 입력<br>(스타일 LIVE &gt; 마이페이지에 적용됩니다)
-						</p>
-						<textarea name="profileComment" id="profileComment" cols="30"
-							rows="6" onblur="onBlurF();" onclick="vocOpn();"></textarea>
-					</div>
-					<div class="hs_pop_btn_wrap">
-						<button type="button" class="hs_black_comm_btn"
-							onclick="javascript:saveProfile()">변경</button>
+
+
+
+						<!-- //정보 -->
+
 					</div>
 				</div>
-				<div>
-					<input type="hidden" name="CSRFToken"
-						value="8fb80cab-3522-4faf-b475-418384537c5a">
+
+				<!--add indicator-->
+
+				<div
+					class="flag_wrap case swiper-container e-gift1811 swiper-container-horizontal swiper-container-free-mode swiper-container-android swiper-container-wp8-horizontal"
+					style="padding: 25px 0 10px 10px; height: 69px;"></div>
+
+				<div class="mypage_card_footer">
+					<span sec:authentication="name"></span> <a
+						class="u_profile_setting btn_popup_btot"
+						href=".hs_mpg_profile_pop"
+						onclick="GA_Event('마이페이지','푸터','프로필 설정')">프로필 설정</a>
+					<div class="u_setting">
+						<!-- 알림 있으면 has 클래스 붙음 -->
+						<a href="/ko/mypage/noticebox" class="alt"
+							onclick="GA_Event('마이페이지', '푸터', '알림');">알림</a> <a
+							href="javascript:noLink();" class="set"
+							onclick="mypageConfigClick();GA_Event('마이페이지', '푸터', '설정');">설정</a>
+					</div>
 				</div>
-			</form>
+
+
+				<div class="mypage_card_footer_logout2008">
+					<a href="/member/logout" class="u_logout" onclick="">로그아웃</a>
+
+				</div>
+			</div>
+			<div class="footer">
+				<a href="/" class="close" onclick="mypagePopupClose(this);">닫기</a>
+			</div>
 		</div>
-		<a href="#" class="pop-comm-cls">닫기</a>
-	</div>
-	<!-- //프로필 관리 팝업 -->
-	<div class="hs_pro_view_layer"></div>
+		<!-- 프로필 관리 팝업 -->
+		<div class="hsome_layer_popup03 hs_mpg_profile_pop">
+			<h2 class="pop-comm-ttl">프로필 관리</h2>
+			<p class="t_info">서비스(스타일 LIVE, 핸썸 TV) 이용 시 적용됩니다</p>
+			<div class="pop-comm-cnts">
+				<form id="profileEditForm" name="profileEditForm" data-ajax="false"
+					action="javascript:saveProfile()" method="POST"
+					enctype="multipart/form-data">
+					<input type="hidden" name="CSRFToken"
+						value="8fb80cab-3522-4faf-b475-418384537c5a"> <input
+						type="hidden" name="profileId" value="8904756689476">
+					<div class="pop_profile_cont">
+						<div class="pro_cont">
+							<div class="img">
+								<img
+									src="http://thehandsome.com/_ui/handsomemobile/images/content/no_pro_img.png"
+									alt="">
+							</div>
+							<input id="profileImg" name="attachFilePath" type="file"
+								accept="image/*" class="pro_file_btn">
+						</div>
+						<div class="name_wrap">
+							<div class="hs_check01">
+								<input type="radio" id="pro_name_check_id" name="pro_name_check"
+									checked="checked"> <label for="pro_name_check_id"
+									sec:authentication="name"></label>
+							</div>
+							<div class="hs_check01 nick_check">
+								<input type="radio" id="pro_name_check_nickname"
+									name="pro_name_check"> <label
+									for="pro_name_check_nickname"><span class="nick_label">닉네임</span><span
+									class="nick_edit">편집</span></label>
+								<div class="hs_default_input">
+									<input id="profileNickname" type="text" placeholder="닉네임">
+								</div>
+							</div>
+						</div>
+						<div class="hs_default_input">
+							<p class="textarea_placeholder2008" onclick="vocOpn();">
+								자기소개 입력<br>(스타일 LIVE &gt; 마이페이지에 적용됩니다)
+							</p>
+							<textarea name="profileComment" id="profileComment" cols="30"
+								rows="6" onblur="onBlurF();" onclick="vocOpn();"></textarea>
+						</div>
+						<div class="hs_pop_btn_wrap">
+							<button type="button" class="hs_black_comm_btn"
+								onclick="javascript:saveProfile()">변경</button>
+						</div>
+					</div>
+					<div>
+						<input type="hidden" name="CSRFToken"
+							value="8fb80cab-3522-4faf-b475-418384537c5a">
+					</div>
+				</form>
+			</div>
+			<a href="#" class="pop-comm-cls">닫기</a>
+		</div>
+		<!-- //프로필 관리 팝업 -->
+		<div class="hs_pro_view_layer"></div>
 	</div>
 	<!-- //################## hsome_quickMenu_contents | 퀵메뉴 컨텐츠 영역 ################## -->
 

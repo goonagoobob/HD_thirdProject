@@ -54,11 +54,16 @@ public class securityConfig extends WebSecurityConfigurerAdapter {
 
 		http.authorizeHttpRequests()
 
-				.antMatchers("/member/join").permitAll().antMatchers("/memberRestAPI/joinMemberAccount").permitAll()
-				.antMatchers("/memberRestAPI/idDoubleCheck").permitAll().antMatchers("/member/login").permitAll()
-				.antMatchers("/member/auth/login").permitAll().antMatchers("/member/findIdPassword").permitAll()
-				.antMatchers("/member/findIdResult").permitAll().antMatchers("/member/findPasswordForm").permitAll()
-				.antMatchers("/").permitAll().antMatchers("/product/productDetail").permitAll()
+				.antMatchers("/member/join").permitAll()
+				.antMatchers("/memberRestAPI/joinMemberAccount").permitAll()
+				.antMatchers("/memberRestAPI/idDoubleCheck").permitAll()
+				.antMatchers("/member/login").permitAll()
+				.antMatchers("/member/auth/login").permitAll()
+				.antMatchers("/member/findIdPassword").permitAll()
+				.antMatchers("/member/findIdResult").permitAll()
+				.antMatchers("/member/findPasswordForm").permitAll()
+				.antMatchers("/").permitAll()
+				.antMatchers("/product/productDetail").permitAll()
 				.antMatchers("/product/productList").permitAll().antMatchers("/product/productListMore").permitAll()
 				.antMatchers("/product/reviewAdd").permitAll().anyRequest().authenticated(); // csrf 보안 설정 비활성화
 

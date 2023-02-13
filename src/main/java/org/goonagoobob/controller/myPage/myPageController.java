@@ -45,6 +45,7 @@ public class myPageController {
 		String mileage = Integer.toString(mA.getMmileage());
 		
 		System.out.println("mileage to String" + mileage);
+		System.out.println(address);
 		model.addAttribute("address", address);
 		model.addAttribute("mileage", mileage);
 	}
