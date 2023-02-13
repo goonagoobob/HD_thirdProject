@@ -535,7 +535,7 @@ $(document).on('click', '.btn_option_edit', function(){
 	});
 });
 //옵션 선택 함수
-function setOptions(obj, prodid, productCode, type)
+/* function setOptions(obj, prodid, productCode, type)
 {
 $(obj).addClass("on");
 $(obj).siblings("a").removeClass("on");
@@ -550,7 +550,7 @@ if(type == 'style')
 {
 } else if(type == 'size'){
 }
-}
+} */
 //옵션 변경 저장 이벤트
 function productModifyEvent(obj){
 var prodid = $(obj).prop('id').split("_");
@@ -563,6 +563,7 @@ if(prodid[0] == 'UpdateCart'){
 	var storeId = form.find('input[name=storeId]').val();
 	var storePickupDate = form.find('input[name=storePickupDate]').val();
 	var cartData = form.data("cart");
+
 	cartQuantity.val($("#quantity_"+prodid[1]).val());
 	form.find('input[name=quantity]').val($("#quantity_"+prodid[1]).val());
 	//#2610 [주문] 가상계좌 결제수단 제외 및 중복 구매 제한 처리 요청 건 20220215 hyunbae
@@ -606,7 +607,7 @@ $('select.sodsb').selectOrDie();
 								<!-- goods_option_info_mid s -->
 								<div class="gl_mid">
 									<div class="gl_tit">
-										<a href="/ko/p/OB2C7KCD762WP2_ZB_90" onclick="setEcommerceData('0', 'Click ADD');"> 
+										<a href="#" onclick="setEcommerceData('0', 'Click ADD');"> 
 										<img th:src="${list.pcimg1}" class="gl_thumbimg" alt="">
 										</a>
 									</div>
@@ -665,26 +666,25 @@ $('select.sodsb').selectOrDie();
 												<ul class="gl_con btn_color_wrap" th:id="${'colorchip_'+i.index}">
 												
 												</ul>
-												<div class="gl_con selected_color_txt">
-													<span class="sct_v">머선색</span>
+												<div class="gl_con selected_color_txt" th:id="${'colorname_'+i.index}">
 												</div>
 											</li>
 											<li>
 												<div class="gl_tit">사이즈</div>
-												<div class="gl_con">
+												<div class="gl_con" th:onclick="selectsize([[${list.psid}]], [[${i.index}]])">
 													<span class="sod_select  touch" tabindex="0"
 														data-cycle="false" data-links="false"
 														data-links-external="false"
 														data-placeholder-option="false" data-filter=""><span
-														class="sod_label">90</span><span class="sod_list_wrapper"><span
-															class="sod_list"><span
-																class="sod_option  selected active " title="90"
+														class="sod_label">사이즈를 선택하세요</span>
+														<span class="sod_list_wrapper"><span class="sod_list" th:id="${'sodcolor_'+i.index}">
+														<span class="sod_option  selected active " title="90"
 																data-value="OB2C7KCD762WP2_ZB_90">90</span><span
 																class="sod_option " title="95"
-																data-value="OB2C7KCD762WP2_ZB_95">95</span></span></span><select
-														id="gl_slr_size_1" name="gl_slr_size_1" class="sodsb"
-														onchange="setOptions(this, '1', '', 'size');">
-															<option value="OB2C7KCD762WP2_ZB_90" selected="">90</option>
+																data-value="OB2C7KCD762WP2_ZB_95">95</span></span></span>
+													<select th:id="${'gl_slr_size_' + i.index}" th:name="${'gl_slr_size_' + i.index}" class="sodsb" 
+														th:onchange="setOptions(this, [[${i.index}]], '', 'size');">
+															<option value="OB2C7KCD762WP2_ZB_90">90</option>
 															<option value="OB2C7KCD762WP2_ZB_95">95</option>
 													</select></span>
 												</div>
@@ -693,13 +693,13 @@ $('select.sodsb').selectOrDie();
 												<div class="gl_tit">수량</div>
 												<div class="gl_con">
 													<div class="gl_count_edit">
-														<a onclick="quantityMinus(this, '1');" class="btn_minus"><span>감소</span></a>
+														<a th:onclick="quantityMinus(this, [[${i.index}]]);" class="btn_minus"><span>감소</span></a>
 														<div class="gl_count_num">
 															<input type="text" title="수량" readonly="" value="1"
-																class="mr0" id="quantity_1" name="quantity_1"
+																class="mr0" th:id="${'quantity_'+i.index}" th:name="${'quantity_'+i.index}" 
 																path="quantity">
 														</div>
-														<a onclick="quantityPlus(this, '1');" class="btn_plus"><span>증가</span></a>
+														<a th:onclick="quantityPlus(this, [[${i.index}]]);" class="btn_plus"><span>증가</span></a>
 													</div>
 												</div>
 											</li>
@@ -707,7 +707,7 @@ $('select.sodsb').selectOrDie();
 										<div class="gl_tgl_btns btn_wrap btn_wrap_div2">
 											<a href="#none" class="btnstl3 solid_btn_gray btn_cancel"><span>취소</span></a>
 											<a href="#none" class="btnstl3 solid_btn_blk btn_save"
-												id="UpdateCart_1" onclick="productModifyEvent(this);"><span>저장</span></a>
+												th:id="${'UpdateCart_'+i.index}" th:onclick="updatecart([[${list.pid}]], [[${list.psid}]], [[${i.index}]], [[${list.pquantity}]])"><span>저장</span></a>
 										</div>
 									</div>
 									<!-- goods_option_edit e -->
@@ -1131,7 +1131,7 @@ var productCode = $(obj).parents('form').find('input[name="productCode"]').val()
 			if(promotionFlag){
 					layerAlert("동일 옵션(컬러/사이즈)으로 최대 1개 구매 가능합니다.");
 			}else{
-				if(isQtyLimitProduct == 'true' && parseInt(qty.val()) + 1 > 2){
+				if(parseInt(qty.val()) + 1 > 2){
 					layerAlert("동일 상품(사이즈/컬러)은<br/>최대 2개까지 선택 가능합니다.");
 					return;
 				}
@@ -1916,10 +1916,110 @@ document.writeln("<scr"+"ipt language='javascript' src='" + TRS_URL + "'></scr"+
 	// ]]>
 </script>
 
+
 <script>
+//사이즈 뿌리기-김주혜
+function selectsize(psid, idx){
+	console.log("sizestart~");
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajax({
+		type: "POST",
+		url: "/cartRestApi/slist",
+	    beforeSend : function(xhr) {
+	        xhr.setRequestHeader(header, token);
+	    },
+		data : {
+			psid : psid, 
+				},
+		success : function(data) {
+			console.log(data);
+			console.log(data.length);
+			console.log(data[0].size);
+			var prosize="";
+			var propsid="";
+			var tag="";
+			var tag1="";
+			
+			for(var i =0; i<data.length; i++){
+				prosize = data[i].psize;
+				propsid = data[i].psid;
+				tag += `<option value="`
+				tag += prosize
+				tag += `">`
+				tag += prosize
+				tag += `</option>` 
+				
+				tag1 += `<span class="sod_option" title="`
+				tag1 += prosize
+				tag1 += `" data-value="`
+				tag1 += propsid
+				tag1 += `">`
+				tag1 += prosize
+				tag1 += `</span>`
+
+			}
+			
+			console.log(tag);
+			console.log(tag1);
+
+			$("#gl_slr_size_" + idx).html(tag); 
+			$("#sodcolor_" + idx).html(tag1);
+		
+		},
+		error : function(e){
+			console.log(e);
+		}
+	
+	});
+}
+
+//카트 옵션 변경-김주혜
+function updatecart(pid, psid, idx, pquantity){
+	alert("updatecart 된다냥~");
+
+	var qid = "quantity_" + idx;
+	var sid = "gl_slr_size_" + idx;
+	var ncname = document.getElementById("cname").innerHTML;
+	var npquantity =  document.getElementById(qid).value;
+	var nsize =  document.getElementById(sid).value;
+	var npsid = pid+"_"+ncname+"_"+nsize;
+	alert(ncname);
+	alert(npquantity);
+	alert("size" + nsize);
+	alert("newpsid" + npsid);
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+
+	$.ajax({
+		type: "POST",
+		url: "/cartRestApi/update",
+	    beforeSend : function(xhr) {
+	        xhr.setRequestHeader(header, token);
+	    },
+		data : {
+			psid:psid,
+			npsid:npsid,
+			pquantity:pquantity,
+			npquantity:npquantity
+				},
+		success : function(data) {
+			console.log(data);
+			alert("성공");
+			window.location.reload();
+			
+		},
+	    error: function(xhr,  Status, error) {
+	        alert('sendRequest error : ' + xhr.status + " ( " + error + " ) " );
+	    }
+	});
+	
+	
+	
+}
+
 //색상 뿌리기-김주혜
 function selectColor(psid, idx){
-	console.log("Aaaa");
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
 		$.ajax({
@@ -1934,17 +2034,31 @@ function selectColor(psid, idx){
 		success : function(data) {
 			console.log(data);
 			console.log(data.length);
+			console.log(idx);
 			var colchip="";
 			var colcode="";	
+			var colname="";
 			var tag="";
 			for(var i =0; i<data.length; i++){
 				colchip = data[i].pcchipimg;
 				colcode = data[i].pccolorcode;
-				tag += `<li><input type="radio" id="gl_rd_color_01_0`
+				colname = data[i].colorname;
+				tag += `<li`
+				tag += `><input type="radio" id="gl_rd_color_0`
+				tag += idx
+				tag += `_0`
 				tag += i+1
 				tag += `" name="gl_rd_color_0`
-				tag += i+1
-				tag += `" onclick="setOptions(this, '1', 'OB2C7KCD762WP2_ZB', 'style');"> <label for="gl_rd_color_01_0`
+				tag += idx
+				tag += `"`
+				tag += ` onclick="selcname('`
+				tag += colname
+				tag += `', '`
+				tag += idx
+				tag += `');"`
+				tag += `> <label for="gl_rd_color_0`
+				tag += idx
+				tag += `_0`
 				tag += i+1
 				tag += `"></label>`
 				tag += `<span class "gl_color_val" style="background:`
@@ -1954,8 +2068,6 @@ function selectColor(psid, idx){
 				tag += `')"></li>`
 			}
 			console.log(tag);
-			
-			
 			
 			$("#colorchip_" + idx).html(tag); 
 		
@@ -1967,6 +2079,16 @@ function selectColor(psid, idx){
 	});
 		
 }
+
+//색상 코드 뿌리기
+function selcname(colorname, idx){
+	var tag = "";
+	tag += `<span class="sct_v" id="cname">`
+	tag += colorname
+	tag += `</span>`
+	$("#colorname_" +idx).html(tag); 
+}
+
 function orderProduct(entryNumber) {
       
       console.log("주문하기 버튼 클릭");
@@ -2075,13 +2197,16 @@ la.confirmAction = function(){//확인 호출 펑션
 
 };
 }
-// 선택 상품 total price - 김주혜
+// 선택 상품 및 전체 상품 total price - 김주혜
 var totalcheckprice = 0;
-/*  $(".gl_chek_all").on('click', function(){
+/*var allproduct = $(".gl_check").find('#gl_check_'+""')
+ var allproduct = document.getElementById("totalprice").value;
+  $(".gl_chek_all").on('click', function(){
 	if($(this).prop("checked") == true) {
-		$("input[name='cartlist']").prop("checked") == true;
-	}else{
-		$("input[name='cartlist']").prop("checked") == false;
+		$('#checkprice').html(allproduct.toLocaleString());
+		$('#rcheckprice').html(allproduct.toLocaleString());
+		$('.btn_t_1').html(allproduct.toLocaleString());
+		
 	}
 })  */
 $("input[name='cartlist']").on('click', function(){
@@ -2107,5 +2232,16 @@ $("input[name='cartlist']").on('click', function(){
 		id="popAlertConfirmDiv"
 		style="left: 0px; position: fixed; top: 100.5px; z-index: 9999; opacity: 0; display: none;"></div>
 </body>
-<!-- This script is for AceCounter START -->
+
+<script>
+
+$(document).on("change",".sodsb",function(){
+    var selectedOption = $(this).find(':selected').text();
+    var pos = $(this).data('value');
+
+	    $(this).parent().find(".sod_label").text(selectedOption); 
+ 	    $("#updateCartForm"+pos).find("input[name='psize']").val(selectedOption);	 
+  }); 
+
+</script><!-- This script is for AceCounter START -->
 </html>

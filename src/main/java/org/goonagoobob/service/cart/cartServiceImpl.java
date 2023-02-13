@@ -12,6 +12,7 @@ import java.util.List;
 
 import org.goonagoobob.domain.cart.cartVO;
 import org.goonagoobob.domain.cart.cartcolorVO;
+import org.goonagoobob.domain.cart.cartsizeVO;
 import org.goonagoobob.mapper.cart.cartMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,5 +58,20 @@ public class cartServiceImpl implements cartService {
 		log.info("cartInsert service....");
 		
 		mapper.cartInsert(mid, psid, pquantity);
+	}
+	//카트 상품 색상별 사이즈
+	@Override
+	public List<cartsizeVO> sizeList(String mid, String psid){
+		log.info("sizeList Service...");
+		
+		List<cartsizeVO> sList = mapper.sizeList(mid, psid);
+		return sList;
+	}
+	//카트 옵션 변경
+	@Override
+	public void cartUpdate(String mid, String psid, String npsid, int pquantity, int npquantity) {
+		log.info("cartUpdate Service...");
+		
+		mapper.cartUpdate(mid, psid, npsid, pquantity, npquantity);
 	}
 }

@@ -7,11 +7,8 @@ import lombok.ToString;
 @ToString
 @Setter
 @Getter
-public class cartcolorVO {
-	private String pcchipimg;
-	private String pccolorcode;
-	private String pid;
-	private String colorname;
-	private String mid;	
+public class cartsizeVO {
+	private String psid;
 	private String pcid;
+	private String psize;
 }

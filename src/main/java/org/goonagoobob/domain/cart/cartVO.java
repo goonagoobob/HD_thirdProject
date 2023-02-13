@@ -30,6 +30,6 @@ public class cartVO {
 	private String psize;
 	private String pid;
 	private String colorname;
+	private String pcid;
 	
-	private List<cartcolorVO> colList;
 }
