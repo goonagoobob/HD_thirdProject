@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.goonagoobob.domain.member.memberAccount;
 import org.goonagoobob.domain.member.memberChangeInfo;
 import org.goonagoobob.domain.order.Criteria;
+import org.goonagoobob.security.service.Message;
 import org.goonagoobob.service.member.memberService;
 import org.goonagoobob.service.order.orderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -89,11 +91,11 @@ public class myPageController {
 	}
 	
 	@PostMapping("/checkPasswordForm")
-	public String checkPasswordForm(Principal principal, @RequestParam("j_password") String password) {
+	public String checkPasswordForm(Principal principal, @RequestParam("j_password") String password, Model model) {
 		System.out.println("@@@@@@@@password@@@@@@@@@" + password);
 		
 		String mid = principal.getName();
-		System.out.println("form에서 확잉을 해보쟝 " + password);
+		System.out.println("form에서 확인을 해보쟝 " + password);
 		
 		memberAccount mA = memberService.selectById(mid);
 		System.out.println("DB에 저장되어 있는 비밀번호 : " + mA.getMpassword());
@@ -104,11 +106,17 @@ public class myPageController {
 			return "redirect:/myPage/changeUserInfo";
 			//return "/myPage/changeUserInfo";
 		}
-		else System.out.println("불일치");
-		//확인 fail handler
-		
-		return null;
-		//return "myPage/checkPasswordForm";
+		else {
+			System.out.println("불일치");
+			String message = "비밀번호가 불일치합니다.";
+			String error = "true";
+			System.out.println(message);
+			System.out.println(error);
+			model.addAttribute("error" , error);
+			model.addAttribute("message" , message);
+			return "/myPage/checkPassword";
+		}
+
 	}
 	
 	
