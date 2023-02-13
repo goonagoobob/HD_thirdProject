@@ -61,8 +61,6 @@ public class securityConfig extends WebSecurityConfigurerAdapter {
 		// http.csrf().disable(); csrf 보안 설정 비활성화
 
 		http.authorizeHttpRequests()
-
-
 				.antMatchers("/member/join").permitAll()
 				.antMatchers("/memberRestAPI/joinMemberAccount").permitAll()
 				.antMatchers("/memberRestAPI/idDoubleCheck").permitAll()

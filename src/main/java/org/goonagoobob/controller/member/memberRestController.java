@@ -9,6 +9,8 @@
 
 package org.goonagoobob.controller.member;
 
+import java.util.ServiceConfigurationError;
+
 import javax.servlet.http.HttpServletResponse;
 
 import org.goonagoobob.domain.member.memberJoin;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.w3c.dom.css.ElementCSSInlineStyle;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -58,10 +61,11 @@ public class memberRestController {
 		
 		System.out.println(element);
 		String mid = element.get("mid").toString();
+		System.out.println(mid);
 		if(service.selectById(mid) == null) {
 			return 1;
 		}
-		
+		else if (mid.equals("")) return 0;
 		return 0;
 	}
 

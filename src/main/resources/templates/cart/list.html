@@ -1,3 +1,20 @@
+<!-- *********************************
+ * @function : 장바구니 목록 페이지
+ * @author : 김주혜
+ * 장바구니 목록 레이아웃 완성
+ * 장바구니 총 목록 개수와 선택 상품 개수 수정
+ * 컬러칩 변경 기능 추가
+ * 컬러칩 라디오버튼 고유 id 부여를 통해 중복 선택 수정
+ * 상품 수량 선택 가능 기능 추가
+ * 장바구니 선택 삭제 추가
+ * 장바구니에 담긴 상품 개별 삭제 기능 추가
+ * 장바구니 체크 버튼을 통해 선택한 상품의 총 가격 계산 기능 추가
+ * 옵션 +, - 버튼 무한 증가, 감소 수정
+ * 전체 체크 버튼 계산 기능 추가
+ * 사이즈 수정시 첫번째 버튼 안눌리는 오류 수정
+ * 상품 옵션 변경시 같은 상품 중복 수정
+ * url 연결
+ ********************************* -->
 <html lang="ko" class="back" xmlns:th="http://www.thymeleaf.org"
    xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
@@ -184,56 +201,6 @@ ACCMOB.config.CSRFToken = "c7173c07-0f23-459b-9438-53fe8ca983cf";
 </style>
 </head>
 <body class="back">
-	<script>
-//<!--  recoPick  START ---->	
-	var birthday = 'Fri May 29 00:00:00 UTC 1998';
-	var splitBirthday = birthday != '' ? birthday.split(" ")[5]: ''; //출생년도
-	var gender   = 'FEMALE';
-		gender   = 'F';      
-	(function(w,d,n,s,e,o) {
-		 w[n]=w[n]||function(){(w[n].q=w[n].q||[]).push(arguments)};
-		 e=d.createElement(s);e.async=1;e.charset='utf-8';e.src='//static.recopick.com/dist/production.min.js';
-		 o=d.getElementsByTagName(s)[0];o.parentNode.insertBefore(e,o);
-	 })(window, document, 'recoPick', 'script');
-			recoPick('service', 'thehandsome.com/ko/');   
-		var cookieUid = getCookie("searchUID");
-				if(cookieUid == false){
-
-				}else{
-						recoPick('setMID', cookieUid);
-						recoPick('setUserInfo',{ birthyear: splitBirthday , gender: gender});
-				}
-			var productMap   = new Map();
-			var productId    = '';
-			var tmpProductId = '';
-			var tmpQuntity   = '';
-						productId = "OB2C7KCD762WP2";
-						productMap.set(productId, '1');
-						tmpProductId = "OB2C7KCD762WP2";
-						if(typeof productMap.get(tmpProductId) != "undefined") {
-								tmpQuntity = parseInt(productMap.get(tmpProductId)) + parseInt('2');
-								productMap.set(tmpProductId, tmpQuntity);
-						}else {
-								productMap.set(tmpProductId, '2');
-						} 
-						productId = "OB2C7KCD762WP2";
-			var itemAarry = new Array();
-			for (var [key, value] of productMap) {
-					var itemInfo = new Object();
-					itemInfo.id = key ;
-					itemInfo.count = value;
-					itemAarry.push(itemInfo);
-			} 
-			try{
-					recoPick('sendLog','basket',itemAarry); // recoPick('sendLog','basket', {id:'상품id', count:상품개수});    
-			}catch(e) {
-					console.log(e);
-			}
-	//<!--  recoPick END -->
-	</script>
-	<script>
-	</script>
-
 	<link rel="stylesheet" type="text/css"
 		href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
 	<link rel="stylesheet" type="text/css"
@@ -255,17 +222,17 @@ ACCMOB.config.CSRFToken = "c7173c07-0f23-459b-9438-53fe8ca983cf";
 			<script type="text/javascript">
 	function goMainpage() {
 		window.sessionStorage.removeItem('moveYn');
-		location.href = "/ko/main";
+		location.href = "/";
 	}
 </script>
 			<!-- ################## header ################## -->
 			<header class="hsome_header">
 				<h1 class="h_ttl ellipsis" id="headerTitle">쇼핑백</h1>
-				<a href="http//localhost" class="h_top_home"><span>홈</span></a> <a
+				<a href="/" class="h_top_home"><span>홈</span></a> <a
 					href="javascript:noLink();" onclick="goBack();" class="h_prev">이전
 					페이지로 가기</a>
 				<ul class="h_gnbMenu">
-					<li class="cart"><a href="http://localhost/cart/list"
+					<li class="cart"><a href="/cart/list"
 						onclick="GA_Event('공통', '헤더', '쇼핑백');"><span>cart</span><i th:text="${list.size}"></i></a></li>
 				</ul>
 			</header>
@@ -291,198 +258,7 @@ if(typeof kakaoPixel !== 'undefined'){
 	kakaoPixel(kakaoTrackId).viewCart();
 }
 </script>
-<!-- 상품 선택 -->
-<script type="text/javascript">
 
-
-
-/* ======================================================================
-Function : 체크박스 선택시 가격 및 수량 정보 변경
-Return   : 
-========================================================================= */
-function checkboxSelect(prodCnt,priceVal){	
- if(prodCnt > 0){
-//		$('.gleb_order span').html("선택상품 주문하기");
-	$('.pymt_select_first').css("display" , "none");
-	$('.pymt_order_apply').css("display" , "block");
-	var cartDivision = $("#ordersheetCartDivision").val();
-	var btnNm = "";
-		btnNm = "선택상품 주문하기";
-	if(cartDivision == "athome"){
-		btnNm = "앳홈 신청하기";
-	}else{
-	}
-	$('#orderButtonGroup').html("<a href=\"javascript:checkoutPage('checkout');\" class='btnstl3 solid_btn_blk gleb_order'><span>"+btnNm+"</span></a>");
-	$('#oderBtn').html("<span class='btn_t_1'><b>"+addComma(priceVal)+"</b> 원</span><span class='btn_t_2'>주문하기</span>");
- }else{
-//		$('.gleb_order span').html("쇼핑계속하기");
-	$('.pymt_select_first').css("display" , "block");
-	$('.pymt_order_apply').css("display" , "none");
-	$('#orderButtonGroup').html("<a href='#none' class='btnstl3 solid_btn_blk gleb_order' onclick='continueUrl();'><span>쇼핑계속하기</span></a>");
- }
-}
-function cartListCheckPrice(entryPkList, only4pm) {
-if($.trim(entryPkList) == "") {
-	entryPkList = ",";
-}
-var cartDivision = $("#ordersheetCartDivision").val();
-if(only4pm == false) {
-	$("input[name='cartlist']").each(function(){
-		if($(this).prop("checked") == true
-										&& $(this).parents("#entryProductInfo").data("outofstock") != true) {
-			entryPkList += $(this).data("pk");
-			entryPkList += ",";
-		}
-	});
-}
-var selectProductCount = entryPkList.split(",").length -2; // ,로 시작해서 , 로 끝나므로 -2
-$("#selectProductCount").text(selectProductCount);
-console.log(entryPkList);
-}
-function checkTotalPrice(obj){
-	var isCartListCheckPrice = true;
-	if($("input:checkbox[name='cartlist']:checked:not(:disabled)").length > 0){
-		if($(obj).attr("data-division") == "store"){
-			if($(".tab_li_store").hasClass("on")){
-				//매장수령일 경우 동일한 브랜드 and 매장 만 체크box 처리
-				var targetIdx = $("input[name='cartlist']").index(obj);
-				var targetBrand = $(".gl_con_brand").eq(targetIdx).html();
-				var targetStore = $(".storePickupName").eq(targetIdx).html();
-				$("input:checkbox[name='cartlist']").each(function(idx){
-					if(targetIdx != idx){
-						var tempBrand = $(".gl_con_brand").eq(idx).html();
-						var tempStore = $(".storePickupName").eq(idx).html();
-						if(targetBrand != tempBrand || targetStore != tempStore){
-							$(this).prop("disabled", true);
-							$(this).prop("checked", false);
-						}
-					}
-				});
-			}
-		} else if($(obj).attr("data-division") == "athome"){
-			if($(".tab_li_athome").hasClass("on")){
-				if($("input:checkbox[name='cartlist']:checked").length > 3){
-					layerAlert('앳홈은 3개 상품 까지만 주문이 가능합니다.');
-					$(obj).prop("checked", false);
-					isCartListCheckPrice = false;
-				}
-			}
-		}
-	}else{
-		if($("#ordersheetCartDivision").val() != ""){
-						$("input[name='cartlist']").each(function(){
-								if ($(this).parents("#entryProductInfo").data("outofstock") != true) {
-										$(this).prop("disabled", false);
-								}
-						})
-		}
-	}
-	if(isCartListCheckPrice){
-			cartListCheckPrice(",", false);
-	}else{
-			return false;
-	}
-}
-function ReqRewarehousing(productcode, layer) {
-getWarehousingPage(productcode, layer);
-return false;
-}
-</script>
-					<script type="text/javascript">
-$(document).ready(function(){
-// 	checkBoxCheckActive('goods_list_wrap'); //상품리스트 체크박스 체크유무 활성화
-	var athomeAlertYn = "";
-	var todayDate = new Date();
-	var startDate1 = new Date('2021/02/23 00:00:00'), endDate1 = new Date('2021/03/12 08:59:59');
-	if (todayDate.getTime() >= startDate1.getTime() && todayDate.getTime() <= endDate1.getTime()) {
-			if(athomeAlertYn == "true"){
-					var la = new layerAlert("앳홈 딜리버리 서비스가 <br>'한섬 케어 플러스(앳홈 클리닝 서비스)'로 <br> 변경 됨에 따라 기존 쇼핑백 내 [앳홈]에 <br> 담아 두셨던 상품은[택배]로 이동하였습니다.<br> 택배 탭을 확인해 주세요.");
-			}
-	}
-$('.goods_list_wrap').on('click', '.gl_top_btns a', function(){ //상품 리스트 상단 버튼
-	if($(this).hasClass("btn_gl_restock") == false){
-		$(this).toggleClass('icon_btn_on');
-	}
-});
-var prevSelectEntry = ",";
-	$(document).on("click", '#onlyFourPm', function(){
-		var checked = $(this).prop("checked");
-		var entryPkList = ",";
-	$(".gl_item").each(function(){
-		if(checked == false) {
-			$($(this).find("input[type='checkbox']")).each(function(){
-				// 체크되있던거
-				var checkTempPk = "," + $(this).data("pk") + ",";
-				if(prevSelectEntry.indexOf(checkTempPk) > -1) {
-					$(this).prop("checked", true);
-				}
-			});
-			if($(this).find("input[type='checkbox']").prop("checked") == true){
-				entryPkList += $(this).data("pk");
-				entryPkList += ",";
-			}
-			$(this).show();
-		} else {
-			$($(this).find("input[type='checkbox']")).each(function(){
-				if($(this).prop("checked") == true) {
-					prevSelectEntry += $(this).data("pk") + ","; // 체크되있던거
-				}
-			});
-			var deliveryKind = $(this).data("deliverykind");
-			if(deliveryKind == "FOUR_PM") {
-				if($(this).find("input[type='checkbox']").prop("checked") == true){
-					entryPkList += $(this).data("pk");
-					entryPkList += ",";
-				}
-			} else {
-				$($(this).find("input[type='checkbox']")).each(function(){
-					$(this).prop("checked", false);
-				});
-				
-				var outofstock = $(this).data("outofstock");
-				if(outofstock == false) {
-					$(this).hide();	
-				}
-			}
-		}
-	});
-	if(checked == false) {
-		prevSelectEntry = ","; // 초기화
-	}
-		cartListCheckPrice(entryPkList, true);
-	});
-//<!-- 2019.11.12 쇼핑백 최초 진입 시 선택 상품 없도록 수정 - 하단 합계 금액 계산 -->
-$('.gl_check_all').click(function(){
-		var cartDivision = $("#ordersheetCartDivision").val();	    
-		var onlyFourPm = $("#onlyFourPm").is(':checked');
-		
-		if($(this).is(":checked") == true){
-				var entryPkList = ",";
-					$("input[name='cartlist']").each(function(){
-							if ($(this).parents("#entryProductInfo").data("outofstock") != true) 
-							{
-									var deliveryKind = $(this).data("deliverykind");
-									if(onlyFourPm){
-											if(deliveryKind == "FOUR_PM") {
-													entryPkList += $(this).data("pk");
-									entryPkList += ",";
-											}
-									}else{
-											entryPkList += $(this).data("pk");
-							entryPkList += ",";
-									}
-							}
-		});
-				cartListCheckPrice(entryPkList, true);
-		}else{
-				cartListCheckPrice(',', true);
-		}
-});
-});
-function continueUrl() {
-location.href="/ko/";
-}
-// </script>
 					<!-- goods_list s -->
 					<h3 class="section_tit mb0 gl_tit gl_4pm">
 						<div class="check_stl gl_check_all_wrap">
@@ -1482,19 +1258,7 @@ function getCSRFToken(){
 </script>
 	<div id="iframepopuparea"></div>
 	<script type="text/javascript">
-/*
-layer popup 형식의 alert 창
 
-========================[example code]===========================
-layerAlert('메세지를 입력하세요');
-
-var lc = new layerAlert('입력하신 정보가 변경완료 되었습니다.');
-lc.confirmAction = function(){
-	//alert화면 실행후 후속 처리 부분 추가
-	location.href="/ko/mypage/order/myorders";
-};
-=============================================================
-*/
 var btnConfirmText = "확인";
 var btnCancleText = "취소";
 var btnCloseText = "닫기";
@@ -1534,17 +1298,7 @@ $("#popAlertConfirmDiv").find('.btn-alert-confirm').click(function(){
 	t.confirmAction();
 });
 };
-/*
-layer popup 형식의 alert 창 변형 -> 팝업창에서의 팝업창일 때 확인 누르거나 X 눌렀을 때 holdBodyHide();를 타면서 Gnb가 나타나는 현상 때문에 layerAlertGnb로 하나 추가하여
-refresh 변수 제거, onClose function 제거
 
-========================[example code]===========================
-layerAlertGnb('메세지를 입력하세요');
-
-var la = new layerAlertGnb('입력하신 정보가 변경완료 되었습니다.');
-
-=============================================================
-*/
 var layerAlertGnb = function(msg){
 btnConfirmText = "확인";
 var t = this;
@@ -1577,15 +1331,7 @@ $("#popAlertConfirmDiv").find('.btn-alert-confirm').click(function(){
 	t.confirmAction();
 });
 };
-/*
-layer popup 형식의 confirm 창
-========================[example code]===========================
-var lc = new layerConfirm('메세지를 입력하세요', '확인버튼', '취소버튼');
-lc.confirmAction = function(){
-	console.log('재정의한 함수입니다.');
-};
-=============================================================
-*/
+
 var layerConfirm = function(msg, confirmMsg, cancleMsg){
 var t = this;
 
@@ -2223,23 +1969,28 @@ la.confirmAction = function(){//확인 호출 펑션
 // 선택 상품 total price - 김주혜
 var totalcheckprice = 0;
 var allproduct = 0;
+var selcount = 0;
  $(".gl_check_all").on('click', function(){
  	if($(this).prop("checked") == true) {
 		$("input[name='cartlist']").each(function(){
 			var tchkprice = $(this).data("pcprice");
 			var tchkpquantity = $(this).data("pquantity");
+			selcount ++;
 			allproduct += tchkprice * tchkpquantity;
 			totalcheckprice = allproduct;
 		});
 		$('#checkprice').html(allproduct.toLocaleString());
 		$('#rcheckprice').html(allproduct.toLocaleString());
 		$('.btn_t_1').html(allproduct.toLocaleString());
+		$('#selectProductCount').html(selcount);
  	}else{
  		allproduct = 0;
+ 		selcount = 0;
  		totalcheckprice = allproduct;
 		$('#checkprice').html(allproduct.toLocaleString());
 		$('#rcheckprice').html(allproduct.toLocaleString());
 		$('.btn_t_1').html(allproduct.toLocaleString());
+		$('#selectProductCount').html(selcount);
  	}
 }); 
 
@@ -2249,17 +2000,21 @@ $("input[name='cartlist']").on('click', function(){
 			var chkprice = $(this).prev().attr('value');
 			totalcheckprice += chkquantity * chkprice;
 			allproduct = totalcheckprice;
+			selcount ++;
 			$('#checkprice').html(allproduct.toLocaleString());
 			$('#rcheckprice').html(allproduct.toLocaleString());
 			$('.btn_t_1').html(allproduct.toLocaleString());
+			$('#selectProductCount').html(selcount);
 		}else{ 
 			var chkquantity = $(this).prev().prev().attr('value');
 			var chkprice = $(this).prev().attr('value');
 			totalcheckprice -=  chkquantity * chkprice;
 			allproduct =  totalcheckprice;
+			selcount --;
 			$('#checkprice').html(allproduct.toLocaleString());
 			$('#rcheckprice').html(allproduct.toLocaleString());
 			$('.btn_t_1').html(allproduct.toLocaleString());
+			$('#selectProductCount').html(selcount);
 		}
 	});
 </script>
