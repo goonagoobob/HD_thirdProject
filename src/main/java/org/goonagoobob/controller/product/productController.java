@@ -5,6 +5,9 @@
  * 상품 상세 Controller 추가 Feb 6. 2023
  * 상품 컬러 변경 기능 추가 Feb 7. 2023
  * 상품 카테고리 리스트 호출 Feb 10. 2023
+ * 상품 리스트 호출 Feb 11. 2023
+ * 메인 호출 Feb 12. 2023
+ * 상품 상세 리뷰 호출 Feb 13. 2023
  *********************************/
 
 package org.goonagoobob.controller.product;
@@ -34,7 +37,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class productController {
 	@Autowired
 	private productService service;
-
+	//상품 리스트 카테고리 별 페이징 별 호
 	@GetMapping("/productList")
 	public void ProductList(@RequestParam(value = "brand", required = false) String brand,
 			@RequestParam(value = "depth1", required = false) String depth1,
@@ -107,7 +110,7 @@ public class productController {
 		}
 
 	}
-
+	//상품 목록 추가 호출 
 	@GetMapping("/productListMore")
 	@ResponseBody
 	public List<productCommonVO> ProductListMore(@RequestParam(value = "brand", required = false) String brand,
@@ -133,7 +136,7 @@ public class productController {
 		System.out.println(VOList);
 		return VOList;
 	}
-
+	//상품 상세 호출 
 	@GetMapping("/productDetail")
 	public void Productdetail(@RequestParam(value = "pid", required = false) String pid,
 			@RequestParam(value = "pcid", required = false) String pcid, Model model, Principal principal) {
@@ -149,7 +152,7 @@ public class productController {
 		model.addAttribute("reviewVO", reviewvoList);
 		model.addAttribute("pcid", pcid);
 	}
-
+	//상품상세 컬러 동적 변
 	@GetMapping("/colorChg")
 	@ResponseBody
 	public productColorVO colorChg(@RequestParam(value = "pcid", required = false) String pcid) {
@@ -158,14 +161,14 @@ public class productController {
 		System.out.println(vo);
 		return vo;
 	}
-
+	//상품 브랜드 카테고리 호출 
 	@GetMapping("/getBrdCtgr")
 	@ResponseBody
 	public List<brandVO> getBrdCtgr() {
 		List<brandVO> vo = service.getBrd();
 		return vo;
 	}
-
+	//상품 브랜드 제외 카테고리 호
 	@GetMapping("/getCtgr")
 	@ResponseBody
 	public List<depth1VO> getCtgr() {
@@ -173,19 +176,17 @@ public class productController {
 		System.out.println(vo);
 		return vo;
 	}
-
+	//메인 호출 
 	@GetMapping("/main1")
 	public void getdsdsCtgr(Model model) {
 		List<productCommonVO> newVO = service.getNewList();
 		List<productCommonVO> bestVO = service.getBestList();
 		int newCount = service.newCount();
-		System.out.println(newVO);
-		System.out.println(bestVO);
 		model.addAttribute("bestVO", bestVO);
 		model.addAttribute("newVO", newVO);
 		model.addAttribute("newCount", newCount);
 	}
-
+	//리뷰 등록 
 	@PostMapping("/reviewAdd")
 	public String reviewAdd(Principal principal,
 			@RequestParam(value = "age", required = false, defaultValue = "미 기입") String age,
