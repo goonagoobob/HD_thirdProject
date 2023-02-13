@@ -1,3 +1,11 @@
+
+/*********************************
+ * @function : 사용자 정보 인터페이스 구현
+ * @author : 이세은
+ * @Date : Feb 1. 2023
+ * 
+ *********************************/
+
 package org.goonagoobob.security.service;
 
 import java.util.ArrayList;

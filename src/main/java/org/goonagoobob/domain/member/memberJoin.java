@@ -1,5 +1,12 @@
-package org.goonagoobob.domain.member;
 
+/*********************************
+ * @function : 회원가입정보 VO
+ * @author : 이세은
+ * @Date : Jan 30. 2023
+ * 
+ *********************************/
+
+package org.goonagoobob.domain.member;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;

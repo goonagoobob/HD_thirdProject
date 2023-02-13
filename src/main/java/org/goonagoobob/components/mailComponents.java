@@ -1,5 +1,12 @@
-package org.goonagoobob.components;
+/*********************************
+ * @function : 메일 보내기
+ * @author : 이세은
+ * @Date : Feb 11. 2023.
+ * 임시 비밀번호 메일 보내기 Feb 11. 2023
+ *********************************/
 
+package org.goonagoobob.components;
+ 
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;

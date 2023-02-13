@@ -1,3 +1,11 @@
+
+/*********************************
+ * @function : 로그인 실패 핸들러
+ * @author : 이세은
+ * @Date : Feb 12. 2023
+ * 
+ *********************************/
+
 package org.goonagoobob.security.handler;
 
 import java.io.IOException;

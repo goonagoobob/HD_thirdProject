@@ -1,3 +1,11 @@
+
+/*********************************
+ * @function : 회원 Service 구현
+ * @author : 이세은
+ * @Date : Feb 12. 2023
+ * 
+ *********************************/
+
 package org.goonagoobob.service.member;
 
 import org.goonagoobob.domain.member.memberAccount;

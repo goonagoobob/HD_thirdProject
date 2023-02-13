@@ -1,15 +1,675 @@
-<html xmlns:th="http://www.thymeleaf.org" 
-xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-	
+<!-- *********************************
+ * @function : 회원가입
+ * @author : 이세은
+ * @Date : Feb 13. 2023
+ * 회원가입 레이아웃 완성 Feb 1. 2023
+ * 유효성 검증 Feb 9. 2023
+ * 회원가입 기능 완료 및 알림창 띄우기 Feb 13. 2023
+ ********************************* -->
+
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
 <!-- <title>회원정보입력폼 | 더한섬닷컴</title> -->
 <title></title>
 <!-- <meta name="_csrf" th:content="${_csrf?.token}" th:if="${_csrf} ne null"> -->
-<meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
-<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+<meta id="_csrf" name="_csrf" th:content="${_csrf.token}" />
+<meta id="_csrf_header" name="_csrf_header"
+	th:content="${_csrf.headerName}" />
+
+
+
+
+<script type="text/javascript">
+	/*
+	layer popup 형식의 alert 창
+
+	========================[example code]===========================
+	layerAlert('메세지를 입력하세요');
+	
+	var lc = new layerAlert('입력하신 정보가 변경완료 되었습니다.');
+	lc.confirmAction = function(){
+	//alert화면 실행후 후속 처리 부분 추가
+	location.href="/ko/mypage/order/myorders";
+	};
+	=============================================================
+	 */
+
+	var btnConfirmText = "확인";
+	var btnCancleText = "취소";
+	var btnCloseText = "닫기";
+	var layerAlert = function(msg, refresh) {
+		btnConfirmText = "확인";
+		var t = this;
+		this.confirmAction = function() {
+			//console.log('함수를 재정의 해주세요!');
+		};
+
+		var alertTag = "";
+		alertTag += '<div class="dvp_container">';
+		alertTag += '   <div class="dvp_close_btn b-close" id="alertCloseDiv"><span>'
+				+ btnCloseText + "</span></div>";
+		alertTag += '   <h1 class="dvp_header"></h1>';
+		alertTag += '   <div class="dvp_content">';
+		alertTag += '      <div class="desc_box">' + msg + "</div>";
+		alertTag += "   </div>";
+		alertTag += '   <div class="btn_wrap">';
+		alertTag += '      <button class="btn btn_bg_b btn-alert-confirm">'
+				+ btnConfirmText + "</button>";
+		alertTag += "   </div>";
+		alertTag += "</div>";
+
+		$("#popAlertConfirmDiv").html(alertTag);
+
+		$(".divpop_wrap_dev.pop_alert_confirm").bPopup({
+			follow : [ false, false ],
+			escClose : false,
+			modalClose : false,
+			opacity : 0.3,
+			positionStyle : "fixed",
+			onClose : function() {
+				holdBodyHide();
+				$("#popAlertConfirmDiv").html("");
+			},
+		});
+		holdBodyShow();
+
+		$("#popAlertConfirmDiv").find(".btn-alert-confirm").click(function() {
+			if (refresh == true)
+				location.reload();
+			$("#alertCloseDiv").click();
+			t.confirmAction();
+		});
+	};
+
+	/*
+	layer popup 형식의 alert 창 변형 -> 팝업창에서의 팝업창일 때 확인 누르거나 X 눌렀을 때 holdBodyHide();를 타면서 Gnb가 나타나는 현상 때문에 layerAlertGnb로 하나 추가하여
+	refresh 변수 제거, onClose function 제거
+
+	========================[example code]===========================
+	layerAlertGnb('메세지를 입력하세요');
+	
+	var la = new layerAlertGnb('입력하신 정보가 변경완료 되었습니다.');
+	
+	=============================================================
+	 */
+	var layerAlertGnb = function(msg) {
+		btnConfirmText = "확인";
+		var t = this;
+		this.confirmAction = function() {
+			//console.log('함수를 재정의 해주세요!');
+		};
+
+		var alertTag = "";
+		alertTag += '<div class="dvp_container">';
+		alertTag += '   <div class="dvp_close_btn b-close" id="alertCloseDiv"><span>'
+				+ btnCloseText + "</span></div>";
+		alertTag += '   <h1 class="dvp_header"></h1>';
+		alertTag += '   <div class="dvp_content">';
+		alertTag += '      <div class="desc_box">' + msg + "</div>";
+		alertTag += "   </div>";
+		alertTag += '   <div class="btn_wrap">';
+		alertTag += '      <button class="btn btn_bg_b btn-alert-confirm">'
+				+ btnConfirmText + "</button>";
+		alertTag += "   </div>";
+		alertTag += "</div>";
+
+		$("#popAlertConfirmDiv").html(alertTag);
+
+		$(".divpop_wrap_dev.pop_alert_confirm").bPopup({
+			follow : [ false, false ],
+			escClose : false,
+			modalClose : false,
+			opacity : 0.3,
+			positionStyle : "fixed",
+		/* onClose: function() { 
+		 holdBodyHide();
+		 $("#popAlertConfirmDiv").html("");
+		} *///body 클래스 scroll 상태 유지
+		});
+		holdBodyShow();
+
+		$("#popAlertConfirmDiv").find(".btn-alert-confirm").click(function() {
+			//if(refresh==true) location.reload(); //refresh check 제거
+			$("#alertCloseDiv").click();
+			t.confirmAction();
+		});
+	};
+
+	/*
+	layer popup 형식의 confirm 창
+
+
+
+	========================[example code]===========================
+
+	var lc = new layerConfirm('메세지를 입력하세요', '확인버튼', '취소버튼');
+	lc.confirmAction = function(){
+	console.log('재정의한 함수입니다.');
+	};
+
+	=============================================================
+
+	 */
+	var layerConfirm = function(msg, confirmMsg, cancleMsg) {
+		var t = this;
+
+		var t = this;
+		this.confirmAction = function() {
+			//console.log('함수를 재정의 해주세요!');
+		};
+		this.cancleAction = function() {
+			//console.log('함수를 재정의 해주세요!');
+		};
+
+		if (confirmMsg != "") {
+			btnConfirmText = confirmMsg;
+		} else {
+			btnConfirmText = "확인";
+		}
+		if (cancleMsg != "") {
+			btnCancleText = cancleMsg;
+		} else {
+			btnCancleText = "취소";
+		}
+
+		var confirmTag = "";
+		confirmTag += '<div class="dvp_container">';
+		confirmTag += '   <div class="dvp_close_btn b-close" id="confirmCloseDiv"><span>'
+				+ btnCloseText + "</span></div>";
+		confirmTag += '   <div class="dvp_content">';
+		confirmTag += '      <div class="desc_box">' + msg + "</div>";
+		confirmTag += "   </div>";
+		confirmTag += '   <div class="btn_wrap btns">';
+		confirmTag += '      <button class="btn btn_bd_g btn-alert-close">'
+				+ btnCancleText + "</button>";
+		confirmTag += '      <button class="btn btn_bg_b btn-alert-confirm">'
+				+ btnConfirmText + "</button>";
+		confirmTag += "   </div>";
+		confirmTag += "</div>";
+
+		$("#popAlertConfirmDiv").html(confirmTag);
+
+		$(".divpop_wrap_dev.pop_alert_confirm").bPopup({
+			follow : [ false, false ],
+			escClose : false,
+			modalClose : false,
+			opacity : 0.3,
+			positionStyle : "fixed",
+			onClose : function() {
+				holdBodyHide();
+				$("#popAlertConfirmDiv").html("");
+			},
+		});
+		holdBodyShow();
+
+		$("#popAlertConfirmDiv").find(".btn-alert-close").click(function() {
+			$("#confirmCloseDiv").click();
+			t.cancleAction();
+		});
+
+		$("#popAlertConfirmDiv").find(".btn-alert-confirm").click(function() {
+			$("#confirmCloseDiv").click();
+			t.confirmAction();
+		});
+	};
+
+	/*
+	layer popup 형식의 confirm 창
+	특정 ios 기종에서 하단 버튼부분이 짤려나오는 현상이 있어서 ios용으로 별도 생성
+	 */
+	var layerConfirmIos = function(msg, confirmMsg, cancleMsg) {
+		var t = this;
+
+		var t = this;
+		this.confirmAction = function() {
+			//console.log('함수를 재정의 해주세요!');
+		};
+		this.cancleAction = function() {
+			//console.log('함수를 재정의 해주세요!');
+		};
+
+		if (confirmMsg != "") {
+			btnConfirmText = confirmMsg;
+		} else {
+			btnConfirmText = "확인";
+		}
+		if (cancleMsg != "") {
+			btnCancleText = cancleMsg;
+		} else {
+			btnCancleText = "취소";
+		}
+
+		var confirmTag = "";
+		confirmTag += '<div class="dvp_container">';
+		confirmTag += ' <div class="dvp_close_btn b-close" id="confirmCloseDiv"><span>'
+				+ btnCloseText + "</span></div>";
+		confirmTag += ' <div class="dvp_content">';
+		confirmTag += ' <div class="desc_box">' + msg + "</div>";
+		confirmTag += " </div>";
+		confirmTag += ' <div class="btn_wrap btns">';
+		confirmTag += ' <button class="btn btn_bd_g btn-alert-close">'
+				+ btnCancleText + "</button>";
+		confirmTag += ' <button class="btn btn_bg_b btn-alert-confirm">'
+				+ btnConfirmText + "</button>";
+		confirmTag += " </div>";
+		confirmTag += "</div>";
+
+		$("#popAlertConfirmDiv").html(confirmTag);
+
+		$(".divpop_wrap_dev.pop_alert_confirm").bPopup({
+			follow : [ false, false ],
+			escClose : false,
+			modalClose : false,
+			opacity : 0.3,
+			positionStyle : "fixed",
+			onClose : function() {
+				holdBodyHide();
+				$("#popAlertConfirmDiv").html("");
+			},
+		});
+		$(".divpop_wrap_dev.pop_alert_confirm").css({
+			top : "50%",
+			margin : "0",
+			transform : "translate3d(0, -50%, 0)",
+		});
+		holdBodyShow();
+
+		$("#popAlertConfirmDiv").find(".btn-alert-close").click(function() {
+			$("#confirmCloseDiv").click();
+			t.cancleAction();
+		});
+
+		$("#popAlertConfirmDiv").find(".btn-alert-confirm").click(function() {
+			$("#confirmCloseDiv").click();
+			t.confirmAction();
+		});
+	};
+
+	/*
+	 * var lc = new layerConfirm2('메세지를 입력하세요', '취소버튼', '확인버튼');
+	 */
+	var layerConfirm2 = function(msg, confirmMsg, cancleMsg) {
+		var t = this;
+
+		var t = this;
+		this.confirmAction = function() {
+			//console.log('함수를 재정의 해주세요!');
+		};
+		this.cancleAction = function() {
+			//console.log('함수를 재정의 해주세요!');
+		};
+
+		if (confirmMsg != "") {
+			btnConfirmText = confirmMsg;
+		} else {
+			btnConfirmText = "확인";
+		}
+		if (cancleMsg != "") {
+			btnCancleText = cancleMsg;
+		} else {
+			btnCancleText = "취소";
+		}
+
+		var confirmTag = "";
+		confirmTag += '<div class="dvp_container">';
+		confirmTag += ' <div class="dvp_close_btn b-close" id="confirmCloseDiv"><span>'
+				+ btnCloseText + "</span></div>";
+		confirmTag += ' <div class="dvp_content">';
+		confirmTag += '     <div class="desc_box">' + msg + "</div>";
+		confirmTag += " </div>";
+		confirmTag += ' <div class="btn_wrap btns">';
+		confirmTag += '     <button class="btn btn_bg_b btn-alert-confirm">'
+				+ btnConfirmText + "</button>";
+		confirmTag += '     <button class="btn btn_bd_g btn-alert-close">'
+				+ btnCancleText + "</button>";
+		confirmTag += " </div>";
+		confirmTag += "</div>";
+
+		$("#popAlertConfirmDiv").html(confirmTag);
+
+		$(".divpop_wrap_dev.pop_alert_confirm").bPopup({
+			follow : [ false, false ],
+			escClose : false,
+			modalClose : false,
+			opacity : 0.3,
+			positionStyle : "fixed",
+			onClose : function() {
+				holdBodyHide();
+				$("#popAlertConfirmDiv").html("");
+			},
+		});
+		holdBodyShow();
+
+		$("#popAlertConfirmDiv").find(".btn-alert-close").click(function() {
+			$("#confirmCloseDiv").click();
+			t.cancleAction();
+		});
+
+		$("#popAlertConfirmDiv").find(".btn-alert-confirm").click(function() {
+			$("#confirmCloseDiv").click();
+			t.confirmAction();
+		});
+	};
+
+	var editableLayer = function(msg, style, refresh) {
+		btnConfirmText = "확인";
+		var t = this;
+		this.confirmAction = function() {
+			//console.log('함수를 재정의 해주세요!');
+		};
+
+		var alertTag = "";
+		alertTag += '<div class="dvp_container" style="' + style + '">';
+		alertTag += '   <div class="dvp_close_btn b-close" id="alertCloseDiv"><span>'
+				+ btnCloseText + "</span></div>";
+		alertTag += '   <h1 class="dvp_header"></h1>';
+		alertTag += '   <div class="dvp_content" style="margin-top: -21px;">';
+		alertTag += '       <div class="desc_box">' + msg + "</div>";
+		alertTag += "   </div>";
+		alertTag += '   <div class="btn_wrap" style="margin-top: 0px;">';
+		alertTag += '       <button class="btn btn_bg_b btn-alert-confirm">'
+				+ btnConfirmText + "</button>";
+		alertTag += "   </div>";
+		alertTag += "</div>";
+
+		$("#popAlertConfirmDiv").html(alertTag);
+
+		$(".divpop_wrap_dev.pop_alert_confirm").bPopup({
+			follow : [ false, false ],
+			escClose : false,
+			modalClose : false,
+			opacity : 0.3,
+			positionStyle : "fixed",
+			onClose : function() {
+				holdBodyHide();
+				$("#popAlertConfirmDiv").html("");
+			},
+		});
+		holdBodyShow();
+
+		$("#popAlertConfirmDiv").find(".btn-alert-confirm").click(function() {
+			if (refresh == true)
+				location.reload();
+			$("#alertCloseDiv").click();
+		});
+		$("#alertCloseDiv").click(function() {
+			t.confirmAction();
+		});
+	};
+
+	/*
+	 * 챗봇 관련 스크립트
+	 */
+	// 앱이 백그라운도 들어 갈 때에
+	//function  appWillEnterBackground() {
+	//    alert("enter background");
+	//
+	//}
+	// 앱이 포어그라운드로 들어갈 때에
+	//function appDidEnterForground() {
+	//    alert("enter foreground");
+	//
+	//}
+	// 챗봇의 푸시링크를 클릭했을 때
+	function openChatView(token, talkId) {
+		callChatbot(token, talkId);
+	}
+
+	function callChatbot(token, talkId) {
+		if (token == null) {
+			$.ajax({
+				type : "POST",
+				url : "/ko/chatbot/token",
+				data : {
+					CSRFToken : "5d3ab883-9783-4f6b-8b09-d945f1672ad6"
+				},
+				async : false,
+				success : function(data) {
+					if (data.result == "SHOULD_LOGIN") {
+						var la = new layerAlert("로그인이 필요합니다");
+						la.confirmAction = function() {
+							//확인 버튼 클릭시 추가 호출 펑션
+							location.href = "/ko/member/login";
+						};
+					} else if (data.result == "NOT_VIP") {
+						var la = new layerAlert("VVIP 회원님만 이용 가능하십니다");
+						la.confirmAction = function() {
+							//확인 버튼 클릭시 추가 호출 펑션
+						};
+					} else if (data.result == "OFF-HOURS") {
+						//일반 : CREW, FRIEND, 간편회원일경우, 평일 오전 9시 30분 ~ 오후 6시 30분만 사용가능
+						var la = new layerAlert(
+								"채팅상담 서비스는 평일 오전 9시 ~ 오후 6시에 이용 가능하십니다.");
+						la.confirmAction = function() {
+							//확인 버튼 클릭시 추가 호출 펑션
+						};
+					} else {
+						if (data.token != "") {
+							token = data.token;
+						}
+					}
+				},
+				error : function(e) {
+				},
+			});
+		}
+
+		if (token != null && token != "") {
+			try {
+				ga("gp.send", "pageview", {
+					title : "하니톡_채팅서비스", //가상페이지 화면명
+					location : "http://www.thehandsome.com/ko/hanitalk", //가상페이지URL
+				});
+			} catch (e) {
+				console.log(e);
+			}
+			$("#chatbot_token").val(token);
+			$("#chatbot_talkId").val(talkId);
+
+			var targetTalkUrl = "";
+			if (location.href.indexOf("www.thehandsome.com") > -1) {
+				//운영
+				//운영 챗봇 url
+				targetTalkUrl = "https://talk.thehandsome.com/front/v1/jsp/view/chat.jsp";
+			} else {
+				//그외
+				//개발 챗봇 url
+				targetTalkUrl = "https://handsome-dev.enomix.co.kr/front/v1/jsp/view/chat.jsp";
+			}
+
+			$("#chatbotForm").attr("action", targetTalkUrl);
+
+			$("#chatbotForm").submit();
+		}
+		return false;
+	}
+	/*
+	 * // 챗봇 관련 스크립트
+	 */
+
+	function updateLocation() {
+		$.ajax({
+			type : "POST",
+			url : "/ko/mobilecommon/updateLocation",
+			datatype : "json",
+			data : {
+				CSRFToken : "5d3ab883-9783-4f6b-8b09-d945f1672ad6",
+				provideLocationYN : $("#isChcked").val()
+			},
+			error : function(request, status, error) {
+				//          console.log( "code:" + request.status+"\n\n\n\n" + "message:" + request.responseText+"\n\n\n\n" + "error:" + error );
+			},
+			success : function(result) {
+				if (result == "SUCCESS") {
+				}
+			},
+		});
+	}
+
+	function updatePush() {
+		$.ajax({
+			type : "POST",
+			url : "/ko/mobilecommon/updatePush",
+			datatype : "json",
+			data : {
+				CSRFToken : "5d3ab883-9783-4f6b-8b09-d945f1672ad6",
+				pushCd : $("#pushCd").val(),
+				pushVal : $("#pushVal").val()
+			},
+			error : function(request, status, error) {
+				//          console.log( "code:" + request.status+"\n\n\n\n" + "message:" + request.responseText+"\n\n\n\n" + "error:" + error );
+			},
+			success : function(result) {
+				if (result == "SUCCESS") {
+				}
+			},
+		});
+	}
+
+	function AppCallLocation(result) {
+		$("#isChcked").val(result);
+		updateLocation();
+	}
+
+	function AppCallPushAll(result) {
+		$("#pushCd").val("all");
+		$("#pushVal").val(result);
+		updatePush();
+	}
+
+	function AppCallPushOrder(result) {
+		$("#pushCd").val("order");
+		$("#pushVal").val(result);
+		updatePush();
+	}
+
+	function AppCallPushEvent(result) {
+		$("#pushCd").val("event");
+		$("#pushVal").val(result);
+		updatePush();
+	}
+
+	function AppCallPushBenefit(result) {
+		$("#pushCd").val("benefit");
+		$("#pushVal").val(result);
+		updatePush();
+	}
+
+	function AppCallPushSilent(result) {
+		$("#pushCd").val("silent");
+		$("#pushVal").val(result);
+		updatePush();
+	}
+
+	function gpsAllowAndroid() {
+		// 가까운 매장순 탭 이동 및 리스트 호출
+		if ("joinInfoFormPage" == "hsProductDetailPage") {
+			if (appYn == "Y") {
+				Android.getLocation();
+
+				$(".sort_tab li").removeClass("on");
+				$(".sort_tab li").eq(0).addClass("on");
+				setTimeout(function() {
+					searchStore(1);
+				}, 500);
+			}
+		} else if ("joinInfoFormPage" == "content1Page") {
+			if (appYn == "Y") {
+				Android.getLocation();
+
+				$(".sort_tab li").removeClass("on");
+				$(".sort_tab li").eq(0).addClass("on");
+				setTimeout(function() {
+					searchStore(1);
+				}, 500);
+			}
+		}
+	}
+
+	function gpsAlertExitAndroid() {
+		// 재고 많은순 탭 선택
+		if ("joinInfoFormPage" == "hsProductDetailPage") {
+			if (appYn == "Y") {
+				$(".sort_tab li").removeClass("on");
+				$(".sort_tab li").eq(1).addClass("on");
+			}
+		} else if ("joinInfoFormPage" == "content1Page") {
+			if (appYn == "Y") {
+				$(".sort_tab li").removeClass("on");
+				$(".sort_tab li").eq(1).addClass("on");
+			}
+		}
+	}
+
+	function gpsAlertOkAndroid() {
+		// 재고 많은순 탭 선택
+		if ("joinInfoFormPage" == "hsProductDetailPage") {
+			if (appYn == "Y") {
+				$(".sort_tab li").removeClass("on");
+				$(".sort_tab li").eq(1).addClass("on");
+			}
+		} else if ("joinInfoFormPage" == "content1Page") {
+			if (appYn == "Y") {
+				$(".sort_tab li").removeClass("on");
+				$(".sort_tab li").eq(1).addClass("on");
+			}
+		}
+	}
+
+	function gpsAlertExitIOS() {
+		// 재고 많은순 탭 선택
+		if ("joinInfoFormPage" == "hsProductDetailPage") {
+			if (appYn == "Y") {
+				$(".sort_tab li").removeClass("on");
+				$(".sort_tab li").eq(1).addClass("on");
+			}
+		} else if ("joinInfoFormPage" == "content1Page") {
+			if (appYn == "Y") {
+				$(".sort_tab li").removeClass("on");
+				$(".sort_tab li").eq(1).addClass("on");
+			}
+		}
+	}
+
+	function gpsSetOkIOS() {
+		// 위치동의 여부 확인 후 (Y : 가까운 매장순 탭 이동 및 리스트 호출, N : 재고 많은순 탭 선택)
+		if ("joinInfoFormPage" == "hsProductDetailPage") {
+			if (appYn == "Y") {
+				webkit.messageHandlers.getLocation.postMessage("");
+
+				setTimeout(function() {
+					if (lat != 0 && lng != 0) {
+						$(".sort_tab li").removeClass("on");
+						$(".sort_tab li").eq(0).addClass("on");
+
+						searchStore(1);
+					}
+				}, 500);
+			}
+		} else if ("joinInfoFormPage" == "content1Page") {
+			if (appYn == "Y") {
+				webkit.messageHandlers.getLocation.postMessage("");
+
+				setTimeout(function() {
+					if (lat != 0 && lng != 0) {
+						$(".sort_tab li").removeClass("on");
+						$(".sort_tab li").eq(0).addClass("on");
+
+						searchStore(1);
+					}
+				}, 500);
+			}
+		}
+	}
+</script>
+
+
+
 
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-<script>
+<!-- <script>
   // 카카오 주소 API
   function execPostCode() {
     new daum.Postcode(
@@ -54,9 +714,67 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
         }
       }).open();
   }
+</script> -->
+
+<script>
+	var element_wrap = document.getElementById('wrap');
+
+	function foldDaumPostcode() {
+		// iframe을 넣은 element를 안보이게 한다.
+		element_wrap.style.display = 'none';
+	}
+	function sample6_execDaumPostcode() {
+		new daum.Postcode({
+			oncomplete : function(data) {
+				// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+				// 각 주소의 노출 규칙에 따라 주소를 조합한다.
+				// 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+				var addr = ''; // 주소 변수
+				var extraAddr = ''; // 참고항목 변수
+
+				//사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+				if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+					addr = data.roadAddress;
+				} else { // 사용자가 지번 주소를 선택했을 경우(J)
+					addr = data.jibunAddress;
+				}
+
+				// 우편번호와 주소 정보를 해당 필드에 넣는다.
+				$("#mzipcode").val(data.zonecode);
+				$("#maddress1").val(addr);
+				$(".address_line1").html(addr);
+				$(".dlvr_adrs_zipcode").html(data.zonecode);
+				// 커서를 상세주소 필드로 이동한다.
+				$("#maddress2").focus();
+				element_wrap.style.display = 'none';
+				document.body.scrollTop = currentScroll;
+			},
+			onresize : function(size) {
+				element_wrap.style.height = size.height + 'px';
+			},
+			width : '100%',
+			height : '100%'
+		}).embed(element_wrap);
+		element_wrap.style.display = 'block';
+		initLayerPosition();
+	}
+	function initLayerPosition() {
+		var width = '100%'; //우편번호서비스가 들어갈 element의 width
+		var height = 400; //우편번호서비스가 들어갈 element의 height
+		var borderWidth = 8; //샘플에서 사용하는 border의 두께
+
+		// 위에서 선언한 값들을 실제 element에 넣는다.
+		element_wrap.style.width = ''; //값을 넣으니 너비가 이상해져서 제거
+		element_wrap.style.height = height + 'px';
+		//element_layer.style.border = borderWidth + 'px solid #afafaf';
+		element_wrap.style.marginBottom = '10px';
+
+		// 실행되는 순간의 화면 너비와 높이 값을 가져와서 중앙에 뜰 수 있도록 위치를 계산한다.
+		//element_layer.style.left = (((window.innerWidth || document.documentElement.clientWidth) - width) / 2 - borderWidth) + 'px';
+		//element_layer.style.top = (((window.innerHeight || document.documentElement.clientHeight) - height) / 2 - borderWidth) + 'px';
+	}
 </script>
-
-
 
 <script type="text/javascript" async=""
 	src="https://www.googletagmanager.com/gtag/js?id=G-RPZ82BN53C&amp;l=dataLayer&amp;cx=c"></script>
@@ -76,12 +794,13 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <script type="text/javascript" charset="UTF-8"
 	src="//t1.daumcdn.net/adfit/static/kp.js"></script>
 <script type="text/javascript">
-			if(typeof kakaoPixel !== 'undefined'){
-			    var kakaoTrackId = '3482319208237780781'; //개발
-	            if(location.href.indexOf("www.thehandsome.com") > -1) kakaoTrackId = '7855119525940511046'; //운영
-	            kakaoPixel(kakaoTrackId).pageView();
-			}
-		</script>
+	if (typeof kakaoPixel !== 'undefined') {
+		var kakaoTrackId = '3482319208237780781'; //개발
+		if (location.href.indexOf("www.thehandsome.com") > -1)
+			kakaoTrackId = '7855119525940511046'; //운영
+		kakaoPixel(kakaoTrackId).pageView();
+	}
+</script>
 <!-- #2894 - 카카오광고 집행 위한 픽셀&SDK 삽입 END -->
 
 <meta name="naver-site-verification"
@@ -112,33 +831,33 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <meta property="og:title" content="아이디/비밀번호찾기 | 더한섬닷컴">
 <meta property="og:type" content="website">
 <script>
+	
 </script>
 <script type="text/javascript">
 	var appYn = "N";
 	var appOs = ""; //ios, android
-	
+
 	var uid = "";
-    var pageUid = "hsFindIdPwPage";
-    var chkScreenPage = [];
-    
-    
-    if(appYn == 'Y'){  //appì¼ëë§ ì²´í¬
-        if(uid == "snsMain" || uid == "snsDetail" || uid == "snsMyProfile" || uid == "snsCollectionDetail" || uid == "snsSearchList"
-        || chkScreenPage.indexOf(pageUid) > -1) { //íì©íì´ì§
-            if(appOs == "ios"){ //ios
-                webkit.messageHandlers.screenShotEnable.postMessage("false");
-            }else { //android
-                Android.screenShotEnable("false");
-            }
-        }else { //ì¬ì©ìí¨
-            if(appOs == "ios"){ //ios
-                webkit.messageHandlers.screenShotEnable.postMessage("true");
-            }else { //android
-                Android.screenShotEnable("true");
-            }
-        }  
-    }
-    
+	var pageUid = "hsFindIdPwPage";
+	var chkScreenPage = [];
+
+	if (appYn == 'Y') { //appì¼ëë§ ì²´í¬
+		if (uid == "snsMain" || uid == "snsDetail" || uid == "snsMyProfile"
+				|| uid == "snsCollectionDetail" || uid == "snsSearchList"
+				|| chkScreenPage.indexOf(pageUid) > -1) { //íì©íì´ì§
+			if (appOs == "ios") { //ios
+				webkit.messageHandlers.screenShotEnable.postMessage("false");
+			} else { //android
+				Android.screenShotEnable("false");
+			}
+		} else { //ì¬ì©ìí¨
+			if (appOs == "ios") { //ios
+				webkit.messageHandlers.screenShotEnable.postMessage("true");
+			} else { //android
+				Android.screenShotEnable("true");
+			}
+		}
+	}
 </script>
 
 <title>아이디/비밀번호찾기 | 더한섬닷컴</title>
@@ -158,28 +877,38 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <link rel="shortcut icon" type="image/x-icon" media="all" href="//">
 
-<link href="http://thehandsome.com/_ui//handsomemobile/css/handsomecss/font_443.css"
+<link
+	href="http://thehandsome.com/_ui//handsomemobile/css/handsomecss/font_443.css"
 	rel="stylesheet" type="text/css">
-<link href="http://thehandsome.com/_ui//handsomemobile/css/handsomecss/jquery-ui.css"
+<link
+	href="http://thehandsome.com/_ui//handsomemobile/css/handsomecss/jquery-ui.css"
 	rel="stylesheet" type="text/css">
-<link href="http://thehandsome.com/_ui//handsomemobile/css/handsomecss/selectordie.css"
+<link
+	href="http://thehandsome.com/_ui//handsomemobile/css/handsomecss/selectordie.css"
 	rel="stylesheet" type="text/css">
-<link href="http://thehandsome.com/_ui//handsomemobile/css/handsomecss/default.css?202200826"
+<link
+	href="http://thehandsome.com/_ui//handsomemobile/css/handsomecss/default.css?202200826"
 	rel="stylesheet" type="text/css">
-<link href="http://thehandsome.com/_ui//handsomemobile/css/handsomecss/display.css?20221107"
+<link
+	href="http://thehandsome.com/_ui//handsomemobile/css/handsomecss/display.css?20221107"
 	rel="stylesheet" type="text/css">
-<link href="http://thehandsome.com/_ui//handsomemobile/css/handsomecss/assist.css?20220929"
+<link
+	href="http://thehandsome.com/_ui//handsomemobile/css/handsomecss/assist.css?20220929"
 	rel="stylesheet" type="text/css">
-<link href="http://thehandsome.com/_ui//handsomemobile/css/handsomecss/devAssist.css"
+<link
+	href="http://thehandsome.com/_ui//handsomemobile/css/handsomecss/devAssist.css"
 	rel="stylesheet" type="text/css">
 
-<link href="http://thehandsome.com/_ui//handsomemobile/css/handsomecss/popup.css"
+<link
+	href="http://thehandsome.com/_ui//handsomemobile/css/handsomecss/popup.css"
 	rel="stylesheet" type="text/css">
 
 <script type="text/javascript">
 	/*<![CDATA[*/
-	
-	var ACCMOB = { config: {} };
+
+	var ACCMOB = {
+		config : {}
+	};
 	ACCMOB.config.contextPath = "";
 	ACCMOB.config.encodedContextPath = "/ko";
 	ACCMOB.config.commonResourcePath = "http://thehandsome.com/_ui//handsomemobile/common";
@@ -187,43 +916,41 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 	ACCMOB.config.siteResourcePath = "http://thehandsome.com/_ui//handsomemobile/site-handsome";
 	ACCMOB.config.rootPath = "http://thehandsome.com/_ui//handsomemobile";
 	ACCMOB.config.CSRFToken = "23495034-d68b-4218-b7e4-2e6f78083211";
-	
-	
+
 	/*]]>*/
 </script>
 <script type="text/javascript">
 	/*<![CDATA[*/
-	ACCMOB.addons = {};	//JS holder for addons properties
-			
-	
+	ACCMOB.addons = {}; //JS holder for addons properties
+
 	/*]]>*/
 </script>
 <script type="text/javascript">
-    var handsomePageId = "hsFindIdPwPage";
-    var main_bul = false;
+	var handsomePageId = "hsFindIdPwPage";
+	var main_bul = false;
 </script>
 
 <script type="text/javascript">
-    var goToMySmartFilterYn = "N";
-    var gnbType = "br";
-    var UserAgent = navigator.platform;
-    var userPhoneOs = "";
-    if (UserAgent.match(/i(Phone|Pod|Pad)/i) != null ){
-        userPhoneOs = "IOS";
-    } else{
-        userPhoneOs = "ANDROID";
-    }
+	var goToMySmartFilterYn = "N";
+	var gnbType = "br";
+	var UserAgent = navigator.platform;
+	var userPhoneOs = "";
+	if (UserAgent.match(/i(Phone|Pod|Pad)/i) != null) {
+		userPhoneOs = "IOS";
+	} else {
+		userPhoneOs = "ANDROID";
+	}
 </script>
 
 <script type="text/javascript">
-        var handsomeUserLoginYn = "N";
-    </script>
+	var handsomeUserLoginYn = "N";
+</script>
 <script type="text/javascript">
-        var isoKoYn = "Y";
-    </script>
+	var isoKoYn = "Y";
+</script>
 <script type="text/javascript">
-    var handsomeIsoCode = "ko";
-    var handsomeContextPath = "/ko"; 
+	var handsomeIsoCode = "ko";
+	var handsomeContextPath = "/ko";
 </script>
 
 <script type="text/javascript"
@@ -255,549 +982,565 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 	src="http://thehandsome.com/_ui//handsomemobile/js/assist_common.js?v=20220630"></script>
 <script type="text/javascript"
 	src="http://thehandsome.com/_ui//handsomemobile/js/assist_new.js"></script>
-<script type="text/javascript" src="http://thehandsome.com/_ui//handsomemobile/js/handsome.js"></script>
+<script type="text/javascript"
+	src="http://thehandsome.com/_ui//handsomemobile/js/handsome.js"></script>
 <script type="text/javascript"
 	src="http://thehandsome.com/_ui//handsomemobile/js/common_function.js"></script>
-<script type="text/javascript" src="http://thehandsome.com/_ui//handsomemobile/js/json2.js"></script>
-<script type="text/javascript" src="http://thehandsome.com/_ui//handsomemobile/js/SsoAjax.js"></script>
+<script type="text/javascript"
+	src="http://thehandsome.com/_ui//handsomemobile/js/json2.js"></script>
+<script type="text/javascript"
+	src="http://thehandsome.com/_ui//handsomemobile/js/SsoAjax.js"></script>
 
 <script type="text/javascript"
 	src="http://thehandsome.com/_ui//handsomemobile/js/instagramAPI.js"></script>
 <script type="text/javascript"
 	src="http://thehandsome.com/_ui//handsomemobile/js/makePCookie.js"></script>
-<script type="text/javascript" src="http://thehandsome.com/_ui//handsomemobile/js/content.js"></script>
+<script type="text/javascript"
+	src="http://thehandsome.com/_ui//handsomemobile/js/content.js"></script>
 <script type="text/javascript"
 	src="http://thehandsome.com/_ui//handsomemobile/js/e-smart-zoom-jquery.min.js"></script>
-<script type="text/javascript" src="http://thehandsome.com/_ui//handsomemobile/js/popup.js"></script>
+<script type="text/javascript"
+	src="http://thehandsome.com/_ui//handsomemobile/js/popup.js"></script>
 <script type="text/javascript"
 	src="http://thehandsome.com/_ui//handsomemobile/js/simplepagination.js"></script>
-<script type="text/javascript" src="http://thehandsome.com/_ui//handsomemobile/js/netfunnel.js"
+<script type="text/javascript"
+	src="http://thehandsome.com/_ui//handsomemobile/js/netfunnel.js"
 	charset="UTF-8"></script>
 <script type="text/javascript"
-	src="http://thehandsome.com/_ui//handsomemobile/js/netfunnel_skin.js" charset="UTF-8"></script>
+	src="http://thehandsome.com/_ui//handsomemobile/js/netfunnel_skin.js"
+	charset="UTF-8"></script>
 
-<script type="text/javascript" src="http://thehandsome.com/_ui//handsomemobile/js/unorm.js"></script>
+<script type="text/javascript"
+	src="http://thehandsome.com/_ui//handsomemobile/js/unorm.js"></script>
 
 <script type="text/javascript">
-var setDimensionData = function(){
-    //GA 설정 sessionStorage 페이지 이동시 초기화 
-    window.sessionStorage.removeItem('main_new_ecommerceDataList');
-    window.sessionStorage.removeItem('main_best_ecommerceDataList');
-    var smartListSize = window.sessionStorage.getItem('smart_ecommerceDataList_size');
-    for(var i=0; i<=smartListSize; i++){
-        window.sessionStorage.removeItem('smart_ecommerceDataList_'+i);
-    }
-    window.sessionStorage.removeItem('smart_ecommerceDataList_size');
-    window.sessionStorage.removeItem('smart_more_ecommerceDataList');
-    window.sessionStorage.removeItem('search_recommend_ecommerceDataList');
-    window.sessionStorage.removeItem('ecommerceDataList');
-    window.sessionStorage.removeItem('yours_lately_ecommerceDataList');
-    window.sessionStorage.removeItem('yours_shoppingbag_ecommerceDataList');
-    window.sessionStorage.removeItem('yours_wish_ecommerceDataList');
-    window.sessionStorage.removeItem('yours_recommend_ecommerceDataList');
-    window.sessionStorage.removeItem('ou_main_ecommerceDataList');
-    
-    var categoryListSize = window.sessionStorage.getItem('category_ecommerceDataList_size');
-    for(var i=0; i<=categoryListSize; i++){
-        window.sessionStorage.removeItem('normal_cate_ecommerceDataList_'+i);
-    }
-    window.sessionStorage.removeItem('category_ecommerceDataList_size');
-    
-    var cid = getCid();
-    var device = "";
-    
-    if(getCookie2("app") == null || getCookie2("app") == "") {
-        device = "MO_WEB";
-    }else{
-        device = "APP";
-    }
-    
-    var entrySite = "";
-    
-	    entrySite = "KO";
-	
-    
-    var oneDepthPage;   // 없을 경우 undifined 그대로 넘겨야 하기 때문에 초기화 X
-    var pageTitle = "";
-    var tmp = getPageDepth();
-    if(tmp != ""){
-        oneDepthPage = tmp;
-        pageTitle = getGAPageTitle(oneDepthPage);
-        if(pageTitle == ""){
-        	oneDepthPage = undefined;
-            pageTitle = document.title;
-        }
-    }else{
-        pageTitle = document.title;
-    }
-    
-    var pageviewObj = new Object();
-        pageviewObj.dimension1 =  cid;                          //고객_ClientID
-        pageviewObj.dimension15 = device;                       //채널_채널유형
-        pageviewObj.dimension16 = entrySite;                  //채널_언어 - #2846 삭제요청 hychung, #2846 복원요청 hychung
-        pageviewObj.dimension18 = oneDepthPage;                 //페이지_1Depth (페이지depth 없는경우 undefined처리)
-        pageviewObj.title = pageTitle;                          //페이지제목     (페이지제목 없는경우 document.title 입력)
-    
-     //로그인 했을경우만 추가 dimension 세팅
-     
+	var setDimensionData = function() {
+		//GA 설정 sessionStorage 페이지 이동시 초기화 
+		window.sessionStorage.removeItem('main_new_ecommerceDataList');
+		window.sessionStorage.removeItem('main_best_ecommerceDataList');
+		var smartListSize = window.sessionStorage
+				.getItem('smart_ecommerceDataList_size');
+		for (var i = 0; i <= smartListSize; i++) {
+			window.sessionStorage.removeItem('smart_ecommerceDataList_' + i);
+		}
+		window.sessionStorage.removeItem('smart_ecommerceDataList_size');
+		window.sessionStorage.removeItem('smart_more_ecommerceDataList');
+		window.sessionStorage.removeItem('search_recommend_ecommerceDataList');
+		window.sessionStorage.removeItem('ecommerceDataList');
+		window.sessionStorage.removeItem('yours_lately_ecommerceDataList');
+		window.sessionStorage.removeItem('yours_shoppingbag_ecommerceDataList');
+		window.sessionStorage.removeItem('yours_wish_ecommerceDataList');
+		window.sessionStorage.removeItem('yours_recommend_ecommerceDataList');
+		window.sessionStorage.removeItem('ou_main_ecommerceDataList');
 
-    // 검색 결과 페이지 일 경우만 처리
-    if(window.location.pathname.indexOf("/hssearch/searchCount") > -1) {
-        pageviewObj.dimension17 = "";                     //검색_검색어(검색결과페이지일때 사용)
-    }
-    
-    return pageviewObj;
-};
+		var categoryListSize = window.sessionStorage
+				.getItem('category_ecommerceDataList_size');
+		for (var i = 0; i <= categoryListSize; i++) {
+			window.sessionStorage.removeItem('normal_cate_ecommerceDataList_'
+					+ i);
+		}
+		window.sessionStorage.removeItem('category_ecommerceDataList_size');
 
-// 고객_ClientID
-function getCid() {
-    var cookieData = document.cookie;
-    var Cookies = cookieData.split(';')
-    var clientId = "";
-    for (var i=0; i < Cookies.length; i++) {
-        if (Cookies[i].split('=')[0] == '_ga' || Cookies[i].split('=')[0] == ' _ga') {
-        clientId = Cookies[i].split('=')[1];
-        }
-    }
-    if (clientId != "") {
-        clientId = clientId.substring(6);
-    }
-    if (clientId == "") {
-        try{
-            ga(function(tracker) {
-                clientId = tracker.get('clientId');
-            });
-        }catch(e) {
-            console.log(e);
-        }
-    }
-    return clientId;
-}
+		var cid = getCid();
+		var device = "";
 
-function getPageDepth(){
-    var returnDepth = "";
-    var target_url  = document.location.href;
-	
-    if(target_url.substring(target_url.indexOf("/ko/")+4) == ""){
-        returnDepth = "메인";
-    }else if(target_url.substring(target_url.indexOf("/ko")+3) == ""){
-        returnDepth = "메인";
-    }else if(target_url.indexOf("/p/") > -1){
-        returnDepth = "상품상세";
-    }else if(target_url.indexOf("/b/") > -1){
-        
-        returnDepth = "브랜드";
-	    
-    }else if(target_url.indexOf("/c/ou_") > -1){
-        returnDepth = "아울렛";
-    }else if(target_url.indexOf("/c/") > -1){
-        // if'/c/카테고리코드' : /가 한개면
-        
-        if(target_url.substring(target_url.indexOf("/c/")+3).indexOf("/") > -1){
-        	if(target_url.toLowerCase().substring(target_url.indexOf("/c/")+3).indexOf("br") > -1){
-            	returnDepth = "브랜드";
-        	}else{
-        		returnDepth = "카테고리";
-        	}
-        }else{
-            returnDepth = "카테고리";
-        }
-        
-    }else if(target_url.indexOf("/mypage/care/") > -1){
-        returnDepth = "케어";
-    }else if(target_url.indexOf("/mypage") > -1){
-        returnDepth = "마이페이지";
-    }else if(target_url.indexOf("/magazine/events") > -1){
-        returnDepth = "이벤트";
-    }else if(target_url.indexOf("/magazine/") > -1){
-        returnDepth = "매거진";
-    }else if(target_url.indexOf("/shoppingbag") > -1){
-        returnDepth = "쇼핑백";
-    }else if(target_url.indexOf("/ou/") > -1){
-        returnDepth = "아울렛";
-    }else if(target_url.indexOf("/checkout/") > -1){
-        returnDepth = "주문";
-    }else if(target_url.indexOf("/member/") > -1){
-        returnDepth = "로그인";
-    }else if(target_url.indexOf("/login/") > -1){
-        returnDepth = "로그인";
-    }else if(target_url.indexOf("/sns/") > -1){
-        returnDepth = "SNS";
-    }else if(target_url.indexOf("/prodqna/") > -1){
-        returnDepth = "상품Q&A";
-    }else if(target_url.indexOf("/svcenter/") > -1){
-        returnDepth = "고객센터";
-    }else if(target_url.indexOf("/item/") > -1){
-        returnDepth = "아이템";
-    }else if(target_url.indexOf("/store-finder/") > -1){
-        returnDepth = "매장안내";
-    }else if(target_url.indexOf("/footer/") > -1){
-        returnDepth = "FOOTER";
-    }else if(target_url.indexOf("/appDownloadSMS/") > -1){
-        returnDepth = "APP 다운로드";
-    }else if(target_url.indexOf("/intro/") > -1){
-        returnDepth = "당신만의 한섬";
-    }else if(target_url.indexOf("/mobilecommon/mainIntro") > -1){
-        returnDepth = "공통";
-    }else if(target_url.indexOf("/mobilecommon/search") > -1){
-        returnDepth = "공통";
-    }else if(target_url.indexOf("/hssearch") > -1){
-        returnDepth = "검색";
-    }else if(target_url.indexOf("/product/") > -1){
-        returnDepth = "상품";
-    }else if(target_url.indexOf("/globalMain") > -1){
-        returnDepth = "메인";
-    }else if(target_url.indexOf("/main") > -1){
-        returnDepth = "메인";
-    }else{
-        returnDepth = "";
-    }
-    return returnDepth;
-}
+		if (getCookie2("app") == null || getCookie2("app") == "") {
+			device = "MO_WEB";
+		} else {
+			device = "APP";
+		}
 
-function getGAPageTitle(oneDepthPage){
-    var returnTitle = "";
-    var target_url  = document.location.href;
-    //if(target_url.substring(target_url.indexOf("/ko/")+4).indexOf("/") == -1){
-    if(target_url.substring(target_url.indexOf("/ko/")+4) == ""){
-        returnTitle = oneDepthPage;
-    }else if(target_url.substring(target_url.indexOf("/ko")+3) == ""){
-        returnTitle = oneDepthPage;
-    }else if(target_url.indexOf("/p/") > -1){
-        returnTitle = oneDepthPage+">";
-    }else if(target_url.indexOf("/c//") > -1){
-        returnTitle = oneDepthPage+">>전체보기";
-    }else if(target_url.indexOf("/b/fourmMain") > -1){
-        returnTitle = oneDepthPage+">FOURM 메인";
-    }else if(target_url.indexOf("/b//brand") > -1){
-        returnTitle = oneDepthPage+">>소개";
-    }else if(target_url.indexOf("/b//storeInformation") > -1){
-        returnTitle = oneDepthPage+">>매장";
-    }else if(target_url.indexOf("/b//lookBookDetail?lookBookCode=") > -1){
-        returnTitle = oneDepthPage+">>룩북>";
-    }else if(target_url.indexOf("/b//lookBook") > -1){
-        returnTitle = oneDepthPage+">>룩북";
-    }else if(target_url.indexOf("/b/") > -1){
-        returnTitle = oneDepthPage+">>브랜드 메인";
-    }else if(target_url.indexOf("/c//ou") > -1){
-    	returnTitle = oneDepthPage;
-    	
-    }else if(target_url.indexOf("/c//") > -1){
-    	returnTitle = oneDepthPage;    	
-    	
-    }else if(target_url.indexOf("/c/") > -1){
-    	returnTitle = oneDepthPage;
-    	
-    }else if(target_url.indexOf("/mypage/order/myordersAthome") > -1){
-        returnTitle = oneDepthPage+">앳홈신청 및 결제";
-    }else if(target_url.indexOf("/mypage/order/myorders") > -1){
-        returnTitle = oneDepthPage+">주문/배송조회";
-    }else if(target_url.indexOf("/mypage/myGradeInfo") > -1){
-        returnTitle = oneDepthPage+">나의 회원등급";
-    }else if(target_url.indexOf("/mypage/voucher") > -1){
-        returnTitle = oneDepthPage+">쿠폰";
-    }else if(target_url.indexOf("/mypage/mypoint") > -1){
-        returnTitle = oneDepthPage+">혜택관리>나의 한섬마일리지";
-    }else if(target_url.indexOf("/mypage/myEGiftCard") > -1){
-        returnTitle = oneDepthPage+">혜택관리>e-giftcard";
-    }else if(target_url.indexOf("/mypage/myWish") > -1){
-        returnTitle = oneDepthPage+">위시리스트";
-    }else if(target_url.indexOf("/mypage/rsalarm") > -1){
-        returnTitle = oneDepthPage+">재입고 알림";
-    }else if(target_url.indexOf("/mypage/personInfomationChangePWCheck") > -1){
-        returnTitle = oneDepthPage+">개인정보 변경/탈퇴";
-    }else if(target_url.indexOf("/mypage/mydelivery") > -1){
-        returnTitle = oneDepthPage+">배송지 관리";
-    }else if(target_url.indexOf("/mypage/oneClick") > -1){
-        returnTitle = oneDepthPage+">나의 정보관리>원클릭 결제 관리";
-    }else if(target_url.indexOf("/mypage/myreview") > -1){
-        returnTitle = oneDepthPage+">내 상품평";
-    }else if(target_url.indexOf("/mypage/myqna") > -1){
-        returnTitle = oneDepthPage+">상품 Q&A";
-    }else if(target_url.indexOf("/mypage/mymantomaninquiry") > -1){
-        returnTitle = oneDepthPage+">1:1 문의";
-    }else if(target_url.indexOf("/mypage/mypageFloatingPopup") > -1){
-        returnTitle = oneDepthPage+">메인";
-    }else if(target_url.indexOf("/mypage/mypoint/mobile") > -1){
-        returnTitle = oneDepthPage+">나의 혜택";
-    }else if(target_url.indexOf("/mypage/event/myevents") > -1){
-        returnTitle = oneDepthPage+">나의 이벤트";
-    }else if(target_url.indexOf("/mypage/oneBuy") > -1){
-        returnTitle = oneDepthPage+">원클릭 결제 설정";
-    }else if(target_url.indexOf("/mypage/care/mycares") > -1){
-        returnTitle = oneDepthPage+">내역조회";
-    }else if(target_url.indexOf("/mypage/care/careRequestComplete") > -1){
-        returnTitle = oneDepthPage+">신청완료";
-    }else if(target_url.indexOf("/mypage/care/careRequest") > -1){
-        returnTitle = oneDepthPage+">신청하기";
-    }else if(target_url.endsWith("/ko/mypage/", target_url.length)){
-        returnTitle = oneDepthPage+">메인";
-    }else if(target_url.endsWith("/ko/mypage", target_url.length)){
-        returnTitle = oneDepthPage+">메인";
-    }else if(target_url.indexOf("/magazine/events/") > -1){
-        returnTitle = oneDepthPage+">상세>";
-    }else if(target_url.indexOf("/magazine/events") > -1){
-        if(getCookie2("app") == null || getCookie2("app") == "") {
-            returnTitle = oneDepthPage+">리스트";
-        }else{
-            returnTitle = oneDepthPage+">모바일썸네일";
-        }
-    }else if(target_url.indexOf("/magazine/editorials/") > -1){
-        returnTitle = oneDepthPage+">에디토리얼>상세>";
-    }else if(target_url.indexOf("/magazine/editorials") > -1){
-        returnTitle = oneDepthPage+">에디토리얼>리스트";
-    }else if(target_url.indexOf("/magazine/exhibitions/") > -1){
-        returnTitle = oneDepthPage+">기획전>상세>";
-    }else if(target_url.indexOf("/magazine/exhibitions") > -1){
-        returnTitle = oneDepthPage+">기획전>리스트";
-    }else if(target_url.indexOf("/magazine/handpeople") > -1){
-        returnTitle = oneDepthPage+">핸썸피플 리스트";
-    }else if(target_url.indexOf("/magazine/instagram") > -1){
-        returnTitle = oneDepthPage+">인스타그램";
-    }else if(target_url.indexOf("/magazine/lookbookDetail/") > -1){
-        returnTitle = oneDepthPage+">룩북>상세>";
-    }else if(target_url.indexOf("/magazine/lookbook") > -1){
-        returnTitle = oneDepthPage+">룩북>리스트";
-    }else if(target_url.indexOf("/magazine/newsDetailtemplatetype") > -1){
-        returnTitle = oneDepthPage+">뉴스>상세>";
-    }else if(target_url.indexOf("/magazine/news") > -1){
-        returnTitle = oneDepthPage+">뉴스>리스트";
-    }else if(target_url.indexOf("/magazine/weeklypick") > -1){
-        returnTitle = oneDepthPage+">위클리 픽 리스트";
-    }else if(target_url.indexOf("/magazine/submain") > -1){
-        returnTitle = oneDepthPage+">THE매거진 메인";
-    }else if(target_url.indexOf("/magazine/youtubeList") > -1){
-        returnTitle = oneDepthPage+">비디오";
-    }else if(target_url.indexOf("/shoppingbag") > -1){
-        returnTitle = oneDepthPage;
-    }else if(target_url.indexOf("/ou/outletMain") > -1){
-        returnTitle = oneDepthPage+">메인";
-    }else if(target_url.indexOf("/c/ou_/ou") > -1){
-        returnTitle = oneDepthPage+">";
-    }else if(target_url.indexOf("/mobilecommon/search") > -1){
-        returnTitle = oneDepthPage+">키워드";
-    }else if(target_url.indexOf("/hssearch/") > -1){
-        returnTitle = oneDepthPage+">검색결과";
-    }else if(target_url.indexOf("/checkout/ordersheet") > -1){
-        returnTitle = oneDepthPage+">주문서 작성";
-    }else if(target_url.indexOf("/checkout/orderConfirmation") > -1){
-        returnTitle = oneDepthPage+">주문 완료";
-    }else if(target_url.indexOf("/member/login") > -1){
-        returnTitle = oneDepthPage;
-    }else if(target_url.indexOf("/login/checkout") > -1){
-        returnTitle = oneDepthPage+">미로그인시로그인유도";
-    }else if(target_url.indexOf("/member/pwChange") > -1){
-        returnTitle = oneDepthPage+">비밀번호 변경 대상";
-    }else if(target_url.indexOf("/member/findIdPwPage") > -1){
-        returnTitle = oneDepthPage+">한섬회원 아이디/비밀번호 찾기";
-    }else if(target_url.indexOf("/member/globaljoincomplete") > -1){
-        returnTitle = oneDepthPage+">가입완료";
-    }else if(target_url.indexOf("/member/joincomplete") > -1){
-        returnTitle = oneDepthPage+">가입완료";
-    }else if(target_url.indexOf("/member/joinGuidePage") > -1){
-        returnTitle = oneDepthPage+">회원가입안내";
-    }else if(target_url.indexOf("/member/joininfoform") > -1){
-        returnTitle = oneDepthPage+">간편회원 정보입력";
-    }else if(target_url.indexOf("/member/joinstart") > -1){
-        returnTitle = oneDepthPage+">간편회원 이메일";
-    }else if(target_url.indexOf("/member/nonMemberLogin") > -1){
-        returnTitle = oneDepthPage+">비회원 주문조회";
-    }else if(target_url.indexOf("/sns/main") > -1){
-        returnTitle = oneDepthPage+">메인";
-    }else if(target_url.indexOf("/sns/detail?") > -1){
-        returnTitle = oneDepthPage+">포스트상세보기";
-    }else if(target_url.indexOf("/sns/myNotice") > -1){
-        returnTitle = oneDepthPage+">나의알림";
-    }else if(target_url.indexOf("/sns/collectionDetail?") > -1){
-        returnTitle = oneDepthPage+">콜렉션상세";
-    }else if(target_url.indexOf("/sns/followerList?") > -1){
-        returnTitle = oneDepthPage+">팔로워리스트";
-    }else if(target_url.indexOf("/sns/followingList?") > -1){
-        returnTitle = oneDepthPage+">팔로윙리스트";
-    }else if(target_url.indexOf("/sns/snsSearch?searchWord=") > -1){
-        returnTitle = oneDepthPage+">태그검색";
-    }else if(target_url.indexOf("/sns/message?") > -1){
-        returnTitle = oneDepthPage+">메시지";
-    }else if(target_url.indexOf("/sns/messageList") > -1){
-        returnTitle = oneDepthPage+">메시지리스트";
-    }else if(target_url.indexOf("/sns/myLevel") > -1){
-        returnTitle = oneDepthPage+">나의레벨";
-    }else if(target_url.indexOf("/sns/myProfile?") > -1){
-        returnTitle = oneDepthPage+">나의프로필";
-    }else if(target_url.indexOf("/sns/weeklyBest") > -1){
-        returnTitle = oneDepthPage+">위클리베스트";
-    }else if(target_url.indexOf("/sns/write") > -1){
-        returnTitle = oneDepthPage+">포스팅작성";
-    }else if(target_url.indexOf("/mobilecommon/mainIntro") > -1){
-        returnTitle = oneDepthPage+">인트로";
-    }else if(target_url.indexOf("/prodqna/listProdQnA?") > -1){
-    	returnTitle = oneDepthPage+">";
-    }else if(target_url.indexOf("/svcenter/submain") > -1){
-        returnTitle = oneDepthPage+">서브메인";
-    }else if(target_url.indexOf("/svcenter/notice") > -1){
-        returnTitle = oneDepthPage+">공지사항";
-    }else if(target_url.indexOf("/svcenter/mantomaninquiry") > -1){
-        returnTitle = oneDepthPage+">1:1 문의";
-    }else if(target_url.indexOf("/svcenter/faq") > -1){
-        returnTitle = oneDepthPage+">FAQ";
-    }else if(target_url.indexOf("/svcenter/mending") > -1){
-        returnTitle = oneDepthPage+">수선진행조회";
-    }else if(target_url.indexOf("/svcenter/memberjoinguide") > -1){
-        returnTitle = oneDepthPage+">쇼핑가이드>회원가입";
-    }else if(target_url.indexOf("/svcenter/theClubInfo") > -1){
-        returnTitle = oneDepthPage+">쇼핑가이드>온라인 멤버십";
-    }else if(target_url.indexOf("/svcenter/memberbenefitguide") > -1){
-        returnTitle = oneDepthPage+">쇼핑가이드>한섬 VVIP 혜택";
-    }else if(target_url.indexOf("/svcenter/pointguide") > -1){
-        returnTitle = oneDepthPage+">쇼핑가이드>한섬마일리지 혜택";
-    }else if(target_url.indexOf("/svcenter/couponguide") > -1){
-        returnTitle = oneDepthPage+">쇼핑가이드>쿠폰";
-    }else if(target_url.indexOf("/svcenter/asguide") > -1){
-        returnTitle = oneDepthPage+">쇼핑가이드>배송/반품/AS";
-    }else if(target_url.indexOf("/svcenter/paymentguide") > -1){
-        returnTitle = oneDepthPage+">쇼핑가이드>주문/결제";
-    }else if(target_url.indexOf("/svcenter/athomeInfo") > -1){
-        returnTitle = oneDepthPage+">at HOME";
-    }else if(target_url.indexOf("/svcenter/footerAthomeInfo") > -1){
-        returnTitle = oneDepthPage+">딜리버리서비스";
-    }else if(target_url.indexOf("/svcenter/mobilemain") > -1){
-        returnTitle = oneDepthPage+">메인";
-    }else if(target_url.indexOf("/svcenter/mobilenotice") > -1){
-        returnTitle = oneDepthPage+">공지사항";
-    }else if(target_url.indexOf("/svcenter/mobilefaq") > -1){
-        returnTitle = oneDepthPage+">FAQ";
-    }else if(target_url.indexOf("/svcenter/mobilemending") > -1){
-        returnTitle = oneDepthPage+">수선진행조회";
-    }else if(target_url.indexOf("/svcenter/serviceguide?targetSlide=0") > -1){
-        returnTitle = oneDepthPage+">서비스소개>간편서비스";
-    }else if(target_url.indexOf("/svcenter/serviceguide?targetSlide=1") > -1){
-        returnTitle = oneDepthPage+">서비스소개>스마트쇼핑";
-    }else if(target_url.indexOf("/svcenter/serviceguide?targetSlide=2") > -1){
-        returnTitle = oneDepthPage+">서비스소개>유니크한섬";
-    }else if(target_url.indexOf("/svcenter/serviceguide") > -1){
-        returnTitle = oneDepthPage+">서비스소개";
-    }else if(target_url.indexOf("/product/reviewList/") > -1){
-        returnTitle = oneDepthPage+">상품평>";
-    }else if(target_url.indexOf("/item/we") > -1){
-        returnTitle = oneDepthPage+">WE";
-    }else if(target_url.indexOf("/item/me") > -1){
-        returnTitle = oneDepthPage+">ME";
-    }else if(target_url.indexOf("/store-finder/") > -1){
-        returnTitle = oneDepthPage;
-    }else if(target_url.indexOf("/footer/footerBrandintro") > -1){
-        returnTitle = oneDepthPage+">브랜드소개";
-    }else if(target_url.indexOf("/footer/footerCEOGreetings") > -1){
-        returnTitle = oneDepthPage+">CEO 메시지";
-    }else if(target_url.indexOf("/footer/footerCompanyIntro") > -1){
-        returnTitle = oneDepthPage+">회사소개>한섬소개";
-    }else if(target_url.indexOf("/footer/footerCEOGreetings") > -1){
-        returnTitle = oneDepthPage+">회사소개>CEO 메시지";
-    }else if(target_url.indexOf("/footer/footerBrandintro") > -1){
-        returnTitle = oneDepthPage+">회사소개>브랜드소개";
-    }else if(target_url.indexOf("/footer/footerGovernance") > -1){
-        returnTitle = oneDepthPage+">투자정보>기업지배구조";
-    }else if(target_url.indexOf("/footer/footerFinancialInfo") > -1){
-        returnTitle = oneDepthPage+">투자정보>재무정보";
-    }else if(target_url.indexOf("/footer/footerStockInfo") > -1){
-        returnTitle = oneDepthPage+">투자정보>주가정보";
-    }else if(target_url.indexOf("/footer/footerIR") > -1){
-        returnTitle = oneDepthPage+">투자정보>IR";
-    }else if(target_url.indexOf("/footer/footerCorporatePartnership") > -1){
-        returnTitle = oneDepthPage+">동반성장>소개";
-    }else if(target_url.indexOf("/footer/footerCoreFourPractices") > -1){
-        returnTitle = oneDepthPage+">동반성장>4대 실천사항";
-    }else if(target_url.indexOf("/footer/footerCooperatorSelection") > -1){
-        returnTitle = oneDepthPage+">동반성장>협력업체 선정";
-    }else if(target_url.indexOf("/footer/footerSupportProgram") > -1){
-        returnTitle = oneDepthPage+">동반성장>지원제도";
-    }else if(target_url.indexOf("/footer/footerContactUs") > -1){
-        returnTitle = oneDepthPage+">동반성장>소통의 장";
-    }else if(target_url.indexOf("/appDownloadSMS/") > -1){
-        returnTitle = oneDepthPage;
-    }else if(target_url.indexOf("/intro/mainYours") > -1){
-        returnTitle = oneDepthPage;
-    }else if(target_url.indexOf("/globalMain") > -1){
-        returnTitle = oneDepthPage;
-    }else if(target_url.indexOf("/main") > -1){
-        returnTitle = oneDepthPage;
-    }
-    
-    return returnTitle;
-}
+		var entrySite = "";
 
-function getCookie2(cname)
-{
-    var name = cname + "=";
-    var decodedCookie = unescape(document.cookie);
-    var ca = decodedCookie.split(';');
-    var cookieValue = "";
-    for(var i=0; i<ca.length; i++)
-    {
-        var c = ca[i];
-        while(c.charAt(0) == ' ')
-        {
-            c = c.substring(1);
-        }
-        if(c.indexOf(name) == 0)
-        {
-            cookieValue = c.substring(name.length, c.length);
-        }
-    }
-    return cookieValue;
-}
+		entrySite = "KO";
 
-function GA_Event(Category,Action,Label) {
-	
-	Label = unescape(Label).replace(/\&#039;/gi,"'").replace(/\&amp;/g,"&");
-	
-	var v_Label = Label;
-	var v_Category = Category;
-	var v_Action = Action;
-	//공백처리을  _ 처리
-	if(Category != null){
-		v_Category = Category.replace(/\s{2,}/gi,' ').trim().replace(/\s/gi,'_');
+		var oneDepthPage; // 없을 경우 undifined 그대로 넘겨야 하기 때문에 초기화 X
+		var pageTitle = "";
+		var tmp = getPageDepth();
+		if (tmp != "") {
+			oneDepthPage = tmp;
+			pageTitle = getGAPageTitle(oneDepthPage);
+			if (pageTitle == "") {
+				oneDepthPage = undefined;
+				pageTitle = document.title;
+			}
+		} else {
+			pageTitle = document.title;
+		}
+
+		var pageviewObj = new Object();
+		pageviewObj.dimension1 = cid; //고객_ClientID
+		pageviewObj.dimension15 = device; //채널_채널유형
+		pageviewObj.dimension16 = entrySite; //채널_언어 - #2846 삭제요청 hychung, #2846 복원요청 hychung
+		pageviewObj.dimension18 = oneDepthPage; //페이지_1Depth (페이지depth 없는경우 undefined처리)
+		pageviewObj.title = pageTitle; //페이지제목     (페이지제목 없는경우 document.title 입력)
+
+		//로그인 했을경우만 추가 dimension 세팅
+
+		// 검색 결과 페이지 일 경우만 처리
+		if (window.location.pathname.indexOf("/hssearch/searchCount") > -1) {
+			pageviewObj.dimension17 = ""; //검색_검색어(검색결과페이지일때 사용)
+		}
+
+		return pageviewObj;
+	};
+
+	// 고객_ClientID
+	function getCid() {
+		var cookieData = document.cookie;
+		var Cookies = cookieData.split(';')
+		var clientId = "";
+		for (var i = 0; i < Cookies.length; i++) {
+			if (Cookies[i].split('=')[0] == '_ga'
+					|| Cookies[i].split('=')[0] == ' _ga') {
+				clientId = Cookies[i].split('=')[1];
+			}
+		}
+		if (clientId != "") {
+			clientId = clientId.substring(6);
+		}
+		if (clientId == "") {
+			try {
+				ga(function(tracker) {
+					clientId = tracker.get('clientId');
+				});
+			} catch (e) {
+				console.log(e);
+			}
+		}
+		return clientId;
 	}
-	if(Action != null){
-		v_Action = Action.replace(/\s{2,}/gi,' ').trim().replace(/\s/gi,'_');
+
+	function getPageDepth() {
+		var returnDepth = "";
+		var target_url = document.location.href;
+
+		if (target_url.substring(target_url.indexOf("/ko/") + 4) == "") {
+			returnDepth = "메인";
+		} else if (target_url.substring(target_url.indexOf("/ko") + 3) == "") {
+			returnDepth = "메인";
+		} else if (target_url.indexOf("/p/") > -1) {
+			returnDepth = "상품상세";
+		} else if (target_url.indexOf("/b/") > -1) {
+
+			returnDepth = "브랜드";
+
+		} else if (target_url.indexOf("/c/ou_") > -1) {
+			returnDepth = "아울렛";
+		} else if (target_url.indexOf("/c/") > -1) {
+			// if'/c/카테고리코드' : /가 한개면
+
+			if (target_url.substring(target_url.indexOf("/c/") + 3)
+					.indexOf("/") > -1) {
+				if (target_url.toLowerCase().substring(
+						target_url.indexOf("/c/") + 3).indexOf("br") > -1) {
+					returnDepth = "브랜드";
+				} else {
+					returnDepth = "카테고리";
+				}
+			} else {
+				returnDepth = "카테고리";
+			}
+
+		} else if (target_url.indexOf("/mypage/care/") > -1) {
+			returnDepth = "케어";
+		} else if (target_url.indexOf("/mypage") > -1) {
+			returnDepth = "마이페이지";
+		} else if (target_url.indexOf("/magazine/events") > -1) {
+			returnDepth = "이벤트";
+		} else if (target_url.indexOf("/magazine/") > -1) {
+			returnDepth = "매거진";
+		} else if (target_url.indexOf("/shoppingbag") > -1) {
+			returnDepth = "쇼핑백";
+		} else if (target_url.indexOf("/ou/") > -1) {
+			returnDepth = "아울렛";
+		} else if (target_url.indexOf("/checkout/") > -1) {
+			returnDepth = "주문";
+		} else if (target_url.indexOf("/member/") > -1) {
+			returnDepth = "로그인";
+		} else if (target_url.indexOf("/login/") > -1) {
+			returnDepth = "로그인";
+		} else if (target_url.indexOf("/sns/") > -1) {
+			returnDepth = "SNS";
+		} else if (target_url.indexOf("/prodqna/") > -1) {
+			returnDepth = "상품Q&A";
+		} else if (target_url.indexOf("/svcenter/") > -1) {
+			returnDepth = "고객센터";
+		} else if (target_url.indexOf("/item/") > -1) {
+			returnDepth = "아이템";
+		} else if (target_url.indexOf("/store-finder/") > -1) {
+			returnDepth = "매장안내";
+		} else if (target_url.indexOf("/footer/") > -1) {
+			returnDepth = "FOOTER";
+		} else if (target_url.indexOf("/appDownloadSMS/") > -1) {
+			returnDepth = "APP 다운로드";
+		} else if (target_url.indexOf("/intro/") > -1) {
+			returnDepth = "당신만의 한섬";
+		} else if (target_url.indexOf("/mobilecommon/mainIntro") > -1) {
+			returnDepth = "공통";
+		} else if (target_url.indexOf("/mobilecommon/search") > -1) {
+			returnDepth = "공통";
+		} else if (target_url.indexOf("/hssearch") > -1) {
+			returnDepth = "검색";
+		} else if (target_url.indexOf("/product/") > -1) {
+			returnDepth = "상품";
+		} else if (target_url.indexOf("/globalMain") > -1) {
+			returnDepth = "메인";
+		} else if (target_url.indexOf("/main") > -1) {
+			returnDepth = "메인";
+		} else {
+			returnDepth = "";
+		}
+		return returnDepth;
 	}
-	if(Label != null){
-		v_Label = Label.replace(/\s{2,}/gi,' ').trim().replace(/\s/gi,'_');
+
+	function getGAPageTitle(oneDepthPage) {
+		var returnTitle = "";
+		var target_url = document.location.href;
+		//if(target_url.substring(target_url.indexOf("/ko/")+4).indexOf("/") == -1){
+		if (target_url.substring(target_url.indexOf("/ko/") + 4) == "") {
+			returnTitle = oneDepthPage;
+		} else if (target_url.substring(target_url.indexOf("/ko") + 3) == "") {
+			returnTitle = oneDepthPage;
+		} else if (target_url.indexOf("/p/") > -1) {
+			returnTitle = oneDepthPage + ">";
+		} else if (target_url.indexOf("/c//") > -1) {
+			returnTitle = oneDepthPage + ">>전체보기";
+		} else if (target_url.indexOf("/b/fourmMain") > -1) {
+			returnTitle = oneDepthPage + ">FOURM 메인";
+		} else if (target_url.indexOf("/b//brand") > -1) {
+			returnTitle = oneDepthPage + ">>소개";
+		} else if (target_url.indexOf("/b//storeInformation") > -1) {
+			returnTitle = oneDepthPage + ">>매장";
+		} else if (target_url.indexOf("/b//lookBookDetail?lookBookCode=") > -1) {
+			returnTitle = oneDepthPage + ">>룩북>";
+		} else if (target_url.indexOf("/b//lookBook") > -1) {
+			returnTitle = oneDepthPage + ">>룩북";
+		} else if (target_url.indexOf("/b/") > -1) {
+			returnTitle = oneDepthPage + ">>브랜드 메인";
+		} else if (target_url.indexOf("/c//ou") > -1) {
+			returnTitle = oneDepthPage;
+
+		} else if (target_url.indexOf("/c//") > -1) {
+			returnTitle = oneDepthPage;
+
+		} else if (target_url.indexOf("/c/") > -1) {
+			returnTitle = oneDepthPage;
+
+		} else if (target_url.indexOf("/mypage/order/myordersAthome") > -1) {
+			returnTitle = oneDepthPage + ">앳홈신청 및 결제";
+		} else if (target_url.indexOf("/mypage/order/myorders") > -1) {
+			returnTitle = oneDepthPage + ">주문/배송조회";
+		} else if (target_url.indexOf("/mypage/myGradeInfo") > -1) {
+			returnTitle = oneDepthPage + ">나의 회원등급";
+		} else if (target_url.indexOf("/mypage/voucher") > -1) {
+			returnTitle = oneDepthPage + ">쿠폰";
+		} else if (target_url.indexOf("/mypage/mypoint") > -1) {
+			returnTitle = oneDepthPage + ">혜택관리>나의 한섬마일리지";
+		} else if (target_url.indexOf("/mypage/myEGiftCard") > -1) {
+			returnTitle = oneDepthPage + ">혜택관리>e-giftcard";
+		} else if (target_url.indexOf("/mypage/myWish") > -1) {
+			returnTitle = oneDepthPage + ">위시리스트";
+		} else if (target_url.indexOf("/mypage/rsalarm") > -1) {
+			returnTitle = oneDepthPage + ">재입고 알림";
+		} else if (target_url.indexOf("/mypage/personInfomationChangePWCheck") > -1) {
+			returnTitle = oneDepthPage + ">개인정보 변경/탈퇴";
+		} else if (target_url.indexOf("/mypage/mydelivery") > -1) {
+			returnTitle = oneDepthPage + ">배송지 관리";
+		} else if (target_url.indexOf("/mypage/oneClick") > -1) {
+			returnTitle = oneDepthPage + ">나의 정보관리>원클릭 결제 관리";
+		} else if (target_url.indexOf("/mypage/myreview") > -1) {
+			returnTitle = oneDepthPage + ">내 상품평";
+		} else if (target_url.indexOf("/mypage/myqna") > -1) {
+			returnTitle = oneDepthPage + ">상품 Q&A";
+		} else if (target_url.indexOf("/mypage/mymantomaninquiry") > -1) {
+			returnTitle = oneDepthPage + ">1:1 문의";
+		} else if (target_url.indexOf("/mypage/mypageFloatingPopup") > -1) {
+			returnTitle = oneDepthPage + ">메인";
+		} else if (target_url.indexOf("/mypage/mypoint/mobile") > -1) {
+			returnTitle = oneDepthPage + ">나의 혜택";
+		} else if (target_url.indexOf("/mypage/event/myevents") > -1) {
+			returnTitle = oneDepthPage + ">나의 이벤트";
+		} else if (target_url.indexOf("/mypage/oneBuy") > -1) {
+			returnTitle = oneDepthPage + ">원클릭 결제 설정";
+		} else if (target_url.indexOf("/mypage/care/mycares") > -1) {
+			returnTitle = oneDepthPage + ">내역조회";
+		} else if (target_url.indexOf("/mypage/care/careRequestComplete") > -1) {
+			returnTitle = oneDepthPage + ">신청완료";
+		} else if (target_url.indexOf("/mypage/care/careRequest") > -1) {
+			returnTitle = oneDepthPage + ">신청하기";
+		} else if (target_url.endsWith("/ko/mypage/", target_url.length)) {
+			returnTitle = oneDepthPage + ">메인";
+		} else if (target_url.endsWith("/ko/mypage", target_url.length)) {
+			returnTitle = oneDepthPage + ">메인";
+		} else if (target_url.indexOf("/magazine/events/") > -1) {
+			returnTitle = oneDepthPage + ">상세>";
+		} else if (target_url.indexOf("/magazine/events") > -1) {
+			if (getCookie2("app") == null || getCookie2("app") == "") {
+				returnTitle = oneDepthPage + ">리스트";
+			} else {
+				returnTitle = oneDepthPage + ">모바일썸네일";
+			}
+		} else if (target_url.indexOf("/magazine/editorials/") > -1) {
+			returnTitle = oneDepthPage + ">에디토리얼>상세>";
+		} else if (target_url.indexOf("/magazine/editorials") > -1) {
+			returnTitle = oneDepthPage + ">에디토리얼>리스트";
+		} else if (target_url.indexOf("/magazine/exhibitions/") > -1) {
+			returnTitle = oneDepthPage + ">기획전>상세>";
+		} else if (target_url.indexOf("/magazine/exhibitions") > -1) {
+			returnTitle = oneDepthPage + ">기획전>리스트";
+		} else if (target_url.indexOf("/magazine/handpeople") > -1) {
+			returnTitle = oneDepthPage + ">핸썸피플 리스트";
+		} else if (target_url.indexOf("/magazine/instagram") > -1) {
+			returnTitle = oneDepthPage + ">인스타그램";
+		} else if (target_url.indexOf("/magazine/lookbookDetail/") > -1) {
+			returnTitle = oneDepthPage + ">룩북>상세>";
+		} else if (target_url.indexOf("/magazine/lookbook") > -1) {
+			returnTitle = oneDepthPage + ">룩북>리스트";
+		} else if (target_url.indexOf("/magazine/newsDetailtemplatetype") > -1) {
+			returnTitle = oneDepthPage + ">뉴스>상세>";
+		} else if (target_url.indexOf("/magazine/news") > -1) {
+			returnTitle = oneDepthPage + ">뉴스>리스트";
+		} else if (target_url.indexOf("/magazine/weeklypick") > -1) {
+			returnTitle = oneDepthPage + ">위클리 픽 리스트";
+		} else if (target_url.indexOf("/magazine/submain") > -1) {
+			returnTitle = oneDepthPage + ">THE매거진 메인";
+		} else if (target_url.indexOf("/magazine/youtubeList") > -1) {
+			returnTitle = oneDepthPage + ">비디오";
+		} else if (target_url.indexOf("/shoppingbag") > -1) {
+			returnTitle = oneDepthPage;
+		} else if (target_url.indexOf("/ou/outletMain") > -1) {
+			returnTitle = oneDepthPage + ">메인";
+		} else if (target_url.indexOf("/c/ou_/ou") > -1) {
+			returnTitle = oneDepthPage + ">";
+		} else if (target_url.indexOf("/mobilecommon/search") > -1) {
+			returnTitle = oneDepthPage + ">키워드";
+		} else if (target_url.indexOf("/hssearch/") > -1) {
+			returnTitle = oneDepthPage + ">검색결과";
+		} else if (target_url.indexOf("/checkout/ordersheet") > -1) {
+			returnTitle = oneDepthPage + ">주문서 작성";
+		} else if (target_url.indexOf("/checkout/orderConfirmation") > -1) {
+			returnTitle = oneDepthPage + ">주문 완료";
+		} else if (target_url.indexOf("/member/login") > -1) {
+			returnTitle = oneDepthPage;
+		} else if (target_url.indexOf("/login/checkout") > -1) {
+			returnTitle = oneDepthPage + ">미로그인시로그인유도";
+		} else if (target_url.indexOf("/member/pwChange") > -1) {
+			returnTitle = oneDepthPage + ">비밀번호 변경 대상";
+		} else if (target_url.indexOf("/member/findIdPwPage") > -1) {
+			returnTitle = oneDepthPage + ">한섬회원 아이디/비밀번호 찾기";
+		} else if (target_url.indexOf("/member/globaljoincomplete") > -1) {
+			returnTitle = oneDepthPage + ">가입완료";
+		} else if (target_url.indexOf("/member/joincomplete") > -1) {
+			returnTitle = oneDepthPage + ">가입완료";
+		} else if (target_url.indexOf("/member/joinGuidePage") > -1) {
+			returnTitle = oneDepthPage + ">회원가입안내";
+		} else if (target_url.indexOf("/member/joininfoform") > -1) {
+			returnTitle = oneDepthPage + ">간편회원 정보입력";
+		} else if (target_url.indexOf("/member/joinstart") > -1) {
+			returnTitle = oneDepthPage + ">간편회원 이메일";
+		} else if (target_url.indexOf("/member/nonMemberLogin") > -1) {
+			returnTitle = oneDepthPage + ">비회원 주문조회";
+		} else if (target_url.indexOf("/sns/main") > -1) {
+			returnTitle = oneDepthPage + ">메인";
+		} else if (target_url.indexOf("/sns/detail?") > -1) {
+			returnTitle = oneDepthPage + ">포스트상세보기";
+		} else if (target_url.indexOf("/sns/myNotice") > -1) {
+			returnTitle = oneDepthPage + ">나의알림";
+		} else if (target_url.indexOf("/sns/collectionDetail?") > -1) {
+			returnTitle = oneDepthPage + ">콜렉션상세";
+		} else if (target_url.indexOf("/sns/followerList?") > -1) {
+			returnTitle = oneDepthPage + ">팔로워리스트";
+		} else if (target_url.indexOf("/sns/followingList?") > -1) {
+			returnTitle = oneDepthPage + ">팔로윙리스트";
+		} else if (target_url.indexOf("/sns/snsSearch?searchWord=") > -1) {
+			returnTitle = oneDepthPage + ">태그검색";
+		} else if (target_url.indexOf("/sns/message?") > -1) {
+			returnTitle = oneDepthPage + ">메시지";
+		} else if (target_url.indexOf("/sns/messageList") > -1) {
+			returnTitle = oneDepthPage + ">메시지리스트";
+		} else if (target_url.indexOf("/sns/myLevel") > -1) {
+			returnTitle = oneDepthPage + ">나의레벨";
+		} else if (target_url.indexOf("/sns/myProfile?") > -1) {
+			returnTitle = oneDepthPage + ">나의프로필";
+		} else if (target_url.indexOf("/sns/weeklyBest") > -1) {
+			returnTitle = oneDepthPage + ">위클리베스트";
+		} else if (target_url.indexOf("/sns/write") > -1) {
+			returnTitle = oneDepthPage + ">포스팅작성";
+		} else if (target_url.indexOf("/mobilecommon/mainIntro") > -1) {
+			returnTitle = oneDepthPage + ">인트로";
+		} else if (target_url.indexOf("/prodqna/listProdQnA?") > -1) {
+			returnTitle = oneDepthPage + ">";
+		} else if (target_url.indexOf("/svcenter/submain") > -1) {
+			returnTitle = oneDepthPage + ">서브메인";
+		} else if (target_url.indexOf("/svcenter/notice") > -1) {
+			returnTitle = oneDepthPage + ">공지사항";
+		} else if (target_url.indexOf("/svcenter/mantomaninquiry") > -1) {
+			returnTitle = oneDepthPage + ">1:1 문의";
+		} else if (target_url.indexOf("/svcenter/faq") > -1) {
+			returnTitle = oneDepthPage + ">FAQ";
+		} else if (target_url.indexOf("/svcenter/mending") > -1) {
+			returnTitle = oneDepthPage + ">수선진행조회";
+		} else if (target_url.indexOf("/svcenter/memberjoinguide") > -1) {
+			returnTitle = oneDepthPage + ">쇼핑가이드>회원가입";
+		} else if (target_url.indexOf("/svcenter/theClubInfo") > -1) {
+			returnTitle = oneDepthPage + ">쇼핑가이드>온라인 멤버십";
+		} else if (target_url.indexOf("/svcenter/memberbenefitguide") > -1) {
+			returnTitle = oneDepthPage + ">쇼핑가이드>한섬 VVIP 혜택";
+		} else if (target_url.indexOf("/svcenter/pointguide") > -1) {
+			returnTitle = oneDepthPage + ">쇼핑가이드>한섬마일리지 혜택";
+		} else if (target_url.indexOf("/svcenter/couponguide") > -1) {
+			returnTitle = oneDepthPage + ">쇼핑가이드>쿠폰";
+		} else if (target_url.indexOf("/svcenter/asguide") > -1) {
+			returnTitle = oneDepthPage + ">쇼핑가이드>배송/반품/AS";
+		} else if (target_url.indexOf("/svcenter/paymentguide") > -1) {
+			returnTitle = oneDepthPage + ">쇼핑가이드>주문/결제";
+		} else if (target_url.indexOf("/svcenter/athomeInfo") > -1) {
+			returnTitle = oneDepthPage + ">at HOME";
+		} else if (target_url.indexOf("/svcenter/footerAthomeInfo") > -1) {
+			returnTitle = oneDepthPage + ">딜리버리서비스";
+		} else if (target_url.indexOf("/svcenter/mobilemain") > -1) {
+			returnTitle = oneDepthPage + ">메인";
+		} else if (target_url.indexOf("/svcenter/mobilenotice") > -1) {
+			returnTitle = oneDepthPage + ">공지사항";
+		} else if (target_url.indexOf("/svcenter/mobilefaq") > -1) {
+			returnTitle = oneDepthPage + ">FAQ";
+		} else if (target_url.indexOf("/svcenter/mobilemending") > -1) {
+			returnTitle = oneDepthPage + ">수선진행조회";
+		} else if (target_url.indexOf("/svcenter/serviceguide?targetSlide=0") > -1) {
+			returnTitle = oneDepthPage + ">서비스소개>간편서비스";
+		} else if (target_url.indexOf("/svcenter/serviceguide?targetSlide=1") > -1) {
+			returnTitle = oneDepthPage + ">서비스소개>스마트쇼핑";
+		} else if (target_url.indexOf("/svcenter/serviceguide?targetSlide=2") > -1) {
+			returnTitle = oneDepthPage + ">서비스소개>유니크한섬";
+		} else if (target_url.indexOf("/svcenter/serviceguide") > -1) {
+			returnTitle = oneDepthPage + ">서비스소개";
+		} else if (target_url.indexOf("/product/reviewList/") > -1) {
+			returnTitle = oneDepthPage + ">상품평>";
+		} else if (target_url.indexOf("/item/we") > -1) {
+			returnTitle = oneDepthPage + ">WE";
+		} else if (target_url.indexOf("/item/me") > -1) {
+			returnTitle = oneDepthPage + ">ME";
+		} else if (target_url.indexOf("/store-finder/") > -1) {
+			returnTitle = oneDepthPage;
+		} else if (target_url.indexOf("/footer/footerBrandintro") > -1) {
+			returnTitle = oneDepthPage + ">브랜드소개";
+		} else if (target_url.indexOf("/footer/footerCEOGreetings") > -1) {
+			returnTitle = oneDepthPage + ">CEO 메시지";
+		} else if (target_url.indexOf("/footer/footerCompanyIntro") > -1) {
+			returnTitle = oneDepthPage + ">회사소개>한섬소개";
+		} else if (target_url.indexOf("/footer/footerCEOGreetings") > -1) {
+			returnTitle = oneDepthPage + ">회사소개>CEO 메시지";
+		} else if (target_url.indexOf("/footer/footerBrandintro") > -1) {
+			returnTitle = oneDepthPage + ">회사소개>브랜드소개";
+		} else if (target_url.indexOf("/footer/footerGovernance") > -1) {
+			returnTitle = oneDepthPage + ">투자정보>기업지배구조";
+		} else if (target_url.indexOf("/footer/footerFinancialInfo") > -1) {
+			returnTitle = oneDepthPage + ">투자정보>재무정보";
+		} else if (target_url.indexOf("/footer/footerStockInfo") > -1) {
+			returnTitle = oneDepthPage + ">투자정보>주가정보";
+		} else if (target_url.indexOf("/footer/footerIR") > -1) {
+			returnTitle = oneDepthPage + ">투자정보>IR";
+		} else if (target_url.indexOf("/footer/footerCorporatePartnership") > -1) {
+			returnTitle = oneDepthPage + ">동반성장>소개";
+		} else if (target_url.indexOf("/footer/footerCoreFourPractices") > -1) {
+			returnTitle = oneDepthPage + ">동반성장>4대 실천사항";
+		} else if (target_url.indexOf("/footer/footerCooperatorSelection") > -1) {
+			returnTitle = oneDepthPage + ">동반성장>협력업체 선정";
+		} else if (target_url.indexOf("/footer/footerSupportProgram") > -1) {
+			returnTitle = oneDepthPage + ">동반성장>지원제도";
+		} else if (target_url.indexOf("/footer/footerContactUs") > -1) {
+			returnTitle = oneDepthPage + ">동반성장>소통의 장";
+		} else if (target_url.indexOf("/appDownloadSMS/") > -1) {
+			returnTitle = oneDepthPage;
+		} else if (target_url.indexOf("/intro/mainYours") > -1) {
+			returnTitle = oneDepthPage;
+		} else if (target_url.indexOf("/globalMain") > -1) {
+			returnTitle = oneDepthPage;
+		} else if (target_url.indexOf("/main") > -1) {
+			returnTitle = oneDepthPage;
+		}
+
+		return returnTitle;
 	}
-	console.log(v_Category,v_Action,v_Label);
-	ga('gp.send','event',v_Category,v_Action,v_Label);
-}
 
-if (!String.prototype.endsWith) {
-    String.prototype.endsWith = function(searchString, position) {
-        var subjectString = this.toString();
-        if (typeof position !== 'number' || !isFinite(position) || Math.floor(position) !== position || position > subjectString.length) {
-            position = subjectString.length;
-        }
-        position -= searchString.length;
-        var lastIndex = subjectString.indexOf(searchString, position);
-        return lastIndex !== -1 && lastIndex === position;
-    };
-}
+	function getCookie2(cname) {
+		var name = cname + "=";
+		var decodedCookie = unescape(document.cookie);
+		var ca = decodedCookie.split(';');
+		var cookieValue = "";
+		for (var i = 0; i < ca.length; i++) {
+			var c = ca[i];
+			while (c.charAt(0) == ' ') {
+				c = c.substring(1);
+			}
+			if (c.indexOf(name) == 0) {
+				cookieValue = c.substring(name.length, c.length);
+			}
+		}
+		return cookieValue;
+	}
 
-function gaIsoCodeEncoding(isoCode){
-    if(isoCode.toLowerCase() == "ko"){
-        GA_Event('공통', '푸터_CNT', 'LANGUAGE_한국어');
-    }else if(isoCode.toLowerCase() == "en"){
-        GA_Event('공통', '푸터_CNT', 'LANGUAGE_영어');
-    }else if(isoCode.toLowerCase() == "zh"){
-        GA_Event('공통', '푸터_CNT', 'LANGUAGE_중국어');
-    }
-}
+	function GA_Event(Category, Action, Label) {
 
+		Label = unescape(Label).replace(/\&#039;/gi, "'").replace(/\&amp;/g,
+				"&");
+
+		var v_Label = Label;
+		var v_Category = Category;
+		var v_Action = Action;
+		//공백처리을  _ 처리
+		if (Category != null) {
+			v_Category = Category.replace(/\s{2,}/gi, ' ').trim().replace(
+					/\s/gi, '_');
+		}
+		if (Action != null) {
+			v_Action = Action.replace(/\s{2,}/gi, ' ').trim().replace(/\s/gi,
+					'_');
+		}
+		if (Label != null) {
+			v_Label = Label.replace(/\s{2,}/gi, ' ').trim()
+					.replace(/\s/gi, '_');
+		}
+		console.log(v_Category, v_Action, v_Label);
+		ga('gp.send', 'event', v_Category, v_Action, v_Label);
+	}
+
+	if (!String.prototype.endsWith) {
+		String.prototype.endsWith = function(searchString, position) {
+			var subjectString = this.toString();
+			if (typeof position !== 'number' || !isFinite(position)
+					|| Math.floor(position) !== position
+					|| position > subjectString.length) {
+				position = subjectString.length;
+			}
+			position -= searchString.length;
+			var lastIndex = subjectString.indexOf(searchString, position);
+			return lastIndex !== -1 && lastIndex === position;
+		};
+	}
+
+	function gaIsoCodeEncoding(isoCode) {
+		if (isoCode.toLowerCase() == "ko") {
+			GA_Event('공통', '푸터_CNT', 'LANGUAGE_한국어');
+		} else if (isoCode.toLowerCase() == "en") {
+			GA_Event('공통', '푸터_CNT', 'LANGUAGE_영어');
+		} else if (isoCode.toLowerCase() == "zh") {
+			GA_Event('공통', '푸터_CNT', 'LANGUAGE_중국어');
+		}
+	}
 </script>
 <script>
-        var ko_time = '20230210163006'; // 현재시간
-        
-        // 스타일라이브 (20210901 이전 접근불가)
-        if( Number(ko_time) < 20210901000000 && 'https://www.thehandsome.com/WEB-INF/views/handsomemobile/pages/member/findIdPwPage.jsp'.indexOf('/sns/') > -1 ) {
-            location.replace("http://www.thehandsome.com/ko/magazine/newsDetailtemplatetype4?newsCode=8802187958044");
-        }
-        </script>
+	var ko_time = '20230210163006'; // 현재시간
+
+	// 스타일라이브 (20210901 이전 접근불가)
+	if (Number(ko_time) < 20210901000000
+			&& 'https://www.thehandsome.com/WEB-INF/views/handsomemobile/pages/member/findIdPwPage.jsp'
+					.indexOf('/sns/') > -1) {
+		location
+				.replace("http://www.thehandsome.com/ko/magazine/newsDetailtemplatetype4?newsCode=8802187958044");
+	}
+</script>
 
 <style media="screen">
 .blsmflw1 {
@@ -813,123 +1556,240 @@ keyframes target_image { 0% {
 50
 
 
+
+
+
+
+
+
 %
 {
 transform
 
 
+
+
+
+
+
+
 :
 
 
+
+
+
+
+
+
 rotate
+
+
+
+
+
+
 (
+
+
+
+
+
+
 
 
 9deg
 
 
+
+
+
+
+
+
 )
+
+
+
+
+
+
 
 
 }
 100
 
 
+
+
+
+
+
+
 %
 {
 transform
 
 
+
+
+
+
+
+
 :
 
 
+
+
+
+
+
+
 rotate
+
+
+
+
+
+
 (
+
+
+
+
+
+
 
 
 -1deg
 
 
+
+
+
+
+
+
 )
+
+
+
+
+
+
 ;
-
-
 }
 }
 </style>
 
 <script>
-		var birthday = '';
-		var splitBirthday = birthday != '' ? birthday.split(" ")[5]: ''; //출생년도
-		var gender   = '';
-		
+	var birthday = '';
+	var splitBirthday = birthday != '' ? birthday.split(" ")[5] : ''; //출생년도
+	var gender = '';
 
-		(function(w,d,n,s,e,o) {
-		   w[n]=w[n]||function(){(w[n].q=w[n].q||[]).push(arguments)};
-		   e=d.createElement(s);e.async=1;e.charset='utf-8';e.src='//static.recopick.com/dist/production.min.js';
-		   o=d.getElementsByTagName(s)[0];o.parentNode.insertBefore(e,o);
-		 })(window, document, 'recoPick', 'script');
-		 
-		    recoPick('service', 'thehandsome.com/ko/');   
- 	     
-            try{
-                recoPick('sendLog','visit');   
-            }catch(e) {
-                console.log(e);
-            }
-		</script>
+	(function(w, d, n, s, e, o) {
+		w[n] = w[n] || function() {
+			(w[n].q = w[n].q || []).push(arguments)
+		};
+		e = d.createElement(s);
+		e.async = 1;
+		e.charset = 'utf-8';
+		e.src = '//static.recopick.com/dist/production.min.js';
+		o = d.getElementsByTagName(s)[0];
+		o.parentNode.insertBefore(e, o);
+	})(window, document, 'recoPick', 'script');
+
+	recoPick('service', 'thehandsome.com/ko/');
+
+	try {
+		recoPick('sendLog', 'visit');
+	} catch (e) {
+		console.log(e);
+	}
+</script>
 
 <script>
-            !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
-            n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
-            t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
-            fbq('init', '1947530058811697'); // Insert your pixel ID here.
-            fbq('track', 'PageView');
-        </script>
+	!function(f, b, e, v, n, t, s) {
+		if (f.fbq)
+			return;
+		n = f.fbq = function() {
+			n.callMethod ? n.callMethod.apply(n, arguments) : n.queue
+					.push(arguments)
+		};
+		if (!f._fbq)
+			f._fbq = n;
+		n.push = n;
+		n.loaded = !0;
+		n.version = '2.0';
+		n.queue = [];
+		t = b.createElement(e);
+		t.async = !0;
+		t.src = v;
+		s = b.getElementsByTagName(e)[0];
+		s.parentNode.insertBefore(t, s)
+	}(window, document, 'script',
+			'https://connect.facebook.net/en_US/fbevents.js');
+	fbq('init', '1947530058811697'); // Insert your pixel ID here.
+	fbq('track', 'PageView');
+</script>
 <noscript>
 	<img height="1" width="1" style="display: none"
 		src="https://www.facebook.com/tr?id=1947530058811697&ev=PageView&noscript=1" />
 </noscript>
 
 <script>
-		
-		var pageviewObj = new Object();
-		pageviewObj = setDimensionData();
+	var pageviewObj = new Object();
+	pageviewObj = setDimensionData();
 
-		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-		})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-		
-		try{
-			ga('create', 'UA-154649175-1', 'auto', 'gp');
-			ga('gp.set', 'anonymizeIp', true);              // IP 익명화 선언
+	(function(i, s, o, g, r, a, m) {
+		i['GoogleAnalyticsObject'] = r;
+		i[r] = i[r] || function() {
+			(i[r].q = i[r].q || []).push(arguments)
+		}, i[r].l = 1 * new Date();
+		a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+		a.async = 1;
+		a.src = g;
+		m.parentNode.insertBefore(a, m)
+	})(window, document, 'script',
+			'https://www.google-analytics.com/analytics.js', 'ga');
 
-			ga('gp.set',pageviewObj);
-		}catch(e) {
-		    console.log(e);
-		}
+	try {
+		ga('create', 'UA-154649175-1', 'auto', 'gp');
+		ga('gp.set', 'anonymizeIp', true); // IP 익명화 선언
 
-		dataLayer = [pageviewObj];
-		
-	
-		(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-		new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-		j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-		'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-		})(window,document,'script','dataLayer','GTM-KSHFVVQ');
-	
-		
-		</script>
+		ga('gp.set', pageviewObj);
+	} catch (e) {
+		console.log(e);
+	}
+
+	dataLayer = [ pageviewObj ];
+
+	(function(w, d, s, l, i) {
+		w[l] = w[l] || [];
+		w[l].push({
+			'gtm.start' : new Date().getTime(),
+			event : 'gtm.js'
+		});
+		var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l='
+				+ l
+				: '';
+		j.async = true;
+		j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+		f.parentNode.insertBefore(j, f);
+	})(window, document, 'script', 'dataLayer', 'GTM-KSHFVVQ');
+</script>
 
 
 <script type="text/javascript">
-    (function(a,i,u,e,o) {
-    a[u]=a[u]||function(){(a[u].q=a[u].q||[]).push(arguments)};
-    })(window, document, "groobee");
-    groobee("serviceKey", "446b3d48b07e41f68624bf7f3457f33d");
-    groobee("siteType", "custom");
-    </script>
+	(function(a, i, u, e, o) {
+		a[u] = a[u] || function() {
+			(a[u].q = a[u].q || []).push(arguments)
+		};
+	})(window, document, "groobee");
+	groobee("serviceKey", "446b3d48b07e41f68624bf7f3457f33d");
+	groobee("siteType", "custom");
+</script>
 <script charset="utf-8"
 	src="//static.groobee.io/dist/g2/groobee.init.min.js"></script>
 
@@ -939,222 +1799,242 @@ rotate
 <meta property="groobee:member_type" content="">
 <meta property="groobee:member_age" content="">
 <script>
-    // 검색 결과 페이지
-    if(window.location.pathname.indexOf("/hssearch/searchCount") > -1) {
-        var groobeeKeyword = "";                     //검색_검색어(검색결과페이지일때 사용)
-        groobee( "SE", { keyword : groobeeKeyword } );
-    }
-    
-    </script>
+	// 검색 결과 페이지
+	if (window.location.pathname.indexOf("/hssearch/searchCount") > -1) {
+		var groobeeKeyword = ""; //검색_검색어(검색결과페이지일때 사용)
+		groobee("SE", {
+			keyword : groobeeKeyword
+		});
+	}
+</script>
 <script type="text/javascript" async=""
 	src="https://googleads.g.doubleclick.net/pagead/viewthroughconversion/943253288/?random=1676014207889&amp;cv=9&amp;fst=1676014207889&amp;num=1&amp;guid=ON&amp;resp=GooglemKTybQhCsO&amp;eid=375603261%2C466465926&amp;u_h=800&amp;u_w=360&amp;u_ah=800&amp;u_aw=360&amp;u_cd=24&amp;u_his=5&amp;u_tz=540&amp;u_java=false&amp;u_nplug=0&amp;u_nmime=0&amp;sendb=1&amp;ig=1&amp;frm=0&amp;url=https%3A%2F%2Fwww.thehandsome.com%2Fko%2Fmember%2FfindIdPwPage&amp;ref=https%3A%2F%2Fwww.thehandsome.com%2Fko%2Fmember%2Flogin&amp;tiba=%EC%95%84%EC%9D%B4%EB%94%94%2F%EB%B9%84%EB%B0%80%EB%B2%88%ED%98%B8%EC%B0%BE%EA%B8%B0%20%7C%20%EB%8D%94%ED%95%9C%EC%84%AC%EB%8B%B7%EC%BB%B4&amp;hn=www.googleadservices.com&amp;rfmt=3&amp;fmt=4"></script>
 </head>
 
 <body>
-<script type="text/javascript">
-	function idCheckOnlyOne(){
-		console.log("hello");
-		
-		var mid = document.getElementById("mid").value;
-		console.log(mid);
-		let element = {"mid" : mid}
-		var token = $("meta[name='_csrf']").attr("content");
-		var header = $("meta[name='_csrf_header']").attr("content");
-		
-		$.ajax({
-			type : 'post',
-			url : '/memberRestAPI/idDoubleCheck',
-			data : JSON.stringify(element),
-			contentType : "application/json; charset=utf-8",
-			dataType : "text",
-			beforeSend: function(jqXHR){
-				jqXHR.setRequestHeader(header, token);
-			},
-			success : function(num) {
-				console.log("success");
-				if(num == 1){
-					$(".feedback").html(" 사용 가능한 아이디입니다.");
-					$(".feedback").attr("style", "display:block;");
+	<script type="text/javascript">
+		function cancleButton() {
+			console.log("hello");
+			var lc = new layerConfirm("회원가입을 취소하시겠습니까?", "확인", "취소");
+			lc.confirmAction = function() {
+				location.href = "/member/login";
+			};
+		}
+		/* $("#cancleBtn").click(function () {
+		 console.log("hellod");
+		 var lc = new layerConfirm("회원가입을 취소하시겠습니까?", "확인", "취소");
+		    lc.confirmAction = function () {
+		      location.href = "/member/login";
+		    };
+		  }); */
+	</script>
+
+
+	<script type="text/javascript">
+		function idCheckOnlyOne() {
+			console.log("hello");
+
+			var mid = document.getElementById("mid").value;
+			console.log(mid);
+			let element = {
+				"mid" : mid
+			}
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+
+			$.ajax({
+				type : 'post',
+				url : '/memberRestAPI/idDoubleCheck',
+				data : JSON.stringify(element),
+				contentType : "application/json; charset=utf-8",
+				dataType : "text",
+				beforeSend : function(jqXHR) {
+					jqXHR.setRequestHeader(header, token);
+				},
+				success : function(num) {
+					console.log("success");
+					if (num == 1) {
+						$(".feedback").html(" 사용 가능한 아이디입니다.");
+						$(".feedback").attr("style", "display:block;");
+					} else {
+						$(".feedback").html(" 다른 사람이 사용하고 있는 아이디입니다.");
+						$(".feedback")
+								.attr("style", "display:block; color:red");
+					}
+				},
+				error : function(jqxHR) {
+					console.log("error");
 				}
-				else{
-					$(".feedback").html(" 다른 사람이 사용하고 있는 아이디입니다.");
-					$(".feedback").attr("style", "display:block; color:red");
+			});
+
+		}
+
+		function isSame() {
+
+			console.log("hello");
+			console.log(document.getElementById('mpassword').value);
+			console.log(document.getElementById('pwc').value);
+
+			if (document.getElementById('mpassword').value != ''
+					&& document.getElementById('pwc').value != '') {
+				if (document.getElementById('mpassword').value == document
+						.getElementById('pwc').value) {
+					document.getElementById('same').innerHTML = '비밀번호가 일치합니다.';
+					document.getElementById('same').style.color = 'blue';
+				} else {
+					document.getElementById('same').innerHTML = '비밀번호가 일치하지 않습니다.';
+					document.getElementById('same').style.color = 'red';
 				}
-			},
-			error : function(jqxHR) {
-				console.log("error");
-			}
-		});
-		
-	}
-	
-	
-	function isSame() {
-		
-		console.log("hello");
-		console.log(document.getElementById('mpassword').value);
-		console.log(document.getElementById('pwc').value);
-		
-		if(document.getElementById('mpassword').value  != '' && document.getElementById('pwc').value != ''){
-			if(document.getElementById('mpassword').value == document.getElementById('pwc').value){
-				document.getElementById('same').innerHTML='비밀번호가 일치합니다.';
-				document.getElementById('same').style.color='blue';
-			}
-			else {
-				document.getElementById('same').innerHTML='비밀번호가 일치하지 않습니다.';
-				document.getElementById('same').style.color='red';
 			}
 		}
-	}
-	
-</script>	
-	
-<script type="text/javascript">
-	window.onload = function() {
-		console.log('hello');
-	}
+	</script>
 
-	function genderCheckOnlyOne(element) {
-		console.log("element" + element.id);
-		const mgenderFemale = document.getElementById("genderFemale").checked;
-		const mgenderMale = document.getElementById("genderMale").checked;
+	<script type="text/javascript">
+		/* window.onload = function() {
+			console.log('hello');
+		} */
 
-		if (element.id == "genderFemale") {
-			console.log("genderFemale Clicked");
-			document.getElementById("genderFemale").checked = true;
-			document.getElementById("genderMale").checked = false; //genderMale 지우기
-			console.log("mgenderFemale 꺼졌나요 ? "
-					+ document.getElementById("genderFemale").checked);
-			console.log("mgenderMale 꺼졌나요 ? "
-					+ document.getElementById("genderMale").checked);
-		}
+		function genderCheckOnlyOne(element) {
+			console.log("element" + element.id);
+			const mgenderFemale = document.getElementById("genderFemale").checked;
+			const mgenderMale = document.getElementById("genderMale").checked;
 
-		if (element.id == "genderMale") {
-			console.log("genderMale Clicked");
-			document.getElementById("genderFemale").checked = false;
-			document.getElementById("genderMale").checked = true;
-			console.log(mgenderFemale);
-			console.log(mgenderMale);
-		}
-
-	}
-
-	function joinMemberAccount() {
-		console.log("hello");
-
-		const mid = document.getElementById("mid").value;
-		const mpassword = document.getElementById("mpassword").value;
-		const mpwc = document.getElementById("pwc").value;
-		const memail = document.getElementById("memail").value;
-		const mphone = document.getElementById("mphone").value;
-		const mname = document.getElementById("mname").value;
-		const mzipcode = document.getElementById("mzipcode").value;
-		const maddress1 = document.getElementById("maddress1").value;
-		const maddress2 = document.getElementById("maddress2").value;
-		
-
-		let mbirth = "";
-		/** 성별 체크된 값 가져오기
-		 */
-		let mgender = 5;
-		if (document.getElementById("genderFemale").checked
-				&& !document.getElementById("genderMale").checked) {
-			console.log("mgender" + 0);
-			mgender = 0;
-		} else if (!document.getElementById("genderFemale").checked
-				&& document.getElementById("genderMale").checked) {
-			console.log("mgender" + 1);
-			mgender = 1;
-		}
-
-		// birth select 값 가져오기
-		var birthYear = document.getElementById('selYear');
-		console.log(birthYear.options[birthYear.selectedIndex].value);
-		birthYear = birthYear.options[birthYear.selectedIndex].value;
-
-		var birthMonth = document.getElementById('selMonth');
-		console.log(birthMonth.options[birthMonth.selectedIndex].value);
-		birthMonth = birthMonth.options[birthMonth.selectedIndex].value;
-
-		var birthDay = document.getElementById('selDay');
-		console.log(birthDay.options[birthDay.selectedIndex].value);
-		birthDay = birthDay.options[birthDay.selectedIndex].value;
-		mbirth = birthYear + '/' + birthMonth + "/" + birthDay;
-
-		console.log(mid);
-		console.log(mpassword);
-		console.log(mpwc);
-		console.log(memail);
-		console.log(mphone);
-		console.log(mname);
-		console.log(mzipcode);
-		console.log(maddress1);
-		console.log(maddress2);
-		console.log(mgender);
-		console.log(mbirth);
-		
-		if(mid == null || mpassword == null|| mpwc == null ||
-		   memail == null || mphone == null || mname == null||
-		   mzipcode == null || maddress1 == null || maddress2 == null || mgender == null || mbirth == null){
-			
-			alert("빈 칸을 채워주세요");	
-			return;
-			
-		}
-
-		let memberJoinObj = {
-			"mid" : mid,
-			"mpassword" : mpassword,
-			"mname" : mname,
-			"memail" : memail,
-			"mphone" : mphone,
-			"mzipcode" : mzipcode,
-			"maddress1" : maddress1,
-			"maddress2" : maddress2,
-			"mbirth" : mbirth,
-			"mgender" : mgender
-		}
-
-		ajaxMemberJoinObj(memberJoinObj);
-
-	}
-
-	function ajaxMemberJoinObj(element) {
-		console.log("보낸당 ...");
-		console.log(element);
-		var token = $("meta[name='_csrf']").attr("content");
-		var header = $("meta[name='_csrf_header']").attr("content");
-		//1. form 전송
-		//document.getElementById('memberJoinForm').submit();
-
-		//CSRF HEADER, TOKEN 만들기
-		console.log("보내졋나?");
-		console.log("token : " + token);
-		console.log("header : " + header);
-		$.ajax({
-			type : 'post',
-			url : '/memberRestAPI/joinMemberAccount',
-			data : JSON.stringify(element),
-			contentType : "application/json; charset=utf-8",
-			dataType : "text",
-			beforeSend : function(jqXHR) {
-				jqXHR.setRequestHeader(header, token);
-			},
-			success : function(jqXHR) {
-				console.log("success");
-				alert("회원가입을 성공하였습니다.");
-				window.location.replace("/member/login");
-			},
-			error : function(jqXHR) {
-				console.log("error");
-			},
-			complete : function(jqXHR) {
+			if (element.id == "genderFemale") {
+				console.log("genderFemale Clicked");
+				document.getElementById("genderFemale").checked = true;
+				document.getElementById("genderMale").checked = false; //genderMale 지우기
+				console.log("mgenderFemale 꺼졌나요 ? "
+						+ document.getElementById("genderFemale").checked);
+				console.log("mgenderMale 꺼졌나요 ? "
+						+ document.getElementById("genderMale").checked);
 			}
-		});
-	}
-</script>
-	
-	
+
+			if (element.id == "genderMale") {
+				console.log("genderMale Clicked");
+				document.getElementById("genderFemale").checked = false;
+				document.getElementById("genderMale").checked = true;
+				console.log(mgenderFemale);
+				console.log(mgenderMale);
+			}
+
+		}
+
+		function joinMemberAccount() {
+			console.log("hello");
+
+			const mid = document.getElementById("mid").value;
+			const mpassword = document.getElementById("mpassword").value;
+			const mpwc = document.getElementById("pwc").value;
+			const memail = document.getElementById("memail").value;
+			const mphone = document.getElementById("mphone").value;
+			const mname = document.getElementById("mname").value;
+			const mzipcode = document.getElementById("mzipcode").value;
+			const maddress1 = document.getElementById("maddress1").value;
+			const maddress2 = document.getElementById("maddress2").value;
+
+			let mbirth = "";
+			/** 성별 체크된 값 가져오기
+			 */
+			let mgender = 5;
+			if (document.getElementById("genderFemale").checked
+					&& !document.getElementById("genderMale").checked) {
+				console.log("mgender" + 0);
+				mgender = 0;
+			} else if (!document.getElementById("genderFemale").checked
+					&& document.getElementById("genderMale").checked) {
+				console.log("mgender" + 1);
+				mgender = 1;
+			}
+
+			// birth select 값 가져오기
+			var birthYear = document.getElementById('selYear');
+			console.log(birthYear.options[birthYear.selectedIndex].value);
+			birthYear = birthYear.options[birthYear.selectedIndex].value;
+
+			var birthMonth = document.getElementById('selMonth');
+			console.log(birthMonth.options[birthMonth.selectedIndex].value);
+			birthMonth = birthMonth.options[birthMonth.selectedIndex].value;
+
+			var birthDay = document.getElementById('selDay');
+			console.log(birthDay.options[birthDay.selectedIndex].value);
+			birthDay = birthDay.options[birthDay.selectedIndex].value;
+			mbirth = birthYear + '/' + birthMonth + "/" + birthDay;
+
+			console.log(mid);
+			console.log(mpassword);
+			console.log(mpwc);
+			console.log(memail);
+			console.log(mphone);
+			console.log(mname);
+			console.log(mzipcode);
+			console.log(maddress1);
+			console.log(maddress2);
+			console.log(mgender);
+			console.log(mbirth);
+
+			if (mid == null || mpassword == null || mpwc == null
+					|| memail == null || mphone == null || mname == null
+					|| mzipcode == null || maddress1 == null
+					|| maddress2 == null || mgender == null || mbirth == null) {
+
+				alert("빈 칸을 채워주세요");
+				return;
+
+			}
+
+			let memberJoinObj = {
+				"mid" : mid,
+				"mpassword" : mpassword,
+				"mname" : mname,
+				"memail" : memail,
+				"mphone" : mphone,
+				"mzipcode" : mzipcode,
+				"maddress1" : maddress1,
+				"maddress2" : maddress2,
+				"mbirth" : mbirth,
+				"mgender" : mgender
+			}
+
+			ajaxMemberJoinObj(memberJoinObj);
+
+		}
+
+		function ajaxMemberJoinObj(element) {
+			console.log("보낸당 ...");
+			console.log(element);
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			//1. form 전송
+			//document.getElementById('memberJoinForm').submit();
+
+			//CSRF HEADER, TOKEN 만들기
+			console.log("보내졋나?");
+			console.log("token : " + token);
+			console.log("header : " + header);
+			$.ajax({
+				type : 'post',
+				url : '/memberRestAPI/joinMemberAccount',
+				data : JSON.stringify(element),
+				contentType : "application/json; charset=utf-8",
+				dataType : "text",
+				beforeSend : function(jqXHR) {
+					jqXHR.setRequestHeader(header, token);
+				},
+				success : function(jqXHR) {
+					console.log("success");
+					alert("회원가입을 성공하였습니다.");
+					window.location.replace("/member/login");
+				},
+				error : function(jqXHR) {
+					console.log("error");
+				},
+				complete : function(jqXHR) {
+				}
+			});
+		}
+	</script>
+
+
 	<!-- Loading -->
 	<div style="display: none;">
 		<div id="loadingBarDiv" style="display: none;"></div>
@@ -1204,382 +2084,398 @@ rotate
 
 
 				<div class="mem_ct_wrap">
-					<form id="memberJoinForm" action="/memberRestAPI/joinMemberAccount"
-						method="POST">
-						<!--  CSRF 토큰 -->
-						<input type="hidden" th:name="_csrf" th:value="_csrf.token" />
-					
-						<input type="hidden" name="emailDuplChk" id="emailDuplChk" value="N"
-							title="이메일 중복"> <input type="hidden" name="pwTypeChk"
-							id="pwTypeChk" value="Y" title="비밀번호 형식"> <input
-							type="hidden" name="pwConfirmChk" id="pwConfirmChk" value=""
-							title="비밀번호 일치"> <input type="hidden" id="uid" name="uid"
-							value="">
-						<!-- <input type="hidden" id="emailAddress" name="emailAddress" value="" /> -->
-						<input type="hidden" id="sBirthday" name="sBirthday" value="">
-						<input type="hidden" id="gender" name="gender" value=""> <input
-							type="hidden" id="collectionAgreementYN"
-							name="collectionAgreementYN" value="">
-						<div class="input_user_id">
+					<!-- <form id="memberJoinForm" action="/memberRestAPI/joinMemberAccount"
+						method="POST"> -->
+					<!--  CSRF 토큰 -->
+					<input type="hidden" th:name="_csrf" th:value="_csrf.token" /> <input
+						type="hidden" name="emailDuplChk" id="emailDuplChk" value="N"
+						title="이메일 중복"> <input type="hidden" name="pwTypeChk"
+						id="pwTypeChk" value="Y" title="비밀번호 형식"> <input
+						type="hidden" name="pwConfirmChk" id="pwConfirmChk" value=""
+						title="비밀번호 일치"> <input type="hidden" id="uid" name="uid"
+						value="">
+					<!-- <input type="hidden" id="emailAddress" name="emailAddress" value="" /> -->
+					<input type="hidden" id="sBirthday" name="sBirthday" value="">
+					<input type="hidden" id="gender" name="gender" value=""> <input
+						type="hidden" id="collectionAgreementYN"
+						name="collectionAgreementYN" value="">
+					<div class="input_user_id">
 
-							<h5>
-								아이디<i class="txt_point">*</i>
-							</h5>
-							<p class="feedback" id="feedback" name="feedback"></p>
-							<div style="float: left;">
-								<input type="text" id="mid" name="mid" class="user_id"
-									placeholder="아이디를 입력하세요." title="아이디를 입력하세요." maxlength="100" required/>
-							</div>
-							<div style="float: left;">
-								<button type="button" class="btnstl3 solid_btn_blk btn_agree"
-									id="idCheck" th:onclick="idCheckOnlyOne()">중복확인</button>
-							</div>
+						<h5>
+							아이디<i class="txt_point">*</i>
+						</h5>
+						<p class="feedback" id="feedback" name="feedback"></p>
+						<div style="float: left;">
+							<input type="text" id="mid" name="mid" class="user_id"
+								placeholder="아이디를 입력하세요." title="아이디를 입력하세요." maxlength="100"
+								required />
 						</div>
-						<div class="input_user_name"></div>
+						<div style="float: left;">
+							<button type="button" class="btnstl3 solid_btn_blk btn_agree"
+								id="idCheck" th:onclick="idCheckOnlyOne()">중복확인</button>
+						</div>
+					</div>
+					<div class="input_user_name"></div>
 
-						<!--건들이지 않는 부분-->
-						<div class="chk_agree_wrap">
-							<h5 class="txt_point user_id">
-								<strong></strong>
+					<!--건들이지 않는 부분-->
+					<div class="chk_agree_wrap">
+						<h5 class="txt_point user_id">
+							<strong></strong>
+						</h5>
+
+						<div class="input_group">
+							<h5>
+								비밀번호<i class="txt_point">*</i>
 							</h5>
+							<div class="input_user_pw">
 
-							<div class="input_group">
-								<h5>
-									비밀번호<i class="txt_point">*</i>
-								</h5>
-								<div class="input_user_pw">
+								<input type="password" id="mpassword" name="mpassword"
+									class="user_pw" placeholder="비밀번호를 입력하세요." title="비밀번호를 입력하세요."
+									maxlength="100" onChange="JavaScript:isSame();" required>
+							</div>
+							<!-- [TO DEV] Error msg here. -->
+							<div class="err_wrap">
+								<p class="err_txt" id="pwMsg"></p>
+							</div>
+							<div class="input_user_pw">
+								<input type="password" id="pwc" class="user_pw" name="pwc"
+									placeholder="비밀번호를 한번 더 입력하세요." title="비밀번호를 한번 더 입력하세요."
+									maxlength="100" onChange="JavaScript:isSame();" required>
+							</div>
+							<p id="same"></p>
 
-									<input type="password" id="mpassword" name="mpassword"
-										class="user_pw" placeholder="비밀번호를 입력하세요."
-										title="비밀번호를 입력하세요." maxlength="100" onChange="JavaScript:isSame();" required>
-								</div>
-								<!-- [TO DEV] Error msg here. -->
-								<div class="err_wrap">
-									<p class="err_txt" id="pwMsg"></p>
-								</div>
-								<div class="input_user_pw">
-									<input type="password" id="pwc" class="user_pw" name="pwc"
-										placeholder="비밀번호를 한번 더 입력하세요." title="비밀번호를 한번 더 입력하세요."
-										maxlength="100" onChange="JavaScript:isSame();" required>
-								</div>
-								<p id="same"></p>
-								
-								
-								<!-- [TO DEV] Error msg here. -->
-								<div class="err_wrap">
-									<p class="err_txt" id="pwcMsg"></p>
-								</div>
 
-								<div class="req_txt">
-									<i class="txt_point">*</i>표시는 필수항목입니다.
-								</div>
-								<h5 class="w_helper">
-									이메일
-									
-									<!-- tootip s -->
-									<span class="cmt_email">
-										<div class="icon_help btn_tooltip"
-											data-tooltip-target="tooltip_cmt_email_guide"></div>
-									</span>
-									<!-- tootip : contents_area s -->
-									<div class="tooltip_contens"></div>
-									<!-- tootip : contents_area e -->
+							<!-- [TO DEV] Error msg here. -->
+							<div class="err_wrap">
+								<p class="err_txt" id="pwcMsg"></p>
+							</div>
 
-									<!-- 툴팁 : 이메일(정보수신용) s -->
-									<div class="tooltip_html">
-										<div class="tooltip_wrap tooltip_cmt_email_guide">
-											<div class="tltp_close_btn btn_tltp_close">
-												<span>닫기</span>
-											</div>
-											<h1 class="tltp_header">이메일(정보수신용)</h1>
-											<div class="tltp_content">
-												쇼핑에 도움이 되시는 마케팅 정보를 수신하기 위한<br>이메일 입니다.
-											</div>
+							<div class="req_txt">
+								<i class="txt_point">*</i>표시는 필수항목입니다.
+							</div>
+							<h5 class="w_helper">
+								이메일
+
+								<!-- tootip s -->
+								<span class="cmt_email">
+									<div class="icon_help btn_tooltip"
+										data-tooltip-target="tooltip_cmt_email_guide"></div>
+								</span>
+								<!-- tootip : contents_area s -->
+								<div class="tooltip_contens"></div>
+								<!-- tootip : contents_area e -->
+
+								<!-- 툴팁 : 이메일(정보수신용) s -->
+								<div class="tooltip_html">
+									<div class="tooltip_wrap tooltip_cmt_email_guide">
+										<div class="tltp_close_btn btn_tltp_close">
+											<span>닫기</span>
+										</div>
+										<h1 class="tltp_header">이메일(정보수신용)</h1>
+										<div class="tltp_content">
+											쇼핑에 도움이 되시는 마케팅 정보를 수신하기 위한<br>이메일 입니다.
 										</div>
 									</div>
-									<!-- 툴팁 : 이메일(정보수신용) e -->
-								</h5>
-								<div class="input_user_email">
-									<input type="text" id="memail" name="memail" class="user_email"
-										placeholder="이메일을 입력하세요." title="이메일을 입력하세요." maxlength="100" required>
 								</div>
-								<!-- <div class="err_wrap">
+								<!-- 툴팁 : 이메일(정보수신용) e -->
+							</h5>
+							<div class="input_user_email">
+								<input type="text" id="memail" name="memail" class="user_email"
+									placeholder="이메일을 입력하세요." title="이메일을 입력하세요." maxlength="100"
+									required>
+							</div>
+							<!-- <div class="err_wrap">
 									<p class="err_txt" id="emailMsg">이미 사용중인 이메일입니다.</p>
 								</div> -->
-								<div class="check_stl chk_area">
-									<input type="checkbox" id="chk_agree" name="emailReceiveYn"
-										value="Y"> <label for="chk_agree"> 이메일을 통한 상품
-										및 이벤트 정보 수신에 동의 합니다. (선택) </label> <br>
-								</div>
+							<div class="check_stl chk_area">
+								<input type="checkbox" id="chk_agree" name="emailReceiveYn"
+									value="Y"> <label for="chk_agree"> 이메일을 통한 상품 및
+									이벤트 정보 수신에 동의 합니다. (선택) </label> <br>
+							</div>
 
-								<div class="input_user_name"></div>
+							<div class="input_user_name"></div>
 
-								<h5>
-									이름<i class="txt_point">*</i>
-								</h5>
-								<div class="input_user_name">
-									<input type="text" id="mname" name="mname" class="user_name"
-										placeholder="이름을 입력하세요." title="이름을 입력하세요." maxlength="100" required>
-								</div>
-								<!-- [TO DEV] Error msg here. -->
-								<div class="err_wrap">
-									<p class="err_txt" id="nameMsg"></p>
-								</div>
-								<h5 class="pd_title">
-									생년월일<i class="txt_point">*</i>
-								</h5>
-								<div class="input_user_bday">
-									<div class="bday_year">
-										<div class="select_box">
-											<select id="selYear" required>
-												<option value="">년</option>
-												<option value="2009">2009</option>
-												<option value="2008">2008</option>
-												<option value="2007">2007</option>
-												<option value="2006">2006</option>
-												<option value="2005">2005</option>
-												<option value="2004">2004</option>
-												<option value="2003">2003</option>
-												<option value="2002">2002</option>
-												<option value="2001">2001</option>
-												<option value="2000">2000</option>
-												<option value="1999">1999</option>
-												<option value="1998">1998</option>
-												<option value="1997">1997</option>
-												<option value="1996">1996</option>
-												<option value="1995">1995</option>
-												<option value="1994">1994</option>
-												<option value="1993">1993</option>
-												<option value="1992">1992</option>
-												<option value="1991">1991</option>
-												<option value="1990">1990</option>
-												<option value="1989">1989</option>
-												<option value="1988">1988</option>
-												<option value="1987">1987</option>
-												<option value="1986">1986</option>
-												<option value="1985">1985</option>
-												<option value="1984">1984</option>
-												<option value="1983">1983</option>
-												<option value="1982">1982</option>
-												<option value="1981">1981</option>
-												<option value="1980">1980</option>
-												<option value="1979">1979</option>
-												<option value="1978">1978</option>
-												<option value="1977">1977</option>
-												<option value="1976">1976</option>
-												<option value="1975">1975</option>
-												<option value="1974">1974</option>
-												<option value="1973">1973</option>
-												<option value="1972">1972</option>
-												<option value="1971">1971</option>
-												<option value="1970">1970</option>
-												<option value="1969">1969</option>
-												<option value="1968">1968</option>
-												<option value="1967">1967</option>
-												<option value="1966">1966</option>
-												<option value="1965">1965</option>
-												<option value="1964">1964</option>
-												<option value="1963">1963</option>
-												<option value="1962">1962</option>
-												<option value="1961">1961</option>
-												<option value="1960">1960</option>
-												<option value="1959">1959</option>
-												<option value="1958">1958</option>
-												<option value="1957">1957</option>
-												<option value="1956">1956</option>
-												<option value="1955">1955</option>
-												<option value="1954">1954</option>
-												<option value="1953">1953</option>
-												<option value="1952">1952</option>
-												<option value="1951">1951</option>
-												<option value="1950">1950</option>
-												<option value="1949">1949</option>
-												<option value="1948">1948</option>
-												<option value="1947">1947</option>
-												<option value="1946">1946</option>
-												<option value="1945">1945</option>
-												<option value="1944">1944</option>
-												<option value="1943">1943</option>
-												<option value="1942">1942</option>
-												<option value="1941">1941</option>
-												<option value="1940">1940</option>
-												<option value="1939">1939</option>
-												<option value="1938">1938</option>
-												<option value="1937">1937</option>
-												<option value="1936">1936</option>
-												<option value="1935">1935</option>
-												<option value="1934">1934</option>
-												<option value="1933">1933</option>
-												<option value="1932">1932</option>
-												<option value="1931">1931</option>
-												<option value="1930">1930</option>
-												<option value="1929">1929</option>
-												<option value="1928">1928</option>
-												<option value="1927">1927</option>
-												<option value="1926">1926</option>
-												<option value="1925">1925</option>
-												<option value="1924">1924</option>
-												<option value="1923">1923</option>
-												<option value="1922">1922</option>
-												<option value="1921">1921</option>
-												<option value="1920">1920</option>
-												<option value="1919">1919</option>
-												<option value="1918">1918</option>
-												<option value="1917">1917</option>
-												<option value="1916">1916</option>
-												<option value="1915">1915</option>
-												<option value="1914">1914</option>
-												<option value="1913">1913</option>
-												<option value="1912">1912</option>
-												<option value="1911">1911</option>
-												<option value="1910">1910</option>
-												<option value="1909">1909</option>
-												<option value="1908">1908</option>
-												<option value="1907">1907</option>
-												<option value="1906">1906</option>
-												<option value="1905">1905</option>
-												<option value="1904">1904</option>
-												<option value="1903">1903</option>
-												<option value="1902">1902</option>
-												<option value="1901">1901</option>
-												<option value="1900">1900</option>
-											</select>
-										</div>
-									</div>
-									<div class="bday_month">
-										<div class="select_box">
-											<select id="selMonth" required>
-												<option value="">월</option>
-												<option value="01">01</option>
-												<option value="02">02</option>
-												<option value="03">03</option>
-												<option value="04">04</option>
-												<option value="05">05</option>
-												<option value="06">06</option>
-												<option value="07">07</option>
-												<option value="08">08</option>
-												<option value="09">09</option>
-												<option value="10">10</option>
-												<option value="11">11</option>
-												<option value="12">12</option>
-											</select>
-										</div>
-									</div>
-									<div class="bday_day">
-										<div class="select_box">
-											<select id="selDay" required>
-												<option value="">일</option>
-												<option value="01">01</option>
-												<option value="02">02</option>
-												<option value="03">03</option>
-												<option value="04">04</option>
-												<option value="05">05</option>
-												<option value="06">06</option>
-												<option value="07">07</option>
-												<option value="08">08</option>
-												<option value="09">09</option>
-												<option value="10">10</option>
-												<option value="11">11</option>
-												<option value="12">12</option>
-												<option value="13">13</option>
-												<option value="14">14</option>
-												<option value="15">15</option>
-												<option value="16">16</option>
-												<option value="17">17</option>
-												<option value="18">18</option>
-												<option value="19">19</option>
-												<option value="20">20</option>
-												<option value="21">21</option>
-												<option value="22">22</option>
-												<option value="23">23</option>
-												<option value="24">24</option>
-												<option value="25">25</option>
-												<option value="26">26</option>
-												<option value="27">27</option>
-												<option value="28">28</option>
-												<option value="29">29</option>
-												<option value="30">30</option>
-												<option value="31">31</option>
-											</select>
-										</div>
+							<h5>
+								이름<i class="txt_point">*</i>
+							</h5>
+							<div class="input_user_name">
+								<input type="text" id="mname" name="mname" class="user_name"
+									placeholder="이름을 입력하세요." title="이름을 입력하세요." maxlength="100"
+									required>
+							</div>
+							<!-- [TO DEV] Error msg here. -->
+							<div class="err_wrap">
+								<p class="err_txt" id="nameMsg"></p>
+							</div>
+							<h5 class="pd_title">
+								생년월일<i class="txt_point">*</i>
+							</h5>
+							<div class="input_user_bday">
+								<div class="bday_year">
+									<div class="select_box">
+										<select id="selYear" required>
+											<option value="">년</option>
+											<option value="2009">2009</option>
+											<option value="2008">2008</option>
+											<option value="2007">2007</option>
+											<option value="2006">2006</option>
+											<option value="2005">2005</option>
+											<option value="2004">2004</option>
+											<option value="2003">2003</option>
+											<option value="2002">2002</option>
+											<option value="2001">2001</option>
+											<option value="2000">2000</option>
+											<option value="1999">1999</option>
+											<option value="1998">1998</option>
+											<option value="1997">1997</option>
+											<option value="1996">1996</option>
+											<option value="1995">1995</option>
+											<option value="1994">1994</option>
+											<option value="1993">1993</option>
+											<option value="1992">1992</option>
+											<option value="1991">1991</option>
+											<option value="1990">1990</option>
+											<option value="1989">1989</option>
+											<option value="1988">1988</option>
+											<option value="1987">1987</option>
+											<option value="1986">1986</option>
+											<option value="1985">1985</option>
+											<option value="1984">1984</option>
+											<option value="1983">1983</option>
+											<option value="1982">1982</option>
+											<option value="1981">1981</option>
+											<option value="1980">1980</option>
+											<option value="1979">1979</option>
+											<option value="1978">1978</option>
+											<option value="1977">1977</option>
+											<option value="1976">1976</option>
+											<option value="1975">1975</option>
+											<option value="1974">1974</option>
+											<option value="1973">1973</option>
+											<option value="1972">1972</option>
+											<option value="1971">1971</option>
+											<option value="1970">1970</option>
+											<option value="1969">1969</option>
+											<option value="1968">1968</option>
+											<option value="1967">1967</option>
+											<option value="1966">1966</option>
+											<option value="1965">1965</option>
+											<option value="1964">1964</option>
+											<option value="1963">1963</option>
+											<option value="1962">1962</option>
+											<option value="1961">1961</option>
+											<option value="1960">1960</option>
+											<option value="1959">1959</option>
+											<option value="1958">1958</option>
+											<option value="1957">1957</option>
+											<option value="1956">1956</option>
+											<option value="1955">1955</option>
+											<option value="1954">1954</option>
+											<option value="1953">1953</option>
+											<option value="1952">1952</option>
+											<option value="1951">1951</option>
+											<option value="1950">1950</option>
+											<option value="1949">1949</option>
+											<option value="1948">1948</option>
+											<option value="1947">1947</option>
+											<option value="1946">1946</option>
+											<option value="1945">1945</option>
+											<option value="1944">1944</option>
+											<option value="1943">1943</option>
+											<option value="1942">1942</option>
+											<option value="1941">1941</option>
+											<option value="1940">1940</option>
+											<option value="1939">1939</option>
+											<option value="1938">1938</option>
+											<option value="1937">1937</option>
+											<option value="1936">1936</option>
+											<option value="1935">1935</option>
+											<option value="1934">1934</option>
+											<option value="1933">1933</option>
+											<option value="1932">1932</option>
+											<option value="1931">1931</option>
+											<option value="1930">1930</option>
+											<option value="1929">1929</option>
+											<option value="1928">1928</option>
+											<option value="1927">1927</option>
+											<option value="1926">1926</option>
+											<option value="1925">1925</option>
+											<option value="1924">1924</option>
+											<option value="1923">1923</option>
+											<option value="1922">1922</option>
+											<option value="1921">1921</option>
+											<option value="1920">1920</option>
+											<option value="1919">1919</option>
+											<option value="1918">1918</option>
+											<option value="1917">1917</option>
+											<option value="1916">1916</option>
+											<option value="1915">1915</option>
+											<option value="1914">1914</option>
+											<option value="1913">1913</option>
+											<option value="1912">1912</option>
+											<option value="1911">1911</option>
+											<option value="1910">1910</option>
+											<option value="1909">1909</option>
+											<option value="1908">1908</option>
+											<option value="1907">1907</option>
+											<option value="1906">1906</option>
+											<option value="1905">1905</option>
+											<option value="1904">1904</option>
+											<option value="1903">1903</option>
+											<option value="1902">1902</option>
+											<option value="1901">1901</option>
+											<option value="1900">1900</option>
+										</select>
 									</div>
 								</div>
-								<!-- [TO DEV] Error msg here. -->
-								<div class="err_wrap">
-									<p class="err_txt" id="bdayMsg">
-										<!-- 생년월일을 입력하세요. -->
-									</p>
+								<div class="bday_month">
+									<div class="select_box">
+										<select id="selMonth" required>
+											<option value="">월</option>
+											<option value="01">01</option>
+											<option value="02">02</option>
+											<option value="03">03</option>
+											<option value="04">04</option>
+											<option value="05">05</option>
+											<option value="06">06</option>
+											<option value="07">07</option>
+											<option value="08">08</option>
+											<option value="09">09</option>
+											<option value="10">10</option>
+											<option value="11">11</option>
+											<option value="12">12</option>
+										</select>
+									</div>
+								</div>
+								<div class="bday_day">
+									<div class="select_box">
+										<select id="selDay" required>
+											<option value="">일</option>
+											<option value="01">01</option>
+											<option value="02">02</option>
+											<option value="03">03</option>
+											<option value="04">04</option>
+											<option value="05">05</option>
+											<option value="06">06</option>
+											<option value="07">07</option>
+											<option value="08">08</option>
+											<option value="09">09</option>
+											<option value="10">10</option>
+											<option value="11">11</option>
+											<option value="12">12</option>
+											<option value="13">13</option>
+											<option value="14">14</option>
+											<option value="15">15</option>
+											<option value="16">16</option>
+											<option value="17">17</option>
+											<option value="18">18</option>
+											<option value="19">19</option>
+											<option value="20">20</option>
+											<option value="21">21</option>
+											<option value="22">22</option>
+											<option value="23">23</option>
+											<option value="24">24</option>
+											<option value="25">25</option>
+											<option value="26">26</option>
+											<option value="27">27</option>
+											<option value="28">28</option>
+											<option value="29">29</option>
+											<option value="30">30</option>
+											<option value="31">31</option>
+										</select>
+									</div>
 								</div>
 							</div>
+							<!-- [TO DEV] Error msg here. -->
+							<div class="err_wrap">
+								<p class="err_txt" id="bdayMsg">
+									<!-- 생년월일을 입력하세요. -->
+								</p>
+							</div>
+						</div>
+					</div>
+
+					<!-- 추가 -->
+					<div class="input_user_name"></div>
+
+
+					<div class="input_user_phone">
+						<h5>
+							전화번호<i class="txt_point">*</i>
+						</h5>
+
+						<input type="text" id="mphone" name="mphone" class="user_phone"
+							placeholder="010000000000" title="전화번호를 입력하세요." maxlength="100">
+					</div>
+
+					<br>
+					<div class="input_user_name"></div>
+
+
+
+					<div class="input_user_eaddress">
+						<h5>
+							주소<i class="txt_point">*</i>
+						</h5>
+						<div id="wrap"
+							style="display: none; border: 1px solid; width: 50px; height: 50px; margin: 5px 0; position: relative">
+							<img src="//t1.daumcdn.net/postcode/resource/images/close.png"
+								id="btnFoldWrap"
+								style="cursor: pointer; position: absolute; right: 0px; top: -1px; z-index: 1"
+								onclick="foldDaumPostcode()" alt="접기 버튼">
+						</div>
+						<div style="float: left;">
+							<input type="text" id="mzipcode" name="mzipcode"
+								class="user_address" placeholder="우편번호" title="우편번호"
+								maxlength="10">
 						</div>
 
-						<!-- 추가 -->
-						<div class="input_user_name"></div>
+						<div style="float: left;">
+							<button type="button" class="btnstl3 solid_btn_blk btn_agree"
+								id="findAddress" onclick="sample6_execDaumPostcode()">주소찾기</button>
+						</div>
+						<div>
+							<input type="text" id="maddress1" name="maddress1"
+								class="user_address" placeholder="주소" title="주소" maxlength="50">
+							<input type="text" id="maddress2" name="maddress2"
+								class="user_address" placeholder="세부주소" title="세부주소"
+								maxlength="100">
 
-
-						<div class="input_user_phone">
-							<h5>
-								전화번호<i class="txt_point">*</i>
-							</h5>
-
-							<input type="text" id="mphone" name="mphone" class="user_phone"
-								placeholder="010000000000" title="전화번호를 입력하세요." maxlength="100">
 						</div>
 
 						<br>
-						<div class="input_user_name"></div>
+
+					</div>
 
 
 
-						<div class="input_user_eaddress">
-							<h5>
-								주소<i class="txt_point">*</i>
-							</h5>
-							<div style="float: left;">
-								<input type="text" id="mzipcode" name="mzipcode"
-									class="user_address" placeholder="우편번호" title="우편번호"
-									maxlength="10">
-							</div>
-							<div style="float: left;">
-								<button type="button" class="btnstl3 solid_btn_blk btn_agree"
-									id="findAddress" onclick="execPostCode()">주소찾기</button>
-							</div>
-							<div>
-								<input type="text" id="maddress1" name="maddress1"
-									class="user_address" placeholder="주소" title="주소" maxlength="50">
-								<input type="text" id="maddress2" name="maddress2"
-									class="user_address" placeholder="세부주소" title="세부주소"
-									maxlength="100">
-							</div>
 
-
-							<br>
-						</div>
-						<div class="input_user_egender">
-							<h5>
-								성별<i class="txt_point">*</i>
-							</h5>
-							<div class="input_user_gender">
-								<ul style="list-style: none;">
-									<li class="check_area"><input id="genderFemale"
-										name="mgender" value="female" class="check" type="checkbox"
-										onclick="genderCheckOnlyOne(this)"> <label
-										for="genderFemale">여성</label></li>
-									<li class="check_area"><input id="genderMale"
-										name="mgender" value="male" class="check" type="checkbox"
-										onclick="genderCheckOnlyOne(this)"> <label
-										for="genderMale">남성</label></li>
-								</ul>
-							</div>
-
-							<br>
+					<div class="input_user_egender">
+						<h5>
+							성별<i class="txt_point">*</i>
+						</h5>
+						<div class="input_user_gender">
+							<ul style="list-style: none;">
+								<li class="check_area"><input id="genderFemale"
+									name="mgender" value="female" class="check" type="checkbox"
+									onclick="genderCheckOnlyOne(this)"> <label
+									for="genderFemale">여성</label></li>
+								<li class="check_area"><input id="genderMale"
+									name="mgender" value="male" class="check" type="checkbox"
+									onclick="genderCheckOnlyOne(this)"> <label
+									for="genderMale">남성</label></li>
+							</ul>
 						</div>
 
+						<br>
+					</div>
 
-					</form>
+
+					<!-- </form> -->
 					<!-- [TO DEV] 20180625 버튼 클래스명 수정 s -->
 					<div class="btn_wrap btn_wrap_div2">
-						<button class="btnstl3 border_btn_gray btn_cnl" id="cancleBtn">취소하기</button>
+						<button class="btnstl3 border_btn_gray btn_cnl" id="cancleBtn"
+							onclick="cancleButton()">취소하기</button>
 						<button class="btnstl3 solid_btn_blk btn_agree" id="joinBtn"
 							onclick="joinMemberAccount()">가입하기</button>
 					</div>
@@ -1637,7 +2533,9 @@ rotate
 
 	</div>
 
-
+	<div class="divpop_wrap_dev pop_mbr pop_alert_confirm"
+		id="popAlertConfirmDiv"
+		style="left: 0px; position: fixed; top: 50.333px; z-index: 9999; opacity: 0; display: none;"></div>
 
 </body>
 <!-- AceCounter Log Gathering Script V.7.5.2013010701 -->

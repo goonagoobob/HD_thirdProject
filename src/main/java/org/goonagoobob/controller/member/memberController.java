@@ -1,3 +1,13 @@
+/*********************************
+ * @function : 회원정보 Controller
+ * @author : 이세은
+ * @Date : Jan 31. 2023. ~ Feb 13.2023
+ * 로그인 기능 구현 Jan 31. 2023
+ * 회원가입 기능 구현 Feb 3. 2023
+ * 로그아웃 기능 구현 Feb 9. 2023
+ * 
+ *********************************/
+
 package org.goonagoobob.controller.member;
 
 import java.security.Principal;

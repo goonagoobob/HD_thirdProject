@@ -1,3 +1,11 @@
+<!-- *********************************
+ * @function : 로그인 
+ * @author : 이세은
+ * @Date : Feb 13. 2023
+ * 로그인 레이아웃 완성 Feb 1. 2023
+ * 로그인 기능 구현 및 오류 전달 Feb 10. 2023
+ ********************************* -->
+
 <!DOCTYPE html>
 <html lang="ko" 
 	  xmlns:th="http://www.thymeleaf.org">
@@ -69,14 +77,15 @@
 	<!-- header -->
 	<header class="hsome_header">
 		<h1 class="h_ttl ellipsis" id="headerTitle">로그인</h1>
-		<a href="/ko/main" class="h_top_home"><span>홈</span></a> <a
-			href="javascript:noLink();" onclick="goBack();" class="h_prev">이전
-			페이지로 가기</a>
+		<a href="/" class="h_top_home"><span>홈</span></a> 
+		<!-- <a
+			href="javascript:window.history.back();" onclick="goBack();" class="h_prev">이전
+			페이지로 가기</a> -->
 		<ul class="h_gnbMenu">
-			<li class="search"><a href="/ko/mobilecommon/search"
-				onclick="GA_Event('공통', '헤더', '검색');"><span>search</span></a></li>
-			<li class="cart"><a href="/ko/shoppingbag"
-				onclick="GA_Event('공통', '헤더', '쇼핑백');"><span>cart</span><i>0</i></a></li>
+<!-- 			<li class="search"><a href="/ko/mobilecommon/search"
+				onclick="GA_Event('공통', '헤더', '검색');"><span>search</span></a></li> -->
+<!-- 			<li class="cart"><a href="/ko/shoppingbag"
+				onclick="GA_Event('공통', '헤더', '쇼핑백');"><span>cart</span><i>0</i></a></li> -->
 		</ul>
 	</header>
 
@@ -109,14 +118,14 @@
 					</div>
 					<div class="login_option bio">
 						<ul>
-							<li class="check_area"><input
+							<!-- <li class="check_area"><input
 								id="_spring_security_remember_me"
 								name="_spring_security_remember_me"
 								path="_spring_security_remember_me" class="check"
 								type="checkbox" checked=""> <label
 								for="_spring_security_remember_me" class="check_txt">자동
 									로그인</label></li>
-							<li>
+							<li> -->
 								<!-- 지문/페이스로그인 : 비활성화되는 옵션의 a태그에 hidden(display:none;)클래스 적용 -->
 							</li>
 						</ul>

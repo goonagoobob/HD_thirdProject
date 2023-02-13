@@ -1,3 +1,14 @@
+/*********************************
+ * @function : 회원정보, 마이페이지 Controller
+ * @author : 이세은
+ * @Date : Jan 31. 2023. ~ Feb 13.2023
+ * 비밀번호 재확인 기능 구현 Feb 10. 2023
+ * 비밀번호 변경 기능 구현 Feb 11. 2023
+ * 개인정보 변경 기능 구현 Feb 12. 2023
+ * 이메일 중복 체크 
+ * 회원 탈퇴 기능 구현 
+ *********************************/
+
 package org.goonagoobob.controller.myPage;
 
 import java.security.Principal;
@@ -6,16 +17,16 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.goonagoobob.service.member.memberService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import net.minidev.json.JSONObject;
-
 
 import lombok.extern.log4j.Log4j2;
+import net.minidev.json.JSONObject;
 
 @RestController
 @Log4j2
@@ -49,6 +60,7 @@ public class myPageRestController {
 		String mid = principal.getName();
 		int num = service.memberOut(mid);
 		System.out.println("num" + num);
+		SecurityContextHolder.clearContext();
 		return num;
 	}
 	

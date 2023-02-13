@@ -1,3 +1,10 @@
+/*********************************
+ * @function : member Service 테스트 코드
+ * @author : 이세은
+ * @Date : Feb 9. 2023
+
+ *********************************/
+
 package org.goonagoobob.service.member;
 
 import org.goonagoobob.domain.member.memberAccount;

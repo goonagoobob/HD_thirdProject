@@ -1,3 +1,12 @@
+/*********************************
+ * @function : 회원정보 Controller
+ * @author : 이세은
+ * @Date : Jan 31. 2023. ~ Feb 13.2023
+ * 회원가입 기능 구현 Feb 3. 2023
+ * 아이디 중복 체크 Feb 5. 2023
+ * 
+ *********************************/
+
 package org.goonagoobob.controller.member;
 
 import javax.servlet.http.HttpServletResponse;
