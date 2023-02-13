@@ -4,6 +4,11 @@
  * @Date : Feb 7. 2023
  * 상품 리스트 레이아웃 완성 Feb 7. 2023
  * 타임리프 레이아웃 추가 카테고리 창 추가 Feb 8. 2023
+ * 상품 리스트 출력  Feb 10. 2023
+ * 특정 카테고리 상품만 출력 가능 Feb 10. 2023
+ * 컬러 변경 구현 Feb 11. 2023
+ * 무한 스크롤 구현 Feb 11. 2023
+ * 상품 조건별로 동적 출력 구현 Feb 12. 2023
  ********************************* -->
 <html lang="ko" class="back" xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
@@ -143,12 +148,14 @@
 						price = price.substr(1);
 						price = price.replace(',', '');
 						price = parseInt(price);
+						
+						//숫자 화폐 단위로 변환 
 						function comma(x) {
 							return '₩'
 									+ x.toString().replace(
 											/\B(?=(\d{3})+(?!\d))/g, ",");
 						}
-
+						//상품 상세 페이지로 이동 
 						function load(t){
 							var str = './productDetail';
 							str += '?pid=';
@@ -158,6 +165,7 @@
 							
 							location.href = str;
 						};
+						//상위 카테고리로 이동 
 						function loadListMain(){
 							var str = '/product/productList';
 
@@ -172,6 +180,7 @@
 
 							location.href = str;
 						};
+						//하위 카테고리로 이동 
 						function loadList(e){
 							if(depth1 == ""){
 								depth1 = $(e).text();
@@ -195,6 +204,8 @@
 							alert(str);
 							location.href = str;
 						};
+						
+						
 						var brand = "[(${brand})]";
 						var depth1 = "[(${depth1})]";
 						var depth2 = "[(${depth2})]";
@@ -489,6 +500,7 @@
 		e.preventDefault();
 		load(this,"");
 	})
+	//스와이퍼 시작 
 var flagWrapSwiper = new Swiper(
 		".flag_wrap.case.swiper-container", {
 			slidesPerView : "auto",
@@ -496,6 +508,7 @@ var flagWrapSwiper = new Swiper(
 			spaceBetween : 6,
 			freeModeMomentumBounce : false,
 		});
+	// 상품 리스트 조건별로 변경 
 	$('#st2').change(function() {
 	    var order = $(this).val();
 	    if (order == "NEW"){

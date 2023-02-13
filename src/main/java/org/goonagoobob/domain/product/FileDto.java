@@ -1,3 +1,10 @@
+/*********************************
+ * @function : File DTO
+ * @author : 조일우
+ * @Date : Feb 13. 2023
+ * 파일 DTO 추가 Feb 13. 2023
+ *********************************/
+
 package org.goonagoobob.domain.product;
 
 import lombok.Data;

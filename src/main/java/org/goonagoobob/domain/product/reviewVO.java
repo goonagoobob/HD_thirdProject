@@ -1,3 +1,11 @@
+/*********************************
+ * @function : Review VO
+ * @author : 조일우
+ * @Date : Feb 13. 2023
+ * 리뷰 VO 추가 Feb 13. 2023
+ * 
+ *********************************/
+
 package org.goonagoobob.domain.product;
 
 import java.util.Date;
@@ -7,6 +15,13 @@ import lombok.Data;
 
 @Data
 public class reviewVO {
+	public reviewVO(String string, String string2, Date today, String string3, String string4, String string5,
+			String string6, String string7, int i, int j, int k, int l, int m) {
+		// TODO Auto-generated constructor stub
+	}
+	public reviewVO() {
+		// TODO Auto-generated constructor stub
+	}
 	private String MID;
 	private String RV_TEXT;
 	private Date RV_DATE;

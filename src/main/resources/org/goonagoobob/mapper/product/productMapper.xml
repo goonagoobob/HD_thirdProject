@@ -314,4 +314,7 @@ depth1name = #{depth1}
  * 상품 컬러 변경 Mapper Feb 7. 2022
  * 상품 카테고리 리스트 Mapper Feb 8. 2022
  * 상품 리스트 Mapper Feb 10. 2022
+ * 메인 상품 리스트 Mapper 추가 Feb 11. 2023
+ * 상품 리스트 상품 갯수Mapper 추가 Feb 12. 2023
+ * 리뷰 삽입 Mapper 추가 Feb 13. 2023
  *********************************/ -->
