@@ -33,4 +33,6 @@ public interface orderMapper {
 	public int cartCount(@Param("mid") String mid);
 	
 	public orderVO orderCancelInfo(@Param("oid") String oid);
+	
+	public int deleteCartByOrder(@Param("mid") String mid, @Param("psid") String psid);
 }

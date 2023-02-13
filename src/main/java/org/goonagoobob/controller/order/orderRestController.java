@@ -50,6 +50,10 @@ public class orderRestController {
 		ObjectMapper mapper = new ObjectMapper();
 		List<orderItemVO> al = mapper.convertValue(map.get("gaOrderArrayArg"), new TypeReference<List<orderItemVO>>() {});
 		
+		for (orderItemVO oi : al) {
+			System.out.println(oi);
+		}
+		
 		result = orderService.insertOrders(orderVO, al);
 		System.out.println(result);
 		return new ResponseEntity<>(HttpStatus.OK);
