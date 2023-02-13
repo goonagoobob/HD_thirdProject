@@ -140,5 +140,9 @@
 		from orders
 		where oid = #{oid}
 	</select>
+	
+	<delete id="deleteCartByOrder">
+		delete from cart where mid = #{mid} and psid = #{psid}
+	</delete>
 
 </mapper> 

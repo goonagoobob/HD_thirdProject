@@ -226,6 +226,7 @@
             <!-- tootip : contents_area e -->
             <!-- select_list : 배송지리스트 s -->
             <input type="hidden" id="defaultShipmentAddressPk" value="">
+            <div id="addressTest"></div>
             <div class="select_list_wrap select_list_dlvr_adrs">
               <!-- select_list : selected_item s -->
 
@@ -804,14 +805,19 @@
           let pmcode = $(".on").children('a').attr('data-g-pay-mode');
 
           let gaOrderArrayArg = new Array();
-          let gaOrderGoodsinfo = new Object();
+          
 
           /*[# th:each="list : ${directOrderList}"]*/
+          var gaOrderGoodsinfo = new Object();
+          console.log([[${list}]]);
+          console.log([[${list.psid}]]);
           gaOrderGoodsinfo.psid = /*[[${list.psid}]]*/;
-          gaOrderGoodsinfo.oicount = 1;
-          gaOrderGoodsinfo.oitotalprice = 1;
+          gaOrderGoodsinfo.oicount = /*[[${pamount[listStat.index]}]]*/;
+          gaOrderGoodsinfo.oitotalprice = /*[[${list.pcprice*pamount[listStat.index]}]]*/;
           gaOrderArrayArg.push(gaOrderGoodsinfo);
+          console.log(gaOrderArrayArg);
           /*[/]*/
+          
           console.log(ozipcode);
           console.log(oaddress1);
           console.log(oaddress2);
@@ -837,7 +843,8 @@
             buyer_tel : ophone,
             buyer_email : oemail,
             name : /*[[${directOrderList[0].pname}]]*/ + " 외" + /*${#lists.size(directOrderList)} - 1*/ + " 건",
-            amount : oafterprice
+            amount : oafterprice,
+            appScheme : 'myapp://action'
 
           }, function (rsp) {
             if (rsp.success) {

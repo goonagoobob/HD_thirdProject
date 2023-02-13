@@ -75,6 +75,8 @@ public class orderServiceImpl implements orderService {
 		for (int i = 0; i < itemList.size(); i++) {
 			result += mapper.insertOrderItem(itemList.get(i).getPsid(), itemList.get(i).getOicount(), itemList.get(i).getOitotalprice(), orders.getMid());
 			System.out.println("order Insert" + itemList.get(i).getPsid());
+			result += mapper.deleteCartByOrder(orders.getMid(), itemList.get(i).getPsid());
+			System.out.println("cart Delete : " + itemList.get(i).getPsid());
 		}
 		System.out.println(result);
 		return result;
