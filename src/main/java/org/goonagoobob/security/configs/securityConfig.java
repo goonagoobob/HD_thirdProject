@@ -63,6 +63,7 @@ public class securityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/member/findIdResult").permitAll()
 				.antMatchers("/member/findPasswordForm").permitAll()
 				.antMatchers("/").permitAll()
+				.antMatchers("/product/main1").permitAll()
 				.antMatchers("/product/productDetail").permitAll()
 				.antMatchers("/product/productList").permitAll().antMatchers("/product/productListMore").permitAll()
 				.antMatchers("/product/reviewAdd").permitAll().anyRequest().authenticated(); // csrf 보안 설정 비활성화

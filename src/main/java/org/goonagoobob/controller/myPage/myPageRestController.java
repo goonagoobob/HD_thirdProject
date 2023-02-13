@@ -6,16 +6,16 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.goonagoobob.service.member.memberService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import net.minidev.json.JSONObject;
-
 
 import lombok.extern.log4j.Log4j2;
+import net.minidev.json.JSONObject;
 
 @RestController
 @Log4j2
@@ -49,6 +49,7 @@ public class myPageRestController {
 		String mid = principal.getName();
 		int num = service.memberOut(mid);
 		System.out.println("num" + num);
+		SecurityContextHolder.clearContext();
 		return num;
 	}
 	

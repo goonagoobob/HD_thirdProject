@@ -1,5 +1,5 @@
 <html lang="ko" class="back" xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
 <meta name="_csrf" th:content="${_csrf.token}">
 <meta name="_csrf_header" th:content="${_csrf.headerName}">
@@ -1414,9 +1414,32 @@ function gaIsoCodeEncoding(isoCode){
 		<a href="#;" class="family_site_popup_close"
 			onclick="familySiteSelectClosed();">닫기<!-- 닫기 --></a>
 	</div>
-	<!-- ################## hsome_quickMenu_contents | 퀵메뉴 컨텐츠 영역 ################## -->
-	<div class="hsome_quickMenu_contents"></div>
-	<!-- //################## hsome_quickMenu_contents | 퀵메뉴 컨텐츠 영역 ################## -->
+	<!-- ################## hsome_quickMenu | 퀵메뉴 ################## -->
+   <aside class="hsome_quickMenu hsome_quickMenu1909 active">
+      <ul>
+         <li class="shop active" style="width: 33.3%;"><a
+            onclick="layerUp()"><i>메뉴</i></a></li>
+         <li class="home" style="width: 33.3%;"><a
+            href="http://localhost"
+            onclick="goMainpage();GA_Event('공통', '네비게이션_바', '홈');"><i>홈</i></a>
+         </li>
+         <li class="mypage" id="gnbMyPageBtn" style="width: 33.3%;"><a
+            href="http://localhost/myPage/myPage"
+            onclick="goMypage();GA_Event('공통', '네비게이션_바', '마이페이지');"><i>마이페이지</i></a>
+         </li>
+         <li class="mypage pageMove" style="display: none"><a href=""
+            id="gnbMypageBtn"></a></li>
+         <li class="mypage" style="display: none"><a
+            href="https://www.thehandsome.com/ko/mobilecommon/myPagePopup"
+            id="gnbMypagePopupBtn"></a></li>
+      </ul>
+   </aside>
+<!-- ################## //hsome_quickMenu | 퀵메뉴 ################## -->
+   <!-- ################## hsome_quickMenu_contents | 퀵메뉴 컨텐츠 영역 ################## -->
+   <div class="hsome_quickMenu_contents">
+   <th:block th:replace="fragments/footer :: footerFragment"></th:block>
+   </div>
+   <!--// ################## hsome_quickMenu_contents | 퀵메뉴 컨텐츠 영역 ################## -->
 
 
 	<a href="javascript:noLink();" onclick="closeAction();"

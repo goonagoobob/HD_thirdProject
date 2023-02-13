@@ -10,7 +10,7 @@ import lombok.extern.log4j.Log4j2;
 public class mainController {
 	@GetMapping("/")
 	private String index() {
-		return "/main";
+		return "redirect:/product/main1";
 	}
 	
 	@GetMapping(value="/login")
