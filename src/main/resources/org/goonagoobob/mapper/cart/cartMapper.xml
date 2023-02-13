@@ -13,7 +13,7 @@
 <mapper namespace="org.goonagoobob.mapper.cart.cartMapper">	
 <!-- cartList 가져오기 -->
 <select id="getCartList" resultType="org.goonagoobob.domain.cart.cartVO">
-	SELECT ps.psid, substr(ps.psid,-5,2) as psid1, pcol.pcimg1, b.bname, pc.pname, pc.pid, pcol.pcprice, pcol.pccolorcode, substr(ps.psize, 0, 2) as psize, c.pquantity
+	SELECT ps.pcid, ps.psid, substr(ps.psid,-5,2) as psid1, pcol.pcimg1, b.bname, pc.pname, pc.pid, pcol.pcprice, pcol.pccolorcode, substr(ps.psize, 0, 2) as psize, c.pquantity
 	FROM brand b, product_common pc, product_color pcol, product_stock ps, cart c
 	WHERE c.psid = ps.psid
 	AND ps.pcid = pcol.pcid
@@ -22,39 +22,8 @@
 	AND c.mid = #{mid}
 </select>
 
-<!-- cartList 가져오기 -->
-<!-- 
-<select id="getCartList" resultMap="cartMap">
-	SELECT c.mid, ps.psid, substr(ps.psid,-5,2) as psid1, pcol.pcimg1, b.bname, pc.pname, pc.pid, pcol.pcprice, pcol.pccolorcode, substr(ps.psize, 0, 2) as psize, c.pquantity
-	FROM brand b, product_common pc, product_color pcol, product_stock ps, cart c
-	WHERE c.psid = ps.psid
-	AND ps.pcid = pcol.pcid
-	AND pcol.pid = pc.pid
-	AND pc.bno = b.bno
-	AND c.mid = #{mid}
-</select>
-<resultMap type="org.goonagoobob.domain.cart.cartVO" id="cartMap">
-	<result property="psid" column="psid" />
-	<result property="psid1" column="psid1" />
-	<result property="pcimg1" column="pcimg1" />
-	<result property="bname" column="bname" />
-	<result property="pname" column="pname" />
-	<result property="pid" column="pid" />
-	<result property="pcprice" column="pcprice" />
-	<result property="pccolorcode" column="pccolorcode" />
-	<result property="psize" column="psize" />
-	<result property="pquantity" column="pquantity" />
-	<collection property="colorList" resultMap="colorMap"></collection>
-</resultMap>
-
 <select id="colorList" resultType="org.goonagoobob.domain.cart.cartcolorVO">
-	select *
-	from (select mid, psid, pquantity, SUBSTR(psid, 1, INSTR(psid, '_') -1) as pid
-	from cart where mid = 'user1') c left join product_color p on c.pid=p.pid;
-</select> -->
-
-<select id="colorList" resultType="org.goonagoobob.domain.cart.cartcolorVO">
-	SELECT pc.pccolorcode, pc.pcchipimg, pc.pid, SUBSTR(pc.pcid, INSTR(pc.pcid, '_')+1, 2) AS colorname
+	SELECT pc.pcid, pc.pccolorcode, pc.pcchipimg, pc.pid, SUBSTR(pc.pcid, INSTR(pc.pcid, '_')+1, 2) AS colorname
 	FROM (
 	select mid, psid, SUBSTR(psid, 1, INSTR(psid, '_') -1) AS pid, pquantity FROM cart WHERE mid= #{mid}
 	) c LEFT JOIN product_color pc ON c.pid=pc.pid
@@ -74,5 +43,22 @@
       </foreach> 
 </delete>
 
+<select id="sizeList" resultType = "org.goonagoobob.domain.cart.cartsizeVO">
+SELECT concat(concat(ps.pcid, '_'), SUBSTR(psize, 0, 2)) as psid, ps.pcid, SUBSTR(psize, 0, 2) AS psize
+FROM
+    (SELECT psid, SUBSTR(psid, 0, instr(psid, '_')+2) as pcid  FROM cart WHERE mid=#{mid}) c
+    LEFT JOIN product_stock ps ON c.pcid = ps.pcid
+WHERE c.psid = #{psid}
+
+</select>
+
+<update id="cartUpdate">
+	UPDATE cart
+	SET psid = #{npsid},
+	    pquantity = #{npquantity}
+	WHERE psid = #{psid}
+	AND pquantity = #{pquantity}
+	AND mid = #{mid}
+</update>
 
 </mapper>

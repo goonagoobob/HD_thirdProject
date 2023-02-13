@@ -12,6 +12,7 @@ import java.util.List;
 
 import org.goonagoobob.domain.cart.cartVO;
 import org.goonagoobob.domain.cart.cartcolorVO;
+import org.goonagoobob.domain.cart.cartsizeVO;
 
 public interface cartService {
 	//카트 리스트
@@ -25,4 +26,10 @@ public interface cartService {
 	
 	//색상 select
 	public List<cartcolorVO> colorList(String mid, String psid);
+	
+	//사이즈 select
+	public List<cartsizeVO> sizeList(String mid, String psid);
+	
+	//옵션 변경
+	public void cartUpdate(String mid, String psid, String npsid, int pquantity, int npquantity);
 }

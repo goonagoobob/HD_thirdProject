@@ -14,6 +14,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.goonagoobob.domain.cart.cartVO;
 import org.goonagoobob.domain.cart.cartcolorVO;
+import org.goonagoobob.domain.cart.cartsizeVO;
 
 @Mapper
 public interface cartMapper {
@@ -25,4 +26,8 @@ public interface cartMapper {
 	public void cartInsert(String mid, String psid, int pquantity);
 	//상품별 색상
 	public List<cartcolorVO> colorList(String mid, String psid);
+	//상품 색상별 사이즈
+	public List<cartsizeVO> sizeList(String mid, String psid);
+	//옵션 변경
+	public void cartUpdate(String mid, String psid, String npsid, int pquantity, int npquantity);
 }

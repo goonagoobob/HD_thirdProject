@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.goonagoobob.domain.cart.cartcolorVO;
+import org.goonagoobob.domain.cart.cartsizeVO;
 import org.goonagoobob.service.cart.cartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -62,7 +63,7 @@ public class cartRestController {
 	  @PostMapping("/list") 
 	  @ResponseBody
 	  public List<cartcolorVO> cartColor(Principal prin, @RequestParam("psid") String psid, Model model) {
-		  log.info("postcartList controller..."); 
+		  log.info("postcolorList controller..."); 
 		  String mid = prin.getName();
 		  log.info("mid: " + mid + " psid: " + psid); 
 		  List<cartcolorVO> cList = service.colorList(mid, psid); 
@@ -70,6 +71,31 @@ public class cartRestController {
 		  model.addAttribute("cList", cList); 
 		  return cList;
 	  }
+	  
+	  //psid 상품 사이즈 뿌려주기
+	  @PostMapping("/slist")
+	  @ResponseBody
+	  public List<cartsizeVO> cartSize(Principal prin, @RequestParam("psid") String psid, Model model) {
+		  log.info("postsizeList controller");
+		  String mid = prin.getName();
+		  log.info("sizeList" + mid + psid);
+		  List<cartsizeVO> sList = service.sizeList(mid, psid);
+		  model.addAttribute("sList", sList);
+		  return sList;
+		  
+	  }
+	  
+	 //선택상품 변경
+	  @PostMapping("/update")
+	  public void cartUpdate(Principal prin, @RequestParam("psid") String psid, @RequestParam("npsid") String npsid, @RequestParam("pquantity") String pquantity, @RequestParam("npquantity") String npquantity) {
+	  log.info("updateCart controller"); 
+	  String mid = prin.getName();
+	  log.info(psid);
+	  log.info(npsid);
+	  log.info(pquantity);
+	  log.info(npquantity);
+	  service.cartUpdate(mid, psid, npsid, Integer.parseInt(pquantity), Integer.parseInt(npquantity));
+  } 
 	 
 	
 }
