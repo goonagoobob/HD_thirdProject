@@ -1,3 +1,8 @@
+<!-- *********************************
+ * @function : 주문서 페이지
+ * @author : 차민수
+ * 장바구니 혹은 상품 상세 페이지에서 구매 버튼 클릭에 따라 상품 정보를 불러오고 구매하기 버튼 클릭 시 주문이 되는 페이지
+ ********************************* -->
 <html lang="ko" class="back" xmlns:th="http://www.thymeleaf.org"
    xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
@@ -736,6 +741,9 @@
    <!--// ################## hsome_quickMenu_contents | 퀵메뉴 컨텐츠 영역 ################## -->
       <!-- Code injected by live-server -->
 
+
+	  <!-- 다음 주소 API 활용 및 IAMPORT 카카오페이 가상결제 구현 -->
+	  <!-- 카카오 페이 가상 결제 후, 결제 완료가 되면 AJAX 를 통해 JSON 으로 데이터를 보내줌 -->
       <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
       <script src="http://code.jquery.com/jquery-latest.min.js"></script>
       <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>

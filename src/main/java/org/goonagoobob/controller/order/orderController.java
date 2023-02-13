@@ -1,4 +1,13 @@
-	package org.goonagoobob.controller.order;
+/*********************************
+ * @function : 주문에 관한 Controller
+ * @author : 차민수
+ * @Date : Jan 31. 2023. ~ Feb 13.2023
+ * 주문 내역 조회 기능 구현 Feb 09.2023
+ * 주문 취소 기능 구현 Feb 10. 2023
+ * 주문서에 주문 상품 정보를 조회하는 기능 구현 Feb 11. 2023
+ * 주문 하기 기능 구현 Feb 11. 2023
+ *********************************/
+package org.goonagoobob.controller.order;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,11 +40,7 @@ public class orderController {
 	@Autowired
 	private memberService memberService;
 	
-	@GetMapping("/complete")
-	public void orderComplete() {
-		log.info("orderComplete controller");
-	}
-
+	// 주문번호를 통해 주문 취소를 할 상품 리스트를 조회하는 Controller
 	@GetMapping("/cancel")
 	public void orderCancelList(@RequestParam(value = "oid") String oid, Model model) {
 		log.info("orderCancel controller");
@@ -46,6 +51,7 @@ public class orderController {
 		model.addAttribute("username", mid);
 	}
 	
+	// 주문 취소 페이에 버튼 클릭에 따른 주문 취소를 하는 Controller (주문 취소 후, 주문 취소가 되었는지 확인하기 위해 주문 내역 페이지로 리다이렉트)
 	@PostMapping("/cancel")
 	public String orderCancel(@RequestParam(value = "oid") String oid, orderVO orderVO, RedirectAttributes rttr) {
 		log.info("주문 취소 컨트롤러까지 옴");
@@ -59,6 +65,8 @@ public class orderController {
 		return "redirect:/myPage/orderList";
 	}
 	
+	// 장바구니 혹은 상품 상세 페이지에서 '구매하기' 버튼 클릭에 따라서 상품 정보들을 조회하는 주문서로 이동하는 페이지를 받은 Controller
+	// Model 에 주문한 유저의 정보, 주문할 상품 정보 리스트, 각 상품에 따른 상품 갯수를 함께 보내줌
 	@GetMapping("/form")
 	public void orderForm(@RequestParam(value = "psid",required = false) List<String> psid, @RequestParam(value="pamount",required = false) List<Integer> pamount, Model model) {
 		log.info("orderForm controller");

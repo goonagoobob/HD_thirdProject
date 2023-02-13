@@ -1,8 +1,7 @@
 /*********************************
- * @function : OrderVO
+ * @function : 주문 정보를 담는 VO
  * @author : 차민수
  * @Date : Feb 06. 2023.
-
  *********************************/
 
 package org.goonagoobob.domain.order;

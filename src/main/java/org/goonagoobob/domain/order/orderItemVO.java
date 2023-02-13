@@ -1,3 +1,8 @@
+/*********************************
+ * @function : orderItemVO (주문 상품에 대한 VO)
+ * @author : 차민수
+ * @Date : Feb 6. 2023
+ *********************************/
 package org.goonagoobob.domain.order;
 
 import org.goonagoobob.domain.product.productDetailVO;

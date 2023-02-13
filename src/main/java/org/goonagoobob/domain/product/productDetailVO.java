@@ -1,3 +1,8 @@
+/*********************************
+ * @function : 주문에 사용되는 상품 정보를 담는 VO
+ * @author : 차민수
+ * @Date : Feb 06. 2023.
+ *********************************/
 package org.goonagoobob.domain.product;
 
 import lombok.Getter;

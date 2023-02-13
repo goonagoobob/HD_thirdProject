@@ -1,11 +1,11 @@
 /*********************************
  * @function : 회원정보, 마이페이지 Controller
- * @author : 이세은
+ * @author : 이세은, 차민수
  * @Date : Jan 31. 2023. ~ Feb 13.2023
  * 비밀번호 재확인 기능 구현 Feb 10. 2023
  * 비밀번호 변경 기능 구현 Feb 11. 2023
  * 개인정보 변경 기능 구현 Feb 12. 2023
- * 
+ * 주문 내역을 조회하는 기능 구현 Feb 11. 2023
  *********************************/
 
 package org.goonagoobob.controller.myPage;
@@ -73,7 +73,9 @@ public class myPageController {
 	}
 	
 	
-	
+	// GET 방식으로 마이페이지에 유저의 주문 내역을 조회하는 Controller
+	// 작성자 : 차민수
+	// Feb 11. 2023
 	@GetMapping(value = "/orderList")
 	public void getList(Criteria cri, Model model) {
 		log.info("getList............");

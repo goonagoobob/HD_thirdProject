@@ -1,3 +1,9 @@
+<!-- *********************************
+ * @function : 주문하기 취소 페이지
+ * @author : 차민수
+ * 주문 취소 버튼 클릭에 따라서 주문 취소가 되고 주문 내역으로 이동하는 페이지
+ ********************************* -->
+
 <html lang="ko" class="back" xmlns:th="http://www.thymeleaf.org"
    xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
@@ -1098,6 +1104,7 @@
   <!-- layerpopupContent e -->
   <!-- 버츄 사이즈 공통스크립트 -->
   <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+  <!-- removeBtn 버튼 클릭 시 order/form POST 방식의 컨트롤러로 form 데이터 submit -->
   <script type="text/javascript">
     $(document).ready(function () {
       let formObj = $(".removeBtn");
