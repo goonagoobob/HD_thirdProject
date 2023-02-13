@@ -12,10 +12,12 @@ package org.goonagoobob.service.product;
 
 import java.util.List;
 
+import org.goonagoobob.domain.product.FileDto;
 import org.goonagoobob.domain.product.brandVO;
 import org.goonagoobob.domain.product.depth1VO;
 import org.goonagoobob.domain.product.productColorVO;
 import org.goonagoobob.domain.product.productCommonVO;
+import org.goonagoobob.domain.product.reviewVO;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -42,4 +44,10 @@ public interface productService {
 	public int newCount();
 
 	public int getCount(String brand, String depth1, String depth2, String depth3);
+
+	public List<reviewVO> getReview(String pid);
+
+	public reviewVO getMyReview(String pid, String string);
+
+	public void insertReview(reviewVO vo, FileDto dto);
 }

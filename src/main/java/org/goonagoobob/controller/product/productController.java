@@ -9,16 +9,17 @@
 
 package org.goonagoobob.controller.product;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-
 import java.io.File;
-import java.util.ArrayList;
+import java.security.Principal;
 import java.util.List;
+import java.util.UUID;
 
+import org.goonagoobob.domain.product.FileDto;
 import org.goonagoobob.domain.product.brandVO;
 import org.goonagoobob.domain.product.depth1VO;
 import org.goonagoobob.domain.product.productColorVO;
 import org.goonagoobob.domain.product.productCommonVO;
+import org.goonagoobob.domain.product.reviewVO;
 import org.goonagoobob.service.product.productService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -139,11 +140,16 @@ public class productController {
 		return VOList;
 	}
 	@GetMapping("/productDetail")
-	public void Productdetail(@RequestParam(value = "pid", required=false) String pid, @RequestParam(value = "pcid", required=false) String pcid,Model model) {
+	public void Productdetail(@RequestParam(value = "pid", required=false) String pid,
+			@RequestParam(value = "pcid", required=false) String pcid,Model model ,Principal principal) {
 		productCommonVO vo = service.getPDetail(pid);
+		List<reviewVO> reviewvoList = service.getReview(pid);
 		System.out.println(vo);
+		System.out.println(reviewvoList);
 		model.addAttribute("productVO", vo);
+		model.addAttribute("reviewVO", reviewvoList);
 		model.addAttribute("pcid", pcid);
+		System.out.println(principal);
 	}
 	
 	@GetMapping("/colorChg")
@@ -181,24 +187,38 @@ public class productController {
 		model.addAttribute("newCount",newCount);
 	}
 	@PostMapping("/reviewAdd")
-	public void reviewAdd(@RequestParam("reviewFile") MultipartFile uploadfile/* @RequestParam("reviewFile1") MultipartFile uploadfile1,
+	public void reviewAdd(@RequestParam("reviewFile") MultipartFile uploadfile,/* @RequestParam("reviewFile1") MultipartFile uploadfile1,
 			@RequestParam("reviewFile2") MultipartFile uploadfile2, @RequestParam("reviewFile3") MultipartFile uploadfile3,
 			@RequestParam("reviewFile4") MultipartFile uploadfile4, @RequestParam("reviewFile5") MultipartFile uploadfile5
-			@RequestParam("reviewFile") MultipartFile uploadfile,,*/) {
-		List<FileDto> list = new ArrayList<>();
-
-		for (MultipartFile file : uploadfile) {			
-			FileDto dto = new FileDto( file.getOriginalFilename(), file.getContentType() );	
-			list.add(dto);
-			File newFileName = new File(dto.getFileName());
-	        
+			@RequestParam("reviewFile") MultipartFile uploadfile,,*/
+			Principal principal, @RequestParam(value="age", required=false, defaultValue="미 기입") String age, 
+			@RequestParam("height") String height,
+			@RequestParam("bodyType") String bodyType,
+			@RequestParam("enjoySize") String enjoySize,
+			@RequestParam("rating") int rating,
+			@RequestParam("realWearSize1") String realWearSize1,
+			@RequestParam("realWearSize2") String realWearSize2,
+			@RequestParam("realWearSize3") String realWearSize3,
+			@RequestParam("realProductColor") String realProductColor,
+			@RequestParam("headline") String headline,
+			@RequestParam("psid") String psid
+			
+			
+			) {
+			reviewVO vo = new reviewVO(-100,principal.getName(),headline,"",psid,age,height,bodyType,
+					enjoySize,rating,realWearSize1,realWearSize2,realWearSize3,realProductColor);
+            FileDto dto = new FileDto(UUID.randomUUID().toString(),
+            		"/Users/choilwoo/Desktop/dev64/workspace_goo/HD_thirdProject/src/main/resources/static/product/img"+uploadfile.getName(),
+                    uploadfile.getOriginalFilename(), 
+                    uploadfile.getContentType());
+			File newFileName = new File(dto.getFILENAME());
+	        System.out.println(UUID.randomUUID().toString());
 			try {
-				file.transferTo(newFileName);
+				uploadfile.transferTo(newFileName);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}
-		model.addAttribute("files", list);
+			service.insertReview(vo,dto);
 	}
 		
 }

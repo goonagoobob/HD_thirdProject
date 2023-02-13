@@ -1,0 +1,2706 @@
+<!-- *********************************
+ * @function : 메인 페이지
+ * @author : 조일우
+ * @Date : Feb 12. 2023
+ * 상품 리스트 레이아웃 완성 Feb 7. 2023
+ * 타임리프 레이아웃 추가 카테고리 창 추가 Feb 8. 2023
+ ********************************* -->
+<html lang="ko" class="back" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="ko" class="back">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="Cache-Control"
+	content="no-cache, no-store, must-revalidate">
+
+<meta charset="UTF-8">
+<meta name="HandheldFriendly" content="true">
+<meta name="viewport"
+	content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width">
+<meta name="format-detection" content="telephone=no">
+
+<!-- Mobile Smart Banner for IOS Device -->
+<meta name="apple-itunes-app" content="app-id=1072288949">
+<!-- //Mobile Smart Banner for IOS Device -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="더한섬닷컴 | THE HANDSOME.COM">
+<meta property="og:description"
+	content="타임, 마인, 시스템, SJSJ 등 프리미엄 브랜드 및 트렌디한 해외·편집숍까지 가득한 스타일 플랫폼!">
+<meta property="og:image"
+	content="http://s3.ap-northeast-2.amazonaws.com/cdn.thehandsome.com-kr/pc/210510_logo/%E3%84%B9%EB%A1%9C%EA%B3%A0.png">
+<meta property="og:url" content="http://www.thehandsome.com/ko/">
+<meta name="keywords"
+	contents="한섬, 더한섬닷컴, 한섬몰, 한섬아울렛, 한섬닷컴, 더한섬, 한섬올라인몰, HANDSOME, thehandsome">
+
+<title>더한섬닷컴</title>
+<link rel="shortcut icon"
+	href="http://www.thehandsome.com/_ui/mobile/common/images/common/thehandsome_ic_16x16.ico">
+<link rel="apple-touch-icon"
+	href="http://www.thehandsome.com/_ui/mobile/common/images/common/app_ban_logo.png">
+<link rel="apple-touch-icon-precomposed"
+	href="http://www.thehandsome.com/_ui/mobile/common/images/common/app_ban_logo.png">
+<link rel="apple-touch-icon-120x120"
+	href="http://www.thehandsome.com/_ui/mobile/common/images/common/app_ban_logo.png">
+<link rel="apple-touch-icon-120x120-precomposed"
+	href="http://www.thehandsome.com/_ui/mobile/common/images/common/app_ban_logo.png">
+
+<!-- <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> -->
+
+
+<link rel="shortcut icon" type="image/x-icon" media="all" href="//">
+
+<link
+	href="http://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/font_80.css?20221121"
+	rel="stylesheet" type="text/css">
+<link
+	href="http://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/jquery-ui.css"
+	rel="stylesheet" type="text/css">
+<link
+	href="http://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/selectordie.css"
+	rel="stylesheet" type="text/css">
+<link
+	href="http://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/default.css?202200826"
+	rel="stylesheet" type="text/css">
+<link
+	href="http://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/display.css?20221107"
+	rel="stylesheet" type="text/css">
+<link
+	href="http://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/assist.css?20220929"
+	rel="stylesheet" type="text/css">
+<link
+	href="http://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/devAssist.css"
+	rel="stylesheet" type="text/css">
+
+<link
+	href="http://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/swiper-vr1908.min.css"
+	rel="stylesheet" type="text/css">
+<link
+	href="http://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/main201909.css?20200423"
+	rel="stylesheet" type="text/css">
+<link
+	href="http://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/renew_main.css?20220826"
+	rel="stylesheet" type="text/css">
+<link
+	href="http://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/popup.css"
+	rel="stylesheet" type="text/css">
+
+<script type="text/javascript"
+	src="http://www.thehandsome.com/_ui/handsomemobile/js/jquery.min.js"></script>
+<script type="text/javascript"
+	src="http://www.thehandsome.com/_ui/handsomemobile/js/jquery.vticker.js"></script>
+<!-- 200318 Ã¬Â¶ÂÃªÂ°Â -->
+<script type="text/javascript"
+	src="http://www.thehandsome.com/_ui/handsomemobile/js/masonry.pkgd.min.js"></script>
+<script type="text/javascript"
+	src="http://www.thehandsome.com/_ui/handsomemobile/js/imagesloaded.pkgd.min.js"></script>
+<script type="text/javascript"
+	src="http://www.thehandsome.com/_ui/handsomemobile/js/jquery.form.min.js"></script>
+<script type="text/javascript"
+	src="http://www.thehandsome.com/_ui/handsomemobile/js/jquery.cookie.js"></script>
+<script type="text/javascript"
+	src="http://www.thehandsome.com/_ui/handsomemobile/js/jquery-ui.min.js"></script>
+<script type="text/javascript"
+	src="http://www.thehandsome.com/_ui/handsomemobile/js/selectordie.min.js"></script>
+<script type="text/javascript"
+	src="http://www.thehandsome.com/_ui/handsomemobile/js/jquery.bpopup.min.js"></script>
+<script type="text/javascript"
+	src="http://www.thehandsome.com/_ui/handsomemobile/js/echarts.min.js"></script>
+<script type="text/javascript" src="../../static/product/common.js"></script>
+<script type="text/javascript"
+	src="http://www.thehandsome.com/_ui/handsomemobile/js/assist_common.js?v=20220630"></script>
+<script type="text/javascript"
+	src="http://www.thehandsome.com/_ui/handsomemobile/js/handsome.js"></script>
+<script type="text/javascript"
+	src="http://www.thehandsome.com/_ui/handsomemobile/js/common_function.js"></script>
+<script type="text/javascript"
+	src="http://www.thehandsome.com/_ui/handsomemobile/js/json2.js"></script>
+<script type="text/javascript"
+	src="http://www.thehandsome.com/_ui/handsomemobile/js/SsoAjax.js"></script>
+
+<script type="text/javascript"
+	src="http://www.thehandsome.com/_ui/handsomemobile/js/instagramAPI.js"></script>
+<script type="text/javascript"
+	src="http://www.thehandsome.com/_ui/handsomemobile/js/makePCookie.js"></script>
+<script type="text/javascript"
+	src="http://www.thehandsome.com/_ui/handsomemobile/js/popup.js"></script>
+<script type="text/javascript"
+	src="http://www.thehandsome.com/_ui/handsomemobile/js/simplepagination.js"></script>
+<script type="text/javascript"
+	src="http://www.thehandsome.com/_ui/handsomemobile/js/swiper_vr1908.min.js"></script>
+<script type="text/javascript"
+	src="http://www.thehandsome.com/_ui/handsomemobile/js/jquery.lazyload.js"></script>
+<script type="text/javascript"
+	src="http://www.thehandsome.com/_ui/handsomemobile/js/netfunnel.js"
+	charset="UTF-8"></script>
+<script type="text/javascript"
+	src="http://www.thehandsome.com/_ui/handsomemobile/js/netfunnel_skin.js"
+	charset="UTF-8"></script>
+
+<script type="text/javascript"
+	src="http://www.thehandsome.com/_ui/handsomemobile/js/unorm.js"></script>
+
+<style media="screen">
+.blsmflw1 {
+	animation: target_image 1.5s;
+	animation-iteration-count: 2;
+	transform-origin: 50% 50%;
+}
+
+@
+keyframes target_image { 0% {
+	transform: rotate(-2deg);
+}
+50
+%
+{
+transform
+:
+rotate(
+9deg
+)
+}
+100
+%
+{
+transform
+:
+rotate(
+-1deg
+);
+}
+}
+</style>
+<body class="back vsc-initialized">
+
+	<form id="CSRFForm" action="/ko/" method="post">
+		<div>
+			<input type="hidden" name="CSRFToken"
+				value="37b3e44c-1d4a-4d29-ab4b-bae60a3ec2fc">
+		</div>
+	</form>
+	<div id="mapleMainPopwrap"
+		style="position: fixed; top: 50%; left: 50%; width: 81.333333%; z-index: 805; transform: translate(-50%, -50%); display: none">
+	</div>
+
+	<div class="layerArea" id="mapleLayer" style="display: none;">
+		<div class="layerBg"></div>
+	</div>
+
+	<!-- ################## hsome_allContents_wrapper | ë³¸ë¬¸ ì»¨íì¸  ìì­ ################## -->
+	<div class="hsome_allContents_wrapper">
+
+		<div class="hsome_allContents">
+
+
+			<!-- ################## header ################## -->
+			<header
+				class="hsome_header main201909 header-fix header-top t-prent white-header">
+				<h1 class="h_logo" id="headerTitle">
+					<a href="javascript:noLink();"
+						onclick="goMainpage();GA_Event('공통', '로고', '상단');">THEHANDSOME.COM</a>
+				</h1>
+				<ul class="h_gnbMenu">
+					<li class="search"><a href="/ko/mobilecommon/search"
+						onclick="GA_Event('공통', '헤더', '검색');"><span>search</span></a></li>
+					<li class="cart"><a href="/ko/shoppingbag"
+						onclick="GA_Event('공통', '헤더', '쇼핑백');"><span>cart</span><i>0</i></a></li>
+				</ul>
+				<div class="top_nav1909" id="topNav1909">
+					<ul>
+						<li class="on"><a href="#contents-home" class="home"
+							onclick="GA_Event('공통', 'GNB', '홈');">홈</a></li>
+						<li class=""><a href="#contents-newitem" class="new_item"
+							onclick="GA_Event('공통', 'GNB', '신상품');">신상품</a></li>
+						<li class=""><a href="#contents-best" class="best"
+							onclick="GA_Event('공통', 'GNB', '베스트');">베스트</a></li>
+					</ul>
+				</div>
+			</header>
+			<!-- //################## header ################## -->
+			<!-- ################## contents ################## -->
+			<div class="hsome_contents">
+				<div class="hsome_main update191029" style="margin-bottom: -3px;">
+					<!-- Swiper -->
+					<div id="main1909_h"
+						class="main-swiper-all-wrap main-contents-wrap">
+						<!-- 홈 -->
+						<div id="contents-home" class="hsomemain-contents-box home"
+							style="display: block;">
+							<div
+								class="swiper-container swiper-container-v main1909_v main_wrapper_swiper1909 verticalSlide0 swiper-container-initialized swiper-container-vertical swiper-container-android"
+								style="height: 867px;">
+								<ul class="swiper-wrapper vertical_slide_wrap"
+									style="transform: translate3d(0px, 0px, 0px);">
+									<!-- 메인배너 -->
+									<li
+										class="swiper-slide main-slide-tt-first index_slide swiper-slide-active"
+										data-index="0" id="home" style="height: 867px;">
+										<!-- Swiper -->
+										<div
+											class="swiper-container standard-sp horiSlide0 swiper-container-initialized swiper-container-horizontal swiper-container-android">
+											<div class="swiper-wrapper" id="mainList"
+												style="transition-duration: 0ms; transform: translate3d(-412px, 0px, 0px);">
+												<div
+													class="swiper-slide WHITE BG_WHITE TXT_WHITE swiper-slide-duplicate swiper-slide-prev"
+													data-swiper-slide-index="9" style="width: 412px;">
+													<a href="/magazine/exhibitions/8813756012216"
+														onclick="GA_Event('메인','메인배너_9', 'AUTOMATIC%20FOR%20THE%20PEOPLE');"
+														class="link-box">
+														<div class="img">
+															<img class="lazy_main"
+																data-original="http://image.thehandsome.com/sys_master/images/hd9/heb/9368747311134.jpg"
+																alt=""
+																src="http://image.thehandsome.com/sys_master/images/hd9/heb/9368747311134.jpg"
+																style="display: inline;">
+														</div>
+														<div class="txt_area btm  center">
+															<div class="txt_area_inner190820">
+																<p class="txt">
+																	<span class="bar-in"> <font color="#FFFFFF">AUTOMATIC<br>FOR
+																			THE PEOPLE
+																	</font> <span class="ab-bar left"
+																		style="background-color: #FFFFFF;"></span> <span
+																		class="ab-bar right"
+																		style="background-color: #FFFFFF;"></span>
+																	</span>
+																</p>
+																<p class="s_txt">
+																	<font color="#FFFFFF">톰그레이하운드의 새로운<br>HOMME
+																		브랜드 런칭
+																	</font>
+																</p>
+															</div>
+														</div>
+													</a>
+												</div>
+												<div
+													class="swiper-slide WHITE BG_WHITE TXT_WHITE swiper-slide-active"
+													data-swiper-slide-index="0" style="width: 412px;">
+													<a href="/magazine/events/8804940437376"
+														onclick="GA_Event('메인','메인배너_0', 'SS%20%uC1FC%uD551%20%uBCA0%uB124%uD54F');"
+														class="link-box">
+														<div class="img">
+															<img
+																src="http://image.thehandsome.com/sys_master/images/h89/h45/9369314951198.jpg"
+																alt="">
+														</div>
+														<div class="txt_area btm  center">
+															<div class="txt_area_inner190820">
+																<p class="txt">
+																	<span class="bar-in"> <font color="#000000">SS
+																			쇼핑 베네핏</font> <span class="ab-bar left"
+																		style="background-color: #000000;"></span> <span
+																		class="ab-bar right"
+																		style="background-color: #000000;"></span>
+																	</span>
+																</p>
+																<p class="s_txt">
+																	<font color="#000000">23 봄 신상품 10% 할인<br>상품평
+																		더블 적립 혜택까지!
+																	</font>
+																</p>
+															</div>
+														</div>
+													</a>
+												</div>
+												<div
+													class="swiper-slide WHITE BG_WHITE TXT_WHITE swiper-slide-next"
+													data-swiper-slide-index="1" style="width: 412px;">
+													<a href="/magazine/events/8804907767680"
+														onclick="GA_Event('메인','메인배너_1', '%uB9B4%uB808%uC774%20%uCCB4%uD5D8%uB2E8');"
+														class="link-box">
+														<div class="img">
+															<img
+																src="http://image.thehandsome.com/sys_master/images/hd6/h00/9369071517726.jpg"
+																alt="">
+														</div>
+														<div class="txt_area btm  center">
+															<div class="txt_area_inner190820">
+																<p class="txt">
+																	<span class="bar-in"> <font color="#FFFFFF">릴레이
+																			체험단</font> <span class="ab-bar left"
+																		style="background-color: #FFFFFF;"></span> <span
+																		class="ab-bar right"
+																		style="background-color: #FFFFFF;"></span>
+																	</span>
+																</p>
+																<p class="s_txt">
+																	<font color="#FFFFFF">오에라 에센스-인-로션을<br>직접
+																		체험해 보세요!
+																	</font>
+																</p>
+															</div>
+														</div>
+													</a>
+												</div>
+												<div class="swiper-slide WHITE BG_WHITE TXT_WHITE"
+													data-swiper-slide-index="2" style="width: 412px;">
+													<a href="/magazine/editorials/8807103125576"
+														onclick="GA_Event('메인','메인배너_2', '%uC0AC%uC9C4%uAC00%20%uAE40%uCCAD%uC544%uC758%20%uC637%uC7A5');"
+														class="link-box">
+														<div class="img">
+															<img class="lazy_main"
+																data-original="http://image.thehandsome.com/sys_master/images/hd5/hd3/9369351487518.jpg"
+																alt=""
+																src="http://image.thehandsome.com/sys_master/images/hd5/hd3/9369351487518.jpg"
+																style="display: inline;">
+														</div>
+														<div class="txt_area btm  center">
+															<div class="txt_area_inner190820">
+																<p class="txt">
+																	<span class="bar-in"> <font color="#FFFFFF">사진가
+																			김청아의 옷장</font> <span class="ab-bar left"
+																		style="background-color: #FFFFFF;"></span> <span
+																		class="ab-bar right"
+																		style="background-color: #FFFFFF;"></span>
+																	</span>
+																</p>
+																<p class="s_txt">
+																	<font color="#FFFFFF">그녀가 포착한<br>추억 속 이야기
+																	</font>
+																</p>
+															</div>
+														</div>
+													</a>
+												</div>
+												<div class="swiper-slide WHITE BG_WHITE TXT_WHITE"
+													data-swiper-slide-index="3" style="width: 412px;">
+													<a href="/magazine/editorials/8807070455880"
+														onclick="GA_Event('메인','메인배너_3', 'INTO%20THE%20WILD');"
+														class="link-box">
+														<div class="img">
+															<img class="lazy_main"
+																data-original="http://image.thehandsome.com/sys_master/images/hbe/h1f/9368784896030.jpg"
+																alt=""
+																src="http://image.thehandsome.com/sys_master/images/hbe/h1f/9368784896030.jpg"
+																style="display: inline;">
+														</div>
+														<div class="txt_area btm  center">
+															<div class="txt_area_inner190820">
+																<p class="txt">
+																	<span class="bar-in"> <font color="#FFFFFF">INTO
+																			THE WILD</font> <span class="ab-bar left"
+																		style="background-color: #FFFFFF;"></span> <span
+																		class="ab-bar right"
+																		style="background-color: #FFFFFF;"></span>
+																	</span>
+																</p>
+																<p class="s_txt">
+																	<font color="#FFFFFF">다채로운 변주로 가득한<br>시스템옴므
+																		TYPE 2
+																	</font>
+																</p>
+															</div>
+														</div>
+													</a>
+												</div>
+												<div class="swiper-slide WHITE BG_WHITE TXT_WHITE"
+													data-swiper-slide-index="4" style="width: 412px;">
+													<a href="/magazine/editorials/8807070521416"
+														onclick="GA_Event('메인','메인배너_4', 'CODE%20MINE%20%3A%20S');"
+														class="link-box">
+														<div class="img">
+															<img class="lazy_main"
+																data-original="http://image.thehandsome.com/sys_master/images/h95/h9d/9368744198174.jpg"
+																alt=""
+																src="http://image.thehandsome.com/sys_master/images/h95/h9d/9368744198174.jpg"
+																style="display: inline;">
+														</div>
+														<div class="txt_area btm  center">
+															<div class="txt_area_inner190820">
+																<p class="txt">
+																	<span class="bar-in"> <font color="#FFFFFF">CODE
+																			MINE : S</font> <span class="ab-bar left"
+																		style="background-color: #FFFFFF;"></span> <span
+																		class="ab-bar right"
+																		style="background-color: #FFFFFF;"></span>
+																	</span>
+																</p>
+																<p class="s_txt">
+																	<font color="#FFFFFF">무대에서 피어난 봄의 마인<br>봄꽃을
+																		닮은 스프링 컬렉션
+																	</font>
+																</p>
+															</div>
+														</div>
+													</a>
+												</div>
+												<div class="swiper-slide WHITE BG_WHITE TXT_WHITE"
+													data-swiper-slide-index="5" style="width: 412px;">
+													<a href="/magazine/exhibitions/8813755946680"
+														onclick="GA_Event('메인','메인배너_5', 'OUR%20LEGACY');"
+														class="link-box">
+														<div class="img">
+															<img class="lazy_main"
+																data-original="http://image.thehandsome.com/sys_master/images/hd5/h44/9368590155806.jpg"
+																alt=""
+																src="http://image.thehandsome.com/sys_master/images/hd5/h44/9368590155806.jpg"
+																style="display: inline;">
+														</div>
+														<div class="txt_area btm  center">
+															<div class="txt_area_inner190820">
+																<p class="txt">
+																	<span class="bar-in"> <font color="#FFFFFF">OUR
+																			LEGACY</font> <span class="ab-bar left"
+																		style="background-color: #FFFFFF;"></span> <span
+																		class="ab-bar right"
+																		style="background-color: #FFFFFF;"></span>
+																	</span>
+																</p>
+																<p class="s_txt">
+																	<font color="#FFFFFF">아워레가시 2023 SS<br>신상품을
+																		지금 만나보세요
+																	</font>
+																</p>
+															</div>
+														</div>
+													</a>
+												</div>
+												<div class="swiper-slide WHITE BG_WHITE TXT_WHITE"
+													data-swiper-slide-index="6" style="width: 412px;">
+													<a href="/magazine/exhibitions/8813755717304"
+														onclick="GA_Event('메인','메인배너_6', 'Valentine%20Special');"
+														class="link-box">
+														<div class="img">
+															<img class="lazy_main"
+																data-original="http://image.thehandsome.com/sys_master/images/hae/h42/9369089769502.jpg"
+																alt=""
+																src="http://image.thehandsome.com/sys_master/images/hae/h42/9369089769502.jpg"
+																style="display: inline;">
+														</div>
+														<div class="txt_area btm  center">
+															<div class="txt_area_inner190820">
+																<p class="txt">
+																	<span class="bar-in"> <font color="#FFFFFF">Valentine
+																			Special</font> <span class="ab-bar left"
+																		style="background-color: #FFFFFF;"></span> <span
+																		class="ab-bar right"
+																		style="background-color: #FFFFFF;"></span>
+																	</span>
+																</p>
+																<p class="s_txt">
+																	<font color="#FFFFFF">배우 이제훈 X 리퀴드 퍼퓸바 bdk<br>15%
+																		할인 &amp; GIFT 패키지 증정
+																	</font>
+																</p>
+															</div>
+														</div>
+													</a>
+												</div>
+												<div class="swiper-slide WHITE BG_WHITE TXT_WHITE"
+													data-swiper-slide-index="7" style="width: 412px;">
+													<a href="/magazine/exhibitions/8813755913912"
+														onclick="GA_Event('메인','메인배너_7', 'UPCOMING%20SPRING');"
+														class="link-box">
+														<div class="img">
+															<img class="lazy_main"
+																data-original="http://image.thehandsome.com/sys_master/images/h06/he6/9369083510814.jpg"
+																alt=""
+																src="http://image.thehandsome.com/sys_master/images/h06/he6/9369083510814.jpg"
+																style="display: inline;">
+														</div>
+														<div class="txt_area btm  center">
+															<div class="txt_area_inner190820">
+																<p class="txt">
+																	<span class="bar-in"> <font color="#FFFFFF">UPCOMING<br>SPRING
+																	</font> <span class="ab-bar left"
+																		style="background-color: #FFFFFF;"></span> <span
+																		class="ab-bar right"
+																		style="background-color: #FFFFFF;"></span>
+																	</span>
+																</p>
+																<p class="s_txt">
+																	<font color="#FFFFFF">다가오는 봄을 위한<br>3.1 필립림
+																		PRE-SPRING 룩
+																	</font>
+																</p>
+															</div>
+														</div>
+													</a>
+												</div>
+												<div class="swiper-slide WHITE BG_WHITE TXT_WHITE"
+													data-swiper-slide-index="8" style="width: 412px;">
+													<a href="/magazine/exhibitions/8813755881144"
+														onclick="GA_Event('메인','메인배너_8', 'BALLY%202nd%20DROP');"
+														class="link-box">
+														<div class="img">
+															<img class="lazy_main"
+																data-original="http://image.thehandsome.com/sys_master/images/hbd/hd1/9369263439902.jpg"
+																alt=""
+																src="http://image.thehandsome.com/sys_master/images/hbd/hd1/9369263439902.jpg"
+																style="display: inline;">
+														</div>
+														<div class="txt_area btm  center">
+															<div class="txt_area_inner190820">
+																<p class="txt">
+																	<span class="bar-in"> <font color="#FFFFFF">BALLY<br>2nd
+																			DROP
+																	</font> <span class="ab-bar left"
+																		style="background-color: #FFFFFF;"></span> <span
+																		class="ab-bar right"
+																		style="background-color: #FFFFFF;"></span>
+																	</span>
+																</p>
+																<p class="s_txt">
+																	<font color="#FFFFFF">다채로운 컬러감의 뉴 컬렉션<br>프리미엄
+																		슈케어 세트 GIFT
+																	</font>
+																</p>
+															</div>
+														</div>
+													</a>
+												</div>
+												<div
+													class="swiper-slide WHITE BG_WHITE TXT_WHITE swiper-slide-duplicate-prev"
+													data-swiper-slide-index="9" style="width: 412px;">
+													<a href="/magazine/exhibitions/8813756012216"
+														onclick="GA_Event('메인','메인배너_9', 'AUTOMATIC%20FOR%20THE%20PEOPLE');"
+														class="link-box">
+														<div class="img">
+															<img class="lazy_main"
+																data-original="http://image.thehandsome.com/sys_master/images/hd9/heb/9368747311134.jpg"
+																alt=""
+																src="http://image.thehandsome.com/sys_master/images/hd9/heb/9368747311134.jpg"
+																style="display: inline;">
+														</div>
+														<div class="txt_area btm  center">
+															<div class="txt_area_inner190820">
+																<p class="txt">
+																	<span class="bar-in"> <font color="#FFFFFF">AUTOMATIC<br>FOR
+																			THE PEOPLE
+																	</font> <span class="ab-bar left"
+																		style="background-color: #FFFFFF;"></span> <span
+																		class="ab-bar right"
+																		style="background-color: #FFFFFF;"></span>
+																	</span>
+																</p>
+																<p class="s_txt">
+																	<font color="#FFFFFF">톰그레이하운드의 새로운<br>HOMME
+																		브랜드 런칭
+																	</font>
+																</p>
+															</div>
+														</div>
+													</a>
+												</div>
+												<div
+													class="swiper-slide WHITE BG_WHITE TXT_WHITE swiper-slide-duplicate swiper-slide-duplicate-active"
+													data-swiper-slide-index="0" style="width: 412px;">
+													<a href="/magazine/events/8804940437376"
+														onclick="GA_Event('메인','메인배너_0', 'SS%20%uC1FC%uD551%20%uBCA0%uB124%uD54F');"
+														class="link-box">
+														<div class="img">
+															<img
+																src="http://image.thehandsome.com/sys_master/images/h89/h45/9369314951198.jpg"
+																alt="">
+														</div>
+														<div class="txt_area btm  center">
+															<div class="txt_area_inner190820">
+																<p class="txt">
+																	<span class="bar-in"> <font color="#000000">SS
+																			쇼핑 베네핏</font> <span class="ab-bar left"
+																		style="background-color: #000000;"></span> <span
+																		class="ab-bar right"
+																		style="background-color: #000000;"></span>
+																	</span>
+																</p>
+																<p class="s_txt">
+																	<font color="#000000">23 봄 신상품 10% 할인<br>상품평
+																		더블 적립 혜택까지!
+																	</font>
+																</p>
+															</div>
+														</div>
+													</a>
+												</div>
+											</div>
+											<!-- Add Pagination -->
+											<div
+												class="swiper-pagination hori-pagination0 bar swiper-pagination-bullets"
+												style="bottom: 109px;">
+												<span
+													class="swiper-pagination-bullet swiper-pagination-bullet-active"></span><span
+													class="swiper-pagination-bullet"></span><span
+													class="swiper-pagination-bullet"></span><span
+													class="swiper-pagination-bullet"></span><span
+													class="swiper-pagination-bullet"></span><span
+													class="swiper-pagination-bullet"></span><span
+													class="swiper-pagination-bullet"></span><span
+													class="swiper-pagination-bullet"></span><span
+													class="swiper-pagination-bullet"></span><span
+													class="swiper-pagination-bullet"></span>
+											</div>
+											<span class="swiper-notification" aria-live="assertive"
+												aria-atomic="true"></span>
+										</div> <!-- 미리보기 -->
+										<div class="main202103-look-ahead next-button-ahead"
+											id="magazinePreview"
+											onclick="GA_Event('메인','메인배너_하단배너', 'Q.P.T.%20%233%20%uB85C%uB9E8%uD2F1%20%uB370%uC774%uD2B8%20%uB8E9')"
+											tabindex="0" role="button" aria-label="Next slide"
+											aria-disabled="false">
+											<span class="tt">Q.P.T. #3 로맨틱 데이트 룩</span>
+										</div> <!-- //미리보기 -->
+
+									</li>
+									<!-- //메인배너 -->
+									<!-- 더매거진 -->
+									<li class="swiper-slide the_magazine swiper-slide-next"
+										data-index="1" id="the_magazine" style="height: 867px;">
+										<div class="sw-con-pd">
+											<div class="main202103-depth-title">
+												<h3 class="tt">THE 매거진</h3>
+												<a href="/ko/magazine/submain" class="more"
+													onclick="GA_Event('메인','THE매거진배너_전체보기','클릭')"><i><span
+														class="blind">더보기</span></i></a>
+											</div>
+
+
+											<!-- Swiper -->
+											<div
+												class="swiper-container standard-sp horiSlide1 swiper-container-initialized swiper-container-horizontal swiper-container-android"
+												style="height: calc(100% - 139px); margin: 0 -15px;">
+												<div class="swiper-wrapper" id="magazineList"
+													style="transition-duration: 0ms; transform: translate3d(-412px, 0px, 0px);">
+													<div
+														class="swiper-slide sbetween swiper-slide-duplicate swiper-slide-prev"
+														data-swiper-slide-index="4" style="width: 412px;">
+														<a
+															href="/ko/magazine/editorials/8807037687880?uiel=Mobile"
+															class="link-box radius-box shadow"
+															onclick="GA_Event('메인','THE매거진배너_4', '%uD3EC%uADFC%uD55C%20%uC2DC%uC5B4%uB9C1%20%uC7AC%uD0B7%20%uC2A4%uD0C0%uC77C');">
+															<div class="img">
+																<img class="lazy_magazine"
+																	data-original="http://cdn.thehandsome.com/mobile/editorial/list/banner/20230127_61394160938605608_ko.gif"
+																	alt="메인 더매거진 이미지"
+																	src="http://cdn.thehandsome.com/mobile/editorial/list/banner/20230127_61394160938605608_ko.gif"
+																	style="display: inline;">
+															</div>
+															<div class="banner-con-type">
+																<strong class="tt">포근한 시어링 재킷 스타일</strong>
+																<p class="sub-txt">
+																	요즘처럼 추운 날씨에는 <br>무조건 챙겨야 하는 시어링 재킷
+																</p>
+															</div>
+														</a>
+													</div>
+													<div class="swiper-slide sbetween swiper-slide-active"
+														data-swiper-slide-index="0" style="width: 412px;">
+														<a
+															href="/ko/magazine/editorials/8807070423112?uiel=Mobile"
+															class="link-box radius-box shadow"
+															onclick="GA_Event('메인','THE매거진배너_0', 'Q.P.T.%20%233%20%uB85C%uB9E8%uD2F1%20%uB370%uC774%uD2B8%20%uB8E9');">
+															<div class="img">
+																<img
+																	src="http://cdn.thehandsome.com/pc/editorial/detail/image/20230207_62343103375274101_ko.jpg"
+																	alt="메인 더매거진 이미지">
+															</div>
+															<div class="banner-con-type">
+																<strong class="tt">Q.P.T. #3 로맨틱 데이트 룩</strong>
+																<p class="sub-txt">
+																	로맨틱한 2월을 보내기 위해 <br>더한섬닷컴이 제안하는 데이트 룩
+																</p>
+															</div>
+														</a>
+													</div>
+													<div class="swiper-slide sbetween swiper-slide-next"
+														data-swiper-slide-index="1" style="width: 412px;">
+														<a
+															href="/ko/magazine/editorials/8807070357576?uiel=Mobile"
+															class="link-box radius-box shadow"
+															onclick="GA_Event('메인','THE매거진배너_1', '%uC790%uC720%uC640%20%uC0DD%uB3D9%20%uADF8%uB9AC%uACE0%20%uC2DC%uC2A4%uD15C%20%uD30C%uB9AC');">
+															<div class="img">
+																<img
+																	src="http://cdn.thehandsome.com/mobile/editorial/list/banner/20230202_61887013821322947_ko.jpg"
+																	alt="메인 더매거진 이미지">
+															</div>
+															<div class="banner-con-type">
+																<strong class="tt">자유와 생동 그리고 시스템 파리</strong>
+																<p class="sub-txt">
+																	시선을 압도하는 시스템 파리 컬렉션 2023 S/S <br>절제된 디자인 사이로
+																</p>
+															</div>
+														</a>
+													</div>
+													<div class="swiper-slide sbetween"
+														data-swiper-slide-index="2" style="width: 412px;">
+														<a
+															href="/ko/magazine/editorials/8807070390344?uiel=Mobile"
+															class="link-box radius-box shadow"
+															onclick="GA_Event('메인','THE매거진배너_2', '%uC798%20%uACE0%uB978%20%uC62C%uBD04%20%uC7AC%uD0B7%20%uD558%uB098');">
+															<div class="img">
+																<img class="lazy_magazine"
+																	data-original="http://cdn.thehandsome.com/mobile/editorial/list/banner/20230201_61818883051415031_ko.gif"
+																	alt="메인 더매거진 이미지"
+																	src="http://cdn.thehandsome.com/mobile/editorial/list/banner/20230201_61818883051415031_ko.gif"
+																	style="display: inline;">
+															</div>
+															<div class="banner-con-type">
+																<strong class="tt">잘 고른 올봄 재킷 하나</strong>
+																<p class="sub-txt">
+																	2023 S/S 시즌 <br>트렌드 키워드로 떠오른 테일러드 재킷
+																</p>
+															</div>
+														</a>
+													</div>
+													<div class="swiper-slide sbetween"
+														data-swiper-slide-index="3" style="width: 412px;">
+														<a
+															href="/ko/magazine/editorials/8807037622344?uiel=Mobile"
+															class="link-box radius-box shadow"
+															onclick="GA_Event('메인','THE매거진배너_3', '%uC6B0%uB9AC%uB4E4%uC758%20%uBE14%uB8E8%uC2A4');">
+															<div class="img">
+																<img class="lazy_magazine"
+																	data-original="http://cdn.thehandsome.com/mobile/editorial/list/banner/20230125_61206563761443975_ko.jpg"
+																	alt="메인 더매거진 이미지"
+																	src="http://cdn.thehandsome.com/mobile/editorial/list/banner/20230125_61206563761443975_ko.jpg"
+																	style="display: inline;">
+															</div>
+															<div class="banner-con-type">
+																<strong class="tt">우리들의 블루스</strong>
+																<p class="sub-txt">
+																	When the spring comes by <br>풋풋한 설렘을 안겨주는 새 옷과 새
+																	시즌
+																</p>
+															</div>
+														</a>
+													</div>
+													<div
+														class="swiper-slide sbetween swiper-slide-duplicate-prev"
+														data-swiper-slide-index="4" style="width: 412px;">
+														<a
+															href="/ko/magazine/editorials/8807037687880?uiel=Mobile"
+															class="link-box radius-box shadow"
+															onclick="GA_Event('메인','THE매거진배너_4', '%uD3EC%uADFC%uD55C%20%uC2DC%uC5B4%uB9C1%20%uC7AC%uD0B7%20%uC2A4%uD0C0%uC77C');">
+															<div class="img">
+																<img class="lazy_magazine"
+																	data-original="http://cdn.thehandsome.com/mobile/editorial/list/banner/20230127_61394160938605608_ko.gif"
+																	alt="메인 더매거진 이미지"
+																	src="http://cdn.thehandsome.com/mobile/editorial/list/banner/20230127_61394160938605608_ko.gif"
+																	style="display: inline;">
+															</div>
+															<div class="banner-con-type">
+																<strong class="tt">포근한 시어링 재킷 스타일</strong>
+																<p class="sub-txt">
+																	요즘처럼 추운 날씨에는 <br>무조건 챙겨야 하는 시어링 재킷
+																</p>
+															</div>
+														</a>
+													</div>
+													<div
+														class="swiper-slide sbetween swiper-slide-duplicate swiper-slide-duplicate-active"
+														data-swiper-slide-index="0" style="width: 412px;">
+														<a
+															href="/ko/magazine/editorials/8807070423112?uiel=Mobile"
+															class="link-box radius-box shadow"
+															onclick="GA_Event('메인','THE매거진배너_0', 'Q.P.T.%20%233%20%uB85C%uB9E8%uD2F1%20%uB370%uC774%uD2B8%20%uB8E9');">
+															<div class="img">
+																<img
+																	src="http://cdn.thehandsome.com/pc/editorial/detail/image/20230207_62343103375274101_ko.jpg"
+																	alt="메인 더매거진 이미지">
+															</div>
+															<div class="banner-con-type">
+																<strong class="tt">Q.P.T. #3 로맨틱 데이트 룩</strong>
+																<p class="sub-txt">
+																	로맨틱한 2월을 보내기 위해 <br>더한섬닷컴이 제안하는 데이트 룩
+																</p>
+															</div>
+														</a>
+													</div>
+												</div>
+												<!-- Add Pagination -->
+												<div
+													class="swiper-pagination hori-pagination1 bar swiper-pagination-bullets"
+													style="bottom: 15px;">
+													<span
+														class="swiper-pagination-bullet swiper-pagination-bullet-active"></span><span
+														class="swiper-pagination-bullet"></span><span
+														class="swiper-pagination-bullet"></span><span
+														class="swiper-pagination-bullet"></span><span
+														class="swiper-pagination-bullet"></span>
+												</div>
+												<span class="swiper-notification" aria-live="assertive"
+													aria-atomic="true"></span>
+											</div>
+											<!-- 미리보기 -->
+											<div class="main202103-look-ahead next-button-ahead"
+												id="exhibitionPreview" style="display: none" tabindex="0"
+												role="button" aria-label="Next slide" aria-disabled="false"></div>
+											<!-- //미리보기 -->
+										</div>
+									</li>
+									<!-- // 더매거진 -->
+									<!-- 기획전 -->
+									<li class="swiper-slide" data-index="2" id="exhibitions"
+										style="height: 867px;">
+										<div class="sw-con-pd">
+											<div class="main202103-depth-title">
+												<h3 class="tt">기획전</h3>
+												<a href="/ko/magazine/exhibitions" class="more"
+													onclick="GA_Event('메인','기획전배너_전체보기','클릭')"><i><span
+														class="blind">더보기</span></i></a>
+											</div>
+											<!-- Swiper -->
+											<div class="swiper-container standard-sp  horiSlide2"
+												style="height: calc(100% - 139px); margin: 0 -15px;">
+												<div class="swiper-wrapper" id="exhibitionList"></div>
+												<!-- Add Pagination -->
+												<div class="swiper-pagination hori-pagination2 bar black"
+													style="bottom: 5px;"></div>
+											</div>
+											<!-- 미리보기 -->
+											<div class="main202103-look-ahead next-button-ahead"
+												id="eventPreview" style="display: none" tabindex="0"
+												role="button" aria-label="Next slide" aria-disabled="false"></div>
+											<!-- //미리보기 -->
+										</div>
+									</li>
+									<!-- //기획전 -->
+									<!-- 이벤트 -->
+									<li class="swiper-slide index_slide" data-index="0" id="events"
+										style="height: 867px;">
+										<div class="sw-con-pd">
+											<div class="main202103-depth-title">
+												<h3 class="tt">이벤트</h3>
+												<a href="/ko/magazine/events" class="more"
+													onclick="GA_Event('메인','이벤트배너_전체보기','클릭')"><i><span
+														class="blind">더보기</span></i></a>
+											</div>
+											<!-- Swiper -->
+											<div class="swiper-container standard-sp horiSlide3"
+												style="height: calc(100% - 139px); margin: 0 -15px;">
+												<div class="swiper-wrapper" id="eventList"></div>
+												<!-- Add Pagination -->
+												<div class="swiper-pagination hori-pagination3 bar black"
+													style="bottom: 5px;"></div>
+											</div>
+											<!-- 미리보기 -->
+											<div class="main202103-look-ahead next-button-ahead"
+												id="homeTabTvPreview" tabindex="0" role="button"
+												aria-label="Next slide" aria-disabled="false"></div>
+											<!-- //미리보기 -->
+										</div>
+									</li>
+									<!-- //이벤트 -->
+									<!-- 핸썸 TV -->
+									<li class="swiper-slide" data-index="1" id="homeTabTv"
+										style="height: 867px;">
+										<div class="sw-con-pd">
+											<div class="main202103-depth-title">
+												<h3 class="tt">핸썸 TV</h3>
+												<a href="/ko/live/liveTV" class="more"
+													onclick="GA_Event('메인','핸썸TV배너_전체보기','클릭')"><i><span
+														class="blind">더보기</span></i></a>
+											</div>
+											<!-- Swiper -->
+											<div class="swiper-container standard-sp horiSlide4"
+												style="height: calc(100% - 139px); margin: 0 -15px;">
+												<div class="swiper-wrapper" id="homeTabTvList"></div>
+												<!-- Add Pagination -->
+												<div class="swiper-pagination hori-pagination4 bar black"
+													style="bottom: 10px;"></div>
+											</div>
+											<!-- 미리보기 -->
+											<div class="main202103-look-ahead more">
+												<div class="more-box radius-box shadow">
+													<a class="tt" href="/ko/mobilecommon/navShop"
+														onclick="GA_Event('메인','브랜드카테고리보기','클릭')"><span
+														class="txt">브랜드/카테고리 보기<i class="arrow"></i></span></a>
+												</div>
+											</div>
+											<!-- //미리보기 -->
+										</div>
+									</li>
+									<!-- //핸썸 TV -->
+									<!-- footer0 -->
+									<li id="v_footer0" class="swiper-slide main-slide-tt-last"
+										style="height: 867px;"><footer id="footer0"
+											class="hsome_footer new181127 footer_kr">
+											<!-- footer_kr class 추가 : 20220406 -->
+										</footer></li>
+									<!-- //footer0 -->
+								</ul>
+								<span class="swiper-notification" aria-live="assertive"
+									aria-atomic="true"></span>
+							</div>
+
+							<!-- 화살표 -->
+							<div
+								class="swiper-button-next main1909_down_arr main1909_down_arr0 white"
+								tabindex="0" role="button" aria-label="Next slide"
+								aria-disabled="false">
+								<a href="#;">아래 슬라이드로</a>
+							</div>
+							<div
+								class="swiper-button-prev main1909_up_arr main1909_up_arr0 swiper-button-disabled"
+								style="display: none" tabindex="0" role="button"
+								aria-label="Previous slide" aria-disabled="true">
+								<a href="#;">위로</a>
+							</div>
+							<!-- // 화살표 -->
+
+							<!-- newpaging -->
+							<div class="new-swiper-paging-wrap"></div>
+							<!-- //newpaging -->
+						</div>
+						<!-- 신상품 -->
+						<div id="contents-newitem"
+							class="hsomemain-contents-box newItems_main_slide1909 new_item"
+							style="display: none;">
+							<div
+								class="swiper-container swiper-container-v main1909_v main_wrapper_swiper1909 verticalSlide1 swiper-container-initialized swiper-container-vertical swiper-container-android"
+								id="newProductList" style="height: 867px;">
+								<ul class="swiper-wrapper inner_vertical_slide_wrap"
+									style="transform: translate3d(0px, 0px, 0px);">
+									<li class="swiper-slide index_slide swiper-slide-active"
+										th:each="list :${newVO}"
+										style="background: rgb(167, 178, 200); height: 867px;">
+										<div class="img_cover_div">
+											<a th:href="'/product/productDetail?pid='+${list.pid}+'&pcid='+${list.pcVO[0].pcid}"
+												><img
+												th:src="${list.pcVO[0].pcimg1}"
+												alt="">
+												<div class="main1909_item_info_wrap">
+													<span class="brand" th:text="${list.bname}"></span>
+													<p class="name" th:text="${list.pname}"></p>
+													<span class="price" th:text="${list.pcVO[0].pcprice}"></span>
+												</div> </a>
+										</div>
+									</li>
+								</ul>
+								<span class="swiper-notification" aria-live="assertive"
+									aria-atomic="true"></span>
+							</div>
+							<div
+								class="swiper-button-next main1909_down_arr main1909_down_arr1"
+								tabindex="0" role="button" aria-label="Next slide"
+								aria-disabled="false">
+								<a href="#;">아래 슬라이드로</a>
+							</div>
+							<div
+								class="swiper-button-prev main1909_up_arr main1909_up_arr1 swiper-button-disabled"
+								style="display: none" tabindex="0" role="button"
+								aria-label="Previous slide" aria-disabled="true">
+								<a href="#;">위로</a>
+							</div>
+							<div
+								class="swiper-pagination main-swiper-paging-wrap-1 main-swiper-bullets swiper-pagination-bullets swiper-pagination-bullets-dynamic"
+								style="height: 77px;">
+								<span
+									class="swiper-pagination-bullet swiper-pagination-bullet-active swiper-pagination-bullet-active-main"
+									style="top: 22px;"></span><span
+									class="swiper-pagination-bullet swiper-pagination-bullet-active-main"
+									style="top: 22px;"></span><span
+									class="swiper-pagination-bullet swiper-pagination-bullet-active-main"
+									style="top: 22px;"></span><span
+									class="swiper-pagination-bullet swiper-pagination-bullet-active-next"
+									style="top: 22px;"></span><span
+									class="swiper-pagination-bullet swiper-pagination-bullet-active-next-next"
+									style="top: 22px;"></span><span
+									class="swiper-pagination-bullet" style="top: 22px;"></span><span
+									class="swiper-pagination-bullet" style="top: 22px;"></span>
+							</div>
+							<div class="txt_on_newItems_best_wrap"
+								id="touchSwiperEvent1909_1">
+								<div class="txt_newItemsbest_wrap_inner">
+									<div class="main1909_count">
+										<span id="counter1909_1">280</span>
+									</div>
+									<div class="new_best_item_plus_btn">
+										<a href="javascript:mainNewLink()" class="prd_link190923">신상품</a>
+										<a href="javascript:mainNewPopUp()"
+											class="plusminus_btn190923"> <span href="#none"
+											class="agree_more_btn"> <!-- plus, minus icon s -->
+												<div class="slide_border_box_icon">
+													<img
+														src="http://cdn.thehandsome.com/_ui/handsomemobile/images/main/handsome-mob-main-cross-icon.png"
+														alt="">
+												</div> <!-- plus, minus icon e -->
+										</span>
+										</a>
+									</div>
+
+								</div>
+							</div>
+						</div>
+						<!-- //신상품 -->
+						<!-- 베스트 -->
+						<div id="contents-best"
+							class="hsomemain-contents-box best_main_slide1909 best"
+							style="display: none;">
+							<div
+								class="swiper-container swiper-container-v main1909_v main_wrapper_swiper1909 verticalSlide2 swiper-container-initialized swiper-container-vertical swiper-container-android"
+								id="bestProductList" style="height: 867px;">
+								<ul class="swiper-wrapper inner_vertical_slide_wrap"
+									style="transform: translate3d(0px, 0px, 0px);">
+																		<li class="swiper-slide index_slide swiper-slide-active"
+										th:each="list :${bestVO}"
+										style="background: rgb(167, 178, 200); height: 867px;">
+										<div class="img_cover_div">
+											<a th:href="'/product/productDetail?pid='+${list.pid}+'&pcid='+${list.pcVO[0].pcid}"
+												><img
+												th:src="${list.pcVO[0].pcimg1}"
+												alt="">
+												<div class="main1909_item_info_wrap" style="z-index: 2;">
+													<span class="brand" th:text="${list.bname}"></span>
+													<p class="name" th:text="${list.pname}"></p>
+													<span class="price" th:text="${list.pcVO[0].pcprice}"></span>
+												</div> </a>
+										</div>
+									</li>
+									<li id="v_footer2" class="swiper-slide" style="height: 867px;">
+										<footer id="footer2" class="hsome_footer new181127 footer_kr">
+											<div class="main-notice">
+												<div class="tit-notice">공지</div>
+												<div class="list-notice">
+													<ul class="notice-wrap">
+														<li><a
+															href="/ko/svcenter/mobilenotice?noticeCode=8804711059376">더한섬닷컴
+																편집/해외 브랜드 종료(예정) 안내(~2/22)</a></li>
+														<li><a
+															href="/ko/svcenter/mobilenotice?noticeCode=8804711059376">더한섬닷컴
+																편집/해외 브랜드 종료(예정) 안내(~2/22)</a></li>
+													</ul>
+												</div>
+												<div class="btn-more">
+													<a href="/ko/svcenter/mobilenotice"><img
+														src="http://cdn.thehandsome.com/_ui/handsomemobile/images/main/btn_arr_notice.png"
+														alt=""></a>
+												</div>
+											</div>
+											<div class="f_wrap">
+												<div class="f_menu re1911">
+													<!-- 수정 190207 -->
+													<ul class="top_line">
+
+														<li><a href="#"></a></li>
+														<li><a href="/ko/member/login" class="login"
+															style="float: left;"
+															onclick="GA_Event('공통', '푸터_메뉴', '로그인');">로그인<!--로그인--></a></li>
+														<li><a href="/ko/svcenter/mobilemain?uiel=Mobile"
+															class="customer" style="float: left; width: 32%;"
+															onclick="GA_Event('공통', '푸터_메뉴', '고객센터');">고객센터<!--고객센터--></a></li>
+														<li><a
+															href="/ko/store-finder/storeInformation?uiel=Mobile"
+															class="storeinfo" style="float: left;"
+															onclick="GA_Event('공통', '푸터_메뉴', '매장안내');">매장안내</a></li>
+													</ul>
+													<ul class="btm_line1911">
+														<li><a href="/ko/svcenter/theClubInfo?uiel=Mobile"
+															class="memberBenefit"
+															style="float: left; letter-spacing: -1px;"
+															onclick="GA_Event('공통', '푸터_메뉴', '한섬 회원 혜택');">한섬 회원
+																혜택<!-- 한섬 회원 혜택 -->
+														</a></li>
+														<li><a
+															href="http://www.handsome.co.kr/ko/company/aboutHandsome.do?leng=ko"
+															target="_blank"
+															style="float: left; letter-spacing: -1px;"
+															onclick="GA_Event('공통', '푸터_메뉴', '회사소개');">회사소개</a></li>
+														<li id="family_site"><span
+															class="language family_site1911 for_iph_css1911"
+															onclick="familySiteSelect();GA_Event('공통', '푸터_CNT', 'FAMILYSITE');">FAMILY
+																SITE&nbsp;</span></li>
+													</ul>
+													<!-- 챗봇 테스트 -->
+												</div>
+
+												<div class="f_sns">
+													<a href="javascript:noLink();"
+														onclick="GA_Event('공통', '푸터_SNS', 'INSTAGRAM');window.open('https://instagram.com/thehandsome_official/','instagram');return false"
+														class="ist">인스타그램</a> <a href="javascript:noLink();"
+														onclick="GA_Event('공통', '푸터_SNS', 'YOUTUBE');window.open('https://www.youtube.com/channel/UC0fmjgbVA8iZrPbIR3dppUQ','youtube');return false"
+														class="ytb">유튜브</a>
+												</div>
+												<div class="f_policy">
+													<a href="/ko/footer/footerTermBusiness?uiel=Mobile">서비스이용약관</a>
+													<a href="/ko/footer/footerPrivacy?uiel=Mobile"
+														style="font-weight: bold;">개인정보처리방침</a>
+
+													<!-- web -->
+													<!-- 180706 추가// -->
+													<span class="language"> <select
+														id="footerSelectLang"
+														onchange="if(this.value) language(this.value);"
+														onclick="GA_Event('공통', '푸터_CNT', 'LANGUAGE');">
+															<option value="" selected="selected" disabled=""
+																hidden="">LANGUAGE</option>
+															<option value="ko">한국어</option>
+															<option value="en">ENGLISH</option>
+															<option value="zh">中文</option>
+													</select>
+													</span>
+													<!-- //180706 추가 -->
+												</div>
+
+												<div class="f_copyright">COPYRIGHT © 2018 HANDSOME.
+													ALL RIGHT RESERVED</div>
+
+												<a href="javascript:noLink();" class="f_info_viewer"
+													onclick="GA_Event('공통', '푸터_CNT', 'INFO');"> <span
+													class="f-txt">(주) 한섬 </span> <span class="f-logo"><img
+														src="http://cdn.thehandsome.com/_ui/handsomemobile/images/common/mob-footer-handsome-logo.png"
+														alt=""></span>
+												</a>
+
+												<div class="f_info">
+													<div class="corp">
+														대표이사 : 김민덕 | 서울시 강남구 도산대로 523 한섬빌딩<br>TEL : 1800-5700
+														(유료) | FAX : 02-6078-2856 <br>개인정보보호책임자 : 윤인수 |
+														호스팅서비스 : (주) 한섬<br>사업자등록번호 : 120-81-26337<br>통신판매업신고번호
+														: 제 2009-서울강남-00826호
+													</div>
+													<div class="link">
+														<a
+															href="https://recruit.ehyundai.com/recruit-info/announcement/list.nhd?pageNo=1&amp;hireGb=01&amp;coCd=HDHAN"
+															target="_blank"
+															onclick="GA_Event('공통', '푸터_CNT', 'INFO_채용정보');">채용정보</a>
+														<a
+															href="http://www.handsome.co.kr/ko/sustainability/sharedGrowth01.do"
+															target="_blank"
+															onclick="GA_Event('공통', '푸터_CNT', 'INFO_동반성장');">동반성장</a>
+														<a
+															href="http://www.handsome.co.kr/ko/sustainability/ecoFriendly01.do"
+															target="_blank"
+															onclick="GA_Event('공통', '푸터_CNT', 'INFO_환경경영');">환경경영</a>
+													</div>
+												</div>
+
+											</div>
+										</footer>
+									</li>
+								</ul>
+								<span class="swiper-notification" aria-live="assertive"
+									aria-atomic="true"></span>
+							</div>
+							<div
+								class="swiper-button-next main1909_down_arr main1909_down_arr2"
+								tabindex="0" role="button" aria-label="Next slide"
+								aria-disabled="false">
+								<a href="#;">아래 슬라이드로</a>
+							</div>
+							<div
+								class="swiper-button-prev main1909_up_arr main1909_up_arr2 swiper-button-disabled"
+								style="display: none" tabindex="0" role="button"
+								aria-label="Previous slide" aria-disabled="true">
+								<a href="#;">위로</a>
+							</div>
+							<div
+								class="swiper-pagination main-swiper-paging-wrap-2 main-swiper-bullets swiper-pagination-bullets swiper-pagination-bullets-dynamic"
+								style="height: 77px;">
+								<span
+									class="swiper-pagination-bullet swiper-pagination-bullet-active swiper-pagination-bullet-active-main"
+									style="top: 22px;"></span><span
+									class="swiper-pagination-bullet swiper-pagination-bullet-active-main"
+									style="top: 22px;"></span><span
+									class="swiper-pagination-bullet swiper-pagination-bullet-active-main"
+									style="top: 22px;"></span><span
+									class="swiper-pagination-bullet swiper-pagination-bullet-active-next"
+									style="top: 22px;"></span><span
+									class="swiper-pagination-bullet swiper-pagination-bullet-active-next-next"
+									style="top: 22px;"></span><span
+									class="swiper-pagination-bullet" style="top: 22px;"></span><span
+									class="swiper-pagination-bullet" style="top: 22px;"></span><span
+									class="swiper-pagination-bullet" style="top: 22px;"></span><span
+									class="swiper-pagination-bullet" style="top: 22px;"></span><span
+									class="swiper-pagination-bullet" style="top: 22px;"></span><span
+									class="swiper-pagination-bullet" style="top: 22px;"></span><span
+									class="swiper-pagination-bullet" style="top: 22px;"></span><span
+									class="swiper-pagination-bullet" style="top: 22px;"></span><span
+									class="swiper-pagination-bullet" style="top: 22px;"></span><span
+									class="swiper-pagination-bullet" style="top: 22px;"></span><span
+									class="swiper-pagination-bullet" style="top: 22px;"></span><span
+									class="swiper-pagination-bullet" style="top: 22px;"></span><span
+									class="swiper-pagination-bullet" style="top: 22px;"></span><span
+									class="swiper-pagination-bullet" style="top: 22px;"></span><span
+									class="swiper-pagination-bullet" style="top: 22px;"></span><span
+									class="swiper-pagination-bullet" style="top: 22px;"></span>
+							</div>
+							<div class="txt_on_newItems_best_wrap">
+								<div class="new_best_item_plus_btn">
+									<a href="javascript:mainBestLink()" class="prd_link190923">베스트</a>
+									<a href="javascript:mainBestPopUp()"
+										class="plusminus_btn190923"> <span href="#none"
+										class="agree_more_btn"> <!-- plus, minus icon s -->
+											<div class="slide_border_box_icon">
+												<img
+													src="http://cdn.thehandsome.com/_ui/handsomemobile/images/main/handsome-mob-main-cross-icon.png"
+													alt="">
+											</div> <!-- plus, minus icon e -->
+									</span>
+									</a>
+								</div>
+							</div>
+						</div>
+						<!-- //베스트 -->
+
+						<!-- 편집샵 -->
+					</div>
+				</div>
+			</div>
+			</div>
+			<!-- //################## contents ################## -->
+
+	<!-- ################## hsome_quickMenu | 퀵메뉴 ################## -->
+	<aside class="hsome_quickMenu hsome_quickMenu1909 active">
+		<ul>
+			<li class="shop active" style="width: 33.3%;"><a
+				onclick="layerUp()"><i>메뉴</i></a></li>
+			<li class="home" style="width: 33.3%;"><a
+				href="javascript:noLink();"
+				onclick="goMainpage();GA_Event('공통', '네비게이션_바', '홈');"><i>홈</i></a>
+			</li>
+			<li class="mypage" id="gnbMyPageBtn" style="width: 33.3%;"><a
+				href="javascript:noLink();"
+				onclick="goMypage();GA_Event('공통', '네비게이션_바', '마이페이지');"><i>마이페이지</i></a>
+			</li>
+			<li class="mypage pageMove" style="display: none"><a href=""
+				id="gnbMypageBtn"></a></li>
+			<li class="mypage" style="display: none"><a
+				href="https://www.thehandsome.com/ko/mobilecommon/myPagePopup"
+				id="gnbMypagePopupBtn"></a></li>
+		</ul>
+	</aside>
+<!-- ################## //hsome_quickMenu | 퀵메뉴 ################## -->
+	<!-- ################## hsome_quickMenu_contents | 퀵메뉴 컨텐츠 영역 ################## -->
+	<div class="hsome_quickMenu_contents">
+	<th:block th:replace="fragments/footer :: footerFragment"></th:block>
+	</div>
+	<!--// ################## hsome_quickMenu_contents | 퀵메뉴 컨텐츠 영역 ################## -->
+
+
+
+	<script th:inline="javascript">
+	/*<![CDATA[*/
+var navViewTime = 1;//3초 후 top nav 사라짐
+var mySwiperV = {};
+var chkFooter = true;
+var home_header_color = $('.header-fix').attr('class');
+var newProductCategory = "";
+var bestProductCategory = "";
+var newProdCnt = new Array();
+var cntDisplayYn = new Array();
+var main_bul = true;//180909 메인 페이지인지 여부
+var newBgColorCode = ""; //신상품 bg컬러
+var bestBgColorCode = ""; //베스트 bg컬러
+var main201909_swiper = {}; //뒤로가기
+var refreshYn = true;  // 새로고침여부
+var refreshIdx = -1;  // 새로고침인덱스
+var refreshHeight = 150;
+var refreshHeight_tv = 150;
+var v_main = true;
+var v_new = true;
+var v_best = true;
+var v_multibrd = true;
+var v_tv = true;
+var v_nowVideoPlayId = '';  // 현재 재생중인 비디오
+var v_videoPlayYn = false;  // 현재 비디오 재생 여부
+
+var h_exhibition = true;
+var h_event = true;
+var h_homeTv = true;
+var sendGaEvent = false;
+<!-- Swiper Slide -->
+/* 세로 슬라이드 */
+
+main_Parent_Verti_slide(0);
+function main_Parent_Verti_slide(i){
+    var idx = 0;
+    var chkMultiBrd = false;
+    if(i == 3){
+        chkMultiBrd == true;
+    }
+    mySwiperV = new Swiper('.verticalSlide'+i+'.main1909_v', {
+        speed: 500,
+        direction: 'vertical',
+        spaceBetween:0,
+        resistance:false,
+        simulateTouch:false,
+        slidesPerView: 1,
+        slidesPerGroup: 1,
+        preventInteractionOnTransition: chkMultiBrd,
+        longSwipes: false,
+        navigation: {
+                nextEl: '.main1909_down_arr'+i + ', .next-button-ahead',
+                prevEl: '.main1909_up_arr'+i,
+        },
+        // 20200917 메인 페이징 옵션
+        pagination: {
+            el: '.main-swiper-paging-wrap-'+i,
+            type: 'bullets',
+            dynamicBullets: true,
+            dynamicMainBullets: 3,
+        },
+        on: {
+            slideChange: function(){
+                //+버튼 초기화
+                $('.main1909_fix_b_btn_wrap ul').removeClass('active');
+                $('.main1909_fix_b_btn_wrap .fix_b_btn').removeClass('spin');
+
+                var tab_On_Index = $('#topNav1909 ul li.on').index();
+                var $current_tab = $('.main-contents-wrap .hsomemain-contents-box').eq(tab_On_Index);
+                
+                var $home = $current_tab.attr('class').indexOf('home'),
+                $new_item = $current_tab.attr('class').indexOf('new_item'),
+                $best = $current_tab.attr('class').indexOf('best'),
+                $multibrd = $current_tab.attr('class').indexOf('multibrd');
+                $tv = $current_tab.attr('class').indexOf('tv');
+
+
+                if ($home != -1) {
+                    idx = 0;
+                } else if ($new_item != -1) {
+                    idx = 1;
+                } else if ($best != -1) {
+                    idx = 2;
+                } else if ($multibrd != -1) {
+                    idx = 3;
+                } else if ($tv != -1) {
+                    idx = 4;
+                }
+
+                var vTitle = "";
+                var vParam = "";
+                
+                if(idx == 1) {
+                    $('#contents-newitem .txt_newItemsbest_wrap_inner .gender li').each(function() {
+                        if ( $(this).hasClass('on') ) {
+                            vParam = $(this).attr("id");
+                            vTitle = "메인>신상품_"+ $(this).find('a').text();
+                            
+                            if(vParam == "we"){
+                                vParam = "women";
+                            }else if(vParam == "me"){
+                                vParam = "men";
+                            }
+                        }
+                    });
+                    
+                    try{
+                        ga('gp.send','pageview',{
+                            'title':vTitle, //가상페이지 화면명
+                            'location':window.location.protocol + '//' + window.location.host + decodeURI(window.location.pathname) + '?main_tab=new_' + vParam, //가상페이지URL
+                            nonInteraction: true //비 상호작용
+                        });
+                    }catch(e) {
+                        console.log(e);
+                    }
+                }else if(idx == 2) {
+                    $('#contents-best .txt_on_newItems_best_wrap .gender li').each(function(){
+                        if ( $(this).hasClass('on') ) {
+                            vParam = $(this).attr("id");
+                            vTitle = "메인>베스트_"+ $(this).find('a').text();
+                            
+                            if(vParam == "we"){
+                                vParam = "women";
+                            }else if(vParam == "me"){
+                                vParam = "men";
+                            }
+                        }
+                    });
+                    
+                    try{
+                        ga('gp.send','pageview',{
+                            'title':vTitle, //가상페이지 화면명
+                            'location':window.location.protocol + '//' + window.location.host + decodeURI(window.location.pathname) + '?main_tab=best_' + vParam, //가상페이지URL
+                            nonInteraction: true //비 상호작용
+                        });
+                    }catch(e) {
+                        console.log(e);
+                    }
+                }
+                
+                if(idx != 4 && idx != 5) { //tv탭이 아닐때만,
+                    // 화살표
+                    var main1909HSwiper = document.querySelector('.verticalSlide'+idx).swiper;
+                    window.sessionStorage.setItem('height',main1909HSwiper.activeIndex);
+                    
+                    var chkSwiperIdx = main1909HSwiper.activeIndex+1;
+                    var main1909HSwiperLength = $('.verticalSlide'+idx+' > ul > li').length;
+
+                    if( chkSwiperIdx >= 2 ) {
+                        $('.main1909_down_arr'+idx).stop().hide();
+                    }else{
+                        $('.main1909_down_arr'+idx).stop().show();
+                    }
+
+                    // 20200917 메인 페이징
+                    var main_V_slide_Leng = $('.verticalSlide'+idx+' ul > .swiper-slide').length;
+                    if ( chkSwiperIdx == main_V_slide_Leng ) {
+                        $('.main-swiper-paging-wrap-'+idx).find('span').eq(main_V_slide_Leng-2).addClass('on');
+                    }else {
+                        $('.main-swiper-paging-wrap-'+idx).find('span').eq(main_V_slide_Leng-2).removeClass('on');
+                    }
+
+                    //top 버튼 3번째페이지부터 노출
+                    var currentSwiperV= document.querySelector('.verticalSlide'+idx).swiper;
+                    if(currentSwiperV.activeIndex > 0){
+                        $('.main1909_fix_b_btn_wrap .top_btn').addClass('active');
+                    }else{
+                        $('.main1909_fix_b_btn_wrap .top_btn').removeClass('active');
+                    }
+                    // 인기브랜드 슬라이드 첫번째로 이동
+                    if (idx == 3) {
+                        var checkFirst = $('.verticalSlide'+idx+' > ul > li').hasClass('swiper-slide-prev');
+                        var pbrdSwiper = document.querySelector('#popMultiBrd').swiper;
+                        if(checkFirst == false){
+                            pbrdSwiper.slideTo(0,0);
+                        }
+                    }
+                    
+                    
+                    var main1909HSwiperLength = $('.verticalSlide'+idx+' ul > li').length;
+                    main1909HSwiperLength = main1909HSwiperLength - ($('#footer li').length) -1;
+                    if(idx == 0){ //home > 기획전
+                        main1909HSwiperLength = main1909HSwiperLength - $("#exhibitions li").length;
+                    }else if(idx == 3){ //편집샵 
+                        main1909HSwiperLength = main1909HSwiperLength - ($("#mutibrdMainSlider ul li").length + $("#mutiBrandSlider ul li").length + $("#popMultiBrd ul li").length);
+                    }
+                    if ( chkSwiperIdx == main1909HSwiperLength ) {
+                        if (idx == 1 || idx == 2) {
+                            $('.new_best_item_plus_btn').show();
+                        }
+                    } else {
+                        if ( chkSwiperIdx > main1909HSwiperLength ) {   //footer
+                            if (idx == 1 || idx == 2) {
+                                $('.new_best_item_plus_btn').hide();
+                            }
+                        } else {
+                            if (idx == 1 || idx == 2) {
+                                $('.new_best_item_plus_btn').show();
+                            }
+                        }
+                    }
+                }
+                
+            },
+            slidePrevTransitionStart: function(){
+                $('.pop-multi-brd').find('.pop-multi-brd-in:last-child').removeClass('noswiping202103');
+                var prevIndex = $('.verticalSlide1.main1909_v').find('li.swiper-slide-prev').length;
+                if(prevIndex == 0){     
+                    $("#contents-newitem .txt_on_newItems_best_wrap .gender ul li").each(function(i) {
+                        if($(this).hasClass('on')) {
+                            if(cntDisplayYn[i] == "0") {
+                                $(".txt_newItemsbest_wrap_inner" ).css("top", "-1.25em");
+                            }else {
+                                if ($('.txt_newItemsbest_wrap_inner').hasClass('up')) {
+                                    newTabNumSlideDown();
+                                }
+                            }
+                        }
+                    });
+                }
+                // 첫번째 슬라이드에서만 로고 노출 210322
+                var checkFirst = $('.verticalSlide'+idx+' > ul > li').hasClass('swiper-slide-prev');
+                if(checkFirst == false){
+                    $('.header-fix').addClass('t-prent');
+                    $('.header-fix').addClass('header-top');
+                    $('.main1909_down_arr'+idx).show();
+                    if(idx == 3 ){
+                        $('.header-fix').addClass('white-header');
+                    }
+                    $('body').removeClass('sw_up');
+                }else{
+                    $('body').addClass('sw_up');
+                }
+            },
+            slideNextTransitionStart: function(){
+                var prevIndex = $('.verticalSlide1.main1909_v').find('li.swiper-slide-prev').length;
+                if(prevIndex > 0){
+                    $("#contents-newitem .txt_on_newItems_best_wrap .gender ul li").each(function(i) {
+                        if($(this).hasClass('on')) {
+                            if(cntDisplayYn[i] == "0") {
+                                $(".txt_newItemsbest_wrap_inner" ).css("top", "-1.25em");
+                            }else {
+                                if (!$('.txt_newItemsbest_wrap_inner').hasClass('up')) {
+                                    newTabNumSlideUp();
+                                }
+                            }
+                        }
+                    });
+                }
+                // 첫번째 슬라이드에서만 로고 노출 210322
+                var verticalSwiper = document.querySelector('.verticalSlide'+idx).swiper;
+                
+                var checkFirst = $('.verticalSlide'+idx+' > ul > li').hasClass('swiper-slide-prev');
+                if(checkFirst == true){
+                    $('.header-fix').removeClass('t-prent');
+                    $('.header-fix').removeClass('header-top');
+	                $('.header-fix').removeClass('white-header');
+                }
+                
+                $('body').removeClass('sw_up');
+            },
+            slideChangeTransitionStart: function(){
+                var tab_On_Index = $('#topNav1909 ul li.on').index();
+                var $current_tab = $('.main-contents-wrap .hsomemain-contents-box').eq(tab_On_Index);
+                var $home = $current_tab.attr('class').indexOf('home'),
+                    $tv = $current_tab.attr('class').indexOf('tv');
+                
+                if ($tv != -1) {
+                    idx = 4;
+                }
+                
+                if(idx != 4 && idx != 5) { //tv탭이 아닐때만,
+
+                    var checkFirst = $('.verticalSlide'+idx+' > ul > li').hasClass('swiper-slide-prev');
+                    
+                    if($home != -1 && checkFirst == false){
+                        var whiteHeader = $('#mainList').find('div.swiper-slide-active').hasClass("WHITE");
+                        if(whiteHeader){ //흰색
+                            if(!$('.header-fix').hasClass('white-header')){
+                                $('.header-fix').addClass('white-header');
+                            }
+                        }else { //검정
+                            if($('.header-fix').hasClass('white-header')){
+                                $('.header-fix').removeClass('white-header');    
+                            }
+                        }
+                        
+                        var previewBgBlack = $('#mainList').find('div.swiper-slide-active').hasClass("BG_BLACK");
+                        if(previewBgBlack){ //검정
+                            $("#magazinePreview").addClass("black-bg");
+                        }else { //흰색
+                            $("#magazinePreview").removeClass("black-bg");
+                        }
+                        
+                        var previewBgTxt = $('#mainList').find('div.swiper-slide-active').hasClass("TXT_BLACK"); //text, pagination color
+                        if(previewBgTxt){ //검정
+                            $("#magazinePreview .tt").addClass("black");
+                            $(".hori-pagination0").addClass("black");
+                            $(".main1909_down_arr0").removeClass("white");
+                            $(".main1909_down_arr0").addClass("black");
+                        }else { //흰색
+                            $("#magazinePreview .tt").removeClass("black");
+                            $(".hori-pagination0").removeClass("black");
+                            $(".main1909_down_arr0").removeClass("black");
+                            $(".main1909_down_arr0").addClass("white");
+                        }
+                    }
+                    
+                }
+                
+                sendGaEvent = true;
+            },
+            slideChangeTransitionEnd: function(){
+                if(idx != 4 && idx != 5) { //tv탭이 아닐때만,
+                    //change시 최초1번 data setting.             
+                    if(idx == 0) { //home tab
+                        var main1909HSwiper = document.querySelector('.verticalSlide'+idx).swiper;
+                        var chkSwiperIdx = main1909HSwiper.activeIndex;
+                        home_hori_swiper = document.querySelector('.swiper-container.standard-sp').swiper;
+                        
+                        if(chkSwiperIdx == 1){
+                            if(h_exhibition) {
+                                h_exhibition = false;
+                                getExhibitionBannerList(); //기획전
+                            }
+                        }else if(chkSwiperIdx == 2){
+                            if(h_event){
+                                h_event = false;
+                                getEventList();       //이벤트
+                            }else if(h_exhibition){
+                                h_exhibition = false;
+                                getExhibitionBannerList(); //기획전
+                            }
+                        }else if(chkSwiperIdx == 3){
+                            if(h_homeTv) {
+                                h_homeTv = false;
+                                getMobileHomeTabTv(); //홈탭 tv
+                            }else if(h_event){
+                                h_event = false;
+                                getEventList();       //이벤트
+                            }
+                        }
+                        
+                    }
+                    
+                    var tab_On_Index = $('#topNav1909 ul li.on').index();
+                    var $current_tab = $('.main-contents-wrap .hsomemain-contents-box').eq(tab_On_Index);
+
+                    var $home = $current_tab.attr('class').indexOf('home'),
+                        $new_item = $current_tab.attr('class').indexOf('new_item'),
+                        $best = $current_tab.attr('class').indexOf('best'),
+                        $home = $current_tab.attr('class').indexOf('home'),
+                        $multibrd = $current_tab.attr('class').indexOf('multibrd');
+
+                    if($('.slide_border_box_icon').hasClass('spin2019')){
+                        $('.slide_border_box_icon').removeClass('spin2019');
+                    }
+                    
+                    if ($new_item != -1) {
+                        var activeIndex = $('.verticalSlide1.main1909_v').find('li.swiper-slide-active').attr('data-index');
+                        if(activeIndex == 0){
+                                $('.newItems_main_slide1909 .main1909_count, .newItems_main_slide1909 .gender').show();
+                                $('.newItems_main_slide1909 .slide_border_box_icon').addClass('spin2019');
+                        }else{
+                                $('.newItems_main_slide1909 .gender').hide();
+                        }
+                    }else if($best != -1) {
+                        var activeIndex2 = $('.verticalSlide2.main1909_v').find('li.swiper-slide-active').attr('data-index');
+                        if(activeIndex2 == 0){
+                                $('.best_main_slide1909 .main1909_count, .best_main_slide1909 .gender').show();
+                                $('.best_main_slide1909 .slide_border_box_icon').addClass('spin2019');
+                        }else{
+                                $('.best_main_slide1909 .main1909_count, .best_main_slide1909 .gender').hide();
+                                $('.best_main_slide1909 .slide_border_box_icon').removeClass('spin2019');
+                        }
+                    }else if($multibrd != -1){
+                        var activeIndex3 = $('.verticalSlide3.main1909_v').find('li.swiper-slide-active').index();
+                        if(activeIndex3 == 0){
+                            $('.multibrd .slide_border_box_icon').addClass('spin2019');
+                        }else{
+                            $('.multibrd .slide_border_box_icon').removeClass('spin2019');
+                        }
+                    } 
+                }
+            },
+            reachEnd : function(){
+                heightChange();
+            },
+            setTranslate : function(e) {
+                if (e > Math.floor(refreshHeight)) {
+                    this.allowTouchMove = false;
+                    if ( refreshYn ) {
+                        var tab_On_Index = $('#topNav1909 ul li.on').index();
+                        var $current_tab = $('.main-contents-wrap .hsomemain-contents-box').eq(tab_On_Index);
+                        
+                        var $home = $current_tab.attr('class').indexOf('home'),
+                        $new_item = $current_tab.attr('class').indexOf('new_item'),
+                        $best = $current_tab.attr('class').indexOf('best'),
+                        $multibrd = $current_tab.attr('class').indexOf('multibrd');
+                        $tv = $current_tab.attr('class').indexOf('tv');
+
+                        if ($home != -1) {
+                            refreshIdx = 0;
+                        } else if ($new_item != -1) {
+                            refreshIdx = 1;
+                        } else if ($best != -1) {
+                            refreshIdx = 2;
+                        } else if ($multibrd != -1) {
+                            refreshIdx = 3;
+                        }
+                    }
+                } else {
+                    this.allowTouchMove = true;
+                }
+            },
+            setTransition : function(e) {
+                if (e == 0 && refreshYn) {
+                    fn_refresh();
+                }
+            }
+        }
+    });
+}
+
+
+/* 홈 영역 컨텐츠 가로 슬라이드  */
+var chkMain = true;
+var chkMagazine = true;
+var chkExhibition = true;
+var chkEvent = true;
+var chkHomeTv = true;
+main_Home_Hori_Slide(0);
+function main_Home_Hori_Slide(i) {
+    var home_hori_swiper = new Swiper('.horiSlide'+i+'.swiper-container.standard-sp', {
+        slidePerView: 1,
+        loop: true,
+        pagination: {
+            el: '.hori-pagination'+i,
+        },
+        on: {
+            touchStart: function() {
+                var mainHwiper = document.querySelector('.horiSlide'+i).swiper;
+//                 window.sessionStorage.setItem('h_width', mainHwiper.activeIndex);
+
+                var homeMain = $(this)[0].$wrapperEl.attr("id").indexOf('mainList'),
+                homeMagazine = $(this)[0].$wrapperEl.attr("id").indexOf('magazineList'),
+                homeExhibition = $(this)[0].$wrapperEl.attr("id").indexOf('exhibitionList'),
+                homeEvent = $(this)[0].$wrapperEl.attr("id").indexOf('eventList'),
+                homeTv = $(this)[0].$wrapperEl.attr("id").indexOf('homeTabTvList');
+	            
+	            //s:비디오재생
+                if ( homeMain != -1) {
+                    if ( $('#mainList').find('#videoDiv1909_'+mainHwiper.activeIndex+'').length > 0 ) {
+                        var nowVideoPlayId = '#videoDiv1909_'+mainHwiper.activeIndex+'';
+                        if ( v_nowVideoPlayId == nowVideoPlayId ) {
+                            if ( v_nowVideoPlayId != '' ) {
+                                if ( v_videoPlayYn ) {
+                                    videoPause(v_nowVideoPlayId);
+                                }
+                                v_nowVideoPlayId = nowVideoPlayId;
+                                videoPlay(v_nowVideoPlayId);
+                            }
+                        } else {
+                            v_nowVideoPlayId = nowVideoPlayId;
+                            videoPlay(v_nowVideoPlayId);
+                        }
+                    } else {
+                        if ( v_nowVideoPlayId != '' && v_videoPlayYn ) {
+                            videoPause(v_nowVideoPlayId);
+                        }
+                    }
+                } else {
+                    if ( v_nowVideoPlayId != '' && v_videoPlayYn ) {
+                        videoPause(v_nowVideoPlayId);
+                    }
+                }
+                //e:비디오재생
+            },
+            slideChangeTransitionStart: function(){
+                var homeMain = $(this)[0].$wrapperEl.attr("id").indexOf('mainList');
+                var checkFirst = $('.verticalSlide0 > ul > li').hasClass('swiper-slide-prev');
+
+                if (homeMain != -1 && checkFirst == false) {
+                    var whiteHeader = $('#mainList').find('div.swiper-slide-active').hasClass("WHITE");
+                    if(whiteHeader){ //흰색
+                        if(!$('.header-fix').hasClass('white-header')){
+                            $('.header-fix').addClass('white-header');
+                        }
+                    }else { //검정
+                        if($('.header-fix').hasClass('white-header')){
+                            $('.header-fix').removeClass('white-header');    
+                        }
+                    }
+                    
+                    var previewBgBlack = $('#mainList').find('div.swiper-slide-active').hasClass("BG_BLACK");
+                    if(previewBgBlack){ //검정
+                        $("#magazinePreview").addClass("black-bg");
+                    }else { //흰색
+                        $("#magazinePreview").removeClass("black-bg");
+                    }
+                    
+                    var previewBgTxt = $('#mainList').find('div.swiper-slide-active').hasClass("TXT_BLACK");  //text, pagination color
+                    if(previewBgTxt){ //검정
+                        $("#magazinePreview .tt").addClass("black");
+                        $(".hori-pagination0").addClass("black");
+                        $(".main1909_down_arr0").removeClass("white");
+                        $(".main1909_down_arr0").addClass("black");
+                    }else { //흰색
+                        $("#magazinePreview .tt").removeClass("black");
+                        $(".hori-pagination0").removeClass("black");
+                        $(".main1909_down_arr0").removeClass("black");
+                        $(".main1909_down_arr0").addClass("white");
+                    }
+                }
+            },
+            touchEnd : function () {
+                var mainHwiper = document.querySelector('.horiSlide'+i).swiper;
+                window.sessionStorage.setItem('h_width', mainHwiper.activeIndex);
+                sendGaEvent = true;
+            }
+        }
+    });
+}    
+
+//신상품 > 카테고리탭 클릭시 on 처리
+function mainNewTab(){
+    var $newMenu = $("#contents-newitem .txt_on_newItems_best_wrap .gender");
+    $newMenu.find('a').on('click', function()
+    {
+        $newMenu.find('li').removeClass('on');
+        $(this).closest('li').addClass('on');
+    });
+}
+//베스트 > 카테고리탭 클릭시 on 처리
+function mainBestTab(){
+    var $bestMenu = $("#contents-best .txt_on_newItems_best_wrap .gender");
+    $bestMenu.find('a').on('click', function()
+    {
+        $bestMenu.find('li').removeClass('on');
+        $(this).closest('li').addClass('on');
+    });
+}
+function mainNewBestGender1909(){ // 신상품,베스트 - 여성남성 선택 on 띠부
+    var $newBestGender = $('.txt_on_newItems_best_wrap .gender');
+    $newBestGender.find('a').on('click', function()
+    {
+       $newBestGender.find('li').removeClass('on');
+       $(this).closest('li').addClass('on');
+    });
+ }
+
+function mainNewBestPopOn1909(){ // 신상품,베스트 - 팝업 - on 띠부
+    var $newBestList = $('#mainNewPopwrap201909 .list_wrap, #mainBestPopwrap201909 .list_wrap');
+    $newBestList.find('a').on('click', function()
+    {
+       $newBestList.find('li').removeClass('on');
+       $(this).closest('li').addClass('on');
+    });
+}
+
+function numberCounter(target_frame, target_number) { //신상품 숫자 카운트효과
+    this.count = 0; this.diff = 0;
+    this.target_count = parseInt(target_number);
+    this.target_frame = document.getElementById(target_frame);
+    this.timer = null;
+    this.counter();
+};
+numberCounterExecute(0);
+function numberCounterExecute(prodNum){//신상품 숫자카운트 효과 실행
+    var idx = prodNum;
+    prodNum = /*[[${newCount}]]*/;
+    var chkSpeed = 30; 
+    var chkDiff = 100; 
+    
+    if( prodNum < 35 ) {
+        //
+    } else if(prodNum < 70 ){
+        chkSpeed = 20;
+    } else if(prodNum < 100 ){
+        chkDiff = 50;
+        chkSpeed = 12;
+    } else if(prodNum < 150 ){
+        chkDiff = 45;
+        chkSpeed = 12;
+    } else if(prodNum < 200 ){
+        chkDiff = 45;
+        chkSpeed = 10;
+    } else {
+        chkDiff = 45;
+        chkSpeed = 8;
+    }
+    
+    numberCounter.prototype.counter = function() {
+        var self = this;
+        this.diff = this.target_count - this.count;
+    
+        if(this.diff > 0) {
+            self.count += Math.ceil(this.diff / chkDiff);
+        }
+    
+        this.target_frame.innerHTML = this.count.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    
+        if(this.count < this.target_count) {
+            this.timer = setTimeout(function() { self.counter(); }, chkSpeed);
+        } else {
+            clearTimeout(this.timer);
+        }
+    };
+    
+    if(cntDisplayYn[idx] == "0"){
+        $("#counter1909_1").hide();
+        $(".txt_newItemsbest_wrap_inner" ).css("top", "-1.25em");
+    }else{
+        $("#counter1909_1").show();
+        $(".txt_newItemsbest_wrap_inner" ).css("top", "");
+        new numberCounter("counter1909_1", prodNum);
+    }
+}
+
+function newTabNumSlideUp(){//신상품 효과1
+    //카운트 따라올라가는것으로 수치변경
+    $( ".txt_on_newItems_best_wrap" ).animate({
+        'top':'-10px'
+    }, 700, function() {
+        $(".txt_on_newItems_best_wrap").css("top","118px"); // 202103 신상품 top값 변경
+        $(".txt_newItemsbest_wrap_inner").css("top","-4.05em");
+	    $(".txt_newItemsbest_wrap_inner").addClass('up');
+    });
+}
+
+function newTabNumSlideDown(){//신상품 효과2
+    //카운트 따라올라가는것으로 수치변경
+    $( ".txt_newItemsbest_wrap_inner" ).css("top", "0px");
+    $(".txt_on_newItems_best_wrap").css("top","-35px");
+    
+    $(".txt_on_newItems_best_wrap").animate({
+        'top':'118px' // 202103 신상품 top값 변경
+    }, 700, function() {
+            $( ".txt_newItemsbest_wrap_inner" ).removeClass('up');
+    });
+    
+}
+function mainNewPopUp(){ //신상품 플러스 클릭시 팝업
+    $(".new_items_pop1909 ul li").removeClass("on");
+    $('#mainNewPopwrap201909').show();
+    $('.hsome_main').css('margin-bottom','-3px');
+    
+    var tmpbar = $('#new_item .slide_border_box_icon .bar_horizontal');
+    if (tmpbar.hasClass('plus')) {
+        tmpbar.removeClass('plus');
+        tmpbar.addClass('minus');
+    } else {
+        tmpbar.removeClass('minus');
+        tmpbar.addClass('plus');
+    }
+    $('#new_item .new_best_item_plus_btn').toggleClass('active'); 
+}
+function mainBestPopUp(){//베스트 플러스 클릭시 팝업
+    $(".best_pop1909 ul li").removeClass("on");
+    $('#mainBestPopwrap201909').show();
+    $('.hsome_main').css('margin-bottom','-3px');
+    
+    var tmpbar = $('#best .slide_border_box_icon .bar_horizontal');
+    if (tmpbar.hasClass('plus')) {
+        tmpbar.removeClass('plus');
+        tmpbar.addClass('minus');
+    } else {
+        tmpbar.removeClass('minus');
+        tmpbar.addClass('plus');
+    }
+    $('#best .new_best_item_plus_btn').toggleClass('active');
+}
+function closePopNew(){
+    $('.pop_wrap190906').hide();
+    $('.agree_more_btn .slide_border_box_icon .bar_horizontal').removeClass('minus');
+    $('.agree_more_btn .slide_border_box_icon .bar.bar_horizontal').addClass('plus');
+    $(".pop_wrap190906 li").removeClass("on");
+}
+<!-- //신상품 /베스트 -->
+
+var down = 0;
+function touchSwiperTopNav(){
+    var element = document.getElementById('main1909_h');
+    
+    element.addEventListener( 'touchstart', function( e ) {
+        var touch = event.touches[0];
+        touchstartX = touch.clientX;
+        touchstartY = touch.clientY;
+        
+          if ( e.type === 'touchstart' && e.touches.length === 1 ) {
+              
+              //[footer] last slide일때,
+              var tab_On_Index = $('#topNav1909 ul li.on').index();
+              var $current_tab = $('.main-contents-wrap .hsomemain-contents-box').eq(tab_On_Index);
+              
+
+              var $home = $current_tab.attr('class').indexOf('home'),
+                  $new_item = $current_tab.attr('class').indexOf('new_item'),
+                  $best = $current_tab.attr('class').indexOf('best'),
+                  $multibrd = $current_tab.attr('class').indexOf('multibrd');
+                  $tv = $current_tab.attr('class').indexOf('tv');
+
+              var vIdx = 0;
+              if($home != -1){
+                  vIdx = 0;
+              }else if($new_item != -1){
+                  vIdx = 1;
+              }else if($best != -1){
+                  vIdx = 2;
+              }else if($multibrd != -1){
+                  vIdx = 3;
+              }else if($tv != -1){
+                  vIdx = 4;
+              }
+              
+              var checkFirst = $('.verticalSlide'+vIdx+' > ul > li').hasClass('swiper-slide-prev');
+              if(checkFirst == false){
+                  $('.hsome_main').addClass('update191029');
+              }else {
+                  $('.hsome_main').removeClass('update191029');
+              }
+          }
+    }, false );
+    element.addEventListener( 'touchend', function( e ) {
+        var chkDown = false;
+        var chkUp = false;
+        
+        if(event.touches.length == 0) {
+            var touch = event.changedTouches[event.changedTouches.length - 1];
+            touchendX = touch.clientX;
+            touchendY = touch.clientY;
+            touchoffsetX = touchendX - touchstartX;
+            touchoffsetY = touchendY - touchstartY;
+            
+            //[footer] last slide일때,
+            var tab_On_Index = $('#topNav1909 ul li.on').index();
+            var $current_tab = $('.main-contents-wrap .hsomemain-contents-box').eq(tab_On_Index);
+            
+
+            var $home = $current_tab.attr('class').indexOf('home'),
+                $new_item = $current_tab.attr('class').indexOf('new_item'),
+                $best = $current_tab.attr('class').indexOf('best'),
+                $multibrd = $current_tab.attr('class').indexOf('multibrd');
+                $tv = $current_tab.attr('class').indexOf('tv');
+
+            var vIdx = 0;
+            if($home != -1){
+                vIdx = 0;
+            }else if($new_item != -1){
+                vIdx = 1;
+            }else if($best != -1){
+                vIdx = 2;
+            }else if($multibrd != -1){
+                vIdx = 3;
+            }else if($tv != -1){
+                vIdx = 4;
+            }
+            
+            var main1909HSwiper = document.querySelector('.verticalSlide'+vIdx).swiper;
+            var chkSwiperIdx = main1909HSwiper.activeIndex+1;
+
+            var main1909HSwiperLength = $('.verticalSlide'+vIdx+' > ul li').length;
+            main1909HSwiperLength = main1909HSwiperLength - ($('#footer li').length);
+            if(vIdx == 0){ //home > 기획전
+                main1909HSwiperLength = main1909HSwiperLength - $("#exhibitions li").length;
+            }else if(vIdx == 3){ //편집샵 
+                main1909HSwiperLength = main1909HSwiperLength - ($("#mutibrdMainSlider ul li").length + $("#mutiBrandSlider ul li").length + $("#popMultiBrd ul li").length);
+            }
+            
+            if(chkSwiperIdx == main1909HSwiperLength){
+                chkFooter = false;
+                if ( vIdx == 3 ) {
+	                var defaultHeight = $('.verticalSlide'+vIdx+'> ul > li:eq(0)').outerHeight();
+	                var footerHeight = $('#footer'+vIdx+'').outerHeight();
+	                var winH = $(window).height() - 48;
+	                var setAutoH = (defaultHeight + footerHeight) - winH;
+	                $('#v_footer'+vIdx+'').css('height', footerHeight);
+	                var totalTranslate = -($('.verticalSlide'+vIdx+'> ul > li').outerHeight()*(main1909HSwiperLength-2) + setAutoH);
+	                main1909HSwiper.setTranslate(totalTranslate);
+	
+	                $('.pop-multi-brd').find('.pop-multi-brd-in:last-child').addClass('noswiping202103');
+                } else {
+                     var footerHeight = $('#footer'+vIdx+'').outerHeight();
+                     $('#v_footer'+vIdx+'').css('height', footerHeight);
+                     var totalTranslate = ( -$('.verticalSlide'+vIdx+'> ul > li').height()*(main1909HSwiperLength-2) ) - footerHeight;
+                     main1909HSwiper.setTranslate(totalTranslate);
+                }
+            }else{
+                chkFooter = true;
+                
+                $('.pop-multi-brd').find('.pop-multi-brd-in:last-child').removeClass('noswiping202103');
+            }
+            
+            
+            /* $(".next-button-ahead").on("click", function (){
+                sendGaEvent = false;
+            }); */
+            
+            if(vIdx == 0 && sendGaEvent) { //home일때,
+                var mainIdx = main1909HSwiper.activeIndex;
+                if(mainIdx != 5) {
+                    if(mainIdx == 0) { //메인배너
+                        try{
+                           ga('gp.send','pageview',{
+                               'title':'메인>홈탭>메인배너', //가상페이지 화면명
+                               'location':window.location.protocol + '//' + window.location.host + decodeURI(window.location.pathname) + '?main_tab=home', //가상페이지URL
+                               nonInteraction: true //비 상호작용
+                           });
+                        }catch(e) {
+                           console.log(e);
+                        }
+                    }else if(mainIdx == 1) { //THE 매거진
+                        try{
+                           ga('gp.send','pageview',{
+                               'title':'메인>홈탭>THE매거진', //가상페이지 화면명
+                               'location':window.location.protocol + '//' + window.location.host + decodeURI(window.location.pathname) + '?main_tab=magazine', //가상페이지URL
+                               nonInteraction: true //비 상호작용
+                           });
+                        }catch(e) {
+                           console.log(e);
+                        }
+                    }else if(mainIdx == 2) { //기획전
+                        try{
+                           ga('gp.send','pageview',{
+                               'title':'메인>홈탭>기획전', //가상페이지 화면명
+                               'location':window.location.protocol + '//' + window.location.host + decodeURI(window.location.pathname) + '?main_tab=edited', //가상페이지URL
+                               nonInteraction: true //비 상호작용
+                           });
+                        }catch(e) {
+                           console.log(e);
+                        }
+                    }else if(mainIdx == 3) { //이벤트
+                        try{
+                           ga('gp.send','pageview',{
+                               'title':'메인>홈탭>이벤트', //가상페이지 화면명
+                               'location':window.location.protocol + '//' + window.location.host + decodeURI(window.location.pathname) + '?main_tab=event', //가상페이지URL
+                               nonInteraction: true //비 상호작용
+                           });
+                        }catch(e) {
+                           console.log(e);
+                        }
+                    }else if(mainIdx == 4) { //핸썸TV
+                        try{
+                           ga('gp.send','pageview',{
+                               'title':'메인>홈탭>핸썸TV', //가상페이지 화면명
+                               'location':window.location.protocol + '//' + window.location.host + decodeURI(window.location.pathname) + '?main_tab=handsometv', //가상페이지URL
+                               nonInteraction: true //비 상호작용
+                           });
+                        }catch(e) {
+                           console.log(e);
+                        }
+                    }
+                }
+                
+                sendGaEvent = false;
+            }
+            
+        }
+        
+    }, false ); //첫번째 슬라이드 스와프시 gnb 나타나도록 하려함.
+}
+/*]]>*/
+</script>
+	<script type="text/javascript"><!--기존로직-->
+// 메인 초기화
+function mainInit() {
+    var varUA = navigator.userAgent.toLowerCase(); //userAgent 값 얻기
+    
+    if(varUA.indexOf("iphone") > -1 || varUA.indexOf("ipad") > -1 || varUA.indexOf("ipod") > -1) {//IOS 일때 처리
+        iPhoneYn = true; 
+    }
+ 
+    /************************************************************************************************
+     * 초기 변수 선언
+    ************************************************************************************************/
+    var winH = $(window).height();
+    var menu_Langth = $('.top_nav1909 li').length;
+    var header_logoH = $('.header-fix').outerHeight();
+    var guickH = $('.hsome_quickMenu1909').outerHeight();
+    /************************************************************************************************
+     * 초기 설정
+    ************************************************************************************************/
+    // 수직슬라이드 스와이퍼 container 부분에 높이값 전달.
+    $('.main_wrapper_swiper1909').css('height',winH - guickH);
+    // 신상품 & 베스트 팝업 최상단 박스 높이 세팅
+    $('.pop_wrap190906').css('height',winH - header_logoH - guickH);
+    
+    /************************************************************************************************
+     * lnb 메뉴 클릭 이벤트
+    ************************************************************************************************/
+    $('#topNav1909 ul li a').on('click', function(e) {
+    	numberCounterExecute(0);
+        var $this = $(this);
+        var all_menu = $this.parents('#topNav1909').find('li');
+        var contents_box = $('.hsomemain-contents-box');
+        var id = $this.attr('href');
+        // 메뉴 on 효과
+        e.preventDefault();
+        all_menu.removeClass('on');
+        $(this).parent('li').addClass('on');
+        contents_box.hide();
+        $(id).show();
+	    $('html, body').scrollTop(0); //스크롤 오작동방지
+	    
+	    // 메뉴 이동 시 신상품, 베스트 효과
+	    var tab_On_Index = $('#topNav1909 ul li.on').index();
+	    var $current_tab = $('.main-contents-wrap .hsomemain-contents-box').eq(tab_On_Index);
+	    
+	    if(tab_On_Index == 4 || tab_On_Index == 5) {//tv클릭시, 링크이동으로변경. 뒤로가기시 홈으로 
+	        tab_On_Index = 0;
+	    }
+	    
+	    window.sessionStorage.setItem('width', tab_On_Index);
+	    
+	    var $home = $current_tab.attr('class').indexOf('home'),
+	        $new_item = $current_tab.attr('class').indexOf('new_item'),
+	        $best = $current_tab.attr('class').indexOf('best'),
+	        $multibrd = $current_tab.attr('class').indexOf('multibrd');
+	        $tv = $current_tab.attr('class').indexOf('tv');
+	
+	    $('.main1909_up_arr').stop().hide();
+	    $('.hsome_header .top_nav1909 ul li').removeClass('on');
+	    
+	    if ($home != -1) {
+	        $('.hsome_header .top_nav1909 ul li').eq(0).addClass('on');
+	        $('.slide_border_box_icon').removeClass('spin2019');
+	        
+	        try{
+                ga('gp.send','pageview',{
+                    'title':'메인>홈탭>메인배너', //가상페이지 화면명
+                    'location':window.location.protocol + '//' + window.location.host + decodeURI(window.location.pathname) + '?main_tab=home', //가상페이지URL
+                    nonInteraction: true //비 상호작용
+                });
+            }catch(e) {
+                console.log(e);
+            }
+            
+            var checkFirst = $('.verticalSlide0 > ul > li').hasClass('swiper-slide-prev');
+
+            if(checkFirst == false){
+                var whiteHeader = $('#mainList').find('div.swiper-slide-active').hasClass("WHITE");
+                if(whiteHeader){ //흰색
+                    if(!$('.header-fix').hasClass('white-header')){
+                        $('.header-fix').addClass('white-header');
+                    }
+                }else { //검정
+                    if($('.header-fix').hasClass('white-header')){
+                        $('.header-fix').removeClass('white-header');    
+                    }
+                }
+                
+                var previewBgBlack = $('#mainList').find('div.swiper-slide-active').hasClass("BG_BLACK");
+                if(previewBgBlack){ //검정
+                    $("#magazinePreview").addClass("black-bg");
+                }else { //흰색
+                    $("#magazinePreview").removeClass("black-bg");
+                }
+                
+                var previewBgTxt = $('#mainList').find('div.swiper-slide-active').hasClass("TXT_BLACK");  //text, pagination color
+                if(previewBgTxt){ //검정
+                    $("#magazinePreview .tt").addClass("black");
+                    $(".hori-pagination0").addClass("black");
+                    $(".main1909_down_arr0").removeClass("white");
+                    $(".main1909_down_arr0").addClass("black");
+                }else { //흰색
+                    $("#magazinePreview .tt").removeClass("black");
+                    $(".hori-pagination0").removeClass("black");
+                    $(".main1909_down_arr0").removeClass("black");
+                    $(".main1909_down_arr0").addClass("white");
+                }
+            }
+	    } else if ($new_item != -1) {
+	        $('.header-fix').removeClass('white-header');
+	        $("#contents-newitem .gender > ul li").each(function (i) {
+	        	numberCounterExecute(0);
+	        });
+	        $('.hsome_header .top_nav1909 ul li').eq(1).addClass('on');
+	
+	        $('.slide_border_box_icon').removeClass('spin2019');
+	        $('.newItems_main_slide1909 .slide_border_box_icon').addClass('spin2019');
+	        main_Parent_Verti_slide(1);
+	        try{
+                ga('gp.send','pageview',{
+                    'title':'메인>신상품_여성', //가상페이지 화면명
+                    'location':window.location.protocol + '//' + window.location.host + decodeURI(window.location.pathname) + '?main_tab=new_women', //가상페이지URL
+                    nonInteraction: true //비 상호작용
+                });
+            }catch(e) {
+                console.log(e);
+            }
+	    } else if ($best != -1) {
+	        $('.header-fix').removeClass('white-header');
+	        $('.hsome_header .top_nav1909 ul li').eq(2).addClass('on');
+	
+	        $('.slide_border_box_icon').removeClass('spin2019');
+	        $('.best_main_slide1909 .slide_border_box_icon').addClass('spin2019');
+	        main_Parent_Verti_slide(2);
+	        try{
+                ga('gp.send','pageview',{
+                    'title':'메인>베스트_여성', //가상페이지 화면명
+                    'location':window.location.protocol + '//' + window.location.host + decodeURI(window.location.pathname) + '?main_tab=best_women', //가상페이지URL
+                    nonInteraction: true //비 상호작용
+                });
+            }catch(e) {
+                console.log(e);
+            }
+	    } else if ($multibrd != -1) {
+	        fn_load(3); // 편집샵
+	        $('.header-fix').addClass('white-header');
+	        $('.hsome_header .top_nav1909 ul li').eq(3).addClass('on');
+	
+	        $('.slide_border_box_icon').removeClass('spin2019');
+	        $('.multibrd .slide_border_box_icon').addClass('spin2019');
+	        
+	        try{
+                ga('gp.send','pageview',{
+                    'title':'메인>편집샵탭>메인배너', //가상페이지 화면명
+                    'location':window.location.protocol + '//' + window.location.host + decodeURI(window.location.pathname) + '?main_tab=selectshop', //가상페이지URL
+                    nonInteraction: true //비 상호작용
+                });
+            }catch(e) {
+                console.log(e);
+            }
+	    } else if ($tv != -1) {
+	        fn_load(4); // 핸썸TV
+	        $('.header-fix').addClass('white-header');
+	        $('.hsome_header .top_nav1909 ul li').eq(4).addClass('on');
+	        
+	        try{
+                ga('gp.send','pageview',{
+                    'title':'메인>핸썸TV', //가상페이지 화면명
+                    'location':window.location.protocol + '//' + window.location.host + decodeURI(window.location.pathname) + '?main_tab=handsometv', //가상페이지URL
+                    nonInteraction: true //비 상호작용
+                });
+            }catch(e) {
+                console.log(e);
+            }
+	    } else {
+	        $('.slide_border_box_icon').removeClass('spin2019');
+	    }
+	
+	    // 첫번째 슬라이드에서만 로고 노출 210322
+	    if ($multibrd != -1 || $tv != -1) {
+	        $('.header-fix').addClass('t-prent header-top white-header');
+	    } else if($home != -1){
+	        $('.header-fix').addClass('t-prent header-top');
+	    } else {
+	        $('.header-fix').addClass('t-prent header-top');
+	        $('.header-fix').removeClass('white-header');
+	    }
+	
+	    // 신상품 text 영역
+	    if($('.txt_newItemsbest_wrap_inner').hasClass('up')){
+	        $('.txt_newItemsbest_wrap_inner').removeClass('up');
+	        $('.txt_newItemsbest_wrap_inner').css('top',0);
+	    }
+	
+	    // 메뉴 이동시 첫화면으로 변경
+	    for(var i=0;i<4;i++){
+            $('.main-swiper-paging-wrap-'+i).find('span').removeClass('on');
+            mySwiperV = document.querySelector('.verticalSlide'+i).swiper;
+            if ( typeof(mySwiperV) != 'undefined' ) {
+	            mySwiperV.update();
+	            mySwiperV.slideTo(0,0);
+            }
+            if(tab_On_Index == 3) { //편집샵일때
+                var mySwiperV3_v = document.querySelector('#popMultiBrd').swiper;
+                if ( typeof(mySwiperV3_v) != 'undefined' ) {
+                    mySwiperV3_v.slideTo(0,0);    
+                }
+            }
+        }
+
+	
+	    // 신상품 & 베스트 남성, 여성 on off
+	    $('.newItems_main_slide1909 .main1909_count, .newItems_main_slide1909 .gender').show();
+	    $('.best_main_slide1909 .main1909_count, .best_main_slide1909 .gender').show();
+	    
+	    // 첫화면에서 나오는 가이드 화살표
+	    $('.guide_arr190906').hide();
+	
+	    // 내려가기 arrow 버튼
+	    $('.main1909_down_arr'+tab_On_Index).stop().show();
+	    
+
+        // lnb 눌렀을때 스와이퍼 update.
+        var i = $this.parent('li').index();
+        if(i != 4 && i != 5) {
+            mySwiperV = document.querySelector('.verticalSlide'+i).swiper;
+            if ( typeof(mySwiperV) != 'undefined' ) {
+                mySwiperV.update();
+            }
+        }else {
+            window.sessionStorage.removeItem('height');
+        } 
+        
+        if(i == 3){ // 메뉴 위치가 편집샵일 경우
+            // 편집샵 메인 슬라이드 업데이트
+            var mutibrdMain = document.querySelector('#mutibrdMainSlider').swiper;
+            mutibrdMain.update();
+
+            // 편집샵 브랜드 리스트 업데이트
+            var mutibrdBrand = document.querySelector('.con-brand-list.swiper-container').swiper;
+            mutibrdBrand.update();
+
+            // 편집샵 인기브랜드 슬라이드 업데이트
+            var multiBrdHot = document.querySelector('#popMultiBrd').swiper;
+            if ( typeof(multiBrdHot) != 'undefined' ) {
+                multiBrdHot.update();  
+            }
+
+            // 편집샵 인기브랜드 아이템 슬라이드 업데이트
+            var hot_Length = $('.brand-pop-item-list-slider.swiper-container');
+            hot_Length.each(function(i){
+                main_multibrd_hotBrandItem_Slide(i);
+            });
+        }
+    
+    });
+    
+    /************************************************************************************************
+     * 신상품 & 베스트 에서 플러스 버튼 눌렀을때 효과
+    ************************************************************************************************/
+    // 신상품 팝업 Open & Close.
+    $('.newItems_main_slide1909 .new_best_item_plus_btn .plusminus_btn190923').click(function(e){
+        e.preventDefault();
+        $('#mainNewPopwrap201909').show();
+//         $('.hsome_main').css('margin-bottom','-3px');
+    });
+    $('.new_items_pop1909 .pop_cls').click(function(e){
+        e.preventDefault();
+        $('.pop_wrap190906').hide();
+//         $('.hsome_main').css('margin-bottom','60px');
+        $('.agree_more_btn .slide_border_box_icon .bar_horizontal').removeClass('minus');
+        $('.agree_more_btn .slide_border_box_icon .bar_horizontal').addClass('plus');
+    });
+
+    // 베스트 팝업 Open & Close.
+    $('.best_main_slide1909 .new_best_item_plus_btn .plusminus_btn190923').click(function(e){
+        e.preventDefault();
+        $('#mainBestPopwrap201909').show();
+//         $('.hsome_main').css('margin-bottom','-3px');
+    });
+    $('.best_pop1909 .pop_cls').click(function(e){
+        e.preventDefault();
+        $('.pop_wrap190906').hide();
+//         $('.hsome_main').css('margin-bottom','60px');
+        $('.agree_more_btn .slide_border_box_icon .bar_horizontal').removeClass('minus');
+        $('.agree_more_btn .slide_border_box_icon .bar.bar_horizontal').addClass('plus');
+    });
+    
+    $('.main202103-depth-title').off().on('click', '.more', function(){
+        $(this).addClass('touch');
+    });
+
+    fn_load(0); // home
+    main_Parent_Verti_slide(0); //스와이퍼
+    
+    touchSwiperTopNav();
+    mainNewBestPopOn1909(); // 신상품,베스트 - 팝업 - on 띠부
+}
+
+//새로고침
+function fn_refresh() {
+ if ( refreshYn ) {
+     var tab_On_Index = $('#topNav1909 ul li.on').index();
+     var $current_tab = $('.main-contents-wrap .hsomemain-contents-box').eq(tab_On_Index);
+     var $home = $current_tab.attr('class').indexOf('home'),
+         $new_item = $current_tab.attr('class').indexOf('new_item'),
+         $best = $current_tab.attr('class').indexOf('best'),
+         $multibrd = $current_tab.attr('class').indexOf('multibrd');
+         $tv = $current_tab.attr('class').indexOf('tv');
+
+     var vIdx = 0;
+     if($home != -1){
+         vIdx = 0;
+     }else if($new_item != -1){
+         vIdx = 1;
+     }else if($best != -1){
+         vIdx = 2;
+     }else if($multibrd != -1){
+         vIdx = 3;
+     }else if($tv != -1){
+         vIdx = 4;
+     }
+     
+     if ( vIdx == refreshIdx ) {
+         refreshYn = false;
+         if ( refreshIdx == 0 ) {
+             v_main = true;
+             
+             h_exhibition = true;  //가로셋팅풀기
+             h_event = true;
+             h_homeTv = true;
+             
+             //s: lazy_load
+             chkMain = true;
+             chkMagazine = true; 
+             chkExhibition = true;
+             chkEvent = true;
+             chkHomeTv = true;
+             //e: lazy_load
+             
+             try{
+                 ga('gp.send','pageview',{
+                     'title':'메인>홈탭>메인배너', //가상페이지 화면명
+                     'location':window.location.protocol + '//' + window.location.host + decodeURI(window.location.pathname) + '?main_tab=home', //가상페이지URL
+                     nonInteraction: true //비 상호작용
+                 });
+             }catch(e) {
+                 console.log(e);
+             }
+         } else if ( refreshIdx == 1 ) {
+             $("#contents-newitem .gender ul li").removeClass("on");
+             $("#contents-newitem .gender ul li:eq(0)").addClass("on");
+             v_new = true;
+             try{
+                 ga('gp.send','pageview',{
+                     'title':'메인>신상품_여성', //가상페이지 화면명
+                     'location':window.location.protocol + '//' + window.location.host + decodeURI(window.location.pathname) + '?main_tab=new_women', //가상페이지URL
+                     nonInteraction: true //비 상호작용
+                 });
+             }catch(e) {
+                 console.log(e);
+             }
+         } else if ( refreshIdx == 2 ) {
+             $("#contents-best .gender ul li").removeClass("on");
+             $("#contents-best .gender ul li:eq(0)").addClass("on");
+             v_best = true;
+             try{
+                 ga('gp.send','pageview',{
+                     'title':'메인>베스트_여성', //가상페이지 화면명
+                     'location':window.location.protocol + '//' + window.location.host + decodeURI(window.location.pathname) + '?main_tab=best_women', //가상페이지URL
+                     nonInteraction: true //비 상호작용
+                 });
+             }catch(e) {
+                 console.log(e);
+             }
+         } else if ( refreshIdx == 3 ) {
+//              chkEdPopular = true; //인기브랜드
+             v_multibrd = true;
+             try{
+                 ga('gp.send','pageview',{
+                     'title':'메인>편집샵탭>메인배너', //가상페이지 화면명
+                     'location':window.location.protocol + '//' + window.location.host + decodeURI(window.location.pathname) + '?main_tab=selectshop', //가상페이지URL
+                     nonInteraction: true //비 상호작용
+                 });
+             }catch(e) {
+                 console.log(e);
+             }
+         }
+         fn_load(refreshIdx);
+     }
+ }
+}
+ 
+window.onpageshow = function(e) {
+    mainInit(); 
+    
+    if ( e.persisted || (window.performance && window.performance.navigation.type == 2)) {  // 뒤로가기
+        if ( iPhoneYn && e.persisted ) {   // bfCache
+            
+            var v_width = 0;
+            var v_height = 0;
+            if ( window.sessionStorage.getItem('width') != null ) {
+                v_width = window.sessionStorage.getItem('width');
+            }
+            if ( window.sessionStorage.getItem('height') != null ) {
+                v_height = window.sessionStorage.getItem('height');
+            }
+            window.sessionStorage.setItem('moveYn', 'Y');
+            window.sessionStorage.setItem('moveHeight', v_height);
+            
+            if ( v_width == 1 || v_width == 2 ) {
+                if ( window.sessionStorage.getItem('categoryCode') != null ) {
+                    window.sessionStorage.setItem('moveCategoryCode', window.sessionStorage.getItem('categoryCode'));
+                }
+            }
+            location.reload();
+        } else {
+        
+            if($("#mainNewPopwrap201909").css("display") == "block" || $("#mainBestPopwrap201909").css("display") == "block"){
+                $('.slide_border_box_icon .bar_horizontal').removeClass("minus");
+                $('.slide_border_box_icon .bar_horizontal').addClass("plus");
+                $('.pop_wrap190906').hide();
+                $(".pop_wrap190906 li").removeClass("on");
+            }
+            if($(".hsome_quickMenu_contents").hasClass("active") ){
+                clsPage(0);
+                $(".hsome_quickMenu").addClass("active");
+            }
+            
+            var v_width = 0;  //탭 (홈/신상품/베스트/편집샵/tv)
+            var v_height = 0; //세로
+            var h_width = 0;  //가로 슬라이드
+            if ( window.sessionStorage.getItem('width') != null ) {
+                v_width = window.sessionStorage.getItem('width');
+            }
+            if ( window.sessionStorage.getItem('height') != null ) {
+                v_height = window.sessionStorage.getItem('height');
+            }
+            if ( window.sessionStorage.getItem('h_width') != null) {
+                h_width = window.sessionStorage.getItem('h_width');
+            }
+            window.sessionStorage.setItem('moveYn', 'Y');
+            window.sessionStorage.setItem('moveHeight', v_height);
+            
+            if ( v_width == 1 || v_width == 2 ) {
+                if ( window.sessionStorage.getItem('categoryCode') != null ) {
+                    window.sessionStorage.setItem('moveCategoryCode', window.sessionStorage.getItem('categoryCode'));
+                }
+            }
+            
+            if ( v_width == 0) {
+                mySwiperV = document.querySelector('.verticalSlide0').swiper;
+                if ( window.sessionStorage.getItem('moveYn') != null && window.sessionStorage.getItem('moveYn') == 'Y' ) {
+                    window.sessionStorage.removeItem('moveYn');
+                    if ( window.sessionStorage.getItem('moveHeight') != null ) {
+//                         $('.header-fix').removeClass('white-header');
+
+                        fn_homeTab(); //홈탭 뒤로가기
+                    
+                    }
+
+                } else {
+                    mySwiperV.slideTo(0,0);
+                }
+            } else {
+                try {
+                    $("#topNav1909 ul li").eq(v_width).find("a").trigger("click"); //세로탭
+                    mySwiperV = document.querySelector('.verticalSlide'+v_width).swiper;
+
+                    if ( v_width == 1 || v_width == 2) {
+                        fn_moveCategory(v_width);
+                    }
+
+                    mySwiperV.slideTo(v_height,0);
+                    heightChange();
+                    
+                    if(v_width == 3){  //편집샵
+                        var popIdx = window.sessionStorage.getItem('pop_height');
+                        var popMultSwiper = document.querySelector('#popMultiBrd').swiper;
+                        popMultSwiper.slideTo(popIdx,0);
+                        if(document.querySelector('#popMultiBrd').swiper.isEnd){
+                            $('.pop-multi-brd').find('.pop-multi-brd-in:last-child').addClass('noswiping202103');
+                        }
+                        
+                        var multiBrdIdx =  window.sessionStorage.getItem('mbm_width');
+                        var multSwiper = document.querySelector('#mutibrdMainSlider').swiper;
+                        multSwiper.slideTo(multiBrdIdx,0);
+                        heightChange();
+                        
+                        window.sessionStorage.removeItem('pop_height');
+                        window.sessionStorage.removeItem('mbm_width');
+                    }
+                } catch(e) {
+                    e.throws;
+                }
+            } 
+        }
+    } else {
+        if ( iPhoneYn && window.sessionStorage.getItem('moveYn') != null ) {
+            var v_width = 0;
+            var v_height = 0;
+            if ( window.sessionStorage.getItem('width') != null ) {
+                v_width = window.sessionStorage.getItem('width');
+            }
+            if ( window.sessionStorage.getItem('height') != null ) {
+                v_height = window.sessionStorage.getItem('height');
+            }
+            if ( window.sessionStorage.getItem('h_width') != null) {
+                h_width = window.sessionStorage.getItem('h_width');
+            }
+            
+            if ( v_width == 0) {
+                mySwiperV = document.querySelector('.verticalSlide0').swiper;
+                if ( window.sessionStorage.getItem('moveYn') != null && window.sessionStorage.getItem('moveYn') == 'Y' ) {
+                    window.sessionStorage.removeItem('moveYn');
+                    if ( window.sessionStorage.getItem('moveHeight') != null ) {
+//                         $('.header-fix').removeClass('white-header');
+
+                        fn_homeTab(); //홈탭 뒤로가기
+                    }
+
+                } else {
+                    mySwiperV.slideTo(0,0);
+                }
+            } else {
+                try {
+                    $("#topNav1909 ul li").eq(v_width).find("a").trigger("click"); //세로탭
+                    mySwiperV = document.querySelector('.verticalSlide'+v_width).swiper;
+                    
+                    if ( v_width == 1 || v_width == 2) {
+                        fn_moveCategory(v_width);
+                    }
+                    
+                    mySwiperV.slideTo(v_height,0);
+                    heightChange();
+                    
+                    if(v_width == 3){  //편집샵
+                        var popIdx = window.sessionStorage.getItem('pop_height');
+                        var popMultSwiper = document.querySelector('#popMultiBrd').swiper;
+                        popMultSwiper.slideTo(popIdx,0);
+                        if(document.querySelector('#popMultiBrd').swiper.isEnd){
+                            $('.pop-multi-brd').find('.pop-multi-brd-in:last-child').addClass('noswiping202103');
+                        }
+                        
+                        var multiBrdIdx =  window.sessionStorage.getItem('mbm_width');
+                        var multSwiper = document.querySelector('#mutibrdMainSlider').swiper;
+                        multSwiper.slideTo(multiBrdIdx,0);
+                        heightChange();
+                        
+                        window.sessionStorage.removeItem('pop_height');
+                        window.sessionStorage.removeItem('mbm_width');
+                    }
+                } catch(e) {
+                    e.throws;
+                }
+            }
+        }
+    }
+    
+    $('#mainList').show();
+};
+    
+</script>
+
+
+</body>
+
+<!-- AceCounter Log Gathering Script V.7.5.2013010701 -->
+</html>

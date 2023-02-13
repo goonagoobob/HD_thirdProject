@@ -46,6 +46,32 @@
 		<result property="depth3" column="depth3name"></result>
 	</resultMap>
 	
+	<resultMap type="org.goonagoobob.domain.product.reviewVO" id="reviewMap">
+		<result property="RNO" column="RNO"></result>
+		<result property="MID" column="MID"></result>
+		<result property="RV_TEXT" column="RV_TEXT"></result>
+		<result property="RV_DATE" column="RV_DATE"></result>
+		<result property="PSID" column="PSID"></result>
+		<result property="AGE" column="AGE"></result>
+		<result property="HEIGHT" column="HEIGHT"></result>
+		<result property="BODYTYPE" column="BODYTYPE"></result>
+		<result property="ENJOYSIZE" column="ENJOYSIZE"></result>
+		<result property="RATING" column="RATING"></result>
+		<result property="REALWEARSIZE1" column="REALWEARSIZE1"></result>
+		<result property="REALWEARSIZE2" column="REALWEARSIZE2"></result>
+		<result property="REALWEARSIZE3" column="REALWEARSIZE3"></result>
+		<result property="REALPRODUCTCOLOR" column="REALPRODUCTCOLOR"></result>
+		<collection property="FileDTO" resultMap="FileDTOMap"></collection>
+	</resultMap>
+	
+	<resultMap type="org.goonagoobob.domain.product.FileDto" id="FileDTOMap">
+		<result property="FILE_UUID" column="FILE_UUID"></result>
+		<result property="UPLOADPATH" column="UPLOADPATH"></result>
+		<result property="FILENAME" column="FILENAME"></result>
+		<result property="FILETYPE" column="FILETYPE"></result>
+	</resultMap>
+	
+	
 	<select id="getPDetail" resultMap="pc1Map">
 		select * from allproduct where #{pid} = pid
 	</select>
@@ -263,8 +289,19 @@ depth1name = #{depth1}
 			</otherwise>
 		</choose>
 	</select>
+	<select id="getReview" resultMap="reviewMap">
+		select r.RNO, MID, RV_TEXT, RV_DATE, PSID, AGE, HEIGHT, BODYTYPE, ENJOYSIZE, RATING, REALWEARSIZE1, REALWEARSIZE2, REALWEARSIZE3, REALPRODUCTCOLOR, FILE_UUID,FILENAME,UPLOADPATH,FILETYPE from review r, attachs a where r.rno = a.rno and psid in (select psid from allproduct where pid = #{pid})
+	</select>
 	
-	
+	<select id="getMyReview" resultMap="reviewMap">
+		select r.RNO, MID, RV_TEXT, RV_DATE, PSID, AGE, HEIGHT, BODYTYPE, ENJOYSIZE, RATING, REALWEARSIZE1, REALWEARSIZE2, REALWEARSIZE3, REALPRODUCTCOLOR, FILE_UUID,FILENAME,UPLOADPATH,FILETYPE from review r, attachs a where r.rno = a.rno and psid = #{psid} and mid = #{username}
+	</select>
+	<insert id="insertReview" parameterType="reviewVO">
+		insert into review values(rno_seq.nextval(),#{MID},#{RV_TEXT},#{RV_DATE},#{PSID},#{AGE},#{HEIGHT},#{BODYTYPE},#{ENJOYSIZE},#{RATING},#{REALWEARSIZE1},#{REALWEARSIZE2},#{REALWEARSIZE3},#{REALPRODUCTCOLOR} )
+	</insert>
+	<insert id="insertFileDto" parameterType="FileDto">
+		insert into Attachs values(#{FILE_UUID},#{RNO},#{UPLOADPATH},#{FILENAME},#{FILETYPE})
+	</insert>
 </mapper>
 
 <!-- /*********************************

@@ -15,10 +15,13 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.goonagoobob.domain.product.FileDto;
 import org.goonagoobob.domain.product.brandVO;
 import org.goonagoobob.domain.product.depth1VO;
 import org.goonagoobob.domain.product.productColorVO;
 import org.goonagoobob.domain.product.productCommonVO;
+import org.goonagoobob.domain.product.reviewVO;
+import org.springframework.security.access.method.P;
 
 @Mapper
 public interface productMapper {
@@ -46,4 +49,14 @@ public interface productMapper {
 	public int newCount();
 
 	public int getCount(String brand, String depth1, String depth2, String depth3);
+
+	public List<reviewVO> getReview(@Param("pid") String pid);
+
+	public reviewVO getMyReview(@Param("pid") String pid,@Param("username")  String username);
+	
+	public void insertReview(@Param("pid") String pid,@Param("username")  String username);
+
+	public void insertReview(reviewVO vo);
+
+	public void insertFileDto(FileDto dto,@Param("RNO") int RNO);
 }

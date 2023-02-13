@@ -752,6 +752,7 @@ $(document).ready(function(){
 						    $('.hs_prd_info_wrap.pv-element .copy').text(colorcode+"_"+sizecode);
 						    $('.hs_prd_info_wrap.pv-element .copy').attr('data-clipboard-text',colorcode+"_"+sizecode); //추가(redmine:914)품번복사 20180910
 						    $("#clipboard").val(colorcode+"_"+sizecode);
+						    $("#psid").val(colorcode+"_"+sizecode);
 						}
 						
 						function reviewPop(){
@@ -821,379 +822,47 @@ $(document).ready(function(){
 							style="height: 350px;">
 							<ul id="reviewLst" class="swiper-wrapper"
 								style="transform: translate3d(0px, 0px, 0px);">
-								<li class="swiper-slide swiper-slide-active"
-									style="margin-right: 10px;"><a id="8943293464625"
+								<li th:each="list : ${reviewVO}" class="swiper-slide swiper-slide-active"
+									style="margin-right: 10px;"><a th:id="${list.RNO}"
 									href=".product_comment_pop"
-									onclick="GA_Event('상품_상세', '상품평', '상품평1');"
-									class="hs_prd_review_cont btn_popup_trigger">
+s									class="hs_prd_review_cont btn_popup_trigger">
 										<div class="pro">
 											<div class="img_wrap">
-												<span class="img"><img
-													src="https://www.thehandsome.com/_ui/handsomemobile/images/content/no_pro_img.png"
+												<span th:each="subList : ${list.FileDto}" class="img"><img
+													th:src="${subList.FILEPATH}"
 													alt=""></span>
 											</div>
 											<div class="txt">
-												<p class="name">cut*****</p>
-												<p class="grade">FRIEND</p>
-												<p class="data">2023.02.03</p>
+												<p class="name" th:text="${list.MID}">cut*****</p>
+												<p class="data" th:text="${list.RV_DATE}">2023.02.03</p>
 											</div>
 										</div>
 										<div class="hs_star_score">
-											<i class="on">1점</i> <i class="on">2점</i> <i class="on">3점</i>
-											<i class="on">4점</i> <i class="on">5점</i>
+											<i class="on" th:if="${list.RATING >= 1}">1점</i> 
+											<i class="" th:if="${list.RATING < 1}">1점</i> 
+											<i class="on" th:if="${list.RATING >= 1}">2점</i> 
+											<i class="" th:if="${list.RATING < 2}">2점</i> 
+											<i class="on" th:if="${list.RATING >= 1}">3점</i>
+											<i class="" th:if="${list.RATING < 3}">3점</i> 
+											<i class="on" th:if="${list.RATING >= 1}">4점</i> 
+											<i class="" th:if="${list.RATING < 4}">4점</i> 
+											<i class="on" th:if="${list.RATING >= 1}">5점</i>
+											<i class="" th:if="${list.RATING < 5}">5점</i> 
 										</div>
 										<div class="info">
 											<ul class="info_list choice">
-												<li>40대 / 169cm / 보통 / 평소 사이즈 : 55</li>
+												<li th:text="${list.AGE}+'대 / '+${list.HEIGHT}+'cm / '+${list.BODYTYPE}+' / 사이즈 : '+${list.ENJOYSIZE}">
+												40대 / 169cm / 보통 / 평소 사이즈 : 55</li>
 												<br>
-											</ul>
-											<ul class="info_list must">
-												<li>구매 정보 : BLACK / 82 / <span>더한섬닷컴</span></li>
 											</ul>
 										</div>
 										<div class="review">
 											<xmp class="txt"
-												style="font-family: inherit; margin-top: 0; margin-bottom: 0; white-space: normal;">와우!!!!세상
+												style="font-family: inherit; margin-top: 0; margin-bottom: 0; white-space: normal;"  th:text="${list.RV_TEXT}">와우!!!!세상
 											따뜻해요. 얇아서 속내의처럼 입고 있습니다. 목둘레가 좀 널널해서 아래로 좀 내려가지만 편하게 입겠습니다.</xmp>
 										</div>
 								</a></li>
-								<li class="swiper-slide swiper-slide-next"
-									style="margin-right: 10px;"><a id="8943292940337"
-									href=".product_comment_pop"
-									onclick="GA_Event('상품_상세', '상품평', '상품평2');"
-									class="hs_prd_review_cont btn_popup_trigger">
-										<div class="pro">
-											<div class="img_wrap">
-												<span class="img"><img
-													src="https://www.thehandsome.com/_ui/handsomemobile/images/content/no_pro_img.png"
-													alt=""></span>
-											</div>
-											<div class="txt">
-												<p class="name">sj1****</p>
-												<p class="grade">MANIA</p>
-												<p class="data">2023.02.03</p>
-											</div>
-										</div>
-										<div class="hs_star_score">
-											<i class="on">1점</i> <i class="on">2점</i> <i class="on">3점</i>
-											<i class="on">4점</i> <i class="on">5점</i>
-										</div>
-										<div class="info">
-											<ul class="info_list choice">
-												<li>162cm / 보통 / 평소 사이즈 : 55</li>
-												<br>
-											</ul>
-											<ul class="info_list must">
-												<li>구매 정보 : IVORY / 82 / <span>더한섬닷컴</span></li>
-											</ul>
-										</div>
-										<div class="review">
-											<xmp class="txt"
-												style="font-family: inherit; margin-top: 0; margin-bottom: 0; white-space: normal;">작년
-											다른 색상 2개 구매하고 이번엔 밝은 색상 추가 구매합니다. 소재 부드럽고 좋아서 이만한 이너는 없는 것
-											같아요. 크림빛 아이보리라 따뜻한 느낌입니다.</xmp>
-										</div>
-								</a></li>
-								<li class="swiper-slide" style="margin-right: 10px;"><a
-									id="8943358083121" href=".product_comment_pop"
-									onclick="GA_Event('상품_상세', '상품평', '상품평3');"
-									class="hs_prd_review_cont btn_popup_trigger">
-										<div class="pro">
-											<div class="img_wrap">
-												<span class="img"><img
-													src="https://www.thehandsome.com/_ui/handsomemobile/images/content/no_pro_img.png"
-													alt=""></span>
-											</div>
-											<div class="txt">
-												<p class="name">jon******</p>
-												<p class="grade">FRIEND</p>
-												<p class="data">2023.02.03</p>
-											</div>
-										</div>
-										<div class="hs_star_score">
-											<i class="on">1점</i> <i class="on">2점</i> <i class="on">3점</i>
-											<i class="on">4점</i> <i class="on">5점</i>
-										</div>
-										<div class="info">
-											<ul class="info_list choice">
-												<li>50대 / 160cm / 보통 / 평소 사이즈 : 66</li>
-												<br>
-											</ul>
-											<ul class="info_list must">
-												<li>구매 정보 : BLACK / 88 / <span>더한섬닷컴</span></li>
-											</ul>
-										</div>
-										<div class="review">
-											<xmp class="txt"
-												style="font-family: inherit; margin-top: 0; margin-bottom: 0; white-space: normal;">LATT
-											괜찮은 울블렌드 하이넥탑입니다. 좋아요~</xmp>
-										</div>
-								</a></li>
-								<li class="swiper-slide" style="margin-right: 10px;"><a
-									id="8943517728817" href=".product_comment_pop"
-									onclick="GA_Event('상품_상세', '상품평', '상품평4');"
-									class="hs_prd_review_cont btn_popup_trigger repd1908">
-										<div class="pro">
-											<div class="img_wrap">
-												<span class="img"><img
-													src="https://www.thehandsome.com/_ui/handsomemobile/images/content/no_pro_img.png"
-													alt=""></span>
-											</div>
-											<div class="txt">
-												<p class="name">sby***</p>
-												<p class="grade">FRIEND</p>
-												<p class="data">2023.02.02</p>
-											</div>
-										</div>
-										<div class="hs_star_score">
-											<i class="on">1점</i> <i class="on">2점</i> <i>3점</i> <i>4점</i>
-											<i>5점</i>
-										</div>
-										<div class="info">
-											<ul class="info_list choice">
-												<li>50대 / 157cm / 보통 / 평소 사이즈 : 55</li>
-												<br>
-											</ul>
-											<ul class="info_list must">
-												<li>구매 정보 : IVORY / 82 / <span>더한섬닷컴</span></li>
-											</ul>
-										</div>
-										<div class="review">
-											<xmp class="txt"
-												style="font-family: inherit; margin-top: 0; margin-bottom: 0; white-space: normal;">후기라
-											많구, 상품편이 좋아 주문 했는데, LATT옷아 맞나 싶을 정도로 좀 허접 해요. 그리고 요즘 살이 많이
-											쩠는데도 젤 작은 사쥬임에도 텐션이 넘 좋아서인지 커요.. 목부문도 입은 모습이 이쁘질 않구, 특히 목 짧으면
-											안 아쁠거 같애요.</xmp>
-											<div class="img">
-												<img
-													src="http://www.thehandsome.com/ko/product/reviewList/LC2D1WTOI26W_OW/medias/20230208-132739.jpg?context=bWFzdGVyfGF0dGFjaG1lbnRzfDYyNjM5MzZ8aW1hZ2UvanBlZ3xhdHRhY2htZW50cy9oZTMvaGU5LzkzNjc5ODA1Mzk5MzQuanBnfDQ0YWEwOWJlNTIzOTBhMGY1OTI3NzBhZDNkMjY4NzNjYjNmNTZmMDdmMDgzZjA2OGNjN2RjOGYwNDgyZjI3Yzg"
-													alt="">
-											</div>
-										</div>
-								</a>
-								<div class="hs_prd_review_btns">
-									<a class="edit" onclick="javascript:modifyReview()">수정</a>
-									<a class="del" onclick="javascript:deleteReview('+reviewList[i].id+')">삭제</a>
-								</div>
-								</li>
-								<li class="swiper-slide" style="margin-right: 10px;"><a
-									id="8943263121457" href=".product_comment_pop"
-									onclick="GA_Event('상품_상세', '상품평', '상품평5');"
-									class="hs_prd_review_cont btn_popup_trigger">
-										<div class="pro">
-											<div class="img_wrap">
-												<span class="img"><img
-													src="https://www.thehandsome.com/_ui/handsomemobile/images/content/no_pro_img.png"
-													alt=""></span>
-											</div>
-											<div class="txt">
-												<p class="name">hal***</p>
-												<p class="grade">CREW</p>
-												<p class="data">2023.02.01</p>
-											</div>
-										</div>
-										<div class="hs_star_score">
-											<i class="on">1점</i> <i class="on">2점</i> <i class="on">3점</i>
-											<i class="on">4점</i> <i class="on">5점</i>
-										</div>
-										<div class="info">
-											<ul class="info_list choice">
-												<li>40대 / 165cm / 보통 / 평소 사이즈 : 55</li>
-												<br>
-											</ul>
-											<ul class="info_list must">
-												<li>구매 정보 : BLACK / 82 / <span>더한섬닷컴</span></li>
-											</ul>
-										</div>
-										<div class="review">
-											<xmp class="txt"
-												style="font-family: inherit; margin-top: 0; margin-bottom: 0; white-space: normal;">작년부터
-											깔별로 쟁이는 중입니다 세번째 구매에요 이너로 이만한게 없어요</xmp>
-										</div>
-								</a></li>
-								<li class="swiper-slide" style="margin-right: 10px;"><a
-									id="8943031091249" href=".product_comment_pop"
-									onclick="GA_Event('상품_상세', '상품평', '상품평6');"
-									class="hs_prd_review_cont btn_popup_trigger repd1908">
-										<div class="pro">
-											<div class="img_wrap">
-												<span class="img"><img
-													src="https://www.thehandsome.com/_ui/handsomemobile/images/content/no_pro_img.png"
-													alt=""></span>
-											</div>
-											<div class="txt">
-												<p class="name">ser**********</p>
-												<p class="grade">STAR</p>
-												<p class="data">2023.01.31</p>
-											</div>
-										</div>
-										<div class="hs_star_score">
-											<i class="on">1점</i> <i class="on">2점</i> <i class="on">3점</i>
-											<i class="on">4점</i> <i class="on">5점</i>
-										</div>
-										<div class="info">
-											<ul class="info_list choice">
-												<li>40대 / 168cm / 보통 / 평소 사이즈 : 66</li>
-												<br>
-											</ul>
-											<ul class="info_list must">
-												<li>구매 정보 : IVORY / 88 / <span>더한섬닷컴</span></li>
-											</ul>
-										</div>
-										<div class="review">
-											<xmp class="txt"
-												style="font-family: inherit; margin-top: 0; margin-bottom: 0; white-space: normal;">진작
-											사 입을걸 그랬네요 색상도 좋고 텐션도 좋은데요</xmp>
-											<div class="img">
-												<img
-													src="/medias/20230131-171225.jpg?context=bWFzdGVyfGF0dGFjaG1lbnRzfDQ2NzQ1MDN8aW1hZ2UvanBlZ3xhdHRhY2htZW50cy9oODIvaDc3LzkzNjYwNjgwMDI4NDYuanBnfDZjNGJmMTVlOWZjZDczMTY5YTVkMjc2OTliOWZkMDEyYTU0NDAxZjk0N2JmMzY5NzRlYjE0ZGI1M2JlNGE5NDI"
-													alt="">
-												<div class="img_count191212">
-													<span class="img_count191212_inner"></span>
-												</div>
-											</div>
-										</div>
-								</a></li>
-								<li class="swiper-slide" style="margin-right: 10px;"><a
-									id="8943062122545" href=".product_comment_pop"
-									onclick="GA_Event('상품_상세', '상품평', '상품평7');"
-									class="hs_prd_review_cont btn_popup_trigger">
-										<div class="pro">
-											<div class="img_wrap">
-												<span class="img"><img
-													src="https://www.thehandsome.com/_ui/handsomemobile/images/content/no_pro_img.png"
-													alt=""></span>
-											</div>
-											<div class="txt">
-												<p class="name">his****</p>
-												<p class="grade">MANIA</p>
-												<p class="data">2023.01.31</p>
-											</div>
-										</div>
-										<div class="hs_star_score">
-											<i class="on">1점</i> <i class="on">2점</i> <i class="on">3점</i>
-											<i class="on">4점</i> <i class="on">5점</i>
-										</div>
-										<div class="info">
-											<ul class="info_list choice">
-												<li>40대 / 160cm / 마른 체형 / 평소 사이즈 : 44</li>
-												<br>
-											</ul>
-											<ul class="info_list must">
-												<li>구매 정보 : IVORY / 82 / <span>더한섬닷컴</span></li>
-											</ul>
-										</div>
-										<div class="review">
-											<xmp class="txt"
-												style="font-family: inherit; margin-top: 0; margin-bottom: 0; white-space: normal;">그레이
-											사고 마음에 들어 아이보리도 구매했어요 얇은데 따뜻하네요 노란빛이 도는 아이보리입니다</xmp>
-										</div>
-								</a></li>
-								<li class="swiper-slide" style="margin-right: 10px;"><a
-									id="8943126773809" href=".product_comment_pop"
-									onclick="GA_Event('상품_상세', '상품평', '상품평8');"
-									class="hs_prd_review_cont btn_popup_trigger">
-										<div class="pro">
-											<div class="img_wrap">
-												<span class="img"><img
-													src="https://www.thehandsome.com/_ui/handsomemobile/images/content/no_pro_img.png"
-													alt=""></span>
-											</div>
-											<div class="txt">
-												<p class="name">sun*******</p>
-												<p class="grade">CREW</p>
-												<p class="data">2023.01.31</p>
-											</div>
-										</div>
-										<div class="hs_star_score">
-											<i class="on">1점</i> <i class="on">2점</i> <i class="on">3점</i>
-											<i class="on">4점</i> <i class="on">5점</i>
-										</div>
-										<div class="info">
-											<ul class="info_list choice">
-												<li>157cm / 마른 체형 / 평소 사이즈 : 44</li>
-												<br>
-											</ul>
-											<ul class="info_list must">
-												<li>구매 정보 : IVORY / 82 / <span>더한섬닷컴</span></li>
-											</ul>
-										</div>
-										<div class="review">
-											<xmp class="txt"
-												style="font-family: inherit; margin-top: 0; margin-bottom: 0; white-space: normal;">좀
-											크긴한데 소재가 부드러워 그냥 입어요</xmp>
-										</div>
-								</a></li>
-								<li class="swiper-slide" style="margin-right: 10px;"><a
-									id="8942810824753" href=".product_comment_pop"
-									onclick="GA_Event('상품_상세', '상품평', '상품평9');"
-									class="hs_prd_review_cont btn_popup_trigger">
-										<div class="pro">
-											<div class="img_wrap">
-												<span class="img"><img
-													src="https://www.thehandsome.com/_ui/handsomemobile/images/content/no_pro_img.png"
-													alt=""></span>
-											</div>
-											<div class="txt">
-												<p class="name">das**</p>
-												<p class="grade">CREW</p>
-												<p class="data">2023.01.28</p>
-											</div>
-										</div>
-										<div class="hs_star_score">
-											<i class="on">1점</i> <i class="on">2점</i> <i class="on">3점</i>
-											<i class="on">4점</i> <i class="on">5점</i>
-										</div>
-										<div class="info">
-											<ul class="info_list choice">
-												<li>163cm / 마른 체형 / 평소 사이즈 : 55</li>
-												<br>
-											</ul>
-											<ul class="info_list must">
-												<li>구매 정보 : BLACK / 82 / <span>더한섬닷컴</span></li>
-											</ul>
-										</div>
-										<div class="review">
-											<xmp class="txt"
-												style="font-family: inherit; margin-top: 0; margin-bottom: 0; white-space: normal;">,색별로
-											모두 구매했어요~ 입을수록 편하고실용적입니다</xmp>
-										</div>
-								</a></li>
-								<li class="swiper-slide" style="margin-right: 10px;"><a
-									id="8942773436465" href=".product_comment_pop"
-									onclick="GA_Event('상품_상세', '상품평', '상품평10');"
-									class="hs_prd_review_cont btn_popup_trigger">
-										<div class="pro">
-											<div class="img_wrap">
-												<span class="img"><img
-													src="https://www.thehandsome.com/_ui/handsomemobile/images/content/no_pro_img.png"
-													alt=""></span>
-											</div>
-											<div class="txt">
-												<p class="name">her****</p>
-												<p class="grade">FRIEND</p>
-												<p class="data">2023.01.28</p>
-											</div>
-										</div>
-										<div class="hs_star_score">
-											<i class="on">1점</i> <i class="on">2점</i> <i class="on">3점</i>
-											<i class="on">4점</i> <i class="on">5점</i>
-										</div>
-										<div class="info">
-											<ul class="info_list choice">
-												<li>40대 / 164cm / 마른 체형 / 평소 사이즈 : 55</li>
-												<br>
-											</ul>
-											<ul class="info_list must">
-												<li>구매 정보 : LIGHT BEIGE / 82 / <span>더한섬닷컴</span></li>
-											</ul>
-										</div>
-										<div class="review">
-											<xmp class="txt"
-												style="font-family: inherit; margin-top: 0; margin-bottom: 0; white-space: normal;">색상별로
-											구매했어요 피부가 예민한데 편안하게 여기저기 다 입어요</xmp>
-										</div>
-								</a></li>
+								
 							</ul>
 						</div>
 						<br> <a id="writeReviewBtn"
@@ -2255,15 +1924,17 @@ $(document).ready(function(){
 		<!--// 상품평 -->
 
 		<!-- 상품평 쓰기 -->
-		<form id="reviewForm" name="reviewForm" method="post" action="/product/review"
+		<form id="reviewForm" name="reviewForm" method="post" action="/product/reviewAdd"
 			enctype="multipart/form-data">
-			<input type="hidden" name="CSRFToken" id="CSRFToken"
-				value="94278b4f-e661-459b-bb38-836dc720a030"> <input
+			<input type="hidden" name="_csrf" id="CSRFToken"
+				th:value="${_csrf.token}"> <input
 				type="hidden" name="productCode" id="productCode"
 				value="IL2C9TTO870N_BK"> <input type="hidden"
 				name="productCodeType"> <input type="hidden"
 				name="orderNumber" id="orderNumber" value=""> <input
 				type="hidden" name="purchaseColor" id="purchaseColor" value="">
+				<input type="hidden" name="psid" id="psid"
+				value="">
 			<input type="hidden" name="purchaseColorName" id="purchaseColorName"
 				value=""> <input type="hidden" name="purchaseSize"
 				id="purchaseSize" value=""> <input type="hidden"
@@ -2663,7 +2334,7 @@ $(document).ready(function(){
 								취소
 								<!-- 취소 -->
 							</button>
-							<button id="registerCustomerReviewBtn" type="button"
+							<button id="registerCustomerReviewBtn" type="submit"
 								class="hs_black_comm_btn">
 								등록
 								<!-- 등록 -->
