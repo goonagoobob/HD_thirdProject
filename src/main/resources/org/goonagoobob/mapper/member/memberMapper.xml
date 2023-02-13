@@ -20,7 +20,7 @@
 		mzipcode, maddress1, maddress2, mbirth, mgender, mrefid, mlogintype,
 		mtosno, menabled, mrole, mgrade, mmileage
 		from member
-		where mid = #{mid}
+		where mid = #{mid} and menabled = 1
 	</select>
 
 	<!-- 비밀번호 입력하면 맞는지 확인 -->
@@ -28,7 +28,7 @@
 		select mpassword
 		from
 		member
-		where mid = #{mid}
+		where mid = #{mid} 
 	</select>
 
 	<!-- findId -->
@@ -36,7 +36,7 @@
 		select mid
 		from member
 		where mname
-		= #{mname} and mbirth = #{mbirth}
+		= #{mname} and mbirth = #{mbirth} and menabled = 1
 	</select>
 
 	<!-- 개인정보변경 -->
