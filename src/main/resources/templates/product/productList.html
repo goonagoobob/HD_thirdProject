@@ -132,10 +132,12 @@
 						function pcchg(e) {
 							var id = $(e).attr('id');
 							var img = $(e).attr('value');
+							var name = $(e).attr('name');
 							$('#' + id).attr('src', img);
 							$('#' + id).parent().attr('value', id);
 							$('button#' + id).removeClass("on");
 							$(e).addClass("on");
+							$(e).parent().parent().parent().siblings('.categoryImgBox').attr('value', name);
 						}
 						var price = $('#strPrice').text();
 						price = price.substr(1);
@@ -147,23 +149,27 @@
 											/\B(?=(\d{3})+(?!\d))/g, ",");
 						}
 
-						function load(t, pid){
-							var str = '/product/productDetail';
+						function load(t){
+							var str = './productDetail';
 							str += '?pid=';
-							str += pid;
-							str += '&pcid='
+							str += $(t).attr('id');
+							str += '&pcid=';
 							str += $(t).attr('value');
+							
 							location.href = str;
 						};
 						function loadListMain(){
 							var str = '/product/productList';
-							if(brand !=""){
-								str += '?brand=';
-								str += brand;
-							}else{
-								str += '&depth1='
-								str += depth1;
-							}
+
+									str += '?brand=';
+									str += brand;
+									str += '&depth1=';
+									str += depth1;
+									str += '&depth2=';
+									str += depth2;
+									str += '&depth3=';
+
+
 							location.href = str;
 						};
 						function loadList(e){
@@ -180,12 +186,13 @@
 							var str = '/product/productList';
 							str += '?brand=';
 							str += brand;
-							str += '&depth1='
+							str += '&depth1=';
 							str += depth1;
-							str += '&depth2='
+							str += '&depth2=';
 							str += depth2;
-							str += '&depth3='
+							str += '&depth3=';
 							str += depth3;
+							alert(str);
 							location.href = str;
 						};
 						var brand = "[(${brand})]";
@@ -195,77 +202,77 @@
 						var orderBy = /*[[${orderBy}]]*/;
 						var Piter = /*[[${Piter}]]*/;
 						var productNum = /*[[${productNum}]]*/;
+
 						
-						var productEnd = false;
-						$(window).scroll(
-								function() {
-									if ($(window).scrollTop() == $(document)
-											.height()
-											- $(window).height()) {
-										Piter = Piter + productNum;
-										if(productEnd == false){
-										$.ajax({
-											 url : "./productListMore", 
-											 type : "GET", 
-											 data : {
-											 brand : brand,
-											 depth1 : depth1,
-											 depth2 : depth2,
-											 depth3 : depth3,
-											 Piter : Piter,
-											 orderBy : orderBy
-											 },
-											 success : function(data) { 
-												var html ='';
-												for(var i = 0; i < data.length; i++){
-													html += ' <li class="float active" id="listBody1_li0">'
-													html += '<a href="" onclick="load(this,'+data[i].pid+')" class="categoryImgBox" value="'+data[i].pcVO[0].pcid+'">';
-													html += '<div class="img">';
-													html += '<img src="'+data[i].pcVO[0].pcimg1+'" class="respon_image lazy"';
-													html += 'style="display: block" id="'+data[i].pid+'" /> <input';
-													html += 'type="hidden" id="'+data.pid+'"';
-													html += 'value="" />';
-													html += 'value="http://newmedia.thehandsome.com/IL/2D/SS/IL2D1ACK414W_LE_T01.jpg!||!IL2D1ACK414W_LE" />';
-													html += '<input type="hidden" id="newImage1_0"  value="" />';
-													html += '</div>';
-													html += ' </a>';
-													html += ' <div class="info_cont">';
-													html += '    <div class="color_chip">';
-													html += '        <a href="javascript:noLink();" ">';
-													html += '<button class="chip on" value="'+data[i].pcVO[0].pcimg1+'"';
-													html += 'id="'+data[i].pid+'" onclick="pcchg(this)"';
-													html += 'style="'+'background: '+ data[i].pcVO[0].pccolorcode+ '";';
-													html += '></button>';
-													for(var j = 1; j < data[i].pcVO.length; j++){
-														html += '        <a href="javascript:noLink();" ">';
-														html += '<button class="chip" value="'+data[i].pcVO[j].pcimg1+'"';
-														html += 'id="'+data[i].pid+'" onclick="pcchg(this)"';
-														html += 'style="'+'background: '+ data[i].pcVO[j].pccolorcode+ '";';
-														html += '></button>';
-													}
-														html += '</a>';
-														html += '</div>';
-														html += '<p class="brand"> '+data[i].bname+'</p>';
-														html += '<p class="name"> '+data[i].pname+'</p>';
-														html += '<p class="price" id="listPrice'+i+'">';
-													html += '<span id="price_IL2D1ACK414W_LE">'+comma(data[i].pcVO[0].pcprice)+'</span>';
-													html += '</p></div></li>';
-													html += '';
-												}
-												if(data.length < 8){
-													productEnd = true;
-												}
-												$('#listBody').append(html);
-											 },
-										 	error : function(request,error) {
-												 alert("에러: 잠시후 다시 시도해주세요");
-												 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-											 }
-										 });
-										};
-									}
-								});
 						  /*]]>*/
+					</script>
+	<script>
+					var productEnd = false;
+					$(window).scroll(
+							function() {
+								if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+									Piter = Piter + productNum;
+									if(productEnd == false){
+									$.ajax({
+										 url : "/product/productListMore", 
+										 type : "GET", 
+										 data : {
+										 brand : brand,
+										 depth1 : depth1,
+										 depth2 : depth2,
+										 depth3 : depth3,
+										 Piter : Piter,
+										 orderBy : orderBy
+										 },
+										 success : function(data) { 
+											var html ='';
+											for(var i = 0; i < data.length; i++){
+												html += ' <li class="float active" id="listBody1_li0">';
+												html += '<a href="" onclick="load(this,'+data[i].pid+')" class="categoryImgBox" value="'+data[i].pcVO[0].pcid+'">';
+												html += '<div class="img">';
+												html += '<img src="'+data[i].pcVO[0].pcimg1+'" class="respon_image lazy"';
+												html += 'style="display: block" id="'+data[i].pid+'" /> <input '
+												html += 'type="hidden" id="'+data[i].pid+'"';
+												html += 'value="" />';
+												html += '<input type="hidden" id="newImage1_0"  value="" />';
+												html += '</div>';
+												html += ' </a>';
+												html += ' <div class="info_cont">';
+												html += '    <div class="color_chip">';
+												html += '        <a href="javascript:noLink();" ">';
+												html += '<button class="chip on" value="'+data[i].pcVO[0].pcimg1+'"';
+												html += 'id="'+data[i].pid+'" onclick="pcchg(this)" "';
+												html += 'style="'+'background: '+ data[i].pcVO[0].pccolorcode+ '";';
+												html += '></button>';
+												for(var j = 1; j < data[i].pcVO.length; j++){
+													html += '        <a href="javascript:noLink();" ">';
+													html += '<button class="chip" value="'+data[i].pcVO[j].pcimg1+'" name="'+data[i].pcVO[j].pcid+' ';
+													html += 'id="'+data[i].pid+'" onclick="pcchg(this)"';
+													html += 'style="'+'background: '+ data[i].pcVO[j].pccolorcode+ '";';
+													html += '></button>';
+												}
+													html += '</a>';
+													html += '</div>';
+													html += '<p class="brand"> '+data[i].bname+'</p>';
+													html += '<p class="name"> '+data[i].pname+'</p>';
+													html += '<p class="price" id="listPrice'+i+'">';
+												html += '<span id="price_IL2D1ACK414W_LE">'+comma(data[i].pcVO[0].pcprice)+'</span>';
+												html += '</p></div></li>';
+												html += '';
+											}
+											if(data.length < 8){
+												productEnd = true;
+											}
+											$('#listBody').append(html);
+										 },
+									 	error : function(request,error) {
+											 alert("에러: 잠시후 다시 시도해주세요");
+											 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+										 }
+									 });
+									};
+								}
+							});
 					</script>
 	<div id="loadingBarDiv" style="display: none"></div>
 	<!-- //Loading -->
@@ -296,7 +303,7 @@
 
 				<a href="javascript:noLink();"
 					onclick="goBack();GA_Event('카테고리_리스트', '헤더', '이전');" class="h_prev">이전
-					페이지로 가기</a> 
+					페이지로 가기</a>
 				<ul class="h_gnbMenu">
 					<li class="search"><a
 						href="https://www.thehandsome.com/ko/mobilecommon/search"
@@ -322,19 +329,22 @@
 							style="height: 44px">
 							<ul class="swiper-wrapper"
 								style="transform: translate3d(0px, 0px, 0px)">
-								<li class="swiper-slide flag on swiper-slide-active" th:if="${depth3 == null}"
-									id="categoryNav01" style="margin-right: 6px"><a
-									class="name" onclick="loadListMain(this)" th:text="${depth0} +' 전체'"></a></li>
-								<li class="swiper-slide flag swiper-slide"
-									th:if="${depth3 != null}"
+								<li class="swiper-slide flag on swiper-slide-active"
+									th:if="${depth3 == null}" id="categoryNav01"
 									style="margin-right: 6px"><a class="name"
 									onclick="loadListMain(this)" th:text="${depth0} +' 전체'"></a></li>
+								<li class="swiper-slide flag swiper-slide"
+									th:if="${depth3 != null}" style="margin-right: 6px"><a
+									class="name" onclick="loadListMain(this)"
+									th:text="${depth0} +' 전체'"></a></li>
 								<li class="swiper-slide flag on swiper-slide"
-									style="margin-right: 6px" th:each="list : ${ctgrList}" th:if="${list == depth3}"><a
-									class="name" onclick="loadList(this)" th:text="${list}"></a></li>
-									<li class="swiper-slide flag swiper-slide"
-									style="margin-right: 6px" th:each="list : ${ctgrList}" th:if="${list != depth3}"><a
-									class="name" onclick="loadList(this)" th:text="${list}"></a></li>
+									style="margin-right: 6px" th:each="list : ${ctgrList}"
+									th:if="${list == depth3}"><a class="name"
+									onclick="loadList(this)" th:text="${list}"></a></li>
+								<li class="swiper-slide flag swiper-slide"
+									style="margin-right: 6px" th:each="list : ${ctgrList}"
+									th:if="${list != depth3}"><a class="name"
+									onclick="loadList(this)" th:text="${list}"></a></li>
 							</ul>
 						</div>
 						<!--// flag_wrap -->
@@ -345,6 +355,8 @@
 				</div>
 				<!-- sort_tit -->
 				<div class="sort_tit">
+					<p class="num_txt" id="totalSpan" th:text="${count} + ' 개'">70
+						개</p>
 					<div class="hs_tit_select">
 						<select id="st2" title="신상품">
 							<option value="NEW">신상품</option>
@@ -358,17 +370,14 @@
 				<!-- product_list -->
 				<div class="hs_product_list" id="hsProductList">
 					<ul id="listBody">
-						<li class="float active" id="listBody1_li0"
+						<li class="float active" 
 							th:each="list : ${productVO}"><a
-							th:onclick="load(this,[[${list.pid}]])" class="categoryImgBox"
-							th:value="${list.pcVO[0].pcid}">
+							class="categoryImgBox"
+							th:value="${list.pcVO[0].pcid}"
+							th:id="${list.pid}">
 								<div class="img">
 									<img th:src="${list.pcVO[0].pcimg1}" class="respon_image lazy"
-										style="display: block" th:id="${list.pid}" /> <input
-										type="hidden" th:id="${list.pid}"
-										value="http://newmedia.thehandsome.com/IL/2D/SS/IL2D1ACK414W_LE_T01.jpg!||!IL2D1ACK414W_LE" />
-									<input type="hidden" id="newImage1_0"
-										value="http://newmedia.thehandsome.com/IL/2D/SS/IL2D1ACK414W_LE_T01.jpg" />
+										style="display: block" th:id="${list.pid}" />
 								</div>
 						</a>
 							<div class="info_cont">
@@ -376,11 +385,13 @@
 									<a href="javascript:noLink();" th:each="list2 : ${list.pcVO}">
 										<button class="chip on" th:value="${list2.pcimg1}"
 											th:id="${list.pid}" onclick="pcchg(this)"
+											th:name="${list2.pcid}"
 											th:style="'background: '+ ${list2.pccolorcode}+ '; 				
 									'"
 											th:if="${list2Stat.first}"></button>
 										<button class="chip" th:value="${list2.pcimg1}"
 											th:id="${list.pid}" onclick="pcchg(this)"
+											th:name="${list2.pcid}"
 											th:style="'background: '+ ${list2.pccolorcode}+ '; 
 									'"
 											th:if="${list2Stat.first != true}"></button>
@@ -465,7 +476,11 @@
 		<!-- layerpop_middle -->
 	</div>
 	<!-- layerpop_wrap -->
-<script>
+	<script>
+	$(document).on('click','.categoryImgBox',function(e){
+		e.preventDefault();
+		load(this,"");
+	})
 var flagWrapSwiper = new Swiper(
 		".flag_wrap.case.swiper-container", {
 			slidesPerView : "auto",
@@ -473,10 +488,8 @@ var flagWrapSwiper = new Swiper(
 			spaceBetween : 6,
 			freeModeMomentumBounce : false,
 		});
-flagWrapSwiper.update();
 	$('#st2').change(function() {
 	    var order = $(this).val();
-	    alert(order);
 	    if (order == "NEW"){
 	    	orderBy = 3;
 	    }else if (order == "HIGH"){
@@ -484,6 +497,7 @@ flagWrapSwiper.update();
 	    }else{
 	    	orderBy = 1;
 	    }
+	    Piter = 1;
 	    $.ajax({
 			 url : "./productListMore", 
 			 type : "GET", 
@@ -499,14 +513,10 @@ flagWrapSwiper.update();
 				var html ='';
 				for(var i = 0; i < data.length; i++){
 					html += ' <li class="float active" id="listBody1_li0">'
-					html += '<a href="" onclick="load(this,'+data[i].pid+')" class="categoryImgBox" value="'+data[i].pcVO[0].pcid+'">';
+					html += '<a href="" id="'+data[i].pid+'" class="categoryImgBox" value="'+data[i].pcVO[0].pcid+'">';
 					html += '<div class="img">';
 					html += '<img src="'+data[i].pcVO[0].pcimg1+'" class="respon_image lazy"';
-					html += 'style="display: block" id="'+data[i].pid+'" /> <input';
-					html += 'type="hidden" id="'+data.pid+'"';
-					html += 'value="" />';
-					html += 'value="http://newmedia.thehandsome.com/IL/2D/SS/IL2D1ACK414W_LE_T01.jpg!||!IL2D1ACK414W_LE" />';
-					html += '<input type="hidden" id="newImage1_0"  value="" />';
+					html += 'style="display: block" id="'+data[i].pid+'" />';
 					html += '</div>';
 					html += ' </a>';
 					html += ' <div class="info_cont">';
@@ -519,8 +529,8 @@ flagWrapSwiper.update();
 					for(var j = 1; j < data[i].pcVO.length; j++){
 						html += '        <a href="javascript:noLink();" ">';
 						html += '<button class="chip" value="'+data[i].pcVO[j].pcimg1+'"';
-						html += 'id="'+data[i].pid+'" onclick="pcchg(this)"';
-						html += 'style="'+'background: '+ data[i].pcVO[j].pccolorcode+ '";';
+						html += 'id="'+data[i].pid+'" onclick="pcchg(this)" name="'+data[i].pcVO[j].pcid+'"';
+						html += ' style="'+'background: '+ data[i].pcVO[j].pccolorcode+ '";';
 						html += '></button>';
 					}
 						html += '</a>';
@@ -540,9 +550,11 @@ flagWrapSwiper.update();
 			 }
 		 });
 	});
+	
+	function goBack(){
+	      window.history.back();
+	}
 </script>
-
-
 
 </body>
 <!-- This script is for AceCounter START -->

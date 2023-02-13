@@ -88,4 +88,9 @@ public class productServiceImpl implements productService {
 		return mapper.newCount();
 	}
 
+	@Override
+	public int getCount(String brand, String depth1, String depth2, String depth3) {
+		return mapper.getCount(brand,depth1,depth2,depth3);
+	}
+
 }

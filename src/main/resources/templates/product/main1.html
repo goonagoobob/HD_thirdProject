@@ -108,8 +108,7 @@
 	src="http://www.thehandsome.com/_ui/handsomemobile/js/jquery.bpopup.min.js"></script>
 <script type="text/javascript"
 	src="http://www.thehandsome.com/_ui/handsomemobile/js/echarts.min.js"></script>
-<script type="text/javascript"
-	src="http://www.thehandsome.com/_ui/handsomemobile/js/common.js?20210501"></script>
+<script type="text/javascript" src="../../static/product/common.js"></script>
 <script type="text/javascript"
 	src="http://www.thehandsome.com/_ui/handsomemobile/js/assist_common.js?v=20220630"></script>
 <script type="text/javascript"
@@ -1241,6 +1240,7 @@ rotate(
 					</div>
 				</div>
 			</div>
+			</div>
 			<!-- //################## contents ################## -->
 
 	<!-- ################## hsome_quickMenu | 퀵메뉴 ################## -->
@@ -1265,7 +1265,9 @@ rotate(
 	</aside>
 <!-- ################## //hsome_quickMenu | 퀵메뉴 ################## -->
 	<!-- ################## hsome_quickMenu_contents | 퀵메뉴 컨텐츠 영역 ################## -->
+	<div class="hsome_quickMenu_contents">
 	<th:block th:replace="fragments/footer :: footerFragment"></th:block>
+	</div>
 	<!--// ################## hsome_quickMenu_contents | 퀵메뉴 컨텐츠 영역 ################## -->
 
 
@@ -2161,7 +2163,7 @@ function mainInit() {
      * lnb 메뉴 클릭 이벤트
     ************************************************************************************************/
     $('#topNav1909 ul li a').on('click', function(e) {
-    	
+    	numberCounterExecute(0);
         var $this = $(this);
         var all_menu = $this.parents('#topNav1909').find('li');
         var contents_box = $('.hsomemain-contents-box');

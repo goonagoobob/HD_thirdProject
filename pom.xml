@@ -129,26 +129,6 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.oracle.ojdbc</groupId>
-			<artifactId>ojdbc8</artifactId>
-			<version>19.3.0.0</version>
-		</dependency>
-		<dependency>
-			<groupId>com.oracle.ojdbc</groupId>
-			<artifactId>oraclepki</artifactId>
-			<version>19.3.0.0</version>
-		</dependency>
-		<dependency>
-			<groupId>com.oracle.ojdbc</groupId>
-			<artifactId>osdt_cert</artifactId>
-			<version>19.3.0.0</version>
-		</dependency>
-		<dependency>
-			<groupId>com.oracle.ojdbc</groupId>
-			<artifactId>osdt_core</artifactId>
-			<version>19.3.0.0</version>
-		</dependency>
-		<dependency>
 			<groupId>com.github.iamport</groupId>
 			<artifactId>iamport-rest-client-java</artifactId>
 			<version>0.2.22</version>

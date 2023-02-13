@@ -3,6 +3,9 @@
  */
 
 //180814 추가 시작
+	function goBack(){
+	      window.history.back();
+	}
 var quickSTagSwiperOption = {
 		slidesPerView: 'auto',
 		freeMode: true,

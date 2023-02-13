@@ -44,4 +44,6 @@ public interface productMapper {
 	public List<productCommonVO> getBestList();
 
 	public int newCount();
+
+	public int getCount(String brand, String depth1, String depth2, String depth3);
 }

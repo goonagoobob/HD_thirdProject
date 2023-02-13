@@ -64,10 +64,11 @@
 	</select>
 
 	<select id="getList" resultMap="pc1Map">
-	                                        select pid, pname, pnote, bname, pcid, pcimg1, pcimg2, pcimg3, pcchipimg, pccolorcode, pcprice, preleasedate, 
-										psid, psstock, psize from allproduct where pid in (select  pid from(select rownum as row_num, pid from(select distinct pid from (select rownum, p.pid from allproduct 
-                                        p,product_category pc, category c
-										where p.pid = pc.pid and pc.cateno = c.cateno and
+	                                    select pid, pname, pnote, bname, pcid, pcimg1, pcimg2, pcimg3, pcchipimg, pccolorcode, pcprice, preleasedate, 
+psid, psstock, psize from allproduct where pid in (select pid from (
+select rownum as row_num, pid from (select distinct p.pid, p.pcprice from allproduct 
+p,product_category pc, category c
+where p.pid = pc.pid and pc.cateno = c.cateno and 
 
 	<choose>
 			<when test="brand != null">
@@ -80,18 +81,18 @@
 									<![CDATA[
 										p.bname = #{brand} and depth1name = #{depth1} and depth2name = #{depth2} and depth3name = #{depth3}
                                         ${orderBy}
-										))
+										)
                                         where
-										rownum < #{productNum}) where row_num >= #{Piter})
+										rownum < #{productNum}) where row_num >= #{Piter})${orderBy}
 										]]>
 									</when>
 									<otherwise>
 									<![CDATA[
 										p.bname = #{brand} and depth1name = #{depth1} and depth2name = #{depth2}
                                         ${orderBy}
-										))
+										)
                                         where
-										rownum < #{productNum}) where row_num >= #{Piter})
+										rownum < #{productNum}) where row_num >= #{Piter})${orderBy}
 										]]>
 									</otherwise>
 								</choose>
@@ -100,9 +101,9 @@
 							<![CDATA[
 										p.bname = #{brand} and depth1name = #{depth1}
                                         ${orderBy}
-										))
+										)
                                         where
-										rownum < #{productNum}) where row_num >= #{Piter})
+										rownum < #{productNum}) where row_num >= #{Piter})${orderBy}
 										]]>
 							</otherwise>
 						</choose>
@@ -111,9 +112,9 @@
 					<![CDATA[
 										p.bname = #{brand}
                                         ${orderBy}
-										))
+										)
                                         where
-										rownum < #{productNum}) where row_num >= #{Piter})
+										rownum < #{productNum}) where row_num >= #{Piter})${orderBy}
 										]]>
 					</otherwise>
 				</choose>
@@ -127,29 +128,29 @@
 									<![CDATA[
 										depth1name = #{depth1} and depth2name = #{depth2} and depth3name = #{depth3}
                                         ${orderBy}
-										))
+										)
                                         where
-										rownum < #{productNum}) where row_num >= #{Piter})
+										rownum < #{productNum}) where row_num >= #{Piter})${orderBy}
 										]]>
 									</when>
 									<otherwise>
 									<![CDATA[
-										depth1name = #{depth1} and depth2name = #{depth2}
+depth1name = #{depth1} and depth2name = #{depth2}
                                         ${orderBy}
-										))
+										)
                                         where
-										rownum < #{productNum}) where row_num >= #{Piter})
+										rownum < #{productNum}) where row_num >= #{Piter})${orderBy}
 										]]>
 									</otherwise>
 								</choose>
 							</when>
 							<otherwise>
 							<![CDATA[
-										depth1name = #{depth1}
+depth1name = #{depth1}
                                         ${orderBy}
-										))
+										)
                                         where
-										rownum < #{productNum}) where row_num >= #{Piter})
+										rownum < #{productNum}) where row_num >= #{Piter})${orderBy}
 										]]>
 							</otherwise>
 						</choose>
@@ -214,6 +215,53 @@
                                        select count(*) from product_color where preleasedate between (SELECT SYSDATE - 1 FROM dual) and sysdate
                                        
                          ]]>
+	</select>	
+	<select id="getCount" resultType="int">
+		<choose>
+			<when test="brand != null">
+				<choose>
+					<when test="depth1 != null">
+						<choose>
+							<when test="depth2 != null">
+								<choose>
+									<when test="depth3 != null">
+																	  select count(*) from (select distinct pid from (select p.pid, pname, pnote, b.bname, pcid, pcimg1, pcimg2, pcimg3, pcchipimg, pccolorcode, pcprice, preleasedate, 
+										psid, psstock, psize, depth1name, depth2name, depth3name from brand b, allproduct p, product_category pc, category c
+										where b.bname = p.bname and p.pid = pc.pid and pc.cateno = c.cateno) where bname = #{brand} and depth1name = #{depth1} and depth2name = #{depth2} and depth3name = #{depth3})
+									</when>
+									<otherwise>
+								  select count(*) from (select distinct pid from (select p.pid, pname, pnote, b.bname, pcid, pcimg1, pcimg2, pcimg3, pcchipimg, pccolorcode, pcprice, preleasedate, 
+										psid, psstock, psize, depth1name, depth2name, depth3name from brand b, allproduct p, product_category pc, category c
+										where b.bname = p.bname and p.pid = pc.pid and pc.cateno = c.cateno) where bname = #{brand} and depth1name = #{depth1} and depth2name = #{depth2} )
+									
+									</otherwise>
+								</choose>
+							</when>
+							<otherwise>
+								select count(*) from (select distinct pid from (select p.pid, pname, pnote, b.bname, pcid, pcimg1, pcimg2, pcimg3, pcchipimg, pccolorcode, pcprice, preleasedate, 
+										psid, psstock, psize, depth1name, depth2name, depth3name from brand b, allproduct p, product_category pc, category c
+										where b.bname = p.bname and p.pid = pc.pid and pc.cateno = c.cateno) where bname = #{brand} and depth1name = #{depth1} )
+							</otherwise>
+						</choose>
+					</when>
+					<otherwise>
+														  select count(*) from (select distinct pid from (select p.pid, pname, pnote, b.bname, pcid, pcimg1, pcimg2, pcimg3, pcchipimg, pccolorcode, pcprice, preleasedate, 
+										psid, psstock, psize, depth1name, depth2name, depth3name from brand b, allproduct p, product_category pc, category c
+										where b.bname = p.bname and p.pid = pc.pid and pc.cateno = c.cateno) where bname = #{brand} )
+					</otherwise>
+				</choose>
+			</when>
+			<otherwise>
+						<choose>
+							<when test="depth2 != null">
+								select distinct depth3name from allcategory where depth1name = #{depth1} and depth2name = #{depth2}
+							</when>
+							<otherwise>
+								select distinct depth2name from allcategory where depth1name = #{depth1}
+							</otherwise>
+						</choose>
+			</otherwise>
+		</choose>
 	</select>
 	
 	

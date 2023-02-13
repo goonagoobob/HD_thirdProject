@@ -9,6 +9,10 @@
 
 package org.goonagoobob.controller.product;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.goonagoobob.domain.product.brandVO;
@@ -20,9 +24,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/product")
@@ -40,44 +46,6 @@ public class productController {
 			Model model
 			) {
 		String depth0 ="";
-		if (brand != "") {
-			
-			if(depth1 == "") {
-				depth0 = brand;
-			}
-			else {
-				if(depth2 == "") {
-					depth0 = depth1;
-				}
-				else {
-					if(depth3 == "") {
-						depth0 = depth3;
-					}
-					else {
-						depth0 = depth2;
-					}
-				}
-			}
-		}
-		else {
-				if(depth2 == "") {
-					if(depth3 == "") {
-						depth0 = depth3;
-					}
-					else {
-						depth0 = depth1;
-						
-					}
-				}
-				else {
-					if(depth1 == "") {
-						depth0 = brand;
-					}
-					else {
-						depth0 = depth1;
-					}
-				}
-		}
 		if (brand == "") {
 			brand =null;
 		}
@@ -89,10 +57,44 @@ public class productController {
 		}if (depth3 == "") {
 			depth3 =null;
 		}
+		if (brand != null) {
+			
+			if(depth1 != null) {
+				if(depth2 != null) {
+						depth0 = depth2;
+						System.out.println("depth2 :"+ depth2 );
+				}
+				else {
+					depth0 = depth1;
+					System.out.println("depth1 :"+ depth1 );
+				}
+				
+			}
+			else {
+				depth0 = brand;
+				System.out.println("brand :"+ brand );
+			}
+		}
+		else {
+				if(depth2 == null) {
+					if(depth3 == null) {
+						depth0 = depth2;
+					}
+					else {
+						depth0 = depth1;
+						
+					}
+				}
+				else {
+						depth0 = depth1;
+				}
+		}
+
 		List<productCommonVO> VOList = service.getList(brand, depth1, depth2, depth3, orderBy, Piter, productNum);
 		List<String> ctgr = service.getCtgrList(brand, depth1, depth2, depth3);
+		int count = service.getCount(brand, depth1, depth2, depth3);
 		System.out.println(VOList);
-		System.out.println(depth0);
+		System.out.println("depth0 : "+depth0);
 		model.addAttribute("brand",brand);
 		model.addAttribute("depth0",depth0);
 		model.addAttribute("depth1",depth1);
@@ -103,6 +105,7 @@ public class productController {
 		model.addAttribute("productNum",productNum);
 		model.addAttribute("productVO", VOList);
 		model.addAttribute("ctgrList", ctgr);
+		model.addAttribute("count", count);
 		if(brand == null) {
 			model.addAttribute("depth",depth1);
 		} else  {
@@ -120,7 +123,17 @@ public class productController {
 			@RequestParam(value = "productNum", required=false, defaultValue = "8") int productNum,
 			@RequestParam(value = "orderBy", required=false, defaultValue = "0") int orderBy
 			) {
-		
+		if (brand == "") {
+			brand =null;
+		}
+		if (depth1 == "") {
+			depth1 =null;
+		}
+		if (depth2 == "") {
+			depth2 =null;
+		}if (depth3 == "") {
+			depth3 =null;
+		}
 		List<productCommonVO> VOList = service.getList(brand, depth1, depth2, depth3, orderBy, Piter, productNum);
 		System.out.println(VOList);
 		return VOList;
@@ -167,4 +180,25 @@ public class productController {
 		model.addAttribute("newVO",newVO);
 		model.addAttribute("newCount",newCount);
 	}
+	@PostMapping("/reviewAdd")
+	public void reviewAdd(@RequestParam("reviewFile") MultipartFile uploadfile/* @RequestParam("reviewFile1") MultipartFile uploadfile1,
+			@RequestParam("reviewFile2") MultipartFile uploadfile2, @RequestParam("reviewFile3") MultipartFile uploadfile3,
+			@RequestParam("reviewFile4") MultipartFile uploadfile4, @RequestParam("reviewFile5") MultipartFile uploadfile5
+			@RequestParam("reviewFile") MultipartFile uploadfile,,*/) {
+		List<FileDto> list = new ArrayList<>();
+
+		for (MultipartFile file : uploadfile) {			
+			FileDto dto = new FileDto( file.getOriginalFilename(), file.getContentType() );	
+			list.add(dto);
+			File newFileName = new File(dto.getFileName());
+	        
+			try {
+				file.transferTo(newFileName);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		model.addAttribute("files", list);
+	}
+		
 }

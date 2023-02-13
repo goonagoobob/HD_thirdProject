@@ -7,13 +7,14 @@
  * 상품 슬라이드. 상품 수량 선택 기능 추가 Feb 7. 2023
  ********************************* -->
 
-<html xmlns:th="http://www.thymeleaf.org" 
-xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <head>
-<meta name="_csrf" th:content="${_csrf.token}"/>
-<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta http-equiv="pragma" content="no-cache">
@@ -71,7 +72,6 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <link
 	href="https://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/beauty.css?20211104"
 	rel="stylesheet" type="text/css">
-
 
 <script type="text/javascript"
 	src="https://www.thehandsome.com/_ui/handsomemobile/js/jquery.min.js"></script>
@@ -133,40 +133,42 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 
 <style>
-							
-	.hs_number_box .number_change .minus:before {
-    display: inline-block;
-    clear: both;
-    content: '';
-    width: 10px;
-    height: 1px;
-    background: #222;
-}.hs_number_box .number_change .plus:before {
-    display: inline-block;
-    clear: both;
-    content: '';
-    width: 10px;
-    height: 1px;
-    background: #222;
-}			
+.hs_number_box .number_change .minus:before {
+	display: inline-block;
+	clear: both;
+	content: '';
+	width: 10px;
+	height: 1px;
+	background: #222;
+}
+
+.hs_number_box .number_change .plus:before {
+	display: inline-block;
+	clear: both;
+	content: '';
+	width: 10px;
+	height: 1px;
+	background: #222;
+}
+
 .hs_number_box .number_change .plus:after {
-    display: inline-block;
-    clear: both;
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    -webkit-transform: translate(-50%);
-    -khtml-transform: translate(-50%);
-    -moz-transform: translate(-50%);
-    -ms-transform: translate(-50%);
-    -o-transform: translate(-50%);
-    transform: translate(-50%);
-    width: 1px;
-    height: 10px;
-    margin-top: -4px;
-    background: #222;
-}					
+	display: inline-block;
+	clear: both;
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	-webkit-transform: translate(-50%);
+	-khtml-transform: translate(-50%);
+	-moz-transform: translate(-50%);
+	-ms-transform: translate(-50%);
+	-o-transform: translate(-50%);
+	transform: translate(-50%);
+	width: 1px;
+	height: 10px;
+	margin-top: -4px;
+	background: #222;
+}
 </style>
 <meta http-equiv="origin-trial"
 	content="A9+ldib+sKhGj2FcIjq5GnvBZFuIiXID0+NkE6k7cEk71MhaHFGqo3wUlUFmZ6d9w0KPwx9UxGiCTYWtRnTGDQkAAACAeyJvcmlnaW4iOiJodHRwczovL2NyaXRlby5uZXQ6NDQzIiwiZmVhdHVyZSI6IlByaXZhY3lTYW5kYm94QWRzQVBJcyIsImV4cGlyeSI6MTY4MDY1Mjc5OSwiaXNTdWJkb21haW4iOnRydWUsImlzVGhpcmRQYXJ0eSI6dHJ1ZX0=">
@@ -208,20 +210,16 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 	<div class="hsome_allContents_wrapper">
 
 		<div class="hsome_allContents">
-			<script type="text/javascript">
-    function goMainpage() {
-    	window.sessionStorage.removeItem('moveYn');
-		location.href = "/ko/main";
-	}
-</script>
 
 			<!-- ################## header ################## -->
 			<header
 				class="hsome_header header_noline product_header add_bg add_ttl">
 				<h1 class="" id="headerTitle">
 					<div id="header_prodNm" class="name" th:text="${productVO.bname}"></div>
-					<div id="header_prodPrice" class="price" >
-						<span th:each="list : ${productVO.pcVO}" th:if="${list.pcid == pcid}" th:text="'₩'+${#numbers.formatInteger(list.pcprice, 0, 'COMMA')}"></span>
+					<div id="header_prodPrice" class="price">
+						<span th:each="list : ${productVO.pcVO}"
+							th:if="${list.pcid == pcid}"
+							th:text="'₩'+${#numbers.formatInteger(list.pcprice, 0, 'COMMA')}"></span>
 					</div>
 				</h1>
 				<div class="h_leftMenu">
@@ -308,16 +306,16 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 						<!--  criteo 상품 페이지 트래커 START  ---->
 						<script type="text/javascript"
 							src="//static.criteo.net/js/ld/ld.js" async="true"></script>
-<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+						<script src="https://code.jquery.com/jquery-latest.min.js"></script>
 
 
-<!-- <div class="dvp_container" id="dvp_container">	
+						<!-- <div class="dvp_container" id="dvp_container">	
 <div class="dvp_close_btn b-close" id="confirmCloseDiv"><span>닫기</span></div>	
 <div class="dvp_content">		
 <div class="desc_box">쇼핑백에 담겼습니다.<br>확인하시겠습니까?</div>	</div>	
 <div class="btn_wrap btns">		<button class="btn btn_bd_g btn-alert-close">계속 쇼핑하기</button>		
 <button class="btn btn_bg_b btn-alert-confirm">쇼핑백 바로가기</button>	</div></div> -->
-<script type="text/javascript">
+						<script type="text/javascript">
 var display = true;
  function doDisplay(){
 	var con = document.getElementById("popAlertConfirmDiv");
@@ -327,8 +325,6 @@ var display = true;
 		con.style.display = "none";
 	}
  }
- 
-
 
 $(document).ready(function(){
 	// 장바구니 추가-김주혜
@@ -376,11 +372,15 @@ $(document).ready(function(){
 
 
 
-								<button th:each="list : ${productVO.pcVO}" th:if="${list.pcid != pcid}" type="button" th:id="${list.pcid}" class="chip" th:style="'background:'+${list.pccolorcode}+' url('+${list.pcchipimg}+');'"></button>
+								<button th:each="list : ${productVO.pcVO}"
+									th:if="${list.pcid != pcid}" type="button" th:id="${list.pcid}"
+									class="chip"
+									th:style="'background:'+${list.pccolorcode}+' url('+${list.pcchipimg}+');'"></button>
 
-									<p class="product_price_css xans-record-">
-										<!-- <span class="title"><span style="font-size: 14px; color: #000000;">판매가</span></span> <span class="value"><span style="font-size: 14px; color: #000000;"><strong id="span_product_price_text";"> <fmt:formatNumber type="number" maxFractionDigits="3" value="${product.pro_price}" /></strong> <input id="product_price" name="product_price" value="" type="hidden"></span></span>  -->
-									</p>				</div>
+								<p class="product_price_css xans-record-">
+									<!-- <span class="title"><span style="font-size: 14px; color: #000000;">판매가</span></span> <span class="value"><span style="font-size: 14px; color: #000000;"><strong id="span_product_price_text";"> <fmt:formatNumber type="number" maxFractionDigits="3" value="${product.pro_price}" /></strong> <input id="product_price" name="product_price" value="" type="hidden"></span></span>  -->
+								</p>
+							</div>
 							<!--// 색상 버튼 -->
 
 							<!-- 상품 정보 -->
@@ -390,11 +390,11 @@ $(document).ready(function(){
 										onclick="GA_Event('상품_상세', '브랜드', 'LÄTT');"><span
 										th:text="${productVO.bname}"></span></a>
 								</div>
-								<div class="name" th:text="${productVO.pname}">
-								</div>
+								<div class="name" th:text="${productVO.pname}"></div>
 								<div class="price">
 									<span th:each="list : ${productVO.pcVO}"
-										th:if="${list.pcid == pcid}" th:text="'₩'+${#numbers.formatInteger(list.pcprice, 0, 'COMMA')}"></span>
+										th:if="${list.pcid == pcid}"
+										th:text="'₩'+${#numbers.formatInteger(list.pcprice, 0, 'COMMA')}"></span>
 								</div>
 
 								<div class="number">
@@ -437,7 +437,7 @@ $(document).ready(function(){
 								<!-- //재입고알림 툴팁 -->
 							</div>
 							<!--// 사이즈 -->
-							
+
 							<!-- 상품수량 -->
 							<div class="hs_btn_size_wrap">
 
@@ -448,7 +448,7 @@ $(document).ready(function(){
 										style="width: 145px; height: 40px; vertical-align: middle; border: 1px solid #ccc; font-size: 0;">
 										<button type="button" class="minus"
 											onclick="javascript:qtyMinus();"
-											style="position: relative; display: inline-block; width: 39px; height: 38px; vertical-align: top;" >-</button>
+											style="position: relative; display: inline-block; width: 39px; height: 38px; vertical-align: top;">-</button>
 										<input type="text" id="ordQty" class="num" value="1"
 											readonly=""
 											style="display: inline-block; width: 65px; height: 38px; font-size: 16px; color: #000; line-height: 38px; text-align: center; border: none; vertical-align: top;">
@@ -456,8 +456,10 @@ $(document).ready(function(){
 											onclick="javascript:qtyPlus();"
 											style="position: relative; display: inline-block; width: 39px; height: 38px; vertical-align: top;">+</button>
 									</div>
-									<p id="strPrice" class="price" th:each="list : ${productVO.pcVO}"
-										th:if="${list.pcid == pcid}" th:text="'₩'+${#numbers.formatInteger(list.pcprice, 0, 'COMMA')}"
+									<p id="strPrice" class="price"
+										th:each="list : ${productVO.pcVO}"
+										th:if="${list.pcid == pcid}"
+										th:text="'₩'+${#numbers.formatInteger(list.pcprice, 0, 'COMMA')}"
 										style="display: table-cell; padding-left: 10px; font-size: 18px; color: #222; font-weight: bold; text-align: right; vertical-align: middle;">₩145,000</p>
 								</div>
 
@@ -743,28 +745,46 @@ $(document).ready(function(){
 						    
 						    var colorcode = $('.hs_prd_info_wrap .hs_btn_color_chip button.chip.on').attr('id').replace("info_","");
 						    var sizecode  = $(elem).text();
-						    sizecode = parseInt(sizecode);
-						    
+						    if(!isNaN(parseInt(sizecode))){
+						    	sizecode = parseInt(sizecode);
+						    	
+						    }
 						    $('.hs_prd_info_wrap.pv-element .copy').text(colorcode+"_"+sizecode);
 						    $('.hs_prd_info_wrap.pv-element .copy').attr('data-clipboard-text',colorcode+"_"+sizecode); //추가(redmine:914)품번복사 20180910
 						    $("#clipboard").val(colorcode+"_"+sizecode);
 						}
+						
+						function reviewPop(){
+							$('.product_comment_write_pop1905').addClass('visible activated active');
+						}
+						function reviewClose(){
+							$('.product_comment_write_pop1905').removeClass('visible activated active');
+							$("#reviewForm")[0].reset();
+						}
+
 						/*]]>*/
 
 </script>
-<div class="divpop_wrap_dev pop_mbr pop_alert_confirm" id="popAlertConfirmDiv" style="left: 0px; position: fixed; top: 89.5px; z-index: 9999; opacity: 1; display: none;">
-  <div class="dvp_container">	<div class="dvp_close_btn b-close" id="confirmCloseDiv">
-    <span>닫기</span>
-  </div>	
-  <div class="dvp_content">		
-    <div class="desc_box">쇼핑백에 담겼습니다.<br>확인하시겠습니까?</div>	
-  </div>	
-  <div class="btn_wrap btns">		
-  <button class="btn btn_bd_g btn-alert-close" onclick="/">계속 쇼핑하기</button>		
-  <button class="btn btn_bg_b btn-alert-confirm" id="gocart">쇼핑백 바로가기</button>	
-</div>
-</div>
-</div>
+					<div class="divpop_wrap_dev pop_mbr pop_alert_confirm"
+						id="popAlertConfirmDiv"
+						style="left: 0px; position: fixed; top: 89.5px; z-index: 9999; opacity: 1; display: none;">
+						<div class="dvp_container">
+							<div class="dvp_close_btn b-close" id="confirmCloseDiv">
+								<span>닫기</span>
+							</div>
+							<div class="dvp_content">
+								<div class="desc_box">
+									쇼핑백에 담겼습니다.<br>확인하시겠습니까?
+								</div>
+							</div>
+							<div class="btn_wrap btns">
+								<button class="btn btn_bd_g btn-alert-close" onclick="/">계속
+									쇼핑하기</button>
+								<button class="btn btn_bg_b btn-alert-confirm" id="gocart">쇼핑백
+									바로가기</button>
+							</div>
+						</div>
+					</div>
 
 					<!-- 팝업 링크 -->
 					<div class="vw_prd_tgMore pv-element">
@@ -783,7 +803,7 @@ $(document).ready(function(){
 					</div>
 					<!-- 상품평 -->
 					<!-- 상품상세 상품평목록 -->
-					
+
 
 					<div class="vw_prd_review pv-element">
 						<h2 class="hs_top_bold_tit01">상품평(676)</h2>
@@ -946,11 +966,16 @@ $(document).ready(function(){
 											안 아쁠거 같애요.</xmp>
 											<div class="img">
 												<img
-													src="/medias/CE2DCB71-2FA1-4456-9F71-CE73DF151E49.jpeg?context=bWFzdGVyfGF0dGFjaG1lbnRzfDM1Mzg5Nzd8aW1hZ2UvanBlZ3xhdHRhY2htZW50cy9oYjUvaDMzLzkzNjc0MDQ3NDA2MzguanBnfDJlZjU1YzI4Njc0ODBjZjFmYmIxODUyYzNkZGJhYjdiNDk3NTQwODQ3YzE1YTlhM2VlNWI4ZDRiNzIxZTlmMTc"
+													src="http://www.thehandsome.com/ko/product/reviewList/LC2D1WTOI26W_OW/medias/20230208-132739.jpg?context=bWFzdGVyfGF0dGFjaG1lbnRzfDYyNjM5MzZ8aW1hZ2UvanBlZ3xhdHRhY2htZW50cy9oZTMvaGU5LzkzNjc5ODA1Mzk5MzQuanBnfDQ0YWEwOWJlNTIzOTBhMGY1OTI3NzBhZDNkMjY4NzNjYjNmNTZmMDdmMDgzZjA2OGNjN2RjOGYwNDgyZjI3Yzg"
 													alt="">
 											</div>
 										</div>
-								</a></li>
+								</a>
+								<div class="hs_prd_review_btns">
+									<a class="edit" onclick="javascript:modifyReview()">수정</a>
+									<a class="del" onclick="javascript:deleteReview('+reviewList[i].id+')">삭제</a>
+								</div>
+								</li>
 								<li class="swiper-slide" style="margin-right: 10px;"><a
 									id="8943263121457" href=".product_comment_pop"
 									onclick="GA_Event('상품_상세', '상품평', '상품평5');"
@@ -1171,15 +1196,14 @@ $(document).ready(function(){
 								</a></li>
 							</ul>
 						</div>
-						<br> <a href="javascript:noLink();" id="writeReviewBtn"
+						<br> <a id="writeReviewBtn"
 							class="hs_white_comm_btn full btn_popup_trigger write_review1907"
-							onclick="GA_Event('상품_상세', '상품평', '상품평 작성하기');">상품평 작성하기</a> <a
-							href="#"
+							onclick="reviewPop()">상품평 작성하기</a> <a href="#"
 							onclick="javascript:goCustomerReviews();GA_Event('상품_상세', '상품평', '전체보기');"
 							class="more_btn">전체보기<!-- 전체보기 --> <i class="arr wid7 right"></i></a>
 					</div>
 
-	<!--// 상품평 -->
+					<!--// 상품평 -->
 					<div class="vw_product_slide pv-element" style="height: 211px">
 						<div class="hs_tooltip_tit">
 							<h2 class="hs_top_bold_tit01">추천상품</h2>
@@ -1243,12 +1267,16 @@ $(document).ready(function(){
 						id="viewExhibitionPageName" value="WEEKLY BEST">
 				</div>
 				<!-- 사전예약 -->
-					<div class="hs_btm_btnwrap two pre_order1905"> 
-						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-						<input type="hidden" name="psid" value="$('#copy_btn_clipboard').text()" /> 
-						<input type="hidden" name="pquantity" value="$('#ordQty').attr('value')" />
-						<button type="button" class="hs_btm_btn black" id="insertcartbutton" onclick="location.href='javascript:doDisplay();' ">쇼핑백 담기</button>
-						<button type="button" class="hs_btm_btn pink trigger direct" id="directOrder">바로주문</button>
+				<div class="hs_btm_btnwrap two pre_order1905">
+					<input type="hidden" name="${_csrf.parameterName}"
+						value="${_csrf.token}" /> <input type="hidden" name="psid"
+						value="$('#copy_btn_clipboard').text()" /> <input type="hidden"
+						name="pquantity" value="$('#ordQty').attr('value')" />
+					<button type="button" class="hs_btm_btn black"
+						id="insertcartbutton"
+						onclick="location.href='javascript:doDisplay();' ">쇼핑백 담기</button>
+					<button type="button" class="hs_btm_btn pink trigger direct"
+						id="directOrder">바로주문</button>
 				</div>
 				<!--// 하단 플로팅 -->
 				<script type="text/javascript">
@@ -2227,7 +2255,7 @@ $(document).ready(function(){
 		<!--// 상품평 -->
 
 		<!-- 상품평 쓰기 -->
-		<form id="reviewForm" name="reviewForm" method="post"
+		<form id="reviewForm" name="reviewForm" method="post" action="/product/review"
 			enctype="multipart/form-data">
 			<input type="hidden" name="CSRFToken" id="CSRFToken"
 				value="94278b4f-e661-459b-bb38-836dc720a030"> <input
@@ -2239,7 +2267,7 @@ $(document).ready(function(){
 			<input type="hidden" name="purchaseColorName" id="purchaseColorName"
 				value=""> <input type="hidden" name="purchaseSize"
 				id="purchaseSize" value=""> <input type="hidden"
-				name="orderWriteChk" id="orderWriteChk" value=""> <input
+				name="orderWriteChk" id="orderWriteChk" value="Y"> <input
 				type="hidden" name="purchaseProdYN" id="purchaseProdYN" value="">
 			<!-- 상품평활성화 -->
 			<input type="hidden" name="categoryCode" id="categoryCode"
@@ -2264,15 +2292,16 @@ $(document).ready(function(){
 						</div>
 						<div class="hs_product_selected_item">
 							<div class="img">
-								<img
-									src="http://newmedia.thehandsome.com/IL/2C/FW/IL2C9TTO870N_BK_S01.jpg"
+								<img th:each="list : ${productVO.pcVO}"
+									th:if="${list.pcid == pcid}" th:src="${list.pcimg1}"
 									onerror="this.src='/_ui/handsomemobile/images/common/no_img.jpg'"
 									alt="">
 							</div>
 							<div class="cont">
-								<p class="brand">LÄTT</p>
-								<p class="name">울 블렌드 하이넥 탑</p>
-								<p class="price">₩145,000</p>
+								<p class="brand" th:text="${productVO.bname}">LÄTT</p>
+								<p class="name" th:text="${productVO.pname}">울 블렌드 하이넥 탑</p>
+								<p class="price"
+									th:text="'₩'+${#numbers.formatInteger(productVO.pcVO[0].pcprice, 0, 'COMMA')}">₩145,000</p>
 								<p class="opt" id="productOption" style="display: none;"></p>
 								<div class="select_group arr1908" id="productOptions"
 									style="display: none;">
@@ -2362,7 +2391,8 @@ $(document).ready(function(){
 								</p>
 								<div class="cont">
 									<div
-										class="rd_box_radio_wrap scroll age swiper-container swiper-container-horizontal swiper-container-free-mode swiper-container-ios swiper-container-wp8-horizontal">
+										class="rd_box_radio_wrap scroll age swiper-container swiper-container-horizontal swiper-container-free-mode swiper-container-ios swiper-container-wp8-horizontal"
+										style="height: 35px;">
 										<ul class="rd_box_radio_list swiper-wrapper"
 											style="transform: translate3d(0px, 0px, 0px);">
 											<li class="swiper-slide rd_box_radio swiper-slide-active"
@@ -2556,7 +2586,7 @@ $(document).ready(function(){
 								<div class="cont"></div></li>
 							<li class="lists block"><label for="" class="title">사진등록<!-- 사진등록 --></label>
 								<div class="cont">
-									<div
+									<div style="height: 103px"
 										class="attachment_list1901 atchl2003 swiper-container swiper-container-horizontal swiper-container-free-mode swiper-container-ios swiper-container-wp8-horizontal">
 										<ul class="swiper-wrapper">
 											<li class="swiper-slide swiper-slide-active"
@@ -2629,13 +2659,12 @@ $(document).ready(function(){
 						</ul>
 						<div class="hs_pop_btn_wrap mt_case">
 							<button type="button" class="hs_white_comm_btn"
-								onclick="GA_Event('상품평 작성하기', '상하단 버튼', '취소');">
+								onclick="reviewClose()">
 								취소
 								<!-- 취소 -->
 							</button>
 							<button id="registerCustomerReviewBtn" type="button"
-								class="hs_black_comm_btn"
-								onclick="GA_Event('상품평 작성하기', '상하단 버튼', '등록');">
+								class="hs_black_comm_btn">
 								등록
 								<!-- 등록 -->
 							</button>
@@ -2643,11 +2672,874 @@ $(document).ready(function(){
 					</div>
 				</div>
 				<a href="#" class="pop-comm-cls write_review1907_close"
-					onclick="reviewWriteClose();GA_Event('상품평 작성하기', '상하단 버튼', '닫기');">닫기<!-- 닫기 --></a>
+					onclick="reviewClose()">닫기<!-- 닫기 --></a>
 			</div>
 		</form>
+		
+		
+		<div class="hsome_layer_popup product_comment_pop"
+			style="z-index: 1000;">
+			<h2 class="pop-comm-ttl">
+				상품평
+				<!-- 상품평 -->
+			</h2>
+			<div class="pop-comm-cnts">
+				<div id="reviewDetail" class="hs_prd_review_cont">
+					<div class="pro">
+						<div class="img_wrap">
+							<span class="img"><img
+								src="/_ui/handsomemobile/images/content/no_pro_img.png" alt=""></span>
+						</div>
+						<div class="txt">
+							<p class="name">pin******</p>
+							<p class="grade">STAR</p>
+							<p class="data">2023-02-11</p>
+						</div>
+					</div>
+					<div class="hs_star_score">
+						<i class="on">1점</i> <i class="on">2점</i> <i class="on">3점</i> <i
+							class="on">4점</i> <i class="on">5점</i>
+					</div>
+					<div class="info">
+						<ul class="info_list choice">
+							<li>168cm / 보통 / 평소 사이즈 : 55</li>
+							<br>
+						</ul>
+						<ul class="info_list must">
+							<li>구매 정보 : OFF WHITE / 82 / <span>더한섬닷컴</span></li>
+						</ul>
+					</div>
+					<div class="review">
+						<xmp class="txt">두 색상 다 매력이 있었는데, 고민하다 얼굴이 좀더 화사해보이는 흰색으로
+						들였어요. 티셔츠가 이렇게 비쌀 일인가 싶지만 막상 보면 명품(?)브랜드 티셔츠에서도 쉽게 보기 어려운 디테일, 귀여움
+						장착한 이런 아이는 또 만나기 어렵다보니..매년 캐릭터티를 구입하게 되네요. ^^</xmp>
+					</div>
+					<div class="check_cont check_cont_1905">
+						<div class="check_area">
+							<p class="top_txt">실 착용 사이즈 느낌</p>
+							<div class="check_cont_detail_wrap">
+								<div class="check_cont_detail">
+									<p class="left_txt">어깨너비</p>
+									<div class="check">
+										<span class="items">타이트함</span> <span class="items on">적당함</span>
+										<span class="items">여유있음</span>
+									</div>
+								</div>
+								<div class="check_cont_detail">
+									<p class="left_txt">가슴둘레</p>
+									<div class="check">
+										<span class="items">타이트함</span> <span class="items on">적당함</span>
+										<span class="items">여유있음</span>
+									</div>
+								</div>
+								<div class="check_cont_detail">
+									<p class="left_txt">총길이</p>
+									<div class="check">
+										<span class="items">짧은 편</span> <span class="items on">적당함</span>
+										<span class="items">긴 편</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="check_area">
+							<p class="top_txt">실 제품 색상 느낌</p>
+							<div class="check en1909">
+								<span class="items">어두워요</span> <span class="items on">화면과
+									같아요</span> <span class="items">밝아요</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 
-		<!-- Google Tag Manager (noscript) -->
+			<a href="#" class="pop-comm-cls">닫기<!-- 닫기 --></a>
+		</div>
+		<script>
+var scrollAgeSwiper = new Swiper('.product_comment_write_pop1905 .rd_box_radio_wrap.age.swiper-container', {//연령 Swiper
+    slidesPerView: 'auto',
+    freeMode: true,
+    spaceBetween: 4
+});
+
+var fileAttachSlide2003 = new Swiper('.attachment_list1901.swiper-container', {
+    freeMode: true ,
+    loop: false,
+    slidesPerView: 3.5,
+    spaceBetween: 8
+});
+
+$('.hsome_layer_popup.product_comment_write_pop1905 .hs_star_score .btn .full').on('click', function() {
+    $('#rating').val($(this).attr('data-value'));
+
+    setFullStarState(this);
+});
+
+function setFullStarState(target) {
+    $(target).addClass('star-colour');
+    $(target).parent().addClass('animate');
+    //$(target).siblings('.half').addClass('star-colour');
+
+    updateStarState(target);
+}
+function updateStarState(target) {
+    $(target).parent().prevAll().addClass('animate');
+    $(target).parent().prevAll().children().addClass('star-colour');
+
+    $(target).parent().nextAll().removeClass('animate');
+    $(target).parent().nextAll().children().removeClass('star-colour');
+};
+
+$('#registerCustomerReviewBtn').on('click', function() {//등록
+    $("#registerCustomerReviewBtn").attr('disabled', true); 
+    var checked = checkingValidation();
+    if ( checked ) {
+        //이미지있을경우
+        if ($(".attachment_list1901 .file_input").find('img').length > 0 && "ko" == "ko") {
+            if (Number(ko_time) < 20210901000000) {
+                if(!blockDoubleRegistry){
+                    blockDoubleRegistry = true;
+                    styleLiveRegistry = false;
+                    submitReviewForm();
+                    GA_Event('상품평 작성하기', '상품평 팝업', '포토상품평만 등록');
+                }
+            }  else if("MEMBER_UNION" == "MEMBER_EASY") {
+                if(!blockDoubleRegistry){
+                    blockDoubleRegistry = true;
+                    styleLiveRegistry = false;
+                    submitReviewForm();
+                    GA_Event('상품평 작성하기', '상품평 팝업', '포토상품평만 등록');
+                }
+            } else {
+                var lc = new layerConfirm('포토상품평이 등록 되었습니다. </br> <b>[스타일라이브]</b>에도 등록하겠습니까?','스타일라이브 등록','포토상품평만 등록');
+                lc.cancleAction = function() {//포토상품평 등록 호출 펑션
+                    if(!blockDoubleRegistry){
+                        blockDoubleRegistry = true;
+                        styleLiveRegistry = false;
+                        submitReviewForm();
+                        GA_Event('상품평 작성하기', '상품평 팝업', '포토상품평만 등록');
+                    }
+                };
+                lc.confirmAction= function() {//스타일라이브로 호출 펑션
+                    if(!blockDoubleRegistry){
+                        blockDoubleRegistry = true;
+                        styleLiveRegistry = true;
+                        submitReviewForm();
+                        GA_Event('상품평 작성하기', '상품평 팝업', '스타일라이브 등록');
+                    }
+                };				  
+            }
+            
+            //스타일라이브 관련 X 마크 삭제 20.06.10
+            $(".dvp_container #confirmCloseDiv").hide();
+            $("#registerCustomerReviewBtn").attr('disabled', false);
+        }else{
+            var lc = new layerConfirm('등록하시겠습니까?','확인','취소');
+            lc.cancleAction = function() {//취소 호출 펑션
+                $("#registerCustomerReviewBtn").attr('disabled', false);
+                blockDoubleRegistry = false;
+                return;
+            };
+            lc.confirmAction= function() {//확인 호출 펑션
+                if(!blockDoubleRegistry){
+                    blockDoubleRegistry = true;
+                    submitReviewForm();
+                }
+            };    
+        }
+        $("#confirmCloseDiv").click(function () {
+            $("#registerCustomerReviewBtn").attr('disabled', false);
+            GA_Event('상품평 작성하기', '상품평 팝업', '닫기');
+        });
+    } else {
+        $("#registerCustomerReviewBtn").attr('disabled', false);
+    }
+});
+function checkingValidation() {
+	var inputNumberchk = /^[0-9]+$/; // 숫자 체크
+	var inputHangulchk = /[^ㄱ-ㅎ|ㅏ-ㅣ]+$/; // 초성(자음/모음) 체크
+		
+	if ( $("#height").val() == null || $.trim($("#height").val()) == '' ) {
+        $("#labelHeight").css("color", "#ff0000");
+        $("#labelHeight").css("font-weight","normal");
+        var la = new layerAlert('키를 입력해주세요.');
+            setTimeout(function(){
+                $("#labelHeight").offset().top;
+                focusMove("labelHeight");
+                $("#labelHeight").focus();
+            }, 20);
+        return false;
+    }
+    
+    if ( $('input[name=bodyType]:checked').length < 1 ) {
+        $("#labelBodyType").css("color", "#ff0000");
+        $("#labelBodyType").css("font-weight","normal");
+        focusMove("labelBodyType");
+        $("#bodyType01").focus();
+        alert('체형을 선택해주세요.');
+        
+        $('input[name=bodyType]').on('click', function() {
+            $("#labelBodyType").css("color", "black");
+            $("#labelBodyType").css("font-weight","normal");
+        });
+        return false;
+    }
+
+    if ( $("#enjoySize").val() == null || $.trim($("#enjoySize").val()) == '' ) {
+        $("#labelEnjoySize").css("color", "#ff0000");
+        $("#labelEnjoySize").css("font-weight","normal");
+        alert('평소 사이즈를 입력해주세요.');
+            setTimeout(function(){
+                $("#labelEnjoySize").offset().top;
+                focusMove("labelEnjoySize");
+                $("#labelEnjoySize").focus();
+            }, 20);
+        return false;
+    }
+	
+	    if($("#height").val() != null && $("#height").val().length > 0){
+	        var height = $("#height").val();
+	        for(i=0; i<height.length; i++){
+	            var str = height.substr(i,1);
+	            if (!inputNumberchk.test(str)){
+	                alert('키는 숫자로 입력해주세요.');
+	                return false;
+	            }
+	        }
+	    }
+	    
+	    if($("#enjoySize").val() != null && $("#enjoySize").val().length > 0){
+	        $("#enjoySize").val($("#enjoySize").val().trim());
+	        var enjoySize = $("#enjoySize").val();
+	        for(i=0; i<enjoySize.length; i++){
+	            var str = enjoySize.substr(i,1);
+	            if (!inputHangulchk.test(str)){
+	                alert('사이즈는 숫자, 영문, 한글로 정확하게 입력해주세요.');
+	                    $("#enjoySize").focus();
+	                return false;
+	            }
+	        }
+	    }
+	    if( $("input[name=realWearSize1]:checked").length < 1 ) {
+	       alert('실 착용 사이즈를 선택해주세요.');
+	        $(".hs_star_score_wrap").next().find("li:eq(0) > p").css("color", "#ff0000");
+	        $(".hs_star_score_wrap").next().find("li:eq(0) > p").css("font-weight","bold");
+	        
+	        $("input[name=realWearSize1]").click(function() {
+	            $(".hs_star_score_wrap").next().find("li:eq(0) > p").css("color", "black");
+	            $(".hs_star_score_wrap").next().find("li:eq(0) > p").css("font-weight","normal");
+	        });
+	        $('#realWearSize1_01').focus();
+	        focusMove("realWearSize1_01");
+	        return;
+	    }
+	    if( $("input[name=realWearSize2]:checked").length < 1 ) {
+	        alert('실 착용 사이즈를 선택해주세요.');
+	        $(".hs_star_score_wrap").next().find("li:eq(0) > p").css("color", "#ff0000");
+	        $(".hs_star_score_wrap").next().find("li:eq(0) > p").css("font-weight","bold");
+	        
+	        $("input[name=realWearSize2]").click(function() {
+	            $(".hs_star_score_wrap").next().find("li:eq(0) > p").css("color", "black");
+	            $(".hs_star_score_wrap").next().find("li:eq(0) > p").css("font-weight","normal");
+	        });
+	        $('#realWearSize2_01').focus();
+	        focusMove("realWearSize2_01");
+	        return;
+	    }
+	    if( $("input[name=realWearSize3]:checked").length < 1 ) {
+	        alert('실 착용 사이즈를 선택해주세요.');
+	        $(".hs_star_score_wrap").next().find("li:eq(0) > p").css("color", "#ff0000");
+	        $(".hs_star_score_wrap").next().find("li:eq(0) > p").css("font-weight","bold");
+	        
+	        $("input[name=realWearSize3]").click(function() {
+	            $(".hs_star_score_wrap").next().find("li:eq(0) > p").css("color", "black");
+	            $(".hs_star_score_wrap").next().find("li:eq(0) > p").css("font-weight","normal");
+	        });
+	        $('#realWearSize3_01').focus();
+	        focusMove("realWearSize3_01");
+	        return;
+	    }
+	    if( $("input[name=realProductColor]:checked").length < 1 ){
+	        alert('실 제품 색상을 선택해주세요.');
+	        $(".hs_star_score_wrap").next().find("li:eq(0)").next().find("> p").css("color", "#ff0000");
+	        $(".hs_star_score_wrap").next().find("li:eq(0)").next().find("> p").css("font-weight","bold");
+	        
+	        $("input[name=realProductColor]").click(function(){
+	            $(".hs_star_score_wrap").next().find("li:eq(0)").next().find("> p").css("color", "black");
+	            $(".hs_star_score_wrap").next().find("li:eq(0)").next().find("> p").css("font-weight","normal");
+	        });
+	        $('#realProductColor01').focus();
+	        focusMove("realProductColor01");
+	        return;
+	    }
+	    if ($('#headline').val().length == 0) {
+	         alert('내용을 입력해주세요.');
+	        $("#headlinelabel").css("color", "#ff0000");
+	        $("#headlinelabel").css("font-weight","normal");
+	        $("#headline").focus();
+	        $("#headline").blur();
+	        return;
+	    }
+	    
+	    if ($('#headline').val().length < 20) {
+	        alert('상품평 내용은 20~200자 사이입니다.');
+	        $("#headlinelabel").css("color", "#ff0000");
+	        $("#headlinelabel").css("font-weight","normal");
+	        $("#headline").focus();
+	        $("#headline").blur();
+	        return;
+	    }
+}
+
+$('form[name=reviewForm] input[type=file]').on('change', function() {
+    var file = null;
+    var maxSize = 10 * 1024 * 1024;
+    var fileName = '';
+    var fileSize = 0;
+    
+        fileName = $(this)[0].files[0].name;
+        //fileSize = ($("#reviewFile")[0].files[0].size / 1024);
+        fileSize = ($(this)[0].files[0].size);
+
+    if ( fileName.substring(fileName.indexOf('.')+1).toUpperCase() !== 'JPG' && fileName.substring(fileName.indexOf('.')+1).toUpperCase() !== 'JPEG' && fileName.substring(fileName.indexOf('.')+1).toUpperCase() !== 'GIF' && fileName.substring(fileName.indexOf('.')+1).toUpperCase() !== 'PNG' ) {
+        $(this).val('');
+        
+       	alert('10MB 미만의 jpg,gif,png 파일만 첨부하실 수 있습니다.');
+        return;
+    } else if ( fileSize > maxSize ) {
+        $(this).val('');
+        
+        alert('10MB 미만의 jpg,gif,png 파일만 첨부하실 수 있습니다.');
+        return;
+    } else {
+         fileAttachLoadImg($(this)); // 유효성 체크 후, 미리보기 이미지 보여줌
+    }
+});
+
+function focusMove(object) {
+var tp = $("#"+object+"").offset().top;
+var moveTp = tp - 300;
+if(moveTp < 0) {
+    moveTp = 0;
+}
+}
+var reviewSwiper = new Swiper('.review_slide.swiper-container', {
+    slidesPerView:'auto',
+    spaceBetween:10
+});
+function removeImg1901(){
+	  $(document).on('click','.remove_img1901',function(){
+	    $(this).prev('.ahm_item').find('.file_input').children('img').remove();
+	    $(this).prev('.ahm_item').find('.file_input').find('input:text').val("");
+	    $(this).prev('.ahm_item').find('.file_input').find('input:file').val("");
+	    $(this).remove();
+	  });
+	}
+
+	function fileAttachSlide2003(){//업로드한 이미지 슬라이드 (스타일라이브 상품평연계)
+	var fileAttachSlide2003 = new Swiper('.attachment_list1901.swiper-container', {
+	    freeMode: true ,
+	    loop: false,
+	    slidesPerView: 3.5,
+	    spaceBetween: 8
+	});
+	}
+	function fileAttachLoadImg(value){
+		  var files = value[0].files[0]; //파일 객체
+		  var reader = new FileReader();
+		  //파일정보 수집
+		  reader.onload = (function(theFile)
+		  {
+		    return function(e)
+		    {
+		        //이미지 뷰
+		        var img_view = ['<img src="', e.target.result, '" title="', escape(theFile.name), '"/>'].join('');
+		        //$('.file_input').eq(2).append(img_view)
+		        $(value).closest('.file_input').append(img_view);
+		    };
+		  })(files);
+		  reader.readAsDataURL(files);
+		  var upload = $(value).val();
+		  var closeBtn = '<a href="javascript:void(0);" class="remove_img1901"></a>';
+		  if($(value).closest('.file_input').find('img').length == 0){
+		      if(upload == ""){
+		        return false
+		      }else{
+		        //$(value).closest('.file_input').append(img_view);
+		        $(value).closest('li').append(closeBtn);
+		      }
+		  }else{
+		      if(upload == ""){
+		        return false
+		      }else{
+		        $(value).closest('.file_input').find('img').remove();
+		        //$(value).closest('.file_input').append(img_view);
+		      }
+		  }
+		}    
+		  $(document).on('click','.remove_img1901',function(){
+		    $(this).prev('.ahm_item').find('.file_input').children('img').remove();
+		    $(this).prev('.ahm_item').find('.file_input').find('input:text').val("");
+		    $(this).prev('.ahm_item').find('.file_input').find('input:file').val("");
+		    $(this).remove();
+		  });
+		  
+		  
+		  $('#reviewLst').on('click', '.hs_prd_review_cont.btn_popup_trigger', function() {//상품상세 상품명 개별 팝업
+		      var reviewDetail = $(this).attr('id');
+		      
+		      var txtDetail = '';
+		      for ( var i=0; i<reviewList.length; i++ ) {
+		          if ( reviewDetail === reviewList[i].id ) {
+		              txtDetail += '<div class="pro">';
+		              var infoLists = [];//infoList용 Array
+		              if ( reviewList[i].profileData != null && reviewList[i].profileData.attachFilePath != null ) {
+		                  txtDetail += '    <div class="img_wrap"><span class="img"><img src="'+reviewList[i].profileData.attachFilePath+'" alt=""></span></div>';
+		              }else{
+		                  txtDetail += '    <div class="img_wrap"><span class="img"><img src="/_ui/handsomemobile/images/content/no_pro_img.png" alt=""></span></div>';
+		              }
+		              txtDetail += '  <div class="txt">';
+		              txtDetail += '    <p class="name">'+reviewList[i].principal.uid+'</p>';
+		              if ( reviewList[i].profileData != null ) {
+		                  if ( reviewList[i].profileData == 'THESTAR') {
+		                      reviewList[i].profileData = 'THE STAR';
+		                  }
+		                  txtDetail += '      	<p class="grade">'+reviewList[i].profileData+'</p>'; <!-- 고객등급 -->
+		              } else {
+		                  //txtDetail += '      	<p class="grade"></p>'; <!-- 고객등급 -->
+		              }
+		              txtDetail += '    <p class="data">'+reviewList[i].displayCreateDate+'</p>';
+		              txtDetail += '  </div>';
+		              txtDetail += '</div>';
+		              if ( 'Y' == 'Y' && reviewList[i].bestYN == true) {
+		                  txtDetail += '  <div class="hs_star_score best_review1905">';
+		              } else {
+		                  txtDetail += '<div class="hs_star_score">';<!-- hs_star_score 180914 위치 수정// -->
+		              }
+		              for ( var j=1; j<6; j++ ) {
+		                  if ( j <= reviewList[i].rating ) {
+		                      txtDetail += '    <i class="on">'+j+'점</i>';
+		                  } else {
+		                      txtDetail += '    <i>'+j+'점</i>';
+		                  }
+		              }
+		              txtDetail += '</div>';
+		              txtDetail += '<div class="info">';
+		              txtDetail += '  <ul class="info_list choice">';
+		              if('top' == 'cosmetic' || 'top' == 'perfume') {
+		                  if ( (reviewList[i].age != null && reviewList[i].age != "") || (reviewList[i].skinType != null && reviewList[i].skinType != "") ) {
+		                      txtDetail += '      <li>';
+		                      if(reviewList[i].age != null && reviewList[i].age !=""){
+		                          infoLists.push(reviewList[i].age);
+		                      }
+		                      if(reviewList[i].skinType !=null && reviewList[i].skinType != ""){
+		                          infoLists.push(reviewList[i].skinType);
+		                      }
+		                      txtDetail += infoLists.join(' / ');//Array 값 구분자
+		                      txtDetail += '</li><br>';
+		                  }
+		              } else {
+		                  if ( (reviewList[i].age != null && reviewList[i].age != "") || (reviewList[i].height != null && reviewList[i].height != "") || (reviewList[i].bodyType != null && reviewList[i].bodyType != "") || (reviewList[i].enjoySize!=null && reviewList[i].enjoySize != "") ) {
+		                      txtDetail += '      <li>';
+		                      if(reviewList[i].age != null && reviewList[i].age !=""){
+		                          infoLists.push(reviewList[i].age);
+		                      }
+		                      if(reviewList[i].height != null && reviewList[i].height !=""){
+		                          infoLists.push(reviewList[i].height+'cm');
+		                      }
+		                      if(reviewList[i].bodyType!=null && reviewList[i].bodyType != ""){
+		                          infoLists.push(reviewList[i].bodyType);
+		                      }
+		                      if(reviewList[i].enjoySize!=null && reviewList[i].enjoySize != "") {
+		                          infoLists.push('평소 사이즈 : '+reviewList[i].enjoySize);
+		                      }
+		                      txtDetail += infoLists.join(' / ');//Array 값 구분자
+		                      txtDetail += '</li><br>';
+		                  }
+		              }
+		              
+		              
+		              txtDetail += '  </ul>';
+		              
+		              txtDetail += '    <ul class="info_list must">';
+		              txtDetail += '      <li>';
+		              if("ko" == "ko") {
+		                  txtDetail += "구매 정보 : ";
+		                  
+		                  if(reviewList[i].purchaseColorName != "" && reviewList[i].purchaseColorName != null){
+		                      txtDetail += reviewList[i].purchaseColorName;
+		                  }
+		                  if(reviewList[i].purchaseSize != "" && reviewList[i].purchaseSize != null && !chkLiquides){
+		                      txtDetail += " / " + reviewList[i].purchaseSize;
+		                  }
+		                  if ( reviewList[i].purchaseProdYN == 'Y' ) {
+		                      if(reviewList[i].prevReviewYn == 'N') {
+		                          txtDetail += " / <span>" + reviewList[i].offlineShpNm + "</span>";
+		                      } else {
+		                          txtDetail += " / <span>오프라인매장</span>";
+		                      }
+		                  } else {
+		                      txtDetail += " / <span>더한섬닷컴</span>";
+		                  }
+		              } else {
+		                  if(reviewList[i].purchaseColorName != "" && reviewList[i].purchaseColorName != null){
+		                      txtDetail += reviewList[i].purchaseColorName;
+		                  }
+		                  if(reviewList[i].purchaseSize != "" && reviewList[i].purchaseSize != null){
+		                      txtDetail += " / " + reviewList[i].purchaseSize;
+		                  }
+		              }
+		              
+		              txtDetail += '</li>';
+		              txtDetail += '    </ul>';
+		              
+		              txtDetail += '</div>';
+		              txtDetail += '<div class="review">';
+		              txtDetail += '  <xmp class="txt">'+decodeText(reviewList[i].headline)+'</xmp>';
+		              if ( reviewList[i].photographCnt > 1 ) {
+		                  //상품평 업로드 이미지 2장이상
+		                  txtDetail += '  <div class="img swiper-container review_img_cont191216">';
+		                  txtDetail += '      <ul class="swiper-wrapper">';	
+		              }
+		              if ( reviewList[i].photograph != null ) {
+		                  if ( reviewList[i].photographCnt > 1 ) {
+		                      //상품평 업로드 이미지 2장이상
+		                      txtDetail += '          <li class="swiper-slide">';	
+		                  } else if ( reviewList[i].photographCnt == 1 ) {
+		                      //상품평 업로드 이미지 1장 일때
+		                      txtDetail += '  <div class="img">';
+		                  }
+		                  txtDetail += '              <img src="'+reviewList[i].photograph.url+'" alt="">';
+		                  if ( reviewList[i].photographCnt > 1 ) {
+		                      //상품평 업로드 이미지 2장이상
+		                      txtDetail += '          </li>';	
+		                  } else if ( reviewList[i].photographCnt == 1 ) {
+		                      txtDetail += '  </div>';
+		                  }
+		              } 
+		              if ( reviewList[i].photograph2 != null ) {
+		                  if ( reviewList[i].photographCnt > 1 ) {
+		                      //상품평 업로드 이미지 2장이상
+		                      txtDetail += '          <li class="swiper-slide">';	
+		                  } else if ( reviewList[i].photographCnt == 1 ) {
+		                      //상품평 업로드 이미지 1장 일때
+		                      txtDetail += '  <div class="img">';
+		                  }
+		                  txtDetail += '              <img src="'+reviewList[i].photograph2.url+'" alt="">';
+		                  if ( reviewList[i].photographCnt > 1 ) {
+		                      //상품평 업로드 이미지 2장이상
+		                      txtDetail += '          </li>';	
+		                  } else if ( reviewList[i].photographCnt == 1 ) {
+		                      txtDetail += '  </div>';
+		                  }	
+		              } 
+		              if ( reviewList[i].photograph3 != null ) {
+		                  if ( reviewList[i].photographCnt > 1 ) {
+		                      //상품평 업로드 이미지 2장이상
+		                      txtDetail += '          <li class="swiper-slide">';	
+		                  } else if ( reviewList[i].photographCnt == 1 ) {
+		                      //상품평 업로드 이미지 1장 일때
+		                      txtDetail += '  <div class="img">';
+		                  }
+		                  txtDetail += '              <img src="'+reviewList[i].photograph3.url+'" alt="">';
+		                  if ( reviewList[i].photographCnt > 1 ) {
+		                      //상품평 업로드 이미지 2장이상
+		                      txtDetail += '          </li>';	
+		                  } else if ( reviewList[i].photographCnt == 1 ) {
+		                      txtDetail += '  </div>';
+		                  }	
+		              } 
+		              if ( reviewList[i].photograph4 != null ) {
+		                  if ( reviewList[i].photographCnt > 1 ) {
+		                      //상품평 업로드 이미지 2장이상
+		                      txtDetail += '          <li class="swiper-slide">';	
+		                  } else if ( reviewList[i].photographCnt == 1 ) {
+		                      //상품평 업로드 이미지 1장 일때
+		                      txtDetail += '  <div class="img">';
+		                  }
+		                  txtDetail += '              <img src="'+reviewList[i].photograph4.url+'" alt="">';
+		                  if ( reviewList[i].photographCnt > 1 ) {
+		                      //상품평 업로드 이미지 2장이상
+		                      txtDetail += '          </li>';	
+		                  } else if ( reviewList[i].photographCnt == 1 ) {
+		                      txtDetail += '  </div>';
+		                  }
+		              } 
+		              if ( reviewList[i].photograph5 != null ) {
+		                  if ( reviewList[i].photographCnt > 1 ) {
+		                      //상품평 업로드 이미지 2장이상
+		                      txtDetail += '          <li class="swiper-slide">';	
+		                  } else if ( reviewList[i].photographCnt == 1 ) {
+		                      //상품평 업로드 이미지 1장 일때
+		                      txtDetail += '  <div class="img">';
+		                  }
+		                  txtDetail += '              <img src="'+reviewList[i].photograph5.url+'" alt="">';
+		                  if ( reviewList[i].photographCnt > 1 ) {
+		                      //상품평 업로드 이미지 2장이상
+		                      txtDetail += '          </li>';	
+		                  } else if ( reviewList[i].photographCnt == 1 ) {
+		                      txtDetail += '  </div>';
+		                  }
+		              }
+		              
+		              if ( reviewList[i].photographCnt > 1 ) {
+		                  txtDetail += '          </li>';
+		                  txtDetail += '      </ul>';	
+		                  txtDetail += '      <div class="swiper-pagination"></div>';
+		                  txtDetail += '  </div>';	
+		              }
+		              txtDetail += '</div>';
+		              if ( 'Y' == 'Y' ) {
+		                  if ( 'Y' == reviewList[i].prevReviewYn ) {
+		                      txtDetail += '<div class="check_cont">';
+		                      txtDetail += '  <div class="check_area">';
+		                      txtDetail += '    <p class="top_txt">실 착용 사이즈 느낌<!--실 착용 사이즈 느낌--></p>';
+		                      txtDetail += '    <div class="check">';
+		                      if ( reviewList[i].realWearSize === 1 ) {
+		                          txtDetail += '      <span class="items on">작다<!--작다--></span>';
+		                      } else {
+		                          txtDetail += '      <span class="items">작다<!--작다--></span>';
+		                      }
+		                      if ( reviewList[i].realWearSize === 2 ) {
+		                          txtDetail += '      <span class="items on">예상했던 사이즈<!--예상했던 사이즈--></span>';
+		                      } else {
+		                          txtDetail += '      <span class="items">예상했던 사이즈<!--예상했던 사이즈--></span>';
+		                      }
+		                      if ( reviewList[i].realWearSize === 3 ) {
+		                          txtDetail += '      <span class="items on">크다<!--크다--></span>';
+		                      } else {
+		                          txtDetail += '      <span class="items">크다<!--크다--></span>';
+		                      }
+		                      txtDetail += '    </div>';
+		                      txtDetail += '  </div>';
+		                      txtDetail += '  <div class="check_area">';
+		                      txtDetail += '    <p class="top_txt">실 제품 색상 느낌<!--실 제품 색상 느낌--></p>';
+		                      txtDetail += '    <div class="check">';
+		                      if ( reviewList[i].realProductColor === 1 ) {
+		                          txtDetail += '      <span class="items on">어둡다<!--어둡다--></span>';
+		                      } else {
+		                          txtDetail += '      <span class="items">어둡다<!--어둡다--></span>';
+		                      }
+		                      if ( reviewList[i].realProductColor === 2 ) {
+		                          txtDetail += '      <span class="items on">화면과 같다<!--화면과 같다--></span>';
+		                      } else {
+		                          txtDetail += '      <span class="items">화면과 같다<!--화면과 같다--></span>';
+		                      }
+		                      if ( reviewList[i].realProductColor === 3 ) {
+		                          txtDetail += '      <span class="items on">밝다<!--밝다--></span>';
+		                      } else {
+		                          txtDetail += '      <span class="items">밝다<!--밝다--></span>';
+		                      }
+		                      txtDetail += '    </div>';
+		                      txtDetail += '  </div>';
+		                      txtDetail += '</div>';
+		                  } else {
+		                      if ( 'top' == 'cosmetic' ) {
+		                          if(reviewList[i].moisturize != null && reviewList[i].spreadability != null && reviewList[i].scent != null) {
+		                              txtDetail += '<div class="check_cont check_cont_1905 check_cont_beauty">';
+		                              txtDetail += '    <div class="check_area">';
+		                              txtDetail += '        <div class="check_cont_detail_wrap">';
+		                              txtDetail += '            <div class="check_cont_detail">';
+		                              txtDetail += '                <p class="left_txt">보습력</p>';
+		                              txtDetail += '                <div class="check">';
+		                              txtDetail += '                    <span class="items' + (reviewList[i].moisturize === '1' ? ' on' : '') +'">조금 건조해요</span>';
+		                              txtDetail += '                    <span class="items' + (reviewList[i].moisturize === '2' ? ' on' : '') +'">보통이에요</span>';
+		                              txtDetail += '                    <span class="items' + (reviewList[i].moisturize === '3' ? ' on' : '') +'">촉촉해요</span>';
+		                              txtDetail += '                </div>';
+		                              txtDetail += '            </div>';
+		                              txtDetail += '            <div class="check_cont_detail">';
+		                              txtDetail += '                <p class="left_txt">발림성</p>';
+		                              txtDetail += '                <div class="check">';
+		                              txtDetail += '                    <span class="items' + (reviewList[i].spreadability === '1' ? ' on' : '') +'">조금 뻑뻑해요</span>';
+		                              txtDetail += '                    <span class="items' + (reviewList[i].spreadability === '2' ? ' on' : '') +'">보통이에요</span>';
+		                              txtDetail += '                    <span class="items' + (reviewList[i].spreadability === '3' ? ' on' : '') +'">부드러워요</span>';
+		                              txtDetail += '                </div>';
+		                              txtDetail += '            </div>';
+		                              txtDetail += '            <div class="check_cont_detail">';
+		                              txtDetail += '                <p class="left_txt">향</p>';
+		                              txtDetail += '                <div class="check">';
+		                              txtDetail += '                    <span class="items' + (reviewList[i].scent === '1' ? ' on' : '') +'">조금 아쉬워요</span>';
+		                              txtDetail += '                    <span class="items' + (reviewList[i].scent === '2' ? ' on' : '') +'">보통이에요</span>';
+		                              txtDetail += '                    <span class="items' + (reviewList[i].scent === '3' ? ' on' : '') +'">좋아요</span>';
+		                              txtDetail += '                </div>';
+		                              txtDetail += '            </div>';
+		                              txtDetail += '        </div>';
+		                              txtDetail += '    </div>';
+		                              txtDetail += '</div>';
+		                          }
+		                      }
+		                      if ( 'top' == 'perfume' ) {
+		                          if(reviewList[i].scent != null && reviewList[i].persistence != null) {
+		                              txtDetail += '<div class="check_cont check_cont_1905 check_cont_beauty">';
+		                              txtDetail += '    <div class="check_area">';
+		                              txtDetail += '        <div class="check_cont_detail_wrap">';
+		                              txtDetail += '            <div class="check_cont_detail">';
+		                              txtDetail += '                <p class="left_txt">향</p>';
+		                              txtDetail += '                <div class="check">';
+		                              txtDetail += '                    <span class="items' + (reviewList[i].scent === '1' ? ' on' : '') +'">조금 아쉬워요</span>';
+		                              txtDetail += '                    <span class="items' + (reviewList[i].scent === '2' ? ' on' : '') +'">보통이에요</span>';
+		                              txtDetail += '                    <span class="items' + (reviewList[i].scent === '3' ? ' on' : '') +'">좋아요</span>';
+		                              txtDetail += '                </div>';
+		                              txtDetail += '            </div>';
+		                              txtDetail += '            <div class="check_cont_detail">';
+		                              txtDetail += '                <p class="left_txt">지속성</p>';
+		                              txtDetail += '                <div class="check">';
+		                              txtDetail += '                    <span class="items' + (reviewList[i].persistence === '1' ? ' on' : '') +'">조금 짧아요</span>';
+		                              txtDetail += '                    <span class="items' + (reviewList[i].persistence === '2' ? ' on' : '') +'">보통이에요</span>';
+		                              txtDetail += '                    <span class="items' + (reviewList[i].persistence === '3' ? ' on' : '') +'">오래 유지돼요</span>';
+		                              txtDetail += '                </div>';
+		                              txtDetail += '            </div>';
+		                              txtDetail += '        </div>';
+		                              txtDetail += '    </div>';
+		                              txtDetail += '</div>';
+		                          }
+		                      }
+		                      if ( 'top' == 'top' ) {
+		                          txtDetail += '<div class="check_cont check_cont_1905">';
+		                          txtDetail += '    <div class="check_area">';
+		                          txtDetail += '        <p class="top_txt">실 착용 사이즈 느낌</p>';
+		                          txtDetail += '        <div class="check_cont_detail_wrap">';
+		                          txtDetail += '            <div class="check_cont_detail">';
+		                          txtDetail += '                <p class="left_txt">어깨너비</p>';
+		                          txtDetail += '                <div class="check">';
+		                          txtDetail += '                    <span class="items' + (reviewList[i].shoulderWidth === 1 ? ' on' : '') +'">타이트함</span>';
+		                          txtDetail += '                    <span class="items' + (reviewList[i].shoulderWidth === 2 ? ' on' : '') +'">적당함</span>';
+		                          txtDetail += '                    <span class="items' + (reviewList[i].shoulderWidth === 3 ? ' on' : '') +'">여유있음</span>';
+		                          txtDetail += '                </div>';
+		                          txtDetail += '            </div>';
+		                          txtDetail += '            <div class="check_cont_detail">';
+		                          txtDetail += '                <p class="left_txt">가슴둘레</p>';
+		                          txtDetail += '                <div class="check">';
+		                          txtDetail += '                    <span class="items' + (reviewList[i].chestSize === 1 ? ' on' : '') +'">타이트함</span>';
+		                          txtDetail += '                    <span class="items' + (reviewList[i].chestSize === 2 ? ' on' : '') +'">적당함</span>';
+		                          txtDetail += '                    <span class="items' + (reviewList[i].chestSize === 3 ? ' on' : '') +'">여유있음</span>';
+		                          txtDetail += '                </div>';
+		                          txtDetail += '            </div>';
+		                          txtDetail += '            <div class="check_cont_detail">';
+		                          txtDetail += '                <p class="left_txt">총길이</p>';
+		                          txtDetail += '                <div class="check">';
+		                          txtDetail += '                    <span class="items' + (reviewList[i].totalSize === 1 ? ' on' : '') +'">짧은 편</span>';
+		                          txtDetail += '                    <span class="items' + (reviewList[i].totalSize === 2 ? ' on' : '') +'">적당함</span>';
+		                          txtDetail += '                    <span class="items' + (reviewList[i].totalSize === 3 ? ' on' : '') +'">긴 편</span>';
+		                          txtDetail += '                </div>';
+		                          txtDetail += '            </div>';
+		                          txtDetail += '        </div>';
+		                          txtDetail += '    </div>';
+		                          txtDetail += '    <div class="check_area">';
+		                          txtDetail += '        <p class="top_txt">실 제품 색상 느낌</p>';
+		                          txtDetail += '        <div class="check en1909">';
+		                          txtDetail += '            <span class="items' + (reviewList[i].realProductColor === 1 ? ' on' : '') +'">어두워요</span>';
+		                          txtDetail += '            <span class="items' + (reviewList[i].realProductColor === 2 ? ' on' : '') +'">화면과 같아요</span>';
+		                          txtDetail += '            <span class="items' + (reviewList[i].realProductColor === 3 ? ' on' : '') +'">밝아요</span>';
+		                          txtDetail += '        </div>';
+		                          txtDetail += '    </div>';
+		                          txtDetail += '</div>';
+		                      }
+		                      if ( 'top' == 'bottoms' ) {
+		                          txtDetail += '<div class="check_cont check_cont_1905">';
+		                          txtDetail += '    <div class="check_area">';
+		                          txtDetail += '        <p class="top_txt">실 착용 사이즈 느낌</p>';
+		                          txtDetail += '        <div class="check_cont_detail_wrap">';
+		                          txtDetail += '            <div class="check_cont_detail">';
+		                          txtDetail += '                <p class="left_txt">허리둘레</p>';
+		                          txtDetail += '                <div class="check">';
+		                          txtDetail += '                    <span class="items' + (reviewList[i].waistSize === 1 ? ' on' : '') +'">타이트함</span>';
+		                          txtDetail += '                    <span class="items' + (reviewList[i].waistSize === 2 ? ' on' : '') +'">적당함</span>';
+		                          txtDetail += '                    <span class="items' + (reviewList[i].waistSize === 3 ? ' on' : '') +'">여유있음</span>';
+		                          txtDetail += '                </div>';
+		                          txtDetail += '            </div>';
+		                          txtDetail += '            <div class="check_cont_detail">';
+		                          txtDetail += '                <p class="left_txt">엉덩이둘레</p>';
+		                          txtDetail += '                <div class="check">';
+		                          txtDetail += '                    <span class="items' + (reviewList[i].buttSize === 1 ? ' on' : '') +'">타이트함</span>';
+		                          txtDetail += '                    <span class="items' + (reviewList[i].buttSize === 2 ? ' on' : '') +'">적당함</span>';
+		                          txtDetail += '                    <span class="items' + (reviewList[i].buttSize === 3 ? ' on' : '') +'">여유있음</span>';
+		                          txtDetail += '                </div>';
+		                          txtDetail += '            </div>';
+		                          txtDetail += '            <div class="check_cont_detail">';
+		                          txtDetail += '                <p class="left_txt">총길이</p>';
+		                          txtDetail += '                <div class="check">';
+		                          txtDetail += '                    <span class="items' + (reviewList[i].totalSize === 1 ? ' on' : '') +'">짧은 편</span>';
+		                          txtDetail += '                    <span class="items' + (reviewList[i].totalSize === 2 ? ' on' : '') +'">적당함</span>';
+		                          txtDetail += '                    <span class="items' + (reviewList[i].totalSize === 3 ? ' on' : '') +'">긴 편</span>';
+		                          txtDetail += '                </div>';
+		                          txtDetail += '            </div>';
+		                          txtDetail += '        </div>';
+		                          txtDetail += '    </div>';
+		                          txtDetail += '    <div class="check_area">';
+		                          txtDetail += '        <p class="top_txt">실 제품 색상 느낌</p>';
+		                          txtDetail += '        <div class="check en1909">';
+		                          txtDetail += '            <span class="items' + (reviewList[i].realProductColor === 1 ? ' on' : '') +'">어두워요</span>';
+		                          txtDetail += '            <span class="items' + (reviewList[i].realProductColor === 2 ? ' on' : '') +'">화면과 같아요</span>';
+		                          txtDetail += '            <span class="items' + (reviewList[i].realProductColor === 3 ? ' on' : '') +'">밝아요</span>';
+		                          txtDetail += '        </div>';
+		                          txtDetail += '    </div>';
+		                          txtDetail += '</div>';
+		                      }
+		                  }
+		              } else {
+		                  txtDetail += '<div class="check_cont">';
+		                  txtDetail += '  <div class="check_area">';
+		                  txtDetail += '    <p class="top_txt">실 착용 사이즈 느낌<!--실 착용 사이즈 느낌--></p>';
+		                  txtDetail += '    <div class="check">';
+		                  if ( reviewList[i].realWearSize === 1 ) {
+		                      txtDetail += '      <span class="items on">작다<!--작다--></span>';
+		                  } else {
+		                      txtDetail += '      <span class="items">작다<!--작다--></span>';
+		                  }
+		                  if ( reviewList[i].realWearSize === 2 ) {
+		                      txtDetail += '      <span class="items on">예상했던 사이즈<!--예상했던 사이즈--></span>';
+		                  } else {
+		                      txtDetail += '      <span class="items">예상했던 사이즈<!--예상했던 사이즈--></span>';
+		                  }
+		                  if ( reviewList[i].realWearSize === 3 ) {
+		                      txtDetail += '      <span class="items on">크다<!--크다--></span>';
+		                  } else {
+		                      txtDetail += '      <span class="items">크다<!--크다--></span>';
+		                  }
+		                  txtDetail += '    </div>';
+		                  txtDetail += '  </div>';
+		                  txtDetail += '  <div class="check_area">';
+		                  txtDetail += '    <p class="top_txt">실 제품 색상 느낌<!--실 제품 색상 느낌--></p>';
+		                  txtDetail += '    <div class="check">';
+		                  if ( reviewList[i].realProductColor === 1 ) {
+		                      txtDetail += '      <span class="items on">어둡다<!--어둡다--></span>';
+		                  } else {
+		                      txtDetail += '      <span class="items">어둡다<!--어둡다--></span>';
+		                  }
+		                  if ( reviewList[i].realProductColor === 2 ) {
+		                      txtDetail += '      <span class="items on">화면과 같다<!--화면과 같다--></span>';
+		                  } else {
+		                      txtDetail += '      <span class="items">화면과 같다<!--화면과 같다--></span>';
+		                  }
+		                  if ( reviewList[i].realProductColor === 3 ) {
+		                      txtDetail += '      <span class="items on">밝다<!--밝다--></span>';
+		                  } else {
+		                      txtDetail += '      <span class="items">밝다<!--밝다--></span>';
+		                  }
+		                  txtDetail += '    </div>';
+		                  txtDetail += '  </div>';
+		                  txtDetail += '</div>';
+		              }
+		          }
+		      }
+		      $('#reviewDetail').html(txtDetail);
+		      
+		      var reviewImgSwiper_2 = {};
+		      
+		      if($('.product_comment_pop').find('.review_img_cont191216').find('ul').children('li').length > 1){
+		          if(!$('.product_comment_pop').find('.review_img_cont191216').find('.swiper-pagination').hasClass('swiper-pagination-bullets')){
+		              setTimeout(function(){
+		              reviewImg191218();
+		              },500);
+		          }else{
+		              reviewImgSwiper_2 = document.querySelector('.product_comment_pop .hs_prd_review_cont .review_img_cont191216').swiper;
+		              reviewImgSwiper_2.slideTo(0,0);
+		          }
+		      }
+		  });
+
+</script>
+	<div class="divpop_wrap_dev pop_mbr pop_alert_confirm" id="popAlertConfirmDiv" style="left: 0px; position: fixed; top: 101px; z-index: 9999; opacity: 0; display: none;"></div>	<!-- Google Tag Manager (noscript) -->
 </body>
 <!-- This script is for AceCounter START -->
 </html>
