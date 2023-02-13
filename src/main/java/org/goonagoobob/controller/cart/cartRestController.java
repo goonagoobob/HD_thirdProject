@@ -1,3 +1,13 @@
+/* *********************************
+ * @function : CartRestController 
+ * @author : 김주혜
+ * 장바구니 넣기 구현
+ * 선택 상품 삭제 구현
+ * 상품 색상 select 구현
+ * 상품 사이즈 select 구현
+ * 선택 상품 변경 구현
+ * 개별 상품 삭제 구현
+ **********************************/
 package org.goonagoobob.controller.cart;
 
 import java.security.Principal;
@@ -59,7 +69,7 @@ public class cartRestController {
 		return new ResponseEntity<>("s",HttpStatus.OK);
 	}
 	
-	  //psid 상품의 색상 종류 뿌려주기
+	  //상품의 색상 종류 뿌려주기
 	  @PostMapping("/list") 
 	  @ResponseBody
 	  public List<cartcolorVO> cartColor(Principal prin, @RequestParam("psid") String psid, Model model) {
@@ -72,14 +82,13 @@ public class cartRestController {
 		  return cList;
 	  }
 	  
-	  //psid 상품 사이즈 뿌려주기
+	  // 상품 사이즈 뿌려주기
 	  @PostMapping("/slist")
 	  @ResponseBody
-	  public List<cartsizeVO> cartSize(Principal prin, @RequestParam("pcid") String pcid, Model model) {
+	  public List<cartsizeVO> cartSize(@RequestParam("pcid") String pcid, Model model) {
 		  log.info("postsizeList controller");
-		  String mid = prin.getName();
-		  log.info("sizeList" + mid + pcid);
-		  List<cartsizeVO> sList = service.sizeList(mid, pcid);
+		  log.info("sizeList" + pcid);
+		  List<cartsizeVO> sList = service.sizeList(pcid);
 		  model.addAttribute("sList", sList);
 		  return sList;
 		  
@@ -105,6 +114,5 @@ public class cartRestController {
 	  log.info(psid);
 	  service.eachdelete(mid, psid);
   } 
-	 
 	
 }

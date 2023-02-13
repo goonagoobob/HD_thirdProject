@@ -1,10 +1,14 @@
-/*********************************
- * @function : Cart ServiceImpl 
+/* *********************************
+ * @function : CartServiceImpl
  * @author : 김주혜
- * @Date : Feb 6. 2023
- * 카트목록 ServiceImpl 추가 Feb 6. 2023
- * 카트삭제 ServiceImpl 추가 Feb 7. 2023
- *********************************/
+ * 장바구니 목록 조회 구현
+ * 장바구니 넣기 구현
+ * 선택 상품 삭제 구현
+ * 상품 색상 select 구현
+ * 상품 사이즈 select 구현
+ * 선택 상품 변경 구현
+ * 개별 상품 삭제 구현
+ **********************************/
 
 package org.goonagoobob.service.cart;
 
@@ -61,10 +65,10 @@ public class cartServiceImpl implements cartService {
 	}
 	//카트 상품 색상별 사이즈
 	@Override
-	public List<cartsizeVO> sizeList(String mid, String pcid){
+	public List<cartsizeVO> sizeList(String pcid){
 		log.info("sizeList Service...");
 		
-		List<cartsizeVO> sList = mapper.sizeList(mid, pcid);
+		List<cartsizeVO> sList = mapper.sizeList(pcid);
 		return sList;
 	}
 	//카트 옵션 변경

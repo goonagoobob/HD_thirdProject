@@ -1,10 +1,14 @@
-/*********************************
- * @function : Cart Service 
+/* *********************************
+ * @function : CartService
  * @author : 김주혜
- * @Date : Feb 6. 2023
- * 카트목록 service 추가 Feb 6. 2023
- * 카트삭제 service 추가 Feb 7. 2023
- *********************************/
+ * 장바구니 조회 구현
+ * 장바구니 넣기 구현
+ * 선택 상품 삭제 구현
+ * 상품 색상 select 구현
+ * 상품 사이즈 select 구현
+ * 선택 상품 변경 구현
+ * 개별 상품 삭제 구현
+ **********************************/
 
 package org.goonagoobob.service.cart;
 
@@ -17,22 +21,16 @@ import org.goonagoobob.domain.cart.cartsizeVO;
 public interface cartService {
 	//카트 리스트
 	public List<cartVO> getCartList(String mid);
-	
 	//선택 상품 삭제
 	public void selectDelete(String mid, List<String> entryNumber);
-	
 	//장바구니 추가
 	public void cartInsert(String mid, String psid, int pquantity);
-	
 	//색상 select
 	public List<cartcolorVO> colorList(String mid, String psid);
-	
 	//사이즈 select
-	public List<cartsizeVO> sizeList(String mid, String pcid);
-	
+	public List<cartsizeVO> sizeList(String pcid);
 	//옵션 변경
 	public void cartUpdate(String mid, String psid, String npsid, int pquantity, int npquantity);
-
 	//개별 삭제
 	public void eachdelete(String mid, String psid);
 }
