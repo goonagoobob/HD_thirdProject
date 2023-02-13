@@ -52,7 +52,7 @@ public interface productMapper {
 
 	public List<reviewVO> getReview(@Param("pid") String pid);
 
-	public reviewVO getMyReview(@Param("pid") String pid,@Param("username")  String username);
+	public String getMyReview(@Param("pid") String pid,@Param("mid")  String username);
 	
 	public void insertReview(@Param("pid") String pid,@Param("username")  String username);
 

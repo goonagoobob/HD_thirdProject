@@ -9,12 +9,10 @@
 
 package org.goonagoobob.controller.product;
 
-import java.io.File;
 import java.security.Principal;
+import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
-import org.goonagoobob.domain.product.FileDto;
 import org.goonagoobob.domain.product.brandVO;
 import org.goonagoobob.domain.product.depth1VO;
 import org.goonagoobob.domain.product.productColorVO;
@@ -36,138 +34,138 @@ import org.springframework.web.multipart.MultipartFile;
 public class productController {
 	@Autowired
 	private productService service;
+
 	@GetMapping("/productList")
-	public void ProductList(@RequestParam(value = "brand", required=false) String brand,
-			@RequestParam(value = "depth1", required=false) String depth1,
-			@RequestParam(value = "depth2", required=false) String depth2,
-			@RequestParam(value = "depth3", required=false) String depth3,
-			@RequestParam(value = "Piter", required=false, defaultValue = "1") int Piter,
-			@RequestParam(value = "productNum", required=false, defaultValue = "8") int productNum,
-			@RequestParam(value = "orderBy", required=false, defaultValue = "0") int orderBy,
-			Model model
-			) {
-		String depth0 ="";
+	public void ProductList(@RequestParam(value = "brand", required = false) String brand,
+			@RequestParam(value = "depth1", required = false) String depth1,
+			@RequestParam(value = "depth2", required = false) String depth2,
+			@RequestParam(value = "depth3", required = false) String depth3,
+			@RequestParam(value = "Piter", required = false, defaultValue = "1") int Piter,
+			@RequestParam(value = "productNum", required = false, defaultValue = "8") int productNum,
+			@RequestParam(value = "orderBy", required = false, defaultValue = "0") int orderBy, Model model) {
+		String depth0 = "";
 		if (brand == "") {
-			brand =null;
+			brand = null;
 		}
 		if (depth1 == "") {
-			depth1 =null;
+			depth1 = null;
 		}
 		if (depth2 == "") {
-			depth2 =null;
-		}if (depth3 == "") {
-			depth3 =null;
+			depth2 = null;
+		}
+		if (depth3 == "") {
+			depth3 = null;
 		}
 		if (brand != null) {
-			
-			if(depth1 != null) {
-				if(depth2 != null) {
-						depth0 = depth2;
-						System.out.println("depth2 :"+ depth2 );
-				}
-				else {
+
+			if (depth1 != null) {
+				if (depth2 != null) {
+					depth0 = depth2;
+					System.out.println("depth2 :" + depth2);
+				} else {
 					depth0 = depth1;
-					System.out.println("depth1 :"+ depth1 );
+					System.out.println("depth1 :" + depth1);
 				}
-				
-			}
-			else {
+
+			} else {
 				depth0 = brand;
-				System.out.println("brand :"+ brand );
+				System.out.println("brand :" + brand);
 			}
-		}
-		else {
-				if(depth2 == null) {
-					if(depth3 == null) {
-						depth0 = depth2;
-					}
-					else {
-						depth0 = depth1;
-						
-					}
+		} else {
+			if (depth2 == null) {
+				if (depth3 == null) {
+					depth0 = depth2;
+				} else {
+					depth0 = depth1;
+
 				}
-				else {
-						depth0 = depth1;
-				}
+			} else {
+				depth0 = depth1;
+			}
 		}
 
 		List<productCommonVO> VOList = service.getList(brand, depth1, depth2, depth3, orderBy, Piter, productNum);
 		List<String> ctgr = service.getCtgrList(brand, depth1, depth2, depth3);
 		int count = service.getCount(brand, depth1, depth2, depth3);
 		System.out.println(VOList);
-		System.out.println("depth0 : "+depth0);
-		model.addAttribute("brand",brand);
-		model.addAttribute("depth0",depth0);
-		model.addAttribute("depth1",depth1);
-		model.addAttribute("depth2",depth2);
-		model.addAttribute("depth3",depth3);
-		model.addAttribute("orderBy",orderBy);
-		model.addAttribute("Piter",Piter);
-		model.addAttribute("productNum",productNum);
+		System.out.println("depth0 : " + depth0);
+		model.addAttribute("brand", brand);
+		model.addAttribute("depth0", depth0);
+		model.addAttribute("depth1", depth1);
+		model.addAttribute("depth2", depth2);
+		model.addAttribute("depth3", depth3);
+		model.addAttribute("orderBy", orderBy);
+		model.addAttribute("Piter", Piter);
+		model.addAttribute("productNum", productNum);
 		model.addAttribute("productVO", VOList);
 		model.addAttribute("ctgrList", ctgr);
 		model.addAttribute("count", count);
-		if(brand == null) {
-			model.addAttribute("depth",depth1);
-		} else  {
-			model.addAttribute("depth",brand);
+		if (brand == null) {
+			model.addAttribute("depth", depth1);
+		} else {
+			model.addAttribute("depth", brand);
 		}
-	
+
 	}
+
 	@GetMapping("/productListMore")
 	@ResponseBody
-	public List<productCommonVO> ProductListMore(@RequestParam(value = "brand", required=false) String brand,
-			@RequestParam(value = "depth1", required=false) String depth1,
-			@RequestParam(value = "depth2", required=false) String depth2,
-			@RequestParam(value = "depth3", required=false) String depth3,
-			@RequestParam(value = "Piter", required=false, defaultValue = "1") int Piter,
-			@RequestParam(value = "productNum", required=false, defaultValue = "8") int productNum,
-			@RequestParam(value = "orderBy", required=false, defaultValue = "0") int orderBy
-			) {
+	public List<productCommonVO> ProductListMore(@RequestParam(value = "brand", required = false) String brand,
+			@RequestParam(value = "depth1", required = false) String depth1,
+			@RequestParam(value = "depth2", required = false) String depth2,
+			@RequestParam(value = "depth3", required = false) String depth3,
+			@RequestParam(value = "Piter", required = false, defaultValue = "1") int Piter,
+			@RequestParam(value = "productNum", required = false, defaultValue = "8") int productNum,
+			@RequestParam(value = "orderBy", required = false, defaultValue = "0") int orderBy) {
 		if (brand == "") {
-			brand =null;
+			brand = null;
 		}
 		if (depth1 == "") {
-			depth1 =null;
+			depth1 = null;
 		}
 		if (depth2 == "") {
-			depth2 =null;
-		}if (depth3 == "") {
-			depth3 =null;
+			depth2 = null;
+		}
+		if (depth3 == "") {
+			depth3 = null;
 		}
 		List<productCommonVO> VOList = service.getList(brand, depth1, depth2, depth3, orderBy, Piter, productNum);
 		System.out.println(VOList);
 		return VOList;
 	}
+
 	@GetMapping("/productDetail")
-	public void Productdetail(@RequestParam(value = "pid", required=false) String pid,
-			@RequestParam(value = "pcid", required=false) String pcid,Model model ,Principal principal) {
+	public void Productdetail(@RequestParam(value = "pid", required = false) String pid,
+			@RequestParam(value = "pcid", required = false) String pcid, Model model, Principal principal) {
 		productCommonVO vo = service.getPDetail(pid);
-		List<reviewVO> reviewvoList = service.getReview(pid);
 		System.out.println(vo);
-		System.out.println(reviewvoList);
+		List<reviewVO> reviewvoList = service.getReview(pid);
+		if (principal != null) {
+			String psid = service.getMyReview(pid, principal.getName());
+			model.addAttribute("psid", psid);
+			model.addAttribute("mid", principal.getName());
+		}
 		model.addAttribute("productVO", vo);
 		model.addAttribute("reviewVO", reviewvoList);
 		model.addAttribute("pcid", pcid);
-		System.out.println(principal);
 	}
-	
+
 	@GetMapping("/colorChg")
 	@ResponseBody
-	public productColorVO colorChg(@RequestParam(value = "pcid", required=false) String pcid) {
+	public productColorVO colorChg(@RequestParam(value = "pcid", required = false) String pcid) {
 		System.out.println("ajax in");
 		productColorVO vo = service.getPColor(pcid);
 		System.out.println(vo);
 		return vo;
 	}
-	
+
 	@GetMapping("/getBrdCtgr")
 	@ResponseBody
 	public List<brandVO> getBrdCtgr() {
 		List<brandVO> vo = service.getBrd();
 		return vo;
 	}
-	
+
 	@GetMapping("/getCtgr")
 	@ResponseBody
 	public List<depth1VO> getCtgr() {
@@ -175,50 +173,51 @@ public class productController {
 		System.out.println(vo);
 		return vo;
 	}
+
 	@GetMapping("/main1")
 	public void getdsdsCtgr(Model model) {
 		List<productCommonVO> newVO = service.getNewList();
-		List<productCommonVO>	bestVO = service.getBestList();
+		List<productCommonVO> bestVO = service.getBestList();
 		int newCount = service.newCount();
 		System.out.println(newVO);
 		System.out.println(bestVO);
-		model.addAttribute("bestVO",bestVO);
-		model.addAttribute("newVO",newVO);
-		model.addAttribute("newCount",newCount);
+		model.addAttribute("bestVO", bestVO);
+		model.addAttribute("newVO", newVO);
+		model.addAttribute("newCount", newCount);
 	}
+
 	@PostMapping("/reviewAdd")
-	public void reviewAdd(@RequestParam("reviewFile") MultipartFile uploadfile,/* @RequestParam("reviewFile1") MultipartFile uploadfile1,
-			@RequestParam("reviewFile2") MultipartFile uploadfile2, @RequestParam("reviewFile3") MultipartFile uploadfile3,
-			@RequestParam("reviewFile4") MultipartFile uploadfile4, @RequestParam("reviewFile5") MultipartFile uploadfile5
-			@RequestParam("reviewFile") MultipartFile uploadfile,,*/
-			Principal principal, @RequestParam(value="age", required=false, defaultValue="미 기입") String age, 
-			@RequestParam("height") String height,
-			@RequestParam("bodyType") String bodyType,
-			@RequestParam("enjoySize") String enjoySize,
-			@RequestParam("rating") int rating,
-			@RequestParam("realWearSize1") String realWearSize1,
-			@RequestParam("realWearSize2") String realWearSize2,
+	public String reviewAdd(Principal principal,
+			@RequestParam(value = "age", required = false, defaultValue = "미 기입") String age,
+			@RequestParam("height") String height, @RequestParam("bodyType") String bodyType,
+			@RequestParam("enjoySize") String enjoySize, @RequestParam("rating") int rating,
+			@RequestParam("realWearSize1") String realWearSize1, @RequestParam("realWearSize2") String realWearSize2,
 			@RequestParam("realWearSize3") String realWearSize3,
-			@RequestParam("realProductColor") String realProductColor,
-			@RequestParam("headline") String headline,
-			@RequestParam("psid") String psid
-			
-			
-			) {
-			reviewVO vo = new reviewVO(-100,principal.getName(),headline,"",psid,age,height,bodyType,
-					enjoySize,rating,realWearSize1,realWearSize2,realWearSize3,realProductColor);
-            FileDto dto = new FileDto(UUID.randomUUID().toString(),
-            		"/Users/choilwoo/Desktop/dev64/workspace_goo/HD_thirdProject/src/main/resources/static/product/img"+uploadfile.getName(),
-                    uploadfile.getOriginalFilename(), 
-                    uploadfile.getContentType());
-			File newFileName = new File(dto.getFILENAME());
-	        System.out.println(UUID.randomUUID().toString());
-			try {
-				uploadfile.transferTo(newFileName);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			service.insertReview(vo,dto);
+			@RequestParam("realProductColor") String realProductColor, @RequestParam("headline") String headline,
+			@RequestParam("psid") String psid,
+			@RequestParam("pcid") String pcid,
+			@RequestParam("pid") String pid
+
+	) {
+		System.out.println(pid);
+		Date today = new Date();
+		reviewVO vo = new reviewVO();
+		vo.setMID(principal.getName());
+		vo.setRV_TEXT(headline);
+		vo.setRV_DATE(today);
+		vo.setPSID(psid);
+		vo.setAGE(age);
+		vo.setHEIGHT(height);
+		vo.setBODYTYPE(bodyType);
+		vo.setENJOYSIZE(enjoySize);
+		vo.setRATING(rating);
+		vo.setREALWEARSIZE1(Integer.parseInt(realWearSize1));
+		vo.setREALWEARSIZE2(Integer.parseInt(realWearSize2));
+		vo.setREALWEARSIZE3(Integer.parseInt(realWearSize3));
+		vo.setREALPRODUCTCOLOR(Integer.parseInt(realProductColor));	
+		service.insertReview(vo);
+		System.out.println(vo);
+		return "redirect:/product/productDetail?pid="+pid+"&pcid="+pcid;
 	}
-		
+
 }

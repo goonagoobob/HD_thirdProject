@@ -63,6 +63,7 @@ public class securityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeHttpRequests()
 
 
+
 				.antMatchers("/member/join").permitAll()
 				.antMatchers("/memberRestAPI/joinMemberAccount").permitAll()
 				.antMatchers("/memberRestAPI/idDoubleCheck").permitAll()

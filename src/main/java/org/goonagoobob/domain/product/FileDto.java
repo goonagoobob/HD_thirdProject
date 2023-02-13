@@ -1,10 +1,8 @@
 package org.goonagoobob.domain.product;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
-@AllArgsConstructor
 public class FileDto {
 	private String FILE_UUID;
 	private String UPLOADPATH;
