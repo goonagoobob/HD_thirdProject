@@ -27,7 +27,9 @@ public interface cartMapper {
 	//상품별 색상
 	public List<cartcolorVO> colorList(String mid, String psid);
 	//상품 색상별 사이즈
-	public List<cartsizeVO> sizeList(String mid, String psid);
+	public List<cartsizeVO> sizeList(String mid, String pcid);
 	//옵션 변경
 	public void cartUpdate(String mid, String psid, String npsid, int pquantity, int npquantity);
+	//개별 삭제
+	public void eachdelete(String mid, String psid);
 }

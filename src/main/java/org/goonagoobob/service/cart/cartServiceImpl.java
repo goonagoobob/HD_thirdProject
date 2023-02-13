@@ -61,10 +61,10 @@ public class cartServiceImpl implements cartService {
 	}
 	//카트 상품 색상별 사이즈
 	@Override
-	public List<cartsizeVO> sizeList(String mid, String psid){
+	public List<cartsizeVO> sizeList(String mid, String pcid){
 		log.info("sizeList Service...");
 		
-		List<cartsizeVO> sList = mapper.sizeList(mid, psid);
+		List<cartsizeVO> sList = mapper.sizeList(mid, pcid);
 		return sList;
 	}
 	//카트 옵션 변경
@@ -73,5 +73,12 @@ public class cartServiceImpl implements cartService {
 		log.info("cartUpdate Service...");
 		
 		mapper.cartUpdate(mid, psid, npsid, pquantity, npquantity);
+	}
+	//개별 삭제
+	@Override
+	public void eachdelete(String mid, String psid) {
+		log.info("eachdelete Service...");
+		
+		mapper.eachdelete(mid, psid);
 	}
 }

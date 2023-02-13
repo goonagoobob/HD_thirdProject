@@ -11,4 +11,7 @@ public class cartsizeVO {
 	private String psid;
 	private String pcid;
 	private String psize;
+	private String pid;
+	private String cname;
+	
 }

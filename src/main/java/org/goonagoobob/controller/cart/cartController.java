@@ -39,20 +39,8 @@ public class cartController {
 		log.info(mid);
 		List<cartVO> list = service.getCartList(mid);
 		model.addAttribute("list", list);
-//		String psid = "TM2CAWPC270W_SG_64";
-//		List<cartcolorVO> cList = service.colorList(mid, psid);
-//		model.addAttribute("cList", cList);
+
 	}
 	
-	  //psid 상품의 색상 종류 뿌려주기
-//	  
-//	  @PostMapping("/list") 
-//	  public void cartColor(Principal prin, @RequestParam("psid") String psid, Model model) {
-//		  log.info("postcartList controller...");
-//		  String mid = prin.getName(); System.out.print("mid" + mid + " psid" + psid);
-//		  List<cartcolorVO> cList = service.colorList(mid, psid);
-//		  log.info(cList);
-//		  model.addAttribute("cList", cList); 
-//	  }
-//	 
+
 }

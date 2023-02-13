@@ -44,11 +44,9 @@
 </delete>
 
 <select id="sizeList" resultType = "org.goonagoobob.domain.cart.cartsizeVO">
-SELECT concat(concat(ps.pcid, '_'), SUBSTR(psize, 0, 2)) as psid, ps.pcid, SUBSTR(psize, 0, 2) AS psize
-FROM
-    (SELECT psid, SUBSTR(psid, 0, instr(psid, '_')+2) as pcid  FROM cart WHERE mid=#{mid}) c
-    LEFT JOIN product_stock ps ON c.pcid = ps.pcid
-WHERE c.psid = #{psid}
+SELECT SUBSTR(ps.psize, 0, 2) AS psize
+FROM product_stock ps JOIN product_color pc ON ps.pcid = pc.pcid
+WHERE pc.pcid = #{pcid}
 
 </select>
 
@@ -61,4 +59,9 @@ WHERE c.psid = #{psid}
 	AND mid = #{mid}
 </update>
 
+<delete id="eachdelete">
+	DELETE cart 
+	WHERE psid = #{psid}
+	AND mid = #{mid}
+</delete>
 </mapper>
