@@ -15,7 +15,7 @@
 
 		<script>
 			function clickChangePassword() {
-				window.location.replace("http://localhost/myPage/changePassword");
+				window.location.replace("/myPage/changePassword");
 			}
 			
 			function formCheck() {
@@ -1200,7 +1200,7 @@ function gaIsoCodeEncoding(isoCode){
 								<div class="bday_day">
 									<div class="select_box">
 										<select name="selDay" id="selDay" required>
-											<option value="default" selected="">**</option>
+											<option value="default" selected="">일</option>
 											<option value="01">01</option>
 											<option value="02">02</option>
 											<option value="03">03</option>
@@ -1429,11 +1429,11 @@ function gaIsoCodeEncoding(isoCode){
          <li class="shop active" style="width: 33.3%;"><a
             onclick="layerUp()"><i>메뉴</i></a></li>
          <li class="home" style="width: 33.3%;"><a
-            href="http://localhost"
+            href="/"
             onclick="goMainpage();GA_Event('공통', '네비게이션_바', '홈');"><i>홈</i></a>
          </li>
          <li class="mypage" id="gnbMyPageBtn" style="width: 33.3%;"><a
-            href="http://localhost/myPage/myPage"
+            href="/myPage/myPage"
             onclick="goMypage();GA_Event('공통', '네비게이션_바', '마이페이지');"><i>마이페이지</i></a>
          </li>
          <li class="mypage pageMove" style="display: none"><a href=""
@@ -1450,9 +1450,9 @@ function gaIsoCodeEncoding(isoCode){
    </div>
    <!--// ################## hsome_quickMenu_contents | 퀵메뉴 컨텐츠 영역 ################## -->
 
-
+<!-- 
 	<a href="javascript:noLink();" onclick="closeAction();"
-		class="pop-comm-cls">닫기</a>
+		class="pop-comm-cls">닫기</a> -->
 
 
 

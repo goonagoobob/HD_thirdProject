@@ -1830,6 +1830,8 @@ rotate
 	</script>
 
 
+
+	<!-- 아이디 중복 체크 AJAX -->
 	<script type="text/javascript">
 		function idCheckOnlyOne() {
 			console.log("hello");
@@ -1853,6 +1855,7 @@ rotate
 				},
 				success : function(num) {
 					console.log("success");
+					console.log(num);
 					if (num == 1) {
 						$(".feedback").html(" 사용 가능한 아이디입니다.");
 						$(".feedback").attr("style", "display:block;");
@@ -1869,6 +1872,7 @@ rotate
 
 		}
 
+		// 비밀번호 유효성 검사 
 		function isSame() {
 
 			console.log("hello");
@@ -1894,6 +1898,8 @@ rotate
 			console.log('hello');
 		} */
 
+		
+		// 성별을 두개 중 하나만 고를 수 있도록 하는 체크박스
 		function genderCheckOnlyOne(element) {
 			console.log("element" + element.id);
 			const mgenderFemale = document.getElementById("genderFemale").checked;
@@ -1919,6 +1925,8 @@ rotate
 
 		}
 
+		
+		// form의 input 정보를 ajax로 controller에 보냄.
 		function joinMemberAccount() {
 			console.log("hello");
 

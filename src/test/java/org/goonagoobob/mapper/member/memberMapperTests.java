@@ -67,6 +67,12 @@ public class memberMapperTests {
 		System.out.println(memberMapper.selectById(mid));
 	}
 	
+	//비밀번호 인코딩 확인
+	@Test
+	public void checkPassword() {
+		String mid="user1";
+		System.out.println(memberMapper.checkPassword(mid));
+	}
 	
 	//id 찾기
 	@Test
