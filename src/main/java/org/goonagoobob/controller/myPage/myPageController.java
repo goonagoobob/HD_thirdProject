@@ -38,8 +38,15 @@ public class myPageController {
 	private orderService service;
 	
 	@GetMapping("/myPage")
-	public void myPage() {
+	public void myPage(Principal principal, Model model) {
+		String mid = principal.getName();
+		memberAccount mA = memberService.selectById(mid);
+		String address = mA.getMaddress1() + mA.getMaddress2();
+		int mileage = mA.getMmileage();
 		
+		System.out.println(mileage);
+		model.addAttribute("address", address);
+		model.addAttribute("mileage" + mileage);
 	}
 	
 	@GetMapping("/passwordCheck")
@@ -123,6 +130,9 @@ public class myPageController {
 			@RequestParam("selYear") String selYear, 
 			@RequestParam("selMonth") String selMonth, 
 			@RequestParam("selDay") String selDay, HttpSession session) {
+		
+		System.out.println("@@@@@@changeUserInfoForm 들어옴@@@@@@");
+		
 		
 		memberChangeInfo mCI = new memberChangeInfo();
 		String mid2 = prin.getName();

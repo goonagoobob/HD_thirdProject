@@ -9,6 +9,16 @@
 
 <title>한섬로그인 | 더한섬닷컴</title>
 
+<script>
+	function goMemberRegistration(){
+		window.location.replace("http://localhost/member/join");
+	}
+	
+	function hpIdFind(){
+		window.location.replace("http://localhost/member/findIdPassword");
+	}
+</script>
+
 <link rel="shortcut icon"
 	href="https://www.thehandsome.com/_ui/mobile/common/images/common/thehandsome_ic_16x16.ico">
 <link rel="apple-touch-icon"
@@ -90,9 +100,9 @@
 							placeholder="비밀번호를 입력하세요." title="비밀번호를 입력하세요.">
 					</div>
 					<!-- [TO DEV] Error msg here. -->
-					<div class="err_wrap">
-						<p id="hpErrMsg" class="err_txt"></p>
-					</div>
+					<div class="err_wrap" th:if="error">
+                         <p id="valid" style="color: red; font-size:12px;"><a style="color: red;" th:text="${exception}"></a></p>
+                     </div>
 					<div class="btn_wrap">
 						<button type="submit" id="login_btn"
 							class="btn btn_bg_b btn_login btn_popup">로그인</button>
@@ -121,11 +131,11 @@
 	<footer class="hsome_footer mem_ct_wrap_bg id_login">
 		<div class="login_find_area">
 			<p class="tit">아이디/비밀번호를 잊으셨나요?</p>
-			<div class="btn_wrap btn_wrap_div2">
+			<div class="btn_wrap btn_wrap_div1">
 				<button class="btnstl3 border_btn_gray btn_fdid"
-					onclick="hpIdFind();">통합회원 아이디 찾기</button>
-				<button class="btnstl3 border_btn_gray btn_fdpw"
-					onclick="hpPasswordFind();">통합회원 비밀번호 찾기</button>
+					onclick="hpIdFind();">아이디/비밀번호 찾기</button>
+				<!-- <button class="btnstl3 border_btn_gray btn_fdpw"
+					onclick="hpPasswordFind();">비밀번호 찾기</button> -->
 			</div>
 
 		</div>
