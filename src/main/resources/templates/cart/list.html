@@ -1,4 +1,6 @@
-<html lang="ko" class="back">
+<html lang="ko" class="back" xmlns:th="http://www.thymeleaf.org"
+   xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
    <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
@@ -259,14 +261,12 @@ ACCMOB.config.CSRFToken = "c7173c07-0f23-459b-9438-53fe8ca983cf";
 			<!-- ################## header ################## -->
 			<header class="hsome_header">
 				<h1 class="h_ttl ellipsis" id="headerTitle">쇼핑백</h1>
-				<a href="/" class="h_top_home"><span>홈</span></a> <a
+				<a href="http//localhost" class="h_top_home"><span>홈</span></a> <a
 					href="javascript:noLink();" onclick="goBack();" class="h_prev">이전
 					페이지로 가기</a>
 				<ul class="h_gnbMenu">
-					<li class="search"><a href="/ko/mobilecommon/search"
-						onclick="GA_Event('공통', '헤더', '검색');"><span>search</span></a></li>
-					<li class="cart"><a href="/ko/shoppingbag"
-						onclick="GA_Event('공통', '헤더', '쇼핑백');"><span>cart</span><i>2</i></a></li>
+					<li class="cart"><a href="http://localhost/cart/list"
+						onclick="GA_Event('공통', '헤더', '쇼핑백');"><span>cart</span><i th:text="${list.size}"></i></a></li>
 				</ul>
 			</header>
 			<!-- //################## header ################## -->
@@ -294,23 +294,8 @@ if(typeof kakaoPixel !== 'undefined'){
 <!-- 상품 선택 -->
 <script type="text/javascript">
 
-/* function deleteBtnEvent(param){
-var la = new layerConfirm('선택하신 상품을 쇼핑백에서 삭제하시겠습니까?','확인','취소');
-la.confirmAction = function(){//확인 호출 펑션
-			var form = $('#updateCartForm' + param);
-			var productCode = form.find('input[name=productCode]').val(); 
-			var initialCartQuantity = form.find('input[name=initialQuantity]');
-			var cartQuantity = form.find('input[name=quantity]');
-			var cartData = form.data("cart");
-			
-			AEC_F_D(productCode,'o',initialCartQuantity.val());
-			
-			cartQuantity.val(0);
-			initialCartQuantity.val(0);
-			form.submit();
-			setEcommerceData(param, "Remove From Cart");
-};
-} */
+
+
 /* ======================================================================
 Function : 체크박스 선택시 가격 및 수량 정보 변경
 Return   : 
@@ -534,23 +519,7 @@ $(document).on('click', '.btn_option_edit', function(){
 			var deliveryPlanDate = '<span class="point_fc">'+reserveSaleyyyy+'년 '+reserveSalemm+'월 '+reserveSaledd+'일</span>부터 <span class="point_fc">순차배송</span> 예정입니다.';
 	});
 });
-//옵션 선택 함수
-/* function setOptions(obj, prodid, productCode, type)
-{
-$(obj).addClass("on");
-$(obj).siblings("a").removeClass("on");
 
-var form = $('#updateCartForm' + prodid);
-var curSize = form.find('input[name=curSize]').val();
-var chgProductCode = form.find('input[name=chgProductCode]');
-var storeId = form.find('input[name=storeId]').val();
-var storePickupDate = form.find('input[name=storePickupDate]').val();
-chgProductCode.val($('#gl_slr_size_'+prodid+' option:selected').val());
-if(type == 'style')
-{
-} else if(type == 'size'){
-}
-} */
 //옵션 변경 저장 이벤트
 function productModifyEvent(obj){
 var prodid = $(obj).prop('id').split("_");
@@ -585,8 +554,8 @@ $('select.sodsb').selectOrDie();
 									<input type="hidden" name="pcprice" th:value="${list.pcprice}"/>
 									<input type="checkbox"
 										th:id="${'gl_check_'+ i.count}"
-										name="cartlist" data-pk=123 data-division=""
-										data-deliverykind="" th:value="${list.psid}" data-soldout="N"
+										name="cartlist" data-pk=123 data-division="" th:data-pquantity="${list.pquantity}"
+										th:data-pcprice="${list.pcprice}" data-deliverykind="" th:value="${list.psid}" data-soldout="N"
 										onclick="checkTotalPrice(this);"> 
 										<label
 										th:for="${'gl_check_' + i.count}"></label>
@@ -598,8 +567,8 @@ $('select.sodsb').selectOrDie();
 									<!-- goods_list_item s -->
 									<!-- 활성화 : gl_item에 품절상품 : gl_status_soldout 클래스 추가/삭제 -->
 									<li><a href="javascript:;"
-										class="icon_btn btn_gl_del icon_btn_on"
-										onclick="deleteBtnEvent('1');"><span>삭제</span></a></li>
+										class="icon_btn btn_gl_del icon_btn_on" th:id="${'eachdelete_' + i.count}"
+										th:onclick="eachdelete([[${list.psid}]], [[${i.index}]]);"><span>삭제</span></a></li>
 								</ul>
 								<!-- goods_top_btn e -->
 								<!-- 상품정보 -->
@@ -671,7 +640,7 @@ $('select.sodsb').selectOrDie();
 											</li>
 											<li>
 												<div class="gl_tit">사이즈</div>
-												<div class="gl_con" th:onclick="selectsize([[${list.psid}]], [[${i.index}]])">
+												<div class="gl_con" >
 													<span class="sod_select  touch" tabindex="0"
 														data-cycle="false" data-links="false"
 														data-links-external="false"
@@ -870,10 +839,7 @@ if(hasQtyLimitProduct){
 	layerAlert("동일 상품(사이즈/컬러)은<br/>최대 2개까지 선택 가능합니다.");
 	return false;
 }
-	// 매장수령일 경우 확인 로직 추가 CMB
-	// 브랜드 and 수령매장이 동일할 경우만
-	// 날짜가 다른 경우만 확인
-	// 화면에 알림을 주기위한 체크로직
+
 	var isStoreCheck = false;
 	var isStoreBrandCheck = false;
 	var isStorePickCheck = false;
@@ -1383,6 +1349,32 @@ $(window).load(function(){
 			<!-- //################## footer ################## -->
 		</div>
 	</div>
+	<!-- ################## hsome_quickMenu | 퀵메뉴 ################## -->
+   <aside class="hsome_quickMenu hsome_quickMenu1909 active">
+      <ul>
+         <li class="shop active" style="width: 33.3%;"><a
+            onclick="layerUp()"><i>메뉴</i></a></li>
+         <li class="home" style="width: 33.3%;"><a
+            href="http://localhost"
+            onclick="goMainpage();GA_Event('공통', '네비게이션_바', '홈');"><i>홈</i></a>
+         </li>
+         <li class="mypage" id="gnbMyPageBtn" style="width: 33.3%;"><a
+            href="http://localhost/myPage/myPage"
+            onclick="goMypage();GA_Event('공통', '네비게이션_바', '마이페이지');"><i>마이페이지</i></a>
+         </li>
+         <li class="mypage pageMove" style="display: none"><a href=""
+            id="gnbMypageBtn"></a></li>
+         <li class="mypage" style="display: none"><a
+            href="https://www.thehandsome.com/ko/mobilecommon/myPagePopup"
+            id="gnbMypagePopupBtn"></a></li>
+      </ul>
+   </aside>
+<!-- ################## //hsome_quickMenu | 퀵메뉴 ################## -->
+   <!-- ################## hsome_quickMenu_contents | 퀵메뉴 컨텐츠 영역 ################## -->
+   <div class="hsome_quickMenu_contents">
+   <th:block th:replace="fragments/footer :: footerFragment"></th:block>
+   </div>
+   <!--// ################## hsome_quickMenu_contents | 퀵메뉴 컨텐츠 영역 ################## -->
 	<!-- ################## //hsome_allContents_wrapper | ë³¸ë¬¸ ì»¨íì¸  ìì­ ################## -->
 	<script type="text/javascript">
 var inicisCookieFlag = true;
@@ -1918,11 +1910,18 @@ document.writeln("<scr"+"ipt language='javascript' src='" + TRS_URL + "'></scr"+
 
 
 <script>
-//사이즈 뿌리기-김주혜
-function selectsize(psid, idx){
+//사이즈 및 색상 이름 뿌리기-김주혜
+function selectsize(pid, colorname, idx){
+	var tag = "";
+	tag += `<span class="sct_v" id="cname">`
+	tag += colorname
+	tag += `</span>`
+	$("#colorname_" +idx).html(tag); 
+	var pcid = pid+"_"+colorname;
 	console.log("sizestart~");
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
+	var con = document.getElementById("pt_list_1"); 	
 	$.ajax({
 		type: "POST",
 		url: "/cartRestApi/slist",
@@ -1930,40 +1929,42 @@ function selectsize(psid, idx){
 	        xhr.setRequestHeader(header, token);
 	    },
 		data : {
-			psid : psid, 
+			pcid : pcid, 
 				},
 		success : function(data) {
-			console.log(data);
-			console.log(data.length);
-			console.log(data[0].size);
+
 			var prosize="";
 			var propsid="";
-			var tag="";
+			var tag2="<option>선택</option>";
 			var tag1="";
 			
 			for(var i =0; i<data.length; i++){
+				
 				prosize = data[i].psize;
-				propsid = data[i].psid;
-				tag += `<option value="`
-				tag += prosize
-				tag += `">`
-				tag += prosize
-				tag += `</option>` 
+				alert(prosize);
+				propcid = data[i].pcid;
+				alert(propcid);
+				tag2 += `<option id = "sizeop_0`
+				tag2 += idx
+				tag2 += `0`
+				tag2 += i
+				tag2 += `" value="`
+				tag2 += prosize
+				tag2 += `">`
+				tag2 += prosize
+				tag2 += `</option>` 
 				
 				tag1 += `<span class="sod_option" title="`
 				tag1 += prosize
 				tag1 += `" data-value="`
-				tag1 += propsid
+				tag1 += propcid
 				tag1 += `">`
 				tag1 += prosize
 				tag1 += `</span>`
 
 			}
-			
-			console.log(tag);
-			console.log(tag1);
 
-			$("#gl_slr_size_" + idx).html(tag); 
+			$("#gl_slr_size_" + idx).html(tag2); 
 			$("#sodcolor_" + idx).html(tag1);
 		
 		},
@@ -1976,18 +1977,17 @@ function selectsize(psid, idx){
 
 //카트 옵션 변경-김주혜
 function updatecart(pid, psid, idx, pquantity){
-	alert("updatecart 된다냥~");
-
 	var qid = "quantity_" + idx;
 	var sid = "gl_slr_size_" + idx;
 	var ncname = document.getElementById("cname").innerHTML;
 	var npquantity =  document.getElementById(qid).value;
 	var nsize =  document.getElementById(sid).value;
 	var npsid = pid+"_"+ncname+"_"+nsize;
-	alert(ncname);
-	alert(npquantity);
-	alert("size" + nsize);
-	alert("newpsid" + npsid);
+	
+	alert("바꿀색이름" + ncname);
+	alert("바꿀수량" + npquantity);
+	alert("바꿀사이즈" + nsize);
+	alert("새로운psid" + npsid);
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
 
@@ -2038,11 +2038,16 @@ function selectColor(psid, idx){
 			var colchip="";
 			var colcode="";	
 			var colname="";
+			var colpid="";
+			var psid = "";
 			var tag="";
 			for(var i =0; i<data.length; i++){
 				colchip = data[i].pcchipimg;
 				colcode = data[i].pccolorcode;
 				colname = data[i].colorname;
+				colpid = data[i].pid;
+				pcid = colpid + "_" + colname;
+				
 				tag += `<li`
 				tag += `><input type="radio" id="gl_rd_color_0`
 				tag += idx
@@ -2051,7 +2056,9 @@ function selectColor(psid, idx){
 				tag += `" name="gl_rd_color_0`
 				tag += idx
 				tag += `"`
-				tag += ` onclick="selcname('`
+				tag += ` onclick="selectsize('`
+				tag += colpid
+				tag += `', '`
 				tag += colname
 				tag += `', '`
 				tag += idx
@@ -2080,17 +2087,7 @@ function selectColor(psid, idx){
 		
 }
 
-//색상 코드 뿌리기
-function selcname(colorname, idx){
-	var tag = "";
-	tag += `<span class="sct_v" id="cname">`
-	tag += colorname
-	tag += `</span>`
-	$("#colorname_" +idx).html(tag); 
-}
-
 function orderProduct(entryNumber) {
-      
       console.log("주문하기 버튼 클릭");
       var msgStr = "";
 
@@ -2129,7 +2126,33 @@ function orderProduct(entryNumber) {
       }
     }
 
+//개별삭제-김주혜
+function eachdelete(psid, idx){
+var la = new layerConfirm('선택하신 상품을 쇼핑백에서 삭제하시겠습니까?','확인','취소');
+la.confirmAction = function(){//확인 호출 펑션
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajax({
+		type : "POST",
+		url : "/cartRestApi/eachdelete",
+	    beforeSend : function(xhr) {
+	        xhr.setRequestHeader(header, token);
+	    },
+		data : {
+			psid : psid, 
+				},
+		success : function(data) {
+	         var lc = new layerAlert("삭제가 완료 되었습니다.");
+	         window.location.reload();
+		},
+		error : function(e){
+			console.log(e);
+		}
+		});
 	
+	};
+		
+};
 // 선택삭제-김주혜
 function selectRemove(entryNumber) {
 var msgStr = "";
@@ -2173,11 +2196,11 @@ la.confirmAction = function(){//확인 호출 펑션
           window.location.reload();
     	  console.log(data);
       if(data == "s") {
-          var lc = new layerAlert("삭제가 완료 되었습니다.");
               lc.confirmAction = function(){
             $("a[name='cartDivision']").each(function() {
               if($(this).data('division') == $("#ordersheetCartDivision").val()){
                 $(this).click();
+		          var lc = new layerAlert("삭제가 완료 되었습니다.");
               }
             });
             setEcommerceData(entryNumber, "Remove From Cart");
@@ -2197,33 +2220,46 @@ la.confirmAction = function(){//확인 호출 펑션
 
 };
 }
-// 선택 상품 및 전체 상품 total price - 김주혜
+// 선택 상품 total price - 김주혜
 var totalcheckprice = 0;
-/*var allproduct = $(".gl_check").find('#gl_check_'+""')
- var allproduct = document.getElementById("totalprice").value;
-  $(".gl_chek_all").on('click', function(){
-	if($(this).prop("checked") == true) {
+var allproduct = 0;
+ $(".gl_check_all").on('click', function(){
+ 	if($(this).prop("checked") == true) {
+		$("input[name='cartlist']").each(function(){
+			var tchkprice = $(this).data("pcprice");
+			var tchkpquantity = $(this).data("pquantity");
+			allproduct += tchkprice * tchkpquantity;
+			totalcheckprice = allproduct;
+		});
 		$('#checkprice').html(allproduct.toLocaleString());
 		$('#rcheckprice').html(allproduct.toLocaleString());
 		$('.btn_t_1').html(allproduct.toLocaleString());
-		
-	}
-})  */
+ 	}else{
+ 		allproduct = 0;
+ 		totalcheckprice = allproduct;
+		$('#checkprice').html(allproduct.toLocaleString());
+		$('#rcheckprice').html(allproduct.toLocaleString());
+		$('.btn_t_1').html(allproduct.toLocaleString());
+ 	}
+}); 
+
 $("input[name='cartlist']").on('click', function(){
 		if($(this).prop("checked") == true) {
 			var chkquantity = $(this).prev().prev().attr('value');
 			var chkprice = $(this).prev().attr('value');
 			totalcheckprice += chkquantity * chkprice;
-			$('#checkprice').html(totalcheckprice.toLocaleString());
-			$('#rcheckprice').html(totalcheckprice.toLocaleString());
-			$('.btn_t_1').html(totalcheckprice.toLocaleString());
-		}else{
+			allproduct = totalcheckprice;
+			$('#checkprice').html(allproduct.toLocaleString());
+			$('#rcheckprice').html(allproduct.toLocaleString());
+			$('.btn_t_1').html(allproduct.toLocaleString());
+		}else{ 
 			var chkquantity = $(this).prev().prev().attr('value');
 			var chkprice = $(this).prev().attr('value');
 			totalcheckprice -=  chkquantity * chkprice;
-			$('#checkprice').html(totalcheckprice.toLocaleString());
-			$('#rcheckprice').html(totalcheckprice.toLocaleString());
-			$('.btn_t_1').html(totalcheckprice.toLocaleString());
+			allproduct =  totalcheckprice;
+			$('#checkprice').html(allproduct.toLocaleString());
+			$('#rcheckprice').html(allproduct.toLocaleString());
+			$('.btn_t_1').html(allproduct.toLocaleString());
 		}
 	});
 </script>
@@ -2234,14 +2270,13 @@ $("input[name='cartlist']").on('click', function(){
 </body>
 
 <script>
-
-$(document).on("change",".sodsb",function(){
+$(document).on("change",".sodsb", function(){
     var selectedOption = $(this).find(':selected').text();
+    console.log(selectedOption);
     var pos = $(this).data('value');
 
 	    $(this).parent().find(".sod_label").text(selectedOption); 
  	    $("#updateCartForm"+pos).find("input[name='psize']").val(selectedOption);	 
   }); 
-
 </script><!-- This script is for AceCounter START -->
 </html>

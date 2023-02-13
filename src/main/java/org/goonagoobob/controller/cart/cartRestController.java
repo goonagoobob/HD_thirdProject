@@ -75,11 +75,11 @@ public class cartRestController {
 	  //psid 상품 사이즈 뿌려주기
 	  @PostMapping("/slist")
 	  @ResponseBody
-	  public List<cartsizeVO> cartSize(Principal prin, @RequestParam("psid") String psid, Model model) {
+	  public List<cartsizeVO> cartSize(Principal prin, @RequestParam("pcid") String pcid, Model model) {
 		  log.info("postsizeList controller");
 		  String mid = prin.getName();
-		  log.info("sizeList" + mid + psid);
-		  List<cartsizeVO> sList = service.sizeList(mid, psid);
+		  log.info("sizeList" + mid + pcid);
+		  List<cartsizeVO> sList = service.sizeList(mid, pcid);
 		  model.addAttribute("sList", sList);
 		  return sList;
 		  
@@ -95,6 +95,15 @@ public class cartRestController {
 	  log.info(pquantity);
 	  log.info(npquantity);
 	  service.cartUpdate(mid, psid, npsid, Integer.parseInt(pquantity), Integer.parseInt(npquantity));
+  } 
+	  
+	 //개별 상품 삭제
+	  @PostMapping("/eachdelete")
+	  public void cartUpdate(Principal prin, @RequestParam("psid") String psid) {
+	  log.info("eachdelete controller"); 
+	  String mid = prin.getName();
+	  log.info(psid);
+	  service.eachdelete(mid, psid);
   } 
 	 
 	
