@@ -101,14 +101,13 @@ public class productServiceImpl implements productService {
 	}
 
 	@Override
-	public reviewVO getMyReview(String pid, String username) {
+	public String getMyReview(String pid, String username) {
 		return mapper.getMyReview( pid, username);
 	}
 
 	@Override
-	public void insertReview(reviewVO vo,FileDto dto) {
+	public void insertReview(reviewVO vo) {
 		mapper.insertReview(vo);
-		mapper.insertFileDto(dto, vo.getRNO());
 	}
 
 }

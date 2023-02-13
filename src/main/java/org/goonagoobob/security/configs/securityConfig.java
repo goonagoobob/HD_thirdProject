@@ -58,7 +58,7 @@ public class securityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/memberRestAPI/idDoubleCheck").permitAll().antMatchers("/member/login").permitAll()
 				.antMatchers("/member/auth/login").permitAll().antMatchers("/member/findIdPassword").permitAll()
 				.antMatchers("/member/findIdResult").permitAll().antMatchers("/member/findPasswordForm").permitAll()
-				.antMatchers("/").permitAll().antMatchers("/product/*").permitAll().anyRequest().authenticated(); // csrf 보안 설정 비활성화
+				.antMatchers("/").permitAll().antMatchers("/product/*").permitAll().antMatchers("/product/reviewAdd").permitAll().anyRequest().authenticated(); // csrf 보안 설정 비활성화
 
 		// .addFilter(jwtAuthorizationFilter()) 해야함
 

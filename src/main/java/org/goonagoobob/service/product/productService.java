@@ -47,7 +47,7 @@ public interface productService {
 
 	public List<reviewVO> getReview(String pid);
 
-	public reviewVO getMyReview(String pid, String string);
+	public String getMyReview(String pid, String username);
 
-	public void insertReview(reviewVO vo, FileDto dto);
+	public void insertReview(reviewVO vo);
 }
