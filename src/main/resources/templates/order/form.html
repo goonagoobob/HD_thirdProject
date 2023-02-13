@@ -235,6 +235,10 @@
               <input type="text" name="oaddress1" placeholder="주소" readonly="readonly" id="sample6_address"
                 th:value="${username.maddress1}">
               <input type="text" name="oaddress2" placeholder="상세 주소를 적어주세요." th:value="${username.maddress2}">
+              
+              <div id="wrap" style="display:none;border:1px solid;width:500px;height:300px;margin:5px 0;position:relative">
+			          <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼">
+			        </div>
             </div>
 
             <a href="#none" data-layerpop-depth="depth1" onclick="sample6_execDaumPostcode()"
@@ -893,51 +897,15 @@
         });
       </script>
 
+      
       <script>
-        /*동적으로 form 태그를 생성해서 데이터를 넘기는 과정*/
-        function order() {
-          var tag_postcode = $('#sample6_postcode').val();
-          var tag_address = $('#sample6_address').val();
-          var tag_detailAddress = $('#sample6_detailAddress').val();
-          var total_address = tag_address + " " + tag_detailAddress;
-          console.log(tag_postcode);
-          console.log(tag_address);
-          console.log(tag_detailAddress);
-          console.log(total_address);
-
-          if (tag_postcode == '') {
-            alert("우편번호를 입력하세요!")
-            return;
-          }
-
-          if (tag_address == '') {
-            alert("주소를 입력하세요!")
-            return;
-          }
-
-          if (tag_detailAddress == '') {
-            alert("상세주소를 입력하세요!")
-            return;
-          }
-
-          var data_form = $('<form></form>');
-
-          data_form.attr("name", "test_form");
-          data_form.attr("method", "POST");
-          data_form.attr("action", "${contextPath}/Hfashion?command=order");
-
-          data_form.append($('<input/>', { type: 'hidden', name: 'postCode', value: tag_postcode }));
-          data_form.append($('<input/>', { type: 'hidden', name: 'address', value: total_address }));
-
-
-
-
-          data_form.appendTo('body');
-
-          data_form.submit();
+      
+        var element_wrap = document.getElementById('wrap');
+      
+        function foldDaumPostcode() {
+          // iframe을 넣은 element를 안보이게 한다.
+          element_wrap.style.display = 'none';
         }
-      </script>
-      <script>
         function sample6_execDaumPostcode() {
           new daum.Postcode({
             oncomplete: function (data) {
@@ -962,8 +930,32 @@
               $(".dlvr_adrs_zipcode").html(data.zonecode);
               // 커서를 상세주소 필드로 이동한다.
               $("#sample6_detailAddress").focus();
-            }
-          }).open();
+              element_wrap.style.display = 'none';
+              document.body.scrollTop = currentScroll;
+            },
+            onresize : function(size) {
+              element_wrap.style.height = size.height+'px';
+            },
+            width : '100%',
+            height : '100%'
+          }).embed(element_wrap);
+          element_wrap.style.display = 'block';
+          initLayerPosition();
+        }
+        function initLayerPosition() {
+            var width = '100%'; //우편번호서비스가 들어갈 element의 width
+            var height = 400; //우편번호서비스가 들어갈 element의 height
+            var borderWidth = 8; //샘플에서 사용하는 border의 두께
+
+            // 위에서 선언한 값들을 실제 element에 넣는다.
+            element_wrap.style.width = ''; //값을 넣으니 너비가 이상해져서 제거
+            element_wrap.style.height = height + 'px';
+            //element_layer.style.border = borderWidth + 'px solid #afafaf';
+            element_wrap.style.marginBottom = '10px';
+
+            // 실행되는 순간의 화면 너비와 높이 값을 가져와서 중앙에 뜰 수 있도록 위치를 계산한다.
+            //element_layer.style.left = (((window.innerWidth || document.documentElement.clientWidth) - width) / 2 - borderWidth) + 'px';
+            //element_layer.style.top = (((window.innerHeight || document.documentElement.clientHeight) - height) / 2 - borderWidth) + 'px';
         }
       </script>
 </body>
