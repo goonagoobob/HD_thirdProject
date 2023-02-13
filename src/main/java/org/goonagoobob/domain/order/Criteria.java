@@ -1,3 +1,9 @@
+/*********************************
+ * @function : CriteriaVO (페이징을 위한  객체)
+ * @author : 차민수
+ * @Date : Feb 6. 2023
+ *********************************/
+
 package org.goonagoobob.domain.order;
 
 import org.springframework.web.util.UriComponentsBuilder;

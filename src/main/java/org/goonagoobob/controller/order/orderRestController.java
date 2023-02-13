@@ -1,3 +1,9 @@
+/*********************************
+ * @function : 주문 RestController
+ * @author : 차민수
+ * @Date : Jan 31. 2023. ~ Feb 13.2023
+ * 주문서에서 입력된 주문 정보를 ajax 통신을 통해 JSON 으로 받는 RestController
+ *********************************/
 package org.goonagoobob.controller.order;
 
 import java.util.List;
@@ -29,6 +35,7 @@ public class orderRestController {
 	@Autowired
 	private orderService orderService;
 	
+	// 주문서 페이지에서 입력된 주문 정보를 ajax 통신을 통해 JSON 데이터를 VO 에 넣기 위해 직접 맵핑
 	@ResponseBody
 	@PostMapping(value = "/form", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<Integer> orderForm(@RequestBody Map<String, Object> map) {
@@ -58,6 +65,4 @@ public class orderRestController {
 		System.out.println(result);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-	
-	
 }

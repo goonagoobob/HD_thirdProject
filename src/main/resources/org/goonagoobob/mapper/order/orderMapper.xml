@@ -3,9 +3,9 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-
 	<mapper namespace="org.goonagoobob.mapper.order.orderMapper">
-
+	
+	<!-- 주문 등록을 위한 resultMap 생성 -->
 	<resultMap type="org.goonagoobob.domain.order.orderVO" id="orderMap">
 		<result property="oid" column="oid" />
 		<result property="ostatus" column="ostatus" />
@@ -17,6 +17,7 @@
 		</collection>
 	</resultMap>
 
+	<!-- 주문에 따른 상품 기본 정보 resultMap 생성 -->
 	<resultMap type="org.goonagoobob.domain.order.orderItemVO" id="itemMap">
 		<result property="psid" column="psid" />
 		<result property="oid" column="oid" />
@@ -25,6 +26,7 @@
 		<association property="productDetail" resultMap="productMap" />
 	</resultMap>
 
+	<!-- 주문에 따른 상품 상세 정보 resultMap 생성 -->
 	<resultMap type="org.goonagoobob.domain.product.productDetailVO" id="productMap">
 		<result property="bname" column="bname" />
 		<result property="pname" column="pname" />
@@ -35,6 +37,7 @@
 		<result property="psid" column="psid"/>
 	</resultMap>
 
+	<!-- 주문 내역을 페이징 처리 및 검색하기 위해 동적 쿼리 -->
 	<sql id="criteria">
 		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
 			<foreach item="type" collection="cri.typeArr">
@@ -51,7 +54,8 @@
 			</foreach> <!--foreach -->
 		</trim> <!--end trim pre... -->
 	</sql>
-
+	
+	<!-- 각 주문에 담긴 상품 갯수를 반환하는 쿼리 -->
 	<select id="getCountByMid" resultType="int">
 		select count(*)
 		from orders o
@@ -64,6 +68,7 @@
 		o.oid > '0'
 	</select>
 
+	<!-- 주문 내역 페이지에 주문 내역을 조회하기 위한 쿼리 -->
 	<select id="getListWithPaging" resultMap="orderMap">
      	<![CDATA[
 		  	select oid, psid, ostatus, odate, oicount, oitotalprice, pname, bname, pccolorcode, pcimg1, pcprice, psize
@@ -78,6 +83,7 @@
 		  	 where
 		  	 mid = #{mid} and
    		]]>
+   		<!-- 페이징 처리를 위해 동적 쿼리 적용 -->
 		<include refid="criteria"></include> 
 	  	<![CDATA[
 		 	rownum <= #{cri.pageNum} * #{cri.amount})
@@ -85,30 +91,36 @@
 			order by oid desc
 	 	]]>
 	</select>
-
+	
+	<!-- 주문 정보를 넣는 insert 쿼리 -->
 	<insert id="insertOrder">
 		insert into orders(OID, OZIPCODE, OADDRESS1, ORECEIVER, OPHONE, OMEMO, OUSEDMILEAGE, OBEFOREPRICE, OAFTERPRICE, MID, PMCODE, OADDRESS2, OEAMIL)
 		values (order_sequence.nextval, #{ozipcode},#{oaddress1},#{oreceiver},#{ophone},#{omemo},#{ousedmileage},#{obeforeprice},#{oafterprice},#{mid},#{pmcode},#{oaddress2},#{oemail})
 	</insert>
 	
+	<!-- 주문에 따른 상품을 insert 쿼리 -->
 	<insert id="insertOrderItem">
 		insert into order_item
 		values (#{psid}, (select max(oid) from orders where mid = #{mid}), #{oicount}, #{oitotalprice})
 	</insert>
 	
+	<!-- 주문을 취소하는 쿼리 => 주문 상태를 기본 '결제 완료' 에서 '주문 취소' 로 update -->
 	<update id="orderCancel">
 		update orders set ostatus = '주문 취소', odate = sysdate where oid = #{oid} 
 	</update>
 	
+	<!-- 주문에 따른 유저의 마일리지 변경 => 주문에 사용된 마일리지는 삭감, 구매 금액의 5% 마일리리 추가 -->
 	<update id="orderMileage">
 		update member set mmileage = (mmileage - #{usedmileage} + (#{oafterprice}*0.05))  where mid = #{mid} 
 	</update>
 	
+	<!-- 주문 취소에 따른 마일리지 반환 쿼리 -->
 	<update id="orderCancelMileage">
 		update member set mmileage = (mmileage - (#{oafterprice}*0.05) + #{usedmileage}) where mid = #{mid} 
 	</update>
+	
+	<!-- 주문 취소 페이지에서 보여질 상품 정보를 조회하는 쿼리 -->
 	<select id="cancelList" resultMap="orderMap">
-     	
 		select oid, psid, ostatus, odate, oicount, oitotalprice, pname, bname, pccolorcode, pcimg1, pcprice, psize, obeforeprice, oafterprice, ousedmileage
 		from (
 			select 
@@ -123,24 +135,21 @@
 		  	)
 	</select>
 	
+	<!-- 주문서 페이지에 보여질 상품 상세 정보 조회 쿼리 -->
 	<select id="orderList" resultMap="productMap">
 		select *
 		from view_product_detail
 		where psid = #{psid}
 	</select>
 	
-	<select id="cartCount" resultType="int">
-		select count(*)
-		from cart
-		where mid = #{mid}
-	</select>
-	
+	<!-- 주문 취소에 따른 정보를 조회하는 쿼리 -->
 	<select id="orderCancelInfo" resultType="org.goonagoobob.domain.order.orderVO">
 		select oid, ostatus, mid, ousedmileage, oafterprice, odate
 		from orders
 		where oid = #{oid}
 	</select>
 	
+	<!-- 장바구니를 통해 구매한 상품을 장바구니에서 삭제하는 쿼리 -->
 	<delete id="deleteCartByOrder">
 		delete from cart where mid = #{mid} and psid = #{psid}
 	</delete>

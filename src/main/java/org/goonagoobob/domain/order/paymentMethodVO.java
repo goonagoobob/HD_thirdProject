@@ -1,3 +1,8 @@
+/*********************************
+ * @function : 결제 수단 정보를 담는 VO
+ * @author : 차민수
+ * @Date : Feb 06. 2023.
+ *********************************/
 package org.goonagoobob.domain.order;
 
 import lombok.Getter;
