@@ -1,3 +1,11 @@
+
+/*********************************
+ * @function : 인증절차 인터페이스 작성
+ * @author : 이세은
+ * @Date : Feb 1. 2023
+ * 
+ *********************************/
+
 package org.goonagoobob.security.provider;
 
 import org.springframework.beans.factory.annotation.Autowired;

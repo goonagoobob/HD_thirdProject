@@ -1,3 +1,11 @@
+
+/*********************************
+ * @function : 사용자 정보 반환 타입 설정
+ * @author : 이세은
+ * @Date : Feb 1. 2023
+ * 
+ *********************************/
+
 package org.goonagoobob.security.service;
 
 import java.util.Collection;

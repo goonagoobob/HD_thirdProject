@@ -1,3 +1,10 @@
+/*********************************
+ * @function : member Mapper 테스트 코드
+ * @author : 이세은
+ * @Date : Feb 9. 2023
+
+ *********************************/
+
 package org.goonagoobob.mapper.member;
 
 import java.sql.SQLException;
@@ -23,6 +30,7 @@ public class memberMapperTests {
 	private PasswordEncoder passwordEncoder;
 
 	
+	//회원가입 test
 	@Test
 	public void testInsert() throws SQLException, ParseException{
 		
@@ -51,12 +59,16 @@ public class memberMapperTests {
 		
 	}
 	
+	
+	//id로 회원 정보 전체 확인
 	@Test
 	public void selectByID() {
 		String mid="user1";
 		System.out.println(memberMapper.selectById(mid));
 	}
 	
+	
+	//id 찾기
 	@Test
 	public void findId() {
 		String mname = "user2ChangeName";
@@ -65,7 +77,7 @@ public class memberMapperTests {
 		System.out.println(memberMapper.findId(mname, mbirth));
 	}
 	
-	
+	//회원정보 변경
 	@Test
 	public void changeMemberInfo() {
 		memberChangeInfo mCI = new memberChangeInfo();
@@ -76,16 +88,19 @@ public class memberMapperTests {
 		System.out.println(memberMapper.updateMemberInfo(mCI));
 	}
 	
+	//이메일 중복 확인
 	@Test
 	public void emailDoubleCheck() {
 		System.out.println(memberMapper.emailDoubleCheck("user1", "user3@email"));
 	}
 	
+	//회원 탈퇴
 	@Test
 	public void memberOut() {
 		System.out.println(memberMapper.memberOut("user8"));
 	}
 	
+	//비밀번호 변경
 	@Test
 	public void changePassword() {
 		String mid = "user5";

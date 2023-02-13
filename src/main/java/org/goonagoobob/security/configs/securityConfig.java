@@ -1,3 +1,11 @@
+
+/*********************************
+ * @function : 시큐리티 환경설정
+ * @author : 이세은
+ * @Date : Feb 13. 2023
+ * 
+ *********************************/
+
 package org.goonagoobob.security.configs;
 
 import org.goonagoobob.security.handler.CustomLoginSuccessHandler;
@@ -25,15 +33,15 @@ import lombok.extern.log4j.Log4j2;
 public class securityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
-	private UserDetailsService userDetailsService; // 이 모양으로 반납해줄 .,,, bean 설정해놓음
+	private UserDetailsService userDetailsService; 
 
-	// AuthenticationProvider
+	//AuthenticationProvider
 	@Bean
 	public AuthenticationProvider authenticationProvider() {
 		return new CustomAuthenticationProvider();
 	}
 
-	// AuthenticationManagerBuilder
+	//AuthenticationManagerBuilder
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.authenticationProvider(authenticationProvider());
@@ -47,10 +55,10 @@ public class securityConfig extends WebSecurityConfigurerAdapter {
 		web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
 	}
 
-	// 4. 스프링 시큐리티 규칙
+	//스프링 시큐리티 규칙
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		// http.csrf().disable();
+		// http.csrf().disable(); csrf 보안 설정 비활성화
 
 		http.authorizeHttpRequests()
 
@@ -66,9 +74,9 @@ public class securityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/product/main1").permitAll()
 				.antMatchers("/product/productDetail").permitAll()
 				.antMatchers("/product/productList").permitAll().antMatchers("/product/productListMore").permitAll()
-				.antMatchers("/product/reviewAdd").permitAll().anyRequest().authenticated(); // csrf 보안 설정 비활성화
+				.antMatchers("/product/reviewAdd").permitAll().anyRequest().authenticated(); 
 
-		// .addFilter(jwtAuthorizationFilter()) 해야함
+		
 
 		http.formLogin().loginPage("/member/login").loginProcessingUrl("/member/login").usernameParameter("username")
 				.passwordParameter("password").successHandler(new CustomLoginSuccessHandler())
@@ -78,6 +86,7 @@ public class securityConfig extends WebSecurityConfigurerAdapter {
 
 	}
 
+	//암호 인코딩
 	@Bean
 	PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();

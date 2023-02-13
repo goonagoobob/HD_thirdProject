@@ -35,8 +35,7 @@
 	<select id="findId" resultType="String">
 		select mid
 		from member
-		where mname
-		= #{mname} and mbirth = #{mbirth} and menabled = 1
+		where mname = #{mname} and mbirth = #{mbirth} and menabled = 1
 	</select>
 
 	<!-- 개인정보변경 -->

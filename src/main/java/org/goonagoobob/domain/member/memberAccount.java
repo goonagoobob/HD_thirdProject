@@ -1,3 +1,10 @@
+/*********************************
+ * @function : 회원전체정보 VO
+ * @author : 이세은
+ * @Date : Jan 30. 2023
+ * 
+ *********************************/
+
 package org.goonagoobob.domain.member;
 
 import lombok.Data;

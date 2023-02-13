@@ -1,3 +1,14 @@
+/*********************************
+ * @function : 회원정보, 마이페이지 Controller
+ * @author : 이세은
+ * @Date : Jan 31. 2023. ~ Feb 13.2023
+ * 비밀번호 재확인 기능 구현 Feb 10. 2023
+ * 비밀번호 변경 기능 구현 Feb 11. 2023
+ * 개인정보 변경 기능 구현 Feb 12. 2023
+ * 이메일 중복 체크 
+ * 회원 탈퇴 기능 구현 
+ *********************************/
+
 package org.goonagoobob.controller.myPage;
 
 import java.security.Principal;
