@@ -1240,8 +1240,9 @@ rotate(
               <div class="s-tit"> <b>마일리지</b></div>
               <div id="mypageCouponList">
                 <div class="s-coupon">
-                  <div class="s-coupon-inner"> <strong>당신의 마일리지는</strong><b>10,000Point</b> <span>2023-02-01
+                  <div class="s-coupon-inner"> <strong>당신의 마일리지는</strong><b>[[${mileage}]]</b> <span th:text="${mileage}">2023-02-01
                       ~ 2023-07-31</span></div>
+                      <span th:text="*{mileage}"></span>
                 </div>
               </div>
               </div>
@@ -1249,7 +1250,7 @@ rotate(
             </div>
 
           </div>
-
+	
           <!-- //혜택 -->
 
           <!-- 정보// -->
@@ -1353,7 +1354,7 @@ STAR / MANIA / CREW / FRIEND
 
            
                 <div class="s-btn">
-                <span>user1user1</span>
+                <span th:text="${address}"></span>
                   <!-- <a href="/ko/mypage/mydelivery">배송지 관리</a> -->
                 </div>
               </div>
@@ -1384,7 +1385,7 @@ STAR / MANIA / CREW / FRIEND
       </div>
 
       <div class="mypage_card_footer">
-        <span>user1</span>
+        <span sec:authentication="name"></span>
         <a class="u_profile_setting btn_popup_btot" href=".hs_mpg_profile_pop" onclick="GA_Event('마이페이지','푸터','프로필 설정')">프로필 설정</a>
         <div class="u_setting">
           <!-- 알림 있으면 has 클래스 붙음 -->

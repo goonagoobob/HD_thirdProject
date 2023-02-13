@@ -1095,7 +1095,7 @@ rotate
 		
 		if(mid == null || mpassword == null|| mpwc == null ||
 		   memail == null || mphone == null || mname == null||
-		   mzipcode == null || maddress1 == null || maddress2 == null || mgender || null || mbirth == null){
+		   mzipcode == null || maddress1 == null || maddress2 == null || mgender == null || mbirth == null){
 			
 			alert("빈 칸을 채워주세요");	
 			return;
@@ -1303,9 +1303,9 @@ rotate
 									<input type="text" id="memail" name="memail" class="user_email"
 										placeholder="이메일을 입력하세요." title="이메일을 입력하세요." maxlength="100" required>
 								</div>
-								<div class="err_wrap">
+								<!-- <div class="err_wrap">
 									<p class="err_txt" id="emailMsg">이미 사용중인 이메일입니다.</p>
-								</div>
+								</div> -->
 								<div class="check_stl chk_area">
 									<input type="checkbox" id="chk_agree" name="emailReceiveYn"
 										value="Y"> <label for="chk_agree"> 이메일을 통한 상품
