@@ -1,10 +1,13 @@
 <!-- *********************************
  * @function : 상품 상세 페이지
- * @author : 조일우
+ * @author : 차민수, 조일우, 김주혜 
  * @Date : Feb 6. 2023
  * 상품 상세 레이아웃 완성 Feb 6. 2023
  * 컬러칩 변경 기능 추가 Feb 7. 2023
  * 상품 슬라이드. 상품 수량 선택 기능 추가 Feb 7. 2023
+ * 상품 바로구매 기능 구현
+ * 장바구니 insert 기능 구현
+ * 상품 리뷰 추가 Feb 13. 2023
  ********************************* -->
 
 <html xmlns:th="http://www.thymeleaf.org"
@@ -325,9 +328,16 @@ var display = true;
 		con.style.display = "none";
 	}
  }
-
+ /* *********************************
+  * @function : 장바구니
+  * @author : 김주혜
+  * 장바구니 insert 구현
+    : 장바구니 담기 버튼 클릭시 더한섬닷컴의 기존 객체를 이용해
+    수량, psid를 받아 장바구니에 insert
+    token, header는 시큐리티를 통해 값을 받아오기 위한 것임
+    장바구니에 있는 상품은 중복하여 담지 않도록 함.
+  **********************************/
 $(document).ready(function(){
-	// 장바구니 추가-김주혜
  	$("#insertcartbutton").click(function() {
 		var pquantity = $('#ordQty').attr('value');
 		var psid = $("#copy_btn_clipboard").text();
@@ -571,6 +581,7 @@ $(document).ready(function(){
 					<!-- 팝업 링크 -->
 					<script th:inline="javascript">
 					var main_bul = false;
+					//상품평 작성창 닫기
 					function closePop(e){
 						$('.vsc-initialized').removeClass('hidden');
 						$(e).parent().removeClass("visible");
@@ -580,6 +591,7 @@ $(document).ready(function(){
 						$(e).parent().parent().removeClass("active");
 						$(e).parent().parent().removeClass("activated");
 					};
+					//헤더 상품 이미지 반이상 스크롤시 사라짐
 					function PHS (){
 					    var $header = $('header.hsome_header.product_header'),
 					        $win = $(window),
@@ -628,7 +640,7 @@ $(document).ready(function(){
 					
 						/* slide */
 						var interleaveOffset = 0.5;
-
+						//슬라이드 시작
 						var swiperOptions = {
 						speed: 500,
 						pagination: {
@@ -665,6 +677,7 @@ $(document).ready(function(){
 						    }
 						}
 						};
+						//스와이퍼 리셋
 						function resetVwSwiper() {
 
 					        var vwSwiper = new Swiper('.vw_swiper.swiper-container', swiperOptions);
@@ -707,13 +720,16 @@ $(document).ready(function(){
 						
 							 
 						});
+						
 						var price = $('#strPrice').text();
 						price = price.substr(1);
 						price = price.replace(',','');
 						price =  parseInt(price);
+						//상품 가격 원화로 변경
 						function comma(x) {
 						    return '₩'+x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 						}
+						//상품 수량 증가
 						function qtyPlus(){
 							var qty = $('#ordQty').val();	
 							qty++;
@@ -726,6 +742,7 @@ $(document).ready(function(){
 							
 							
 						}
+						//상품 갯수 감소
 						function qtyMinus(){
 							var qty = $('#ordQty').val();	
 							qty--;
@@ -738,6 +755,7 @@ $(document).ready(function(){
 							
 						
 						}
+						//상품 사이즈 변경
 						function sizeBtnClick(elem) {
 						    $(".pre_order_txt191007").hide();
 						    $('.hs_btn_size_wrap .size_area .size').removeClass('on');

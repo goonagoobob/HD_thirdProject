@@ -1,9 +1,7 @@
 /*********************************
  * @function : Cart Controller 
  * @author : 김주혜
- * @Date : Feb 6. 2023
- * 카트목록 Controller 추가 Feb 6. 2023
- * 카트삭제 Controller 추가 Feb 7. 2023
+ * 카트목록 Controller 구현
  *********************************/
 
 
@@ -39,7 +37,6 @@ public class cartController {
 		log.info(mid);
 		List<cartVO> list = service.getCartList(mid);
 		model.addAttribute("list", list);
-
 	}
 	
 

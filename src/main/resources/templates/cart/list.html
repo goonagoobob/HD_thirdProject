@@ -352,7 +352,7 @@ $('select.sodsb').selectOrDie();
 								<!-- goods_option_info_mid s -->
 								<div class="gl_mid">
 									<div class="gl_tit">
-										<a href="#" onclick="setEcommerceData('0', 'Click ADD');"> 
+										<a href="#" > 
 										<img th:src="${list.pcimg1}" class="gl_thumbimg" alt="">
 										</a>
 									</div>
@@ -1656,7 +1656,11 @@ document.writeln("<scr"+"ipt language='javascript' src='" + TRS_URL + "'></scr"+
 
 
 <script>
-//사이즈 및 색상 이름 뿌리기-김주혜
+/* *********************************
+* @function : 사이즈 및 색상 이름 부여
+* @author : 김주혜
+* selectsize function을 onclick 태그로 걸어놓은 후
+*********************************  */
 function selectsize(pid, colorname, idx){
 	var tag = "";
 	tag += `<span class="sct_v" id="cname">`
@@ -1721,7 +1725,13 @@ function selectsize(pid, colorname, idx){
 	});
 }
 
-//카트 옵션 변경-김주혜
+/* *********************************
+* @function : 옵션 변경
+* @author : 김주혜
+* 현재 색상과 psid를 가지고
+* 옵션 변경 창에서 선택한 값으로 변경하는
+* update문을 사용해 구현
+*********************************  */
 function updatecart(pid, psid, idx, pquantity){
 	var qid = "quantity_" + idx;
 	var sid = "gl_slr_size_" + idx;
@@ -1763,8 +1773,11 @@ function updatecart(pid, psid, idx, pquantity){
 	
 	
 }
-
-//색상 뿌리기-김주혜
+/* *********************************
+* @function : 각 pcid 당 사이즈 조회
+* @author : 김주혜
+* 고유 값을 위해 index 사용해 id 부여
+*********************************  */
 function selectColor(psid, idx){
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
@@ -1832,7 +1845,11 @@ function selectColor(psid, idx){
 	});
 		
 }
-
+/* *********************************
+* @function : 선택 상품 주문서 페이지로 이동
+* @author : 차민수
+* 선택된 상품 리스트 entryNumber와 상품 개수 데이터 전달
+*********************************  */
 function orderProduct(entryNumber) {
       console.log("주문하기 버튼 클릭");
       var msgStr = "";
@@ -1872,7 +1889,13 @@ function orderProduct(entryNumber) {
       }
     }
 
-//개별삭제-김주혜
+/* *********************************
+* @function : 선택 상품 삭제
+* @author : 김주혜
+* 기존 entryNumber에 psid를 넣어
+* entryNumber에 해당하는 psid와 로그인 멤버 정보를 이용해
+* 선택 상품 삭제 구현
+*********************************  */
 function eachdelete(psid, idx){
 var la = new layerConfirm('선택하신 상품을 쇼핑백에서 삭제하시겠습니까?','확인','취소');
 la.confirmAction = function(){//확인 호출 펑션
@@ -1899,7 +1922,6 @@ la.confirmAction = function(){//확인 호출 펑션
 	};
 		
 };
-// 선택삭제-김주혜
 function selectRemove(entryNumber) {
 var msgStr = "";
 
@@ -1966,7 +1988,12 @@ la.confirmAction = function(){//확인 호출 펑션
 
 };
 }
-// 선택 상품 total price - 김주혜
+/* *********************************
+* @function : 선택 상품 및 전체 상품 개수와 가격 설정
+* @author : 김주혜
+* 각 id와 class에 값을 부여한다.
+* 가격은 천 단위 표시를 위해 toLocaleString()을 이용했다.
+*********************************  */
 var totalcheckprice = 0;
 var allproduct = 0;
 var selcount = 0;
@@ -2025,6 +2052,7 @@ $("input[name='cartlist']").on('click', function(){
 </body>
 
 <script>
+// 선택한 상품 사이즈의 값을 받아오기 위한 스크립트 - 김주혜
 $(document).on("change",".sodsb", function(){
     var selectedOption = $(this).find(':selected').text();
     console.log(selectedOption);

@@ -1,8 +1,7 @@
 /*********************************
  * @function : cartVO 
  * @author : 김주혜
- * @Date : Feb 6. 2023
- * vo 수정 : Feb 7. 2023
+ * 카트 목록 탐색을 위한 VO
  *********************************/
 
 package org.goonagoobob.domain.cart;
