@@ -159,7 +159,7 @@ where p.pid = pc.pid and pc.cateno = c.cateno and
 									</when>
 									<otherwise>
 									<![CDATA[
-depth1name = #{depth1} and depth2name = #{depth2}
+										depth1name = #{depth1} and depth2name = #{depth2}
                                         ${orderBy}
 										)
                                         where
@@ -170,7 +170,7 @@ depth1name = #{depth1} and depth2name = #{depth2}
 							</when>
 							<otherwise>
 							<![CDATA[
-depth1name = #{depth1}
+										depth1name = #{depth1}
                                         ${orderBy}
 										)
                                         where
@@ -236,7 +236,7 @@ depth1name = #{depth1}
 		<select id="newCount" resultType="int">
 	<![CDATA[
 	
-                                       select count(*) from product_color where preleasedate between (SELECT SYSDATE - 1 FROM dual) and sysdate
+                                       select count(*) from product_color where preleasedate between (SELECT SYSDATE - 3 FROM dual) and sysdate
                                        
                          ]]>
 	</select>	

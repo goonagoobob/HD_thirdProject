@@ -64,15 +64,12 @@ public class productController {
 			if (depth1 != null) {
 				if (depth2 != null) {
 					depth0 = depth2;
-					System.out.println("depth2 :" + depth2);
 				} else {
 					depth0 = depth1;
-					System.out.println("depth1 :" + depth1);
 				}
 
 			} else {
 				depth0 = brand;
-				System.out.println("brand :" + brand);
 			}
 		} else {
 			if (depth2 == null) {
@@ -182,6 +179,7 @@ public class productController {
 		List<productCommonVO> newVO = service.getNewList();
 		List<productCommonVO> bestVO = service.getBestList();
 		int newCount = service.newCount();
+		System.out.println(newCount);
 		model.addAttribute("bestVO", bestVO);
 		model.addAttribute("newVO", newVO);
 		model.addAttribute("newCount", newCount);

@@ -227,19 +227,11 @@
 				</h1>
 				<div class="h_leftMenu">
 					<a href="javascript:noLink();"
-						onclick="GA_Event('상품_상세','헤더','이전');goBack();" class="h_prev">이전
-						페이지로 가기</a> <a href="/ko/main" class="h_home"
+						onclick="window.history.back()" class="h_prev">이전
+						페이지로 가기</a> <a href="/" class="h_home"
 						onclick="GA_Event('상품_상세','헤더','홈');" style="display: block;">Home</a>
 				</div>
 
-				<ul class="h_gnbMenu">
-					<li class="share" style="display: list-item;"><a
-						href=".hs_share_pop" class="btn_popup_btot"
-						onclick="javascript:GA_Event('상품_상세','헤더','공유');initShareData('/ko/p/','IL2C9TTO870N_BK?uiel=Mobile', 'http://newmedia.thehandsome.com/IL/2C/FW/IL2C9TTO870N_BK_C01.jpg','[LÄTT] 울 블렌드 하이넥 탑', '울 블렌드 하이넥 탑')"><span>공유하기</span></a></li>
-					<li class="like"><a href="javascript:noLink();"
-						onclick="GA_Event('상품_상세', '좋아요', '울 블렌드 하이넥 탑');"><span>좋아요</span></a></li>
-					<!-- 찜 선택시 class.on 추가 -->
-				</ul>
 			</header>
 			<!-- //################## header ################## -->
 			<!-- ################## contents ################## -->
@@ -417,15 +409,6 @@ $(document).ready(function(){
 									<!-- input text만 복사 가능하여 품번 복사를 위한 영역을 지정 -->
 								</div>
 
-								<div class="pos_btn">
-
-									<a href=".product-style-pop" id="style_aLink"
-										class="style btn_popup_trigger"
-										onclick="GA_Event('상품_상세', '코디스타일', '클릭');"
-										style="display: inline-block;">스타일</a> <a href=".hs_share_pop"
-										onclick="javascript:initShareData('/ko/p/','IL2C9TTO870N_BK?uiel=Mobile', 'http://newmedia.thehandsome.com/IL/2C/FW/IL2C9TTO870N_BK_C01.jpg','[LÄTT] 울 블렌드 하이넥 탑', '울 블렌드 하이넥 탑')"
-										class="share btn_popup_btot">공유</a>
-								</div>
 							</div>
 							<!--// 상품 정보 -->
 
@@ -797,7 +780,7 @@ $(document).ready(function(){
 								</div>
 							</div>
 							<div class="btn_wrap btns">
-								<button class="btn btn_bd_g btn-alert-close" onclick="/">계속
+								<button class="btn btn_bd_g btn-alert-close" onclick="">계속
 									쇼핑하기</button>
 								<button class="btn btn_bg_b btn-alert-confirm" id="gocart">쇼핑백
 									바로가기</button>
@@ -825,53 +808,66 @@ $(document).ready(function(){
 
 
 					<div class="vw_prd_review pv-element">
-						<h2 class="hs_top_bold_tit01" th:if="${reviewVO != null}" th:text="'상품평('+${reviewVO.size}+')'"></h2>
-						<h2 class="hs_top_bold_tit01" th:if="${reviewVO == null}" >상품평(0)</h2>
-						<div id="starscore" class="star_wrap" th:if="${reviewVO != null}">
-							<div class="hs_star_score" th:if="${reviewVO != null}"><!-- 
-								<i class="on" th:if="${#numbers.formatDecimal(#aggregates.sum(reviewVO.![RATING])*1.0 / #lists.size(reviewVO), 1, 1)} >= 1">1점</i> 
-					 			<i class="" th:if="${#numbers.formatDecimal(#aggregates.sum(reviewVO.![RATING])*1.0 / #lists.size(reviewVO), 1, 1)} < 1">1점</i> 
-								<i class="on" th:if="${#numbers.formatDecimal(#aggregates.sum(reviewVO.![RATING])*1.0 / #lists.size(reviewVO), 1, 1)} >= 2">2점</i> 
-								<i class="" th:if="${#numbers.formatDecimal(#aggregates.sum(reviewVO.![RATING])*1.0 / #lists.size(reviewVO), 1, 1)} < 2">2점</i> 
-								<i class="on" th:if="${#numbers.formatDecimal(#aggregates.sum(reviewVO.![RATING])*1.0 / #lists.size(reviewVO), 1, 1)} >= 3">3점</i> 
-								<i class="" th:if="${#numbers.formatDecimal(#aggregates.sum(reviewVO.![RATING])*1.0 / #lists.size(reviewVO), 1, 1)} < 3">3점</i> 
-								<i class="on" th:if="${#numbers.formatDecimal(#aggregates.sum(reviewVO.![RATING])*1.0 / #lists.size(reviewVO), 1, 1)} >= 4">4점</i> 
-								<i class="" th:if="${#numbers.formatDecimal(#aggregates.sum(reviewVO.![RATING])*1.0 / #lists.size(reviewVO), 1, 1)} < 4">4점</i> 
-								<i class="on" th:if="${#numbers.formatDecimal(#aggregates.sum(reviewVO.![RATING])*1.0 / #lists.size(reviewVO), 1, 1)} >= 5">5점</i> 
-								<i class="" th:if="${#numbers.formatDecimal(#aggregates.sum(reviewVO.![RATING])*1.0 / #lists.size(reviewVO), 1, 1)} < 5">5점</i>  -->
+						<h2 class="hs_top_bold_tit01" th:if="${reviewVO.size > 0}"
+							th:text="'상품평('+${reviewVO.size}+')'"></h2>
+						<h2 class="hs_top_bold_tit01" th:if="${reviewVO == null}">상품평(0)</h2>
+						<div id="starscore" class="star_wrap" th:if="${reviewVO.size > 0}">
+							<div class="hs_star_score" th:if="${reviewVO != null}">
+							
+								<i class="on" th:if="${reviewVO.size > 0} and ${#numbers.formatDecimal(#aggregates.sum(reviewVO.![RATING])*1.0 / #lists.size(reviewVO), 1, 1)} >= 1">1점</i> 
+					 			<i class="" th:if="${reviewVO.size > 0} and ${#numbers.formatDecimal(#aggregates.sum(reviewVO.![RATING])*1.0 / #lists.size(reviewVO), 1, 1)} < 1">1점</i> 
+								<i class="on" th:if="${reviewVO.size > 0} and ${#numbers.formatDecimal(#aggregates.sum(reviewVO.![RATING])*1.0 / #lists.size(reviewVO), 1, 1)} >= 2">2점</i> 
+								<i class="" th:if="${reviewVO.size > 0} and ${#numbers.formatDecimal(#aggregates.sum(reviewVO.![RATING])*1.0 / #lists.size(reviewVO), 1, 1)} < 2">2점</i> 
+								<i class="on" th:if="${reviewVO.size > 0} and ${#numbers.formatDecimal(#aggregates.sum(reviewVO.![RATING])*1.0 / #lists.size(reviewVO), 1, 1)} >= 3">3점</i> 
+								<i class="" th:if="${reviewVO.size > 0} and ${#numbers.formatDecimal(#aggregates.sum(reviewVO.![RATING])*1.0 / #lists.size(reviewVO), 1, 1)} < 3">3점</i> 
+								<i class="on" th:if="${reviewVO.size > 0} and ${#numbers.formatDecimal(#aggregates.sum(reviewVO.![RATING])*1.0 / #lists.size(reviewVO), 1, 1)} >= 4">4점</i> 
+								<i class="" th:if="${reviewVO.size > 0} and ${#numbers.formatDecimal(#aggregates.sum(reviewVO.![RATING])*1.0 / #lists.size(reviewVO), 1, 1)} < 4">4점</i> 
+								<i class="on" th:if="${reviewVO.size > 0} and ${#numbers.formatDecimal(#aggregates.sum(reviewVO.![RATING])*1.0 / #lists.size(reviewVO), 1, 1)} >= 5">5점</i> 
+								<i class="" th:if="${reviewVO.size > 0} and ${#numbers.formatDecimal(#aggregates.sum(reviewVO.![RATING])*1.0 / #lists.size(reviewVO), 1, 1)} < 5">5점</i>  
 							</div>
 							<p class="txt">상품 만족도</p>
 						</div>
-
+							<p class="no_review" th:if="${reviewVO.size < 1}">
+									등록된 상품평이 없습니다.<br>이 상품에 대한 첫 번째 리뷰 글을 작성해 주세요.<span
+										class="no_review_txt1905"> <strong>온라인 구매 후
+											상품평 작성 시 추가 마일리지를 드립니다!</strong><br> <span>*최초 ‘포토 상품평’은
+											추가로 2,000마일리지를 더 드려요~</span>
+									</span>
+								</p>
 						<!-- 상품상세 아래 상품평 목록  -->
 						<div
 							class="swiper-container review_slide swiper-container-horizontal swiper-container-ios swiper-container-wp8-horizontal"
-							style="height: 350px;">
-							<ul id="reviewLst" class="swiper-wrapper"
+							style="height: 350px;" th:if="${reviewVO.size > 0}">
+
+							<ul id="reviewLst" class="swiper-wrapper" th:if="${reviewVO.size > 0}"
 								style="transform: translate3d(0px, 0px, 0px);">
+								
 								<li th:each="list : ${reviewVO}"
 									class="swiper-slide swiper-slide-active"
-									style="margin-right: 10px;"   th:if="${list.MID == mid}">
-									<a 
+									style="margin-right: 10px;" th:if="${list.MID == mid}"><a
 									href=".product_comment_pop"
 									class="hs_prd_review_cont btn_popup_trigger">
 										<div class="pro">
-										<div class="img_wrap"><span class="img"><img src="http://www.thehandsome.com/_ui/handsomemobile/images/content/no_pro_img.png" alt=""></span></div>
+											<div class="img_wrap">
+												<span class="img"><img
+													src="http://www.thehandsome.com/_ui/handsomemobile/images/content/no_pro_img.png"
+													alt=""></span>
+											</div>
 											<div class="txt">
 												<p class="name" th:text="${list.MID}">cut*****</p>
 												<p class="data" th:text="${list.RV_DATE}">2023.02.03</p>
 											</div>
 										</div>
 										<div class="hs_star_score">
-											<i class="on" >1점</i> 
-											<i class="on"th:if="${list.RATING >= 2}">2점</i> 
-												<i class=""	th:if="${list.RATING < 2}">2점</i> 
-												<i class="on" th:if="${list.RATING >= 3}">3점</i> 
-												<i class=""	th:if="${list.RATING < 3}">3점</i> 
-												<i class="on"	th:if="${list.RATING >= 4}">4점</i> 
-												<i class=""	th:if="${list.RATING < 4}">4점</i> 
-												<i class="on"	th:if="${list.RATING >= 5}">5점</i> 
-												<i class="" th:if="${list.RATING < 5}">5점</i>
+											<i class="on">1점</i> <i class="on"
+												th:if="${list.RATING >= 2}">2점</i> <i class=""
+												th:if="${list.RATING < 2}">2점</i> <i class="on"
+												th:if="${list.RATING >= 3}">3점</i> <i class=""
+												th:if="${list.RATING < 3}">3점</i> <i class="on"
+												th:if="${list.RATING >= 4}">4점</i> <i class=""
+												th:if="${list.RATING < 4}">4점</i> <i class="on"
+												th:if="${list.RATING >= 5}">5점</i> <i class=""
+												th:if="${list.RATING < 5}">5점</i>
 										</div>
 										<div class="info">
 											<ul class="info_list choice">
@@ -886,19 +882,22 @@ $(document).ready(function(){
 												th:text="${list.RV_TEXT}">와우!!!!세상 따뜻해요. 얇아서 속내의처럼 입고
 											있습니다. 목둘레가 좀 널널해서 아래로 좀 내려가지만 편하게 입겠습니다.</xmp>
 										</div>
-										
+
 										<div class="hs_prd_review_btns">
-											 <a	class="del"	onclick="javascript:deleteReview('+reviewList[i].id+')">삭제</a>
-										</div>
-								</li>
+											<a class="del"
+												onclick="javascript:deleteReview('+reviewList[i].id+')">삭제</a>
+										</div></li>
 								<li th:each="list : ${reviewVO}"
 									class="swiper-slide swiper-slide-active"
-									style="margin-right: 10px;" th:if="${list.MID != mid}">
-									<a 
+									style="margin-right: 10px;" th:if="${list.MID != mid}"><a
 									href=".product_comment_pop"
 									class="hs_prd_review_cont btn_popup_trigger">
 										<div class="pro">
-											<div class="img_wrap"><span class="img"><img src="http://www.thehandsome.com/_ui/handsomemobile/images/content/no_pro_img.png" alt=""></span></div>
+											<div class="img_wrap">
+												<span class="img"><img
+													src="http://www.thehandsome.com/_ui/handsomemobile/images/content/no_pro_img.png"
+													alt=""></span>
+											</div>
 											<div class="txt">
 												<p class="name" th:text="${list.MID}">cut*****</p>
 												<p class="data" th:text="${list.RV_DATE}">2023.02.03</p>
@@ -931,14 +930,12 @@ $(document).ready(function(){
 											있습니다. 목둘레가 좀 널널해서 아래로 좀 내려가지만 편하게 입겠습니다.</xmp>
 										</div>
 								</a></li>
-								
+
 							</ul>
 						</div>
 						<br> <a id="writeReviewBtn"
 							class="hs_white_comm_btn full btn_popup_trigger write_review1907"
-							onclick="reviewCheck()">상품평 작성하기</a> <a href="#"
-							onclick="javascript:goCustomerReviews();GA_Event('상품_상세', '상품평', '전체보기');"
-							class="more_btn">전체보기<!-- 전체보기 --> <i class="arr wid7 right"></i></a>
+							onclick="reviewCheck()">상품평 작성하기</a>
 					</div>
 
 					<!--// 상품평 -->
@@ -949,9 +946,9 @@ $(document).ready(function(){
 				<!-- 사전예약 -->
 				<div class="hs_btm_btnwrap two pre_order1905">
 					<input type="hidden" name="${_csrf.parameterName}"
-						value="${_csrf.token}" /> <input type="hidden" id="psid" name="psid"
-						th:value="${psid}" /> <input type="hidden" name="mid" id="mid"
-						th:value="${mid}" /> <input type="hidden"
+						value="${_csrf.token}" /> <input type="hidden" id="psid"
+						name="psid" th:value="${psid}" /> <input type="hidden" name="mid"
+						id="mid" th:value="${mid}" /> <input type="hidden"
 						name="pquantity" value="$('#ordQty').attr('value')" />
 					<button type="button" class="hs_btm_btn black"
 						id="insertcartbutton"
@@ -1937,16 +1934,18 @@ $(document).ready(function(){
 
 		<!-- 상품평 쓰기 -->
 		<form id="reviewForm" name="reviewForm" method="post"
-			action="/product/reviewAdd" enctype="multipart/form-data">
+			action="/product/reviewAdd" enctype="multipart/form-data"
+			onsubmit="return checkingValidation(this)">
 			<input type="hidden" name="_csrf" id="CSRFToken"
 				th:value="${_csrf.token}"> <input type="hidden"
 				name="productCode" id="productCode" value="IL2C9TTO870N_BK">
 			<input type="hidden" name="productCodeType"> <input
 				type="hidden" name="orderNumber" id="orderNumber" value="">
 			<input type="hidden" name="purchaseColor" id="purchaseColor" value="">
-			<input type="hidden" name="psid" id="psid" th:if="${mid != null}" th:value="${psid}"> 
-			<input type="hidden" name="pid" id="pid" th:value="${productVO.pid}">
-			<input type="hidden" name="pcid" id="pcid" th:value="${pcid}"><input
+			<input type="hidden" name="psid" id="psid" th:if="${mid != null}"
+				th:value="${psid}"> <input type="hidden" name="pid" id="pid"
+				th:value="${productVO.pid}"> <input type="hidden"
+				name="pcid" id="pcid" th:value="${pcid}"><input
 				type="hidden" name="purchaseColorName" id="purchaseColorName"
 				value=""> <input type="hidden" name="purchaseSize"
 				id="purchaseSize" value=""> <input type="hidden"
@@ -2267,7 +2266,7 @@ $(document).ready(function(){
 										maxlength="200"></textarea>
 								</div>
 								<div class="cont"></div></li>
-							
+
 						</ul>
 					</div>
 					<div class="hs_gray_bdtop_area">
@@ -2383,113 +2382,54 @@ $(document).ready(function(){
 			<a href="#" class="pop-comm-cls">닫기<!-- 닫기 --></a>
 		</div>
 		<script>
-var scrollAgeSwiper = new Swiper('.product_comment_write_pop1905 .rd_box_radio_wrap.age.swiper-container', {//연령 Swiper
-    slidesPerView: 'auto',
-    freeMode: true,
-    spaceBetween: 4
-});
+		//나잇대 선택 스와이퍼 활성화 
+		var scrollAgeSwiper = new Swiper('.product_comment_write_pop1905 .rd_box_radio_wrap.age.swiper-container', {//연령 Swiper
+    			slidesPerView: 'auto',
+    			freeMode: true,
+    			spaceBetween: 4	
+		});
+		//파일첨부 스와이퍼 활성
+		var fileAttachSlide2003 = new Swiper('.attachment_list1901.swiper-container', {
+  			  freeMode: true ,
+ 			  loop: false,
+ 			   slidesPerView: 3.5,
+  			  spaceBetween: 8
+		});
+		//물품 평점 클릭 애니메이션 적용 
+		$('.hsome_layer_popup.product_comment_write_pop1905 .hs_star_score .btn .full').on('click', function() {
+		    $('#rating').val($(this).attr('data-value'));
 
-var fileAttachSlide2003 = new Swiper('.attachment_list1901.swiper-container', {
-    freeMode: true ,
-    loop: false,
-    slidesPerView: 3.5,
-    spaceBetween: 8
-});
+		    setFullStarState(this);
+		});
+		//물품 평점 클릭 애니메이션 적용
+		function setFullStarState(target) {
+    		$(target).addClass('star-colour');
+    		$(target).parent().addClass('animate');	
+    		//$(target).siblings('.half').addClass('star-colour');
 
-$('.hsome_layer_popup.product_comment_write_pop1905 .hs_star_score .btn .full').on('click', function() {
-    $('#rating').val($(this).attr('data-value'));
+    		updateStarState(target);
+		}
+		//물품 평점 클릭 애니메이션 적용
+		function updateStarState(target) {
+    		$(target).parent().prevAll().addClass('animate');
+    		$(target).parent().prevAll().children().addClass('star-colour');
 
-    setFullStarState(this);
-});
+    		$(target).parent().nextAll().removeClass('animate');
+    		$(target).parent().nextAll().children().removeClass('star-colour');
+		};
 
-function setFullStarState(target) {
-    $(target).addClass('star-colour');
-    $(target).parent().addClass('animate');
-    //$(target).siblings('.half').addClass('star-colour');
 
-    updateStarState(target);
-}
-function updateStarState(target) {
-    $(target).parent().prevAll().addClass('animate');
-    $(target).parent().prevAll().children().addClass('star-colour');
-
-    $(target).parent().nextAll().removeClass('animate');
-    $(target).parent().nextAll().children().removeClass('star-colour');
-};
-
-$('#registerCustomerReviewBtn').on('click', function() {//등록
-    $("#registerCustomerReviewBtn").attr('disabled', true); 
-    var checked = checkingValidation();
-    if ( checked ) {
-        //이미지있을경우
-        if ($(".attachment_list1901 .file_input").find('img').length > 0 && "ko" == "ko") {
-            if (Number(ko_time) < 20210901000000) {
-                if(!blockDoubleRegistry){
-                    blockDoubleRegistry = true;
-                    styleLiveRegistry = false;
-                    submitReviewForm();
-                    GA_Event('상품평 작성하기', '상품평 팝업', '포토상품평만 등록');
-                }
-            }  else if("MEMBER_UNION" == "MEMBER_EASY") {
-                if(!blockDoubleRegistry){
-                    blockDoubleRegistry = true;
-                    styleLiveRegistry = false;
-                    submitReviewForm();
-                    GA_Event('상품평 작성하기', '상품평 팝업', '포토상품평만 등록');
-                }
-            } else {
-                var lc = new layerConfirm('포토상품평이 등록 되었습니다. </br> <b>[스타일라이브]</b>에도 등록하겠습니까?','스타일라이브 등록','포토상품평만 등록');
-                lc.cancleAction = function() {//포토상품평 등록 호출 펑션
-                    if(!blockDoubleRegistry){
-                        blockDoubleRegistry = true;
-                        styleLiveRegistry = false;
-                        submitReviewForm();
-                        GA_Event('상품평 작성하기', '상품평 팝업', '포토상품평만 등록');
-                    }
-                };
-                lc.confirmAction= function() {//스타일라이브로 호출 펑션
-                    if(!blockDoubleRegistry){
-                        blockDoubleRegistry = true;
-                        styleLiveRegistry = true;
-                        submitReviewForm();
-                        GA_Event('상품평 작성하기', '상품평 팝업', '스타일라이브 등록');
-                    }
-                };				  
-            }
-            
-            //스타일라이브 관련 X 마크 삭제 20.06.10
-            $(".dvp_container #confirmCloseDiv").hide();
-            $("#registerCustomerReviewBtn").attr('disabled', false);
-        }else{
-            var lc = new layerConfirm('등록하시겠습니까?','확인','취소');
-            lc.cancleAction = function() {//취소 호출 펑션
-                $("#registerCustomerReviewBtn").attr('disabled', false);
-                blockDoubleRegistry = false;
-                return;
-            };
-            lc.confirmAction= function() {//확인 호출 펑션
-                if(!blockDoubleRegistry){
-                    blockDoubleRegistry = true;
-                    submitReviewForm();
-                }
-            };    
-        }
-        $("#confirmCloseDiv").click(function () {
-            $("#registerCustomerReviewBtn").attr('disabled', false);
-            GA_Event('상품평 작성하기', '상품평 팝업', '닫기');
-        });
-    } else {
-        $("#registerCustomerReviewBtn").attr('disabled', false);
-    }
-});
-function checkingValidation() {
+var checReviewForrm = false;
+//리뷰 폼 필수 입력칸 입력 확인 
+function checkingValidation(e) {
 	var inputNumberchk = /^[0-9]+$/; // 숫자 체크
 	var inputHangulchk = /[^ㄱ-ㅎ|ㅏ-ㅣ]+$/; // 초성(자음/모음) 체크
 		
 	if ( $("#height").val() == null || $.trim($("#height").val()) == '' ) {
         $("#labelHeight").css("color", "#ff0000");
         $("#labelHeight").css("font-weight","normal");
-        var la = new layerAlert('키를 입력해주세요.');
+            checReviewForrm = false;
+        alert('키를 입력해주세요.');
             setTimeout(function(){
                 $("#labelHeight").offset().top;
                 focusMove("labelHeight");
@@ -2503,6 +2443,7 @@ function checkingValidation() {
         $("#labelBodyType").css("font-weight","normal");
         focusMove("labelBodyType");
         $("#bodyType01").focus();
+        checReviewForrm = false;
         alert('체형을 선택해주세요.');
         
         $('input[name=bodyType]').on('click', function() {
@@ -2515,6 +2456,7 @@ function checkingValidation() {
     if ( $("#enjoySize").val() == null || $.trim($("#enjoySize").val()) == '' ) {
         $("#labelEnjoySize").css("color", "#ff0000");
         $("#labelEnjoySize").css("font-weight","normal");
+            checReviewForrm = false;
         alert('평소 사이즈를 입력해주세요.');
             setTimeout(function(){
                 $("#labelEnjoySize").offset().top;
@@ -2529,6 +2471,7 @@ function checkingValidation() {
 	        for(i=0; i<height.length; i++){
 	            var str = height.substr(i,1);
 	            if (!inputNumberchk.test(str)){
+	            	checReviewForrm = false;
 	                alert('키는 숫자로 입력해주세요.');
 	                return false;
 	            }
@@ -2541,6 +2484,7 @@ function checkingValidation() {
 	        for(i=0; i<enjoySize.length; i++){
 	            var str = enjoySize.substr(i,1);
 	            if (!inputHangulchk.test(str)){
+	                    checReviewForrm = false;
 	                alert('사이즈는 숫자, 영문, 한글로 정확하게 입력해주세요.');
 	                    $("#enjoySize").focus();
 	                return false;
@@ -2548,6 +2492,7 @@ function checkingValidation() {
 	        }
 	    }
 	    if( $("input[name=realWearSize1]:checked").length < 1 ) {
+	    	checReviewForrm = false;
 	       alert('실 착용 사이즈를 선택해주세요.');
 	        $(".hs_star_score_wrap").next().find("li:eq(0) > p").css("color", "#ff0000");
 	        $(".hs_star_score_wrap").next().find("li:eq(0) > p").css("font-weight","bold");
@@ -2558,9 +2503,10 @@ function checkingValidation() {
 	        });
 	        $('#realWearSize1_01').focus();
 	        focusMove("realWearSize1_01");
-	        return;
+	        return false;
 	    }
 	    if( $("input[name=realWearSize2]:checked").length < 1 ) {
+	    	checReviewForrm = false;
 	        alert('실 착용 사이즈를 선택해주세요.');
 	        $(".hs_star_score_wrap").next().find("li:eq(0) > p").css("color", "#ff0000");
 	        $(".hs_star_score_wrap").next().find("li:eq(0) > p").css("font-weight","bold");
@@ -2571,9 +2517,10 @@ function checkingValidation() {
 	        });
 	        $('#realWearSize2_01').focus();
 	        focusMove("realWearSize2_01");
-	        return;
+	        return false;
 	    }
 	    if( $("input[name=realWearSize3]:checked").length < 1 ) {
+	    	checReviewForrm = false;
 	        alert('실 착용 사이즈를 선택해주세요.');
 	        $(".hs_star_score_wrap").next().find("li:eq(0) > p").css("color", "#ff0000");
 	        $(".hs_star_score_wrap").next().find("li:eq(0) > p").css("font-weight","bold");
@@ -2584,9 +2531,10 @@ function checkingValidation() {
 	        });
 	        $('#realWearSize3_01').focus();
 	        focusMove("realWearSize3_01");
-	        return;
+	        return false;
 	    }
 	    if( $("input[name=realProductColor]:checked").length < 1 ){
+	    	checReviewForrm = false;
 	        alert('실 제품 색상을 선택해주세요.');
 	        $(".hs_star_score_wrap").next().find("li:eq(0)").next().find("> p").css("color", "#ff0000");
 	        $(".hs_star_score_wrap").next().find("li:eq(0)").next().find("> p").css("font-weight","bold");
@@ -2597,27 +2545,31 @@ function checkingValidation() {
 	        });
 	        $('#realProductColor01').focus();
 	        focusMove("realProductColor01");
-	        return;
+	        return false;
 	    }
 	    if ($('#headline').val().length == 0) {
+	    	checReviewForrm = false;
 	         alert('내용을 입력해주세요.');
 	        $("#headlinelabel").css("color", "#ff0000");
 	        $("#headlinelabel").css("font-weight","normal");
 	        $("#headline").focus();
 	        $("#headline").blur();
-	        return;
+	        return false;
 	    }
 	    
 	    if ($('#headline').val().length < 20) {
+	    	checReviewForrm = false;
 	        alert('상품평 내용은 20~200자 사이입니다.');
 	        $("#headlinelabel").css("color", "#ff0000");
 	        $("#headlinelabel").css("font-weight","normal");
 	        $("#headline").focus();
 	        $("#headline").blur();
-	        return;
+	        return false;
 	    }
+	    checReviewForrm = true;
+	    alert(checkingValidation());
 }
-
+//상품 리뷰 이미지 업로드 제한 
 $('form[name=reviewForm] input[type=file]').on('change', function() {
     var file = null;
     var maxSize = 10 * 1024 * 1024;
@@ -2642,7 +2594,7 @@ $('form[name=reviewForm] input[type=file]').on('change', function() {
          fileAttachLoadImg($(this)); // 유효성 체크 후, 미리보기 이미지 보여줌
     }
 });
-
+//미기입 요소로 이
 function focusMove(object) {
 var tp = $("#"+object+"").offset().top;
 var moveTp = tp - 300;
@@ -2650,10 +2602,13 @@ if(moveTp < 0) {
     moveTp = 0;
 }
 }
+//리뷰 스와이퍼 활성화 
 var reviewSwiper = new Swiper('.review_slide.swiper-container', {
     slidesPerView:'auto',
     spaceBetween:10
 });
+
+//업로드 이미지 삭제 
 function removeImg1901(){
 	  $(document).on('click','.remove_img1901',function(){
 	    $(this).prev('.ahm_item').find('.file_input').children('img').remove();
@@ -2742,7 +2697,7 @@ function removeImg1901(){
 		              if ( 'Y' == 'Y' && reviewList[i].bestYN == true) {
 		                  txtDetail += '  <div class="hs_star_score best_review1905">';
 		              } else {
-		                  txtDetail += '<div class="hs_star_score">';<!-- hs_star_score 180914 위치 수정// -->
+		                  txtDetail += '<div class="hs_star_score">';
 		              }
 		              for ( var j=1; j<6; j++ ) {
 		                  if ( j <= reviewList[i].rating ) {
@@ -3166,6 +3121,7 @@ function removeImg1901(){
 		          }
 		      }
 		  });
+		  //리뷰 작성 자격 확인 
 function reviewCheck(){
 	var checkMid = $('#mid').val();
 	var checkPsid = $('#psid').val();
@@ -3180,80 +3136,6 @@ function reviewCheck(){
 	}
 }
 
-function to_ajax(){
-	 
-
-	var queryString = $("#reviewForm").serialize() ;
-	alert(queryString);
-	$.ajax({
-		type : 'post',
-		url : '/product/reviewAdd',
-		data : queryString,
-		dataType : 'json',
-	 	contentType: false,
-	 	processData: false,	
-		error: function(xhr, status, error){
-			alert('error');
-		},
-		success : function(data){
-			alert("리뷰가 등록되었습니다.");
-			var html = "";
-			html += '<li ';
-			html += 'class="swiper-slide swiper-slide-active"';
-			html += 'style="margin-right: 10px;" ">';
-			html += '<a "';
-			html += 'href=".product_comment_pop"';
-			html += 'class="hs_prd_review_cont btn_popup_trigger">';
-			html += '	<div class="pro">';
-			html += '	<div class="img_wrap"><span class="img"><img src="http://www.thehandsome.com/_ui/handsomemobile/images/content/no_pro_img.png" alt=""></span></div>';
-			html += '<div class="txt">';
-			html += '<p class="name" >data.MID</p>';
-			html += '<p class="data">data.RV_DATE</p>';
-			html += '</div>';
-			html += '<div class="hs_star_score">';
-			html += '<i class="on" >1점</i> ';
-			if( data.RATING == 2){
-				html += '<i class="on"th:if="${list.RATING >= 2}">2점</i> ';
-			}
-			else if(data.RATING == 3){
-				html += '<i class="on"th:if="${list.RATING >= 2}">2점</i> ';
-				html += '<i class="on" th:if="${list.RATING >= 3}">3점</i> ';
-			}
-			else if (data.RATING== 4){
-				html += '<i class="on"th:if="${list.RATING >= 2}">2점</i> ';
-				html += '<i class="on" th:if="${list.RATING >= 3}">3점</i> ';
-				html += '<i class="on"	th:if="${list.RATING >= 4}">4점</i> ';
-			}
-			else if(data.RATING == 5){
-				html += '<i class="on"th:if="${list.RATING >= 2}">2점</i> ';
-				html += '<i class="on" th:if="${list.RATING >= 3}">3점</i> ';
-				html += '<i class="on"	th:if="${list.RATING >= 4}">4점</i> ';
-				html += '<i class="on"	th:if="${list.RATING >= 5}">5점</i> ';
-			}
-			html += '</div>';
-			html += '<div class="info">';
-			html += '<ul class="info_list choice">';
-			html += '<li>';
-			html += data.AGE+'대 / '+data.HEIGHT+'cm / '+data.BODYTYPE+' / 사이즈 : '+data.BODYSIZE+'</li>';
-			html += '</ul>';
-			html += '</div>';
-			html += '<div class="review">';
-			html += '<xmp class="txt"';
-			html += 'style="font-family: inherit; margin-top: 0; margin-bottom: 0; white-space: normal;>"';
-			html += data.RV_TEXT;
-			html += '</xmp>';
-			html += '</div>';
-			html += '<div class="hs_prd_review_btns">';
-			html += '<a	class="del"	onclick="javascript:deleteReview()">삭제</a>';
-			html += '</div>';
-			html += '</li>';
-			$('#reviewLst').prepend(html);
-			reviewClose();
-			reviewWrited = true;
-		}
-	});
-
-}
 
 </script>
 		<div class="divpop_wrap_dev pop_mbr pop_alert_confirm"
