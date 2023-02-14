@@ -1341,7 +1341,7 @@ rotate
 									<div id="mypageCouponList">
 										<div class="s-coupon">
 											<div class="s-coupon-inner">
-												<strong>당신의 마일리지는</strong><b>[[${mileage}]] Point</b> <span>2023-02-01
+												<strong>당신의 마일리지는</strong><b th:text="${#numbers.formatInteger(mileage, 3, 'COMMA') + ' Point'}"></b> <span>2023-02-01
 													~ 2023-07-31</span>
 											</div>
 

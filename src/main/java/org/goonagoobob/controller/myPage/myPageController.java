@@ -54,12 +54,12 @@ public class myPageController {
 		String mid = principal.getName();
 		memberAccount mA = memberService.selectById(mid);
 		String address = mA.getMaddress1() + mA.getMaddress2();
-		String mileage = Integer.toString(mA.getMmileage());
+		// String mileage = Integer.toString(mA.getMmileage());
 		
-		System.out.println("mileage to String" + mileage);
+		System.out.println("mileage to String" + mA.getMmileage());
 		System.out.println(address);
 		model.addAttribute("address", address);
-		model.addAttribute("mileage", mileage);
+		model.addAttribute("mileage", mA.getMmileage());
 	}
 	
 	@GetMapping("/passwordCheck")

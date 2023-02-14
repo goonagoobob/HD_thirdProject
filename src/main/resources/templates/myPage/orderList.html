@@ -948,11 +948,11 @@
          <li class="shop active" style="width: 33.3%;"><a
             onclick="layerUp()"><i>메뉴</i></a></li>
          <li class="home" style="width: 33.3%;"><a
-            href="http://localhost"
+            href="/"
             onclick="goMainpage();GA_Event('공통', '네비게이션_바', '홈');"><i>홈</i></a>
          </li>
          <li class="mypage" id="gnbMyPageBtn" style="width: 33.3%;"><a
-            href="http://localhost/myPage/myPage"
+            href="/myPage/myPage"
             onclick="goMypage();GA_Event('공통', '네비게이션_바', '마이페이지');"><i>마이페이지</i></a>
          </li>
          <li class="mypage pageMove" style="display: none"><a href=""
@@ -973,7 +973,7 @@
       <script type="text/javascript">
           function goMypage() {
             $.cookie("handsomeappreturnurl", "/ko/", { path: "/" });
-            location.href = "http://localhost/myPage/myPage";
+            location.href = "/myPage/myPage";
           }
           $(window).load(function () {
             //모든 리소스 로드 후에 처리
@@ -984,7 +984,7 @@
             window.sessionStorage.removeItem('moveYn');
             window.sessionStorage.removeItem('width');
             window.sessionStorage.removeItem('height');
-            location.href = "http://localhost";
+            location.href = "/";
           } 
       </script>
 
