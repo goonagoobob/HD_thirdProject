@@ -9,11 +9,14 @@
 package org.goonagoobob.domain.product;
 
 import java.util.Date;
-import java.util.List;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Data
+@Getter
+@Setter
 public class reviewVO {
 	public reviewVO(String string, String string2, Date today, String string3, String string4, String string5,
 			String string6, String string7, int i, int j, int k, int l, int m) {
