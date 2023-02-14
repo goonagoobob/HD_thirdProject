@@ -51,12 +51,9 @@ public class memberMapperTests {
 			mJ.setMemail("user1@email");
 			memberMapper.joinMemberAccount(mJ);
 		}
-		
 		else {
 			System.out.println("insert불가");
-		}
-
-		
+		}		
 	}
 	
 	

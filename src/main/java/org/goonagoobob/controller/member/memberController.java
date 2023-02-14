@@ -95,7 +95,8 @@ public class memberController {
 	}
 	
 	@PostMapping("/findIdResult")
-	public void findId(@RequestParam("iUserName") String name, @RequestParam("selYear") String selYear, @RequestParam("selMonth") String selMonth, @RequestParam("selDay") String selDay, Model model) {
+	public void findId(@RequestParam("iUserName") String name, @RequestParam("selYear") String selYear, @RequestParam("selMonth") String selMonth
+			, @RequestParam("selDay") String selDay, Model model) {
 		System.out.println("name: " + name);
 		selYear = selYear.substring(2);
 		System.out.println(selYear);

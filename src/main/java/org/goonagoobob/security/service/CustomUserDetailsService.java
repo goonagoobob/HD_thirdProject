@@ -35,12 +35,11 @@ public class CustomUserDetailsService implements UserDetailsService{
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
 		log.info("username" + username);
-		//id로 탖기
+		//id로 찾기
 		memberAccount account = mM.selectById(username); //account 객체 얻어와서
 		System.out.println(account);
 		
 		if(account == null) {
-			System.out.println("null 이라고라 ????");
 			throw new UsernameNotFoundException("UsernameNotFoundException");
 		}
 		

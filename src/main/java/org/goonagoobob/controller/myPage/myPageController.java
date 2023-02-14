@@ -86,7 +86,7 @@ public class myPageController {
 	}
 
 	
-	//로그인 안된 상태로 바로 들어가면 principal 오류가 남 ... 
+	
 	@GetMapping("/checkPassword")
 	public void checkPassword(Principal principal, Model model) {
 		
@@ -107,7 +107,7 @@ public class myPageController {
 		System.out.println("@@@@@@@@password@@@@@@@@@" + password);
 		
 		String mid = principal.getName();
-		System.out.println("form에서 확인을 해보쟝 " + password);
+		System.out.println(password);
 		
 		memberAccount mA = memberService.selectById(mid);
 		System.out.println("DB에 저장되어 있는 비밀번호 : " + mA.getMpassword());
@@ -175,7 +175,7 @@ public class myPageController {
 		mCI.setMbirth(mbirth);
 		
 		int result = memberService.changeMemberInfo(mCI);
-		System.out.println("바뀌었습니깡 ??? " + result + "!!!!");
+		System.out.println("변경 확인" + result + "!!!!");
 		
 		if (result == 1) {
 			return "redirect:/myPage/myPage";
