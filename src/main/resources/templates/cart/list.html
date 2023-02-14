@@ -1691,9 +1691,9 @@ function selectsize(pid, colorname, idx){
 			for(var i =0; i<data.length; i++){
 				
 				prosize = data[i].psize;
-				alert(prosize);
+				
 				propcid = data[i].pcid;
-				alert(propcid);
+				
 				tag2 += `<option id = "sizeop_0`
 				tag2 += idx
 				tag2 += `0`
@@ -1740,10 +1740,6 @@ function updatecart(pid, psid, idx, pquantity){
 	var nsize =  document.getElementById(sid).value;
 	var npsid = pid+"_"+ncname+"_"+nsize;
 	
-	alert("바꿀색이름" + ncname);
-	alert("바꿀수량" + npquantity);
-	alert("바꿀사이즈" + nsize);
-	alert("새로운psid" + npsid);
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
 
