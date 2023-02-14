@@ -1769,9 +1769,9 @@ function updatecart(pid, psid, idx, pquantity){
 	
 }
 /* *********************************
-* @function : 각 pcid 당 사이즈 조회
+* @function : 각 pcid 당 색상조회
 * @author : 김주혜
-* 고유 값을 위해 index 사용해 id 부여
+* 각 상품당 고유 값을 위해 index 사용해 id 부여
 *********************************  */
 function selectColor(psid, idx){
 	var token = $("meta[name='_csrf']").attr("content");
@@ -1885,12 +1885,13 @@ function orderProduct(entryNumber) {
     }
 
 /* *********************************
-* @function : 선택 상품 삭제
+* @function : 선택 및 개별상품 삭제
 * @author : 김주혜
 * 기존 entryNumber에 psid를 넣어
 * entryNumber에 해당하는 psid와 로그인 멤버 정보를 이용해
 * 선택 상품 삭제 구현
 *********************************  */
+/* 개별 상품 삭제 */
 function eachdelete(psid, idx){
 var la = new layerConfirm('선택하신 상품을 쇼핑백에서 삭제하시겠습니까?','확인','취소');
 la.confirmAction = function(){//확인 호출 펑션
@@ -1917,6 +1918,7 @@ la.confirmAction = function(){//확인 호출 펑션
 	};
 		
 };
+/* 선택상품삭제 */
 function selectRemove(entryNumber) {
 var msgStr = "";
 

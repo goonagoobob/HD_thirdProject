@@ -83,7 +83,7 @@
 		  	 where
 		  	 mid = #{mid} and
    		]]>
-   		<!-- 페이징 처리를 위해 동적 쿼리 적용 -->
+   		
 		<include refid="criteria"></include> 
 	  	<![CDATA[
 		 	rownum <= #{cri.pageNum} * #{cri.amount})
